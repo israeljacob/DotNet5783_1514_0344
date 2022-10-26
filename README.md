@@ -2,4 +2,4 @@
 ## מיני פרויקט במערכת חלונות
 
 Just nothing to see here.
-hello ware.
+hello Qare.
