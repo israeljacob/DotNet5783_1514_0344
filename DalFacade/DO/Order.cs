@@ -20,7 +20,14 @@ public struct Order
     public DateTime DeliveryrDate  { get; set; }
 
 
-    public override string ToString() => $@" UniqID: {UniqID}: {CustomerName}, Customer Email=  {CustomerEmail}, Customer Adress - {CustomerAdress} Order Date: {OrderDate}  Ship Date: {ShipDate} Deliveryr Date: {DeliveryrDate} ";
+    public override string ToString() => $@" 
+UniqID: {UniqID}
+Name: {CustomerName}, 
+Customer Email=  {CustomerEmail}, 
+Customer Adress: {CustomerAdress} 
+Order Date: {OrderDate}  
+Ship Date: {ShipDate} 
+Deliveryr Date: {DeliveryrDate} ";
 
 
 

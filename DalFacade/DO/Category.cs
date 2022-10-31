@@ -1,6 +1,6 @@
 ﻿namespace DO;
 
-public enum Enums
+public enum Category
 {
     Shirts,//חולצות
     trousers,//מכנסיים

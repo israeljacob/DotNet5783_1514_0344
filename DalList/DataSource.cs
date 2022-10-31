@@ -17,7 +17,10 @@ internal static class DataSource
         for (int i = 0; i < 20; i++)
         {
             orders[i].UniqID = RandomNumber;
-            
+            orders[i].CustomerName = "a"+i;
+            orders[i].CustomerEmail = "email"+i+"@gmail.com";
+            orders[i].CustomerAdress =  "address"+(i + 55);
+            orders[i].ShipDate = DateTime.Now;
         }
     }
 

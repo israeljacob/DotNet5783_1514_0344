@@ -1,5 +1,4 @@
-﻿using DocumentFormat.OpenXml.Wordprocessing;
-
+﻿
 namespace DO;
 
 public struct OrderItem
@@ -10,7 +9,12 @@ public struct OrderItem
     public int Amount { get; set; }
     public int UniqID { get; set; }
 
-    public override string ToString() => $@" UniqID: {UniqID}: Product ID={ProductID}, Order ID=  {OrderID}, Amount - {Amount} Price: {Price} ";
+    public override string ToString() => $@" 
+UniqID: {UniqID}
+Product ID={ProductID}, 
+Order ID=  {OrderID}, 
+Amount: {Amount} 
+Price: {Price} ";
 
 
 
