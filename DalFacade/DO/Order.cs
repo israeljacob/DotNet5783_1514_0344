@@ -1,6 +1,4 @@
-﻿using DocumentFormat.OpenXml.Drawing.Charts;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using DocumentFormat.OpenXml.Wordprocessing;
+﻿
 
 namespace DO;
 
