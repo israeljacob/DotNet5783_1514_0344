@@ -1,6 +1,11 @@
 ﻿namespace DO;
 
-public struct Enums
+public enum Enums
 {
+    Shirts,//חולצות
+    trousers,//מכנסיים
+    shoes,//נעלים
+    coats,//מעילים
+    sweaters//סוודרים
 
 }
