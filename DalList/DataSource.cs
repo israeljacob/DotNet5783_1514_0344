@@ -1,7 +1,4 @@
 ﻿using DO;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
-using System.Data;
 
 namespace Dal;
 

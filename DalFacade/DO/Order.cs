@@ -25,13 +25,13 @@ public struct Order
     }
 
     public override string ToString() => $@" 
-UniqID: {UniqID}
-Name: {CustomerName}, 
-Customer Email=  {CustomerEmail}, 
-Customer Adress: {CustomerAdress} 
-Order Date: {OrderDate}  
-Ship Date: {ShipDate} 
-Deliveryr Date: {DeliveryrDate} ";
+        UniqID: {UniqID}
+        Name: {CustomerName}, 
+        Customer Email=  {CustomerEmail}, 
+        Customer Adress: {CustomerAdress} 
+        Order Date: {OrderDate}  
+        Ship Date: {ShipDate} 
+        Deliveryr Date: {DeliveryrDate} ";
 
 
     
