@@ -13,7 +13,16 @@ public struct Order
     public DateTime OrderDate { get; set; }
     public DateTime ShipDate { get; set; }
     public DateTime DeliveryrDate  { get; set; }
+    
+    static Order ()
+    {
+        s_Initialize();
+    }
 
+    private static void s_Initialize()
+    { 
+
+    }
 
     public override string ToString() => $@" 
 UniqID: {UniqID}
@@ -25,5 +34,5 @@ Ship Date: {ShipDate}
 Deliveryr Date: {DeliveryrDate} ";
 
 
-
+    
 }
