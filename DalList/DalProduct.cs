@@ -96,10 +96,7 @@ public class DalProduct
                 DataSource.products[j] = DataSource.products[j + 1];
             }
             DataSource.products[j].UniqID = 0;
-            DataSource.products[i].Name = "";
-            DataSource.products[i].Price = 0;
-            DataSource.products[i].Category = null;
-            DataSource.products[i].InStock = null;
+            DataSource.Config.availableProduct--;
         }
         else
             throw new Exception("ID dos not exsist");
