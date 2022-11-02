@@ -15,7 +15,6 @@ public class DalOrder
     /// <returns></returns>
     public int Add(Order newOrder)
     {
-        newOrder.UniqID = DataSource.Config.OrderID;
         int locationInArray = DataSource.Config.OrderID;
         DataSource.orders[locationInArray] =newOrder;
         return newOrder.UniqID;
@@ -41,7 +40,11 @@ public class DalOrder
         else
             throw new Exception("ID dos not exsist");
     }
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public Order[] ReadAll()
     {
         Order[] orders;
@@ -60,6 +63,11 @@ public class DalOrder
         else throw new Exception("There are no any orders in the system");
         return orders;
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="updatedOrder"></param>
+    /// <exception cref="Exception"></exception>
     public void Update(Order updatedOrder)
     {
         int i = 0;
@@ -79,8 +87,33 @@ public class DalOrder
         else
             throw new Exception("ID dos not exsist");
     }
-    public Order Delete(int ID)
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <returns></returns>
+    public void Delete(int ID)
     {
-        return new Order();
+        int i = -1,j;
+        while (DataSource.orders[i+1].UniqID > 1000000 && ID != DataSource.orders[i+1].UniqID)
+        {
+            i++;
+        }
+        if (DataSource.orders[i].UniqID == ID)
+        {
+            for(j= i; DataSource.orders[j].UniqID > 1000000; j++)
+            {
+                DataSource.orders[j] = DataSource.orders[j + 1];
+            }
+            DataSource.orders[j].UniqID = 0;
+            DataSource.orders[j].CustomerName = "";
+            DataSource.orders[j].CustomerEmail = "";
+            DataSource.orders[j].CustomerAdress = "";
+            DataSource.orders[j].OrderDate = DateTime.MinValue;
+            DataSource.orders[j].ShipDate = DateTime.MinValue;
+            DataSource.orders[j].DeliveryrDate = DateTime.MinValue;
+        }
+        else
+            throw new Exception("ID dos not exsist");
     }
 }

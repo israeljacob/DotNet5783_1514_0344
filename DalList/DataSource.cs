@@ -12,7 +12,7 @@ internal static class DataSource
     static readonly int RandomNumber = r.Next(0, 1000);
     internal static Order[] orders=new Order[100];
     internal static OrderItem[] orderItems = new OrderItem[200];
-    internal static Product[] Products = new Product[50];
+    internal static Product[] products = new Product[50];
     
     internal static class Config
     {
