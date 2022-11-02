@@ -1,7 +1,4 @@
-﻿using DO;
-using DocumentFormat.OpenXml.Drawing.Charts;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using Order = DO.Order;
+﻿using Order = DO.Order;
 
 namespace Dal;
 
@@ -106,12 +103,7 @@ public class DalOrder
                 DataSource.orders[j] = DataSource.orders[j + 1];
             }
             DataSource.orders[j].UniqID = 0;
-            DataSource.orders[j].CustomerName = "";
-            DataSource.orders[j].CustomerEmail = "";
-            DataSource.orders[j].CustomerAdress = "";
-            DataSource.orders[j].OrderDate = DateTime.MinValue;
-            DataSource.orders[j].ShipDate = DateTime.MinValue;
-            DataSource.orders[j].DeliveryrDate = DateTime.MinValue;
+            DataSource.Config.availableOrder--;
         }
         else
             throw new Exception("ID dos not exsist");
