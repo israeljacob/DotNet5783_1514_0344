@@ -9,7 +9,7 @@ public class DalOrderItem
     {
         int locationInArray = DataSource.Config.OrderItemID;
         DataSource.orderItems[locationInArray] = newOrderItem;
-        return newOrderItem.ProductID;
+        return newOrderItem.UniqID;
     }
     /// <summary>
     /// 
@@ -17,14 +17,14 @@ public class DalOrderItem
     /// <param name="ID"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public OrderItem Read(int productID, int orderID)
+    public OrderItem Read(int uniqID)
     {
         int i = 0;
-        while (DataSource.orderItems[i].ProductID > 1000000 && (productID != DataSource.orderItems[i].ProductID|| orderID!= DataSource.orderItems[i].OrderID))
+        while (DataSource.orderItems[i].ProductID > 1000000 && uniqID != DataSource.orderItems[i].UniqID)
         {
             i++;
         }
-        if (DataSource.orderItems[i].ProductID == productID && DataSource.orderItems[i].OrderID == orderID)
+        if (DataSource.orderItems[i].UniqID == uniqID )
         {
             OrderItem newOrderItem = DataSource.orderItems[i];
             return newOrderItem;
@@ -42,7 +42,7 @@ public class DalOrderItem
         OrderItem[] orderItems;
         int i = -1;
 
-        while (DataSource.orderItems[i + 1].ProductID > 1000000)
+        while (DataSource.orderItems[i + 1].UniqID >= 3000000)
         {
             i++;
         }
@@ -63,7 +63,7 @@ public class DalOrderItem
     public void Update(OrderItem updatedOrderItem)
     {
         int i = 0;
-        while (DataSource.orderItems[i].ProductID > 1000000 && (updatedOrderItem.ProductID != DataSource.orderItems[i].ProductID || updatedOrderItem.OrderID != DataSource.orderItems[i].OrderID))
+        while (DataSource.orderItems[i].ProductID > 3000000 && (updatedOrderItem.ProductID != DataSource.orderItems[i].ProductID || updatedOrderItem.OrderID != DataSource.orderItems[i].OrderID))
         {
             i++;
         }
