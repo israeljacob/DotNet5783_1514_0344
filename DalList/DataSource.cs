@@ -4,18 +4,21 @@ namespace Dal;
 
 internal static class DataSource
 {
-    static int ID = 1000000;
-    static Random r = new Random();
-    static readonly int RandomNumber = r.Next(0, 1000);
+    //static int ID = 1000000;
+    //static Random r = new Random();
+    //static readonly int RandomNumber = r.Next(0, 1000);
     internal static Order[] orders = new Order[100];
-    //internal static Order Orders
-    //{
-    //    get { return orders[0]; }
-    //    set { orders[0] = value; }
-    //}
     internal static OrderItem[] orderItems = new OrderItem[200];
     internal static Product[] products = new Product[50];
-    
+    static  DataSource()
+    {
+        S_Initialize();
+    }
+    static void S_Initialize()
+    {
+        orders[0].UniqID = 0;
+    }
+
     internal static class Config
     {
         
@@ -56,23 +59,19 @@ internal static class DataSource
         }
 
     }
-    //private static void order_Initialize
+    
+    //private static void  OrderInitial()
     //{
-    //    Orders [0]
-    //}
+    //      for (int i = 0; i < 20; i++)
+    //    {
 
-    private static void  OrderInitial()
-    {
-          for (int i = 0; i < 20; i++)
-        {
-             
-            orders[i].UniqID = RandomNumber;
-            orders[i].CustomerName = "a"+i;
-            orders[i].CustomerEmail = "email"+i+"@gmail.com";
-            orders[i].CustomerAdress =  "address"+(i + 55);
-            orders[i].ShipDate = DateTime.Now;
-        }
-    }
+    //        orders[i].UniqID = RandomNumber;
+    //        orders[i].CustomerName = "a"+i;
+    //        orders[i].CustomerEmail = "email"+i+"@gmail.com";
+    //        orders[i].CustomerAdress =  "address"+(i + 55);
+    //        orders[i].ShipDate = DateTime.Now;
+    //    }
+    //}
 
 }
 
