@@ -188,12 +188,11 @@ internal static class DataSource
 
             }
 
-            //5% of all the product will not be in stock, that mean half the product.
-            //but I think it is not half but 0. because 0.05 * 10(product) =0 
+            //רק מוצר אחד יהיה FAlse
             if (i % 2 == 0)
-                products[i].InStock = true;
+                products[i].InStock = 0;
             else
-                products[i].InStock = false;
+                products[i].InStock = 1;
 
 
         }
@@ -224,6 +223,7 @@ internal static class DataSource
 
         for (int i = 0; i < 20; i++)
         {
+            //לשנות ל I
             var r = new Random();
             var namesindex = r.Next(names.Length);
             var emailsindex = r.Next(emails.Length);
@@ -232,9 +232,9 @@ internal static class DataSource
 
 
             orders[i].UniqID = Config.OrderItemID;
-            orders[i].CustomerName = names[namesindex];
-            orders[i].CustomerEmail = emails[emailsindex];
-            orders[i].CustomerAdress = adresses[adressesindex];
+            orders[i].CustomerName = names[i];
+            orders[i].CustomerEmail = emails[i];
+            orders[i].CustomerAdress = adresses[i];
 
             orders[i].OrderDate = DateTime.Now;
 
@@ -250,9 +250,12 @@ internal static class DataSource
          
         for (int i = 0; i < 40; i++)
         {
-            orderItems[i].OrderID=Config.OrderItemID;
-            orderItems[i].Amount= r.Next(0, 4);
-            orderItems[i].Price=0;
+            int rand = r.Next(0, 9);
+            orderItems[i].UniqID=Config.OrderItemID;
+            orderItems[i].ProductID = orders[r.Next(0,19)].UniqID;
+            orderItems[i].ProductID = products[rand].UniqID;
+            orderItems[i].Amount= r.Next(1,10);
+            orderItems[i].Price = products[rand].Price * orderItems[i].Amount;
             
         }
     }
