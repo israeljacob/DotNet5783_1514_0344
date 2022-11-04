@@ -5,7 +5,6 @@ namespace Dal;
 
 internal static class DataSource
 {
-    static int ID = 1000000;
     internal static Order[] orders = new Order[100];
     internal static OrderItem[] orderItems = new OrderItem[200];
     internal static Product[] products = new Product[50];
