@@ -19,7 +19,7 @@ public class DalProduct
     public Product Read(int ID)
     {
         int i = 0;
-        while (DataSource.products[i].UniqID > 1000000 && ID != DataSource.products[i].UniqID)
+        while (DataSource.products[i].UniqID >=2000000 && ID != DataSource.products[i].UniqID)
         {
             i++;
         }
@@ -41,7 +41,7 @@ public class DalProduct
         Product[] products;
         int i = -1;
 
-        while (DataSource.products[i + 1].UniqID > 1000000)
+        while (DataSource.products[i + 1].UniqID >= 2000000)
         {
             i++;
         }
@@ -62,7 +62,7 @@ public class DalProduct
     public void Update(Product updatedProduct)
     {
         int i = 0;
-        while (DataSource.products[i].UniqID > 1000000 && updatedProduct.UniqID != DataSource.products[i].UniqID)
+        while (DataSource.products[i].UniqID >=2000000 && updatedProduct.UniqID != DataSource.products[i].UniqID)
         {
             i++;
         }
@@ -85,13 +85,13 @@ public class DalProduct
     public void Delete(int ID)
     {
         int i = -1, j;
-        while (DataSource.products[i + 1].UniqID > 1000000 && ID != DataSource.products[i + 1].UniqID)
+        while (DataSource.products[i + 1].UniqID >=2000000 && ID != DataSource.products[i + 1].UniqID)
         {
             i++;
         }
         if (DataSource.products[i].UniqID == ID)
         {
-            for (j = i; DataSource.products[j].UniqID > 1000000; j++)
+            for (j = i; DataSource.products[j].UniqID >= 2000000; j++)
             {
                 DataSource.products[j] = DataSource.products[j + 1];
             }

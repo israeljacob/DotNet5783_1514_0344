@@ -25,7 +25,7 @@ public class DalOrder
     public Order Read(int ID)
     {
         int i = 0;
-        while (DataSource.orders[i].UniqID>1000000 && ID!= DataSource.orders[i].UniqID)
+        while (DataSource.orders[i].UniqID>= 1000000 && ID!= DataSource.orders[i].UniqID)
         {
             i++;
         }
@@ -47,7 +47,7 @@ public class DalOrder
         Order[] orders;
         int i = -1;
 
-        while (DataSource.orders[i+1].UniqID > 1000000 )
+        while (DataSource.orders[i+1].UniqID >= 1000000 )
         {
             i++;
         }
@@ -68,7 +68,7 @@ public class DalOrder
     public void Update(Order updatedOrder)
     {
         int i = 0;
-        while (DataSource.orders[i].UniqID > 1000000 && updatedOrder.UniqID != DataSource.orders[i].UniqID)
+        while (DataSource.orders[i].UniqID >= 1000000 && updatedOrder.UniqID != DataSource.orders[i].UniqID)
         {
             i++;
         }
@@ -92,13 +92,13 @@ public class DalOrder
     public void Delete(int ID)
     {
         int i = -1,j;
-        while (DataSource.orders[i+1].UniqID > 1000000 && ID != DataSource.orders[i+1].UniqID)
+        while (DataSource.orders[i+1].UniqID >= 1000000 && ID != DataSource.orders[i+1].UniqID)
         {
             i++;
         }
         if (DataSource.orders[i].UniqID == ID)
         {
-            for(j= i; DataSource.orders[j].UniqID > 1000000; j++)
+            for(j= i; DataSource.orders[j].UniqID >= 1000000; j++)
             {
                 DataSource.orders[j] = DataSource.orders[j + 1];
             }

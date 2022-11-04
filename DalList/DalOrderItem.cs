@@ -20,7 +20,7 @@ public class DalOrderItem
     public OrderItem Read(int uniqID)
     {
         int i = 0;
-        while (DataSource.orderItems[i].ProductID > 1000000 && uniqID != DataSource.orderItems[i].UniqID)
+        while (DataSource.orderItems[i].UniqID >= 3000000 && uniqID != DataSource.orderItems[i].UniqID)
         {
             i++;
         }
@@ -63,12 +63,14 @@ public class DalOrderItem
     public void Update(OrderItem updatedOrderItem)
     {
         int i = 0;
-        while (DataSource.orderItems[i].ProductID > 3000000 && (updatedOrderItem.ProductID != DataSource.orderItems[i].ProductID || updatedOrderItem.OrderID != DataSource.orderItems[i].OrderID))
+        while (DataSource.orderItems[i].UniqID >= 3000000 & updatedOrderItem.UniqID != DataSource.orderItems[i].UniqID)
         {
             i++;
         }
-        if (DataSource.orderItems[i].ProductID == updatedOrderItem.ProductID && DataSource.orderItems[i].OrderID == updatedOrderItem.OrderID)
+        if (DataSource.orderItems[i].UniqID == updatedOrderItem.UniqID )
         {
+            DataSource.orderItems[i].OrderID = updatedOrderItem.OrderID;
+            DataSource.orderItems[i].ProductID = updatedOrderItem.ProductID;
             DataSource.orderItems[i].Price = updatedOrderItem.Price;
             DataSource.orderItems[i].Amount = updatedOrderItem.Amount;
 
@@ -81,19 +83,20 @@ public class DalOrderItem
     /// </summary>
     /// <param name="ID"></param>
     /// <returns></returns>
-    public void Delete(int productID, int orderID)
+    public void Delete(int uniqID)
     {
         int i = -1, j;
-        while (DataSource.orderItems[i].ProductID > 1000000 && (productID != DataSource.orderItems[i].ProductID || orderID != DataSource.orderItems[i].OrderID))
+        while (DataSource.orderItems[i].UniqID >= 3000000 && uniqID != DataSource.orderItems[i].UniqID)
         {
             i++;
         }
-        if (DataSource.orderItems[i].ProductID == productID && DataSource.orderItems[i].OrderID == orderID)
+        if (DataSource.orderItems[i].UniqID == uniqID )
         {
-            for (j = i; DataSource.orderItems[j].ProductID > 1000000; j++)
+            for (j = i; DataSource.orderItems[j].UniqID >= 3000000; j++)
             {
                 DataSource.orderItems[j] = DataSource.orderItems[j + 1];
             }
+            DataSource.orderItems[j].UniqID = 0;
             DataSource.orderItems[j].ProductID = 0;
             DataSource.orderItems[j].OrderID = 0;
             DataSource.Config.availableOrderItem--;
