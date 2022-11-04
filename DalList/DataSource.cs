@@ -136,12 +136,11 @@ internal static class DataSource
 
             }
 
-            //5% of all the product will not be in stock, that mean half the product.
-            //but I think it is not half but 0. because 0.05 * 10(product) =0 
+            //רק מוצר אחד יהיה FAlse
             if (i % 2 == 0)
-                products[i].InStock = true;
+                products[i].InStock = 0;
             else
-                products[i].InStock = false;
+                products[i].InStock = 1;
 
 
         }
@@ -186,6 +185,7 @@ internal static class DataSource
 
         for (int i = 0; i < 20; i++)
         {
+            //לשנות ל I
             var r = new Random();
 
 
@@ -194,23 +194,12 @@ internal static class DataSource
             orders[i].CustomerName = names[i];
             orders[i].CustomerEmail = emails[i];
             orders[i].CustomerAdress = adresses[i];
-            do {
-                orders[i].OrderDate = new DateTime(r.Next(2000, 2022), r.Next(1, 12), r.Next(1, 28));
-            }while(orders[i].OrderDate>DateTime.Now);
-            do
-            {
-                orders[i].ShipDate = new DateTime(r.Next(2000, 2022), r.Next(1, 12), r.Next(1, 28));
-            } while (orders[i].ShipDate > DateTime.Now);
-            do
-            {
-                orders[i].DeliveryrDate = new DateTime(r.Next(2000, 2022), r.Next(1, 12), r.Next(1, 28));
-            } while (orders[i].DeliveryrDate > DateTime.Now);
-        }
-        for (int i= 20; i<100;i++)
-        {
-            orders[i].OrderDate =  DateTime.MinValue;
-            orders[i].ShipDate = DateTime.MinValue;
-            orders[i].DeliveryrDate = DateTime.MinValue;
+
+            orders[i].OrderDate = DateTime.Now;
+
+            orders[i].ShipDate = DateTime.Now;
+            orders[i].DeliveryrDate = DateTime.Now;
+           
         }
     }
 
@@ -220,11 +209,12 @@ internal static class DataSource
          
         for (int i = 0; i < 40; i++)
         {
+            int rand = r.Next(0, 9);
             orderItems[i].UniqID=Config.OrderItemID;
-            orderItems[i].OrderID = orders[i].UniqID;
-            orderItems[i].ProductID = products[i].UniqID;
-            orderItems[i].Amount= r.Next(0, 4);
-            orderItems[i].Price=0;
+            orderItems[i].ProductID = orders[r.Next(0,19)].UniqID;
+            orderItems[i].ProductID = products[rand].UniqID;
+            orderItems[i].Amount= r.Next(1,10);
+            orderItems[i].Price = products[rand].Price * orderItems[i].Amount;
             
         }
     }
