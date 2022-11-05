@@ -4,6 +4,7 @@ namespace DO;
 
 public struct Order
 {
+    
 
 
     public int UniqID { get; set; }

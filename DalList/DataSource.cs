@@ -92,10 +92,6 @@ internal static class DataSource
 
         for (int i = 0; i < 10; i++)
         {
-            var PriceIndexShirt = r.Next(ProductsPriceShirt.Length);//down in if()
-            var PriceIndexTrouser = r.Next(ProductsPriceTrouser.Length);
-            var PriceIndexShoe = r.Next(ProductsPriceShoe.Length);
-            var PriceIndexCoat = r.Next(ProductsPriceCoat.Length);
 
 
 
@@ -106,40 +102,46 @@ internal static class DataSource
 
             if (products[i].Name.Contains("Shirt"))//else
             {
+               var PriceIndexShirt = r.Next(ProductsPriceShirt.Length);
                 products[i].Price = ProductsPriceShirt[PriceIndexShirt];
                 products[i].Category = DO.Category.Shirts;
 
             }
-            if (products[i].Name.Contains("Trouser"))
+            else if (products[i].Name.Contains("Trouser"))
             {
+               var PriceIndexTrouser = r.Next(ProductsPriceTrouser.Length);
                 products[i].Price = ProductsPriceTrouser[PriceIndexTrouser];
                 products[i].Category = DO.Category.trousers;
 
             }
-            if (products[i].Name.Contains("Shoe"))
+            else if (products[i].Name.Contains("Shoe"))
             {
+                var PriceIndexShoe = r.Next(ProductsPriceShoe.Length);
                 products[i].Price = ProductsPriceShoe[PriceIndexShoe];
                 products[i].Category = DO.Category.shoes;
 
             }
-            if (products[i].Name.Contains("Caot"))
+            else if (products[i].Name.Contains("Caot"))
             {
+                 var PriceIndexCoat = r.Next(ProductsPriceCoat.Length);
                 products[i].Price = ProductsPriceCoat[PriceIndexCoat];
                 products[i].Category = DO.Category.coats;
 
             }
-            if (products[i].Name.Contains("Sweater"))
+            else if (products[i].Name.Contains("Sweater"))
             {
+                var PriceIndexShirt = r.Next(ProductsPriceShirt.Length);
                 products[i].Price = ProductsPriceShirt[PriceIndexShirt];
                 products[i].Category = DO.Category.sweaters;
 
             }
 
-            //רק מוצר אחד יהיה FAlse
-            if (i % 2 == 0)
+
+            var stockindex = r.Next(20);
+            if (i ==1)
                 products[i].InStock = 0;
             else
-                products[i].InStock = 1;
+                products[i].InStock =stockindex ;
 
 
         }
