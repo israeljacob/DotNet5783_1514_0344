@@ -35,7 +35,7 @@ public class mainProgram
             switch (menuChoice)
             {
                 case MainOptions.ProductCheck:
-                    Menu.ProdectCheckMenu();
+                    Menu.ProductCheckMenu();
                     ProductOptions AddingMenuChoice = (ProductOptions)Menu.UserInput();
                     switch (AddingMenuChoice)
                     {

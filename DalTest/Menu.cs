@@ -41,6 +41,8 @@ public enum OrderItemOptions
 {
     Add = 1,
     Read,
+    ReadByOrder,
+    ReadByProduct,
     ReadAllList,
     Update,
     Delete
@@ -67,7 +69,7 @@ namespace Dal
         Console.WriteLine("0.Exit");
 
         }
-        public static void ProdectCheckMenu()
+        public static void ProductCheckMenu()
         {
             Console.WriteLine("1.Add Product");
             Console.WriteLine("2.See Product By ID");
@@ -91,9 +93,11 @@ namespace Dal
         {
             Console.WriteLine("1.Add Order Item");
             Console.WriteLine("2.See Order Item By ID");
-            Console.WriteLine("3.See List of Orders Item");
-            Console.WriteLine("4.Update Order Item");
-            Console.WriteLine("4.Delete Order Item");
+            Console.WriteLine("3.See Order Item By Order ID");
+            Console.WriteLine("4.See Order Item By Product ID");
+            Console.WriteLine("4.See List of Orders Item");
+            Console.WriteLine("5.Update Order Item");
+            Console.WriteLine("6.Delete Order Item");
             Console.WriteLine("0.Return to main menu");
 
         }
