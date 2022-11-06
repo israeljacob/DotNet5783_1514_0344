@@ -49,12 +49,32 @@ public class mainProgram
                             Console.Write("{0} Was Added Successfully \n", Dalproduct.Add(product));
                             break;
                         case ProductOptions.Read:
+                            int idinput = Menu.IDInput();
+                            Console.Write(Dalproduct.Read(idinput).ToString());
                             break;
                         case ProductOptions.ReadAllList:
+                            int size=Dalproduct.ReadAll().Length;
+                            Product[] products1 = new Product[size];
+                            products1=Dalproduct.ReadAll(); 
+                            foreach (var productitem in products1)
+                            {
+                                Console.Write(productitem.ToString());
+                            }
+                            //Console.Write(Dalproduct.ReadAll().ToString());
                             break;
                         case ProductOptions.Update:
+                            product.UniqID = Menu.IDInput();
+                            product.Name = Menu.NameInput();
+                            product.Price = Menu.PriceInput();
+                            product.Category = Menu.CategoryInput();
+                            product.InStock = Menu.InstockInput();
+                            Dalproduct.Update(product);
+                            Console.Write("{0} Was Update Successfully \n", product.UniqID);
                             break;
                         case ProductOptions.Delete:
+                            int del = Menu.IDInput();
+                            Dalproduct.Delete(del);
+                            Console.Write("{0} Was Delete Successfully \n",del);
                             break;
                         default:
                             break;

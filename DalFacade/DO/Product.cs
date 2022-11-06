@@ -16,7 +16,9 @@ UniqID: {UniqID}
 {Name}
 category - {Category}
 Price: {Price}
-Amount in stock: {InStock}";
+Amount in stock: {InStock} 
+
+";
 
 
 }

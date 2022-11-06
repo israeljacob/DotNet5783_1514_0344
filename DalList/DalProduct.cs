@@ -25,7 +25,7 @@ public class DalProduct
     public Product Read(int ID)
     {
         int i = 0;
-        while (DataSource.products[i].UniqID >=2000000 && ID != DataSource.products[i].UniqID)
+        while (DataSource.products[i].UniqID >=2000000 && ID != DataSource.products[i].UniqID && DataSource.products[i].UniqID!=0)
         {
             i++;
         }
@@ -47,15 +47,18 @@ public class DalProduct
         Product[] products;
         int i = -1;
 
-        while (DataSource.products[i + 1].UniqID >= 2000000)
+        while (DataSource.products[i + 1].UniqID >= 2000000 && DataSource.products[i + 1].UniqID != 0 )
         {
             i++;
         }
         if (i >= 0)
         {
             products = new Product[i + 1];
-            for (int j = 0; j < i; j++)
-                products[j] = DataSource.products[j];
+            for (int j = 0; j <= i; j++)
+            {
+                if(DataSource.products[j].UniqID != 0)
+                 products[j] = DataSource.products[j];
+            }
         }
         else throw new Exception("There are no any products in the system");
         return products;
@@ -95,13 +98,13 @@ public class DalProduct
         {
             i++;
         }
-        if (DataSource.products[i].UniqID == ID)
+        if (DataSource.products[i+1].UniqID == ID && i< DataSource.AvailableProduct-1)
         {
-            for (j = i; DataSource.products[j].UniqID >= 2000000; j++)
+            for (j = i+1; DataSource.products[j].UniqID >= 2000000 && j<DataSource.products.Length; j++)
             {
                 DataSource.products[j] = DataSource.products[j + 1];
             }
-            DataSource.products[j].UniqID = 0;
+           // DataSource.products[j+1].UniqID = 0;
             DataSource.AvailableProduct--;
         }
         else
