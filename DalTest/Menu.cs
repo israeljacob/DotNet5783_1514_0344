@@ -1,8 +1,14 @@
-﻿using System;
+﻿using DO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
+
+
+
 
 public enum MainOptions
 {
@@ -102,6 +108,56 @@ namespace Dal
         {
             int option;
             do Console.Write("Choose an option: \n");
+            while (!int.TryParse(Console.ReadLine(), out option));
+            Console.WriteLine("\n");
+            return option;
+        }
+
+        public static int IDInput()
+        {
+            int option;
+            do
+            { Console.Write("Enter ID: \n"); }
+            while (!int.TryParse(Console.ReadLine(), out option) );
+            Console.WriteLine("\n");
+
+            return option;
+        }
+        public static string NameInput()
+        {
+            string option=null;
+            do 
+            {
+                Console.Write("Enter Name: \n");
+                option = Console.ReadLine();
+
+            }
+            while(!Regex.IsMatch(option, @"^[a-zA-Z]+$"));
+
+           // while (!int.TryParse(Console.ReadLine(), out option));
+            Console.WriteLine("\n");
+            return option;
+        }
+        public static int PriceInput()
+        {
+            int option;
+            do Console.Write("Enter Price: \n");
+            while (!int.TryParse(Console.ReadLine(), out option));
+            Console.WriteLine("\n");
+            return option;
+        }
+        public static Category CategoryInput()
+        {
+            int option;
+            do Console.Write("Enter Category: 1 - Shirts, 2 - trousers, 3 - shoes, 4 - coats,5 - sweaters  \n");
+            while (!int.TryParse(Console.ReadLine(), out option) && (option >0 || option <5));
+            Console.WriteLine("\n");
+            return (Category)option;
+        }
+        public static int InstockInput()
+        {
+            int option;
+            do Console.Write("Enter How much in stock: \n");
             while (!int.TryParse(Console.ReadLine(), out option));
             Console.WriteLine("\n");
             return option;

@@ -103,7 +103,7 @@ public class DalOrder
                 DataSource.orders[j] = DataSource.orders[j + 1];
             }
             DataSource.orders[j].UniqID = 0;
-            DataSource.Config.availableOrder--;
+            DataSource.AvailableOrder--;
         }
         else
             throw new Exception("ID dos not exsist");

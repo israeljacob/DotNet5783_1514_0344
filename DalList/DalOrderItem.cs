@@ -99,7 +99,7 @@ public class DalOrderItem
             DataSource.orderItems[j].UniqID = 0;
             DataSource.orderItems[j].ProductID = 0;
             DataSource.orderItems[j].OrderID = 0;
-            DataSource.Config.availableOrderItem--;
+            DataSource.AvailableOrderItem--;
         }
         else
             throw new Exception("ID dos not exsist");

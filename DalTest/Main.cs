@@ -8,21 +8,22 @@ namespace DalTest;
 
 public class mainProgram
 {
+    static void Main(string[] args)
+    {
 
     DalProduct Dalproduct=new DalProduct();    
     DalOrder Dalorder=new DalOrder();
     DalOrderItem Dalitem=new DalOrderItem();
 
 
-    Product product = new();
+   // public Product product =new();
+           Product product = new Product();
     DalOrder order = new DalOrder();
     DalOrderItem item = new DalOrderItem();
-    static void Main(string[] args)
-    {
         MainOptions menuChoice;
         int idInput=0;
         string name = null ;
-        double price;
+        int price;
         Category category;
         int inStock;
 
@@ -31,8 +32,6 @@ public class mainProgram
         {
             Menu.MainMenu();
             menuChoice = (MainOptions)Menu.UserInput();
-
-
             switch (menuChoice)
             {
                 case MainOptions.ProductCheck:
@@ -41,12 +40,13 @@ public class mainProgram
                     switch (AddingMenuChoice)
                     {
                         case ProductOptions.Add:
-                            idInput = Menu.UserInput();
-                            name=Console.ReadLine();
-                            price= Menu.UserInput();
-                            category = (Category)Menu.UserInput();
-                            inStock = Menu.UserInput();
-                           // product(idInput, name, price, category, inStock);
+                            product.UniqID  = Menu.IDInput();
+                             product.Name =Menu.NameInput();
+                             product.Price = Menu.PriceInput();
+                             product.Category = Menu.CategoryInput();
+                             product.InStock = Menu.InstockInput();
+                            // Dalproduct.Add(product);
+                            Console.Write("{0} Was Added Successfully \n", Dalproduct.Add(product));
                             break;
                         case ProductOptions.Read:
                             break;
@@ -126,7 +126,7 @@ public class mainProgram
     }
 
 
-
+   
 }
 
 

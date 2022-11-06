@@ -4,12 +4,18 @@ namespace Dal;
 
 public class DalProduct
 {
+  //  public Product product=new();
+    
+    
     public int Add(Product newProduct)
     {
-        int locationInArray = DataSource.Config.ProductID;
+        
+        int locationInArray = DataSource.AvailableProduct;
         DataSource.products[locationInArray] = newProduct;
+        DataSource.AvailableProduct++;
         return newProduct.UniqID;
     }
+    
     /// <summary>
     /// 
     /// </summary>
@@ -96,7 +102,7 @@ public class DalProduct
                 DataSource.products[j] = DataSource.products[j + 1];
             }
             DataSource.products[j].UniqID = 0;
-            DataSource.Config.availableProduct--;
+            DataSource.AvailableProduct--;
         }
         else
             throw new Exception("ID dos not exsist");

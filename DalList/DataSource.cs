@@ -9,6 +9,29 @@ internal static class DataSource
     internal static OrderItem[] orderItems = new OrderItem[200];
     internal static Product[] products = new Product[50];
 
+    private static int availableProduct=0;
+    internal static int AvailableProduct
+    {
+        set { availableProduct =value; }
+        get { return availableProduct; }
+    }
+
+    private static int availableOrder = 0;
+    internal static int AvailableOrder
+    {
+        set { availableOrder = value; }
+        get { return availableOrder; }
+
+    }
+    private static int availableOrderItem = 0;
+    internal static int AvailableOrderItem
+    {
+        set { availableOrderItem = value; }
+        get { return availableOrderItem; }
+    }
+
+
+
     static DataSource()
     {
         ProductInitialize();
@@ -20,34 +43,26 @@ internal static class DataSource
     {
         
         
-        internal static int availableOrder=0;
-        internal static int AvailableOrder
-        {
-            get { return availableOrder++; }
-
-        }
-        internal static int availableOrderItem = 0;
-        internal static int AvailableOrderItem
-        {
-            get { return availableOrderItem++; }
-        }
-        internal static int availableProduct=0;
-        internal static int AvailableProduct
-        {
-            get { return availableProduct++; }
-        }
+        
+      //  public static int availableProduct;
+        //internal static int AvailableProduct
+        //{
+        //    set { availableProduct=value; }
+        //    get { return availableProduct; }
+        //}
         static Random r = new Random();
         internal static int orderID = r.Next(1000000, 1500000);
         
         internal static int OrderID
         {
-            get {return orderID++; }
+            get {   return orderID++;  }
         }
 
 
         internal static int productID = r.Next(2000000, 2500000);
         internal static int ProductID
         {
+
             get {return productID++; }
         }
         internal static int orderItemID= r.Next(3000000, 3500000);
@@ -93,10 +108,10 @@ internal static class DataSource
         for (int i = 0; i < 10; i++)
         {
 
-
+            availableProduct++;
 
             products[i].UniqID = Config.ProductID;
-
+            
             products[i].Name = Productsnames[i];
 
 
