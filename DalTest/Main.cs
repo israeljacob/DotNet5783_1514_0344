@@ -21,7 +21,7 @@ public class mainProgram
     {
         MainOptions menuChoice;
         int idInput=0;
-        string name = null ;
+        string ?name = null ;
         double price;
         Category category;
         int inStock;
@@ -36,7 +36,7 @@ public class mainProgram
             switch (menuChoice)
             {
                 case MainOptions.ProductCheck:
-                    Menu.ProdectCheckMenu();
+                    Menu.ProductCheckMenu();
                     ProductOptions AddingMenuChoice = (ProductOptions)Menu.UserInput();
                     switch (AddingMenuChoice)
                     {
