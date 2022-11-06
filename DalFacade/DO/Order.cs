@@ -7,6 +7,7 @@ public struct Order
     
 
 
+
     public int UniqID { get; set; }
     public string CustomerName { get; set; }
     public string CustomerEmail { get; set; }
@@ -15,12 +16,6 @@ public struct Order
     public DateTime ShipDate { get; set; }
     public DateTime DeliveryrDate  { get; set; }
     
-    //static Order ()
-    //{
-    //    s_Initialize();
-    //}
-
-   
 
     public override string ToString() => $@" 
         UniqID: {UniqID}
@@ -29,7 +24,9 @@ public struct Order
         Customer Adress: {CustomerAdress} 
         Order Date: {OrderDate}  
         Ship Date: {ShipDate} 
-        Deliveryr Date: {DeliveryrDate} ";
+        Deliveryr Date: {DeliveryrDate}
+
+";
 
 
     

@@ -201,18 +201,13 @@ internal static class DataSource
 
         for (int i = 0; i < 20; i++)
         {
-            //לשנות ל I
-            var r = new Random();
-
-
-
+            AvailableOrder++;
             orders[i].UniqID = Config.OrderItemID;
             orders[i].CustomerName = names[i];
             orders[i].CustomerEmail = emails[i];
             orders[i].CustomerAdress = adresses[i];
 
             orders[i].OrderDate = DateTime.Now;
-
             orders[i].ShipDate = DateTime.Now;
             orders[i].DeliveryrDate = DateTime.Now;
            
@@ -225,10 +220,11 @@ internal static class DataSource
          
         for (int i = 0; i < 40; i++)
         {
-            int rand = r.Next(0, 9);
+            AvailableOrderItem++;
+            int rand = r.Next(1, 9);
             orderItems[i].UniqID=Config.OrderItemID;
-            orderItems[i].ProductID = orders[r.Next(0,19)].UniqID;
-            orderItems[i].ProductID = products[rand].UniqID;
+            orderItems[i].ProductID = orders[r.Next(1,19)].UniqID;
+            orderItems[i].OrderID = products[rand].UniqID;
             orderItems[i].Amount= r.Next(1,10);
             orderItems[i].Price = products[rand].Price * orderItems[i].Amount;
             

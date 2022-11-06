@@ -11,10 +11,13 @@ public struct OrderItem
     
 
     public override string ToString() => $@" 
-Product ID={ProductID}, 
-Order ID=  {OrderID}, 
+Uniq ID: {UniqID}
+Product ID: {ProductID}
+Order ID: {OrderID} 
 Amount: {Amount} 
-Price: {Price} ";
+Price: {Price} 
+
+";
 
 
 
