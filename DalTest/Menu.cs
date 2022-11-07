@@ -40,6 +40,8 @@ public enum OrderItemOptions
 {
     Add = 1,
     Read,
+    ReadByOrder,
+    ReadByProduct,
     ReadAllList,
     Update,
     Delete
@@ -95,55 +97,21 @@ namespace Dal
             Console.WriteLine("0.Return to main menu");
 
         }
-        public static void DisplayListMenu()
+        public static string StringInput(string output)
         {
-            Console.WriteLine("1.Display ");
-
-
-        }
-
-        public static int UserInput()
-        {
-            int option;
-            do Console.Write("Choose an option: \n");
-            while (!int.TryParse(Console.ReadLine(), out option));
-            Console.WriteLine("\n");
-            return option;
-        }
-
-        public static int IDInput()
-        {
-            int option;
-            do
-            { Console.Write("Enter ID: \n"); }
-            while (!int.TryParse(Console.ReadLine(), out option));
-            Console.WriteLine("\n");
-
-            return option;
-        }
-        public static string NameInput()
-        {
-            string option = null;
-            do
-            {
-                Console.Write("Enter Name: \n");
+            string? option;
+            
+                Console.WriteLine(output);
                 option = Console.ReadLine();
-
+            while (!Regex.IsMatch(option, @"^[a-zA-Z]+$"))
+            {
+                Console.WriteLine("you must enter letters onlt. Try again!");
+                option = Console.ReadLine();
             }
-            while (!Regex.IsMatch(option, @"^[a-zA-Z]+$"));
-
-            // while (!int.TryParse(Console.ReadLine(), out option));
             Console.WriteLine("\n");
             return option;
         }
-        public static int PriceInput()
-        {
-            int option;
-            do Console.Write("Enter Price: \n");
-            while (!int.TryParse(Console.ReadLine(), out option));
-            Console.WriteLine("\n");
-            return option;
-        }
+       
         public static Category CategoryInput()
         {
             int option;
@@ -152,82 +120,37 @@ namespace Dal
             Console.WriteLine("\n");
             return (Category)option;
         }
-        public static int InstockInput()
+        public static int IntInput(string messege)
         {
             int option;
-            do Console.Write("Enter How much in stock: \n");
-            while (!int.TryParse(Console.ReadLine(), out option));
-            Console.WriteLine("\n");
+            Console.WriteLine(messege);
+            while (!int.TryParse(Console.ReadLine(), out option))
+                Console.WriteLine("you must entar numbers ony. try again!");
             return option;
         }
-        public static string AdrressInput()
-        {
-
-            Console.Write("Enter Address: \n");
-            string option = Console.ReadLine();
-
-
-            Console.WriteLine("\n");
-            return option;
-        }
+        
         public static string emailInput()
         {
-            string option = null;
+            string ?option;
 
-            Console.Write("Enter Email: \n");
+            Console.WriteLine("Enter the email:");
             option = Console.ReadLine();
-            Console.WriteLine("\n");
+            while (!option.Contains("@")|| !option.Contains("."))
+            {
+                Console.WriteLine("You must enter a correct email address. Try again!");
+                option = Console.ReadLine();
+            }
+
             return option;
         }
 
         public static DateTime dateinput()
         {
-            int minute, hour, day, month, year;
-            do Console.Write(" Enter Day: ");
-            while (!int.TryParse(Console.ReadLine(), out day));
-            do Console.Write(" Enter Month: ");
-            while (!int.TryParse(Console.ReadLine(), out month));
-            do Console.Write(" Enter year: ");
-            while (!int.TryParse(Console.ReadLine(), out year));
-            do Console.Write(" Enter Hour: ");
-            while (!int.TryParse(Console.ReadLine(), out hour));
-            do Console.Write(" Enter Minute: ");
-            while (!int.TryParse(Console.ReadLine(), out minute));
-
-            DateTime dateTime = new DateTime(year, month, day, hour, minute, 00);
-
+            DateTime date = new DateTime();
+            while (!DateTime.TryParse(Console.ReadLine(), out date) )
+                Console.WriteLine("try again");
             Console.WriteLine("\n");
-            return dateTime;
-        }
-
-        public static int IDProductInput()
-        {
-            int option;
-            do
-            { Console.Write("Enter ID Product: \n"); }
-            while (!int.TryParse(Console.ReadLine(), out option));
-            Console.WriteLine("\n");
-
-            return option;
-        }
-        public static int IDOrderInput()
-        {
-            int option;
-            do
-            { Console.Write("Enter ID Order: \n"); }
-            while (!int.TryParse(Console.ReadLine(), out option));
-            Console.WriteLine("\n");
-
-            return option;
-        }
-
-        public static int AmountInput()
-        {
-            int option;
-            do Console.Write("Enter Amount: \n");
-            while (!int.TryParse(Console.ReadLine(), out option));
-            Console.WriteLine("\n");
-            return option;
+            return date;
         }
     }
 }

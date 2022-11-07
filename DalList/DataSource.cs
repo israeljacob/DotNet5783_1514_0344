@@ -38,28 +38,19 @@ internal static class DataSource
         OrderInitialize();
         OrderItemInitialize();
     }
-    
+
     internal static class Config
     {
-        
-        
-        
-      //  public static int availableProduct;
-        //internal static int AvailableProduct
-        //{
-        //    set { availableProduct=value; }
-        //    get { return availableProduct; }
-        //}
         static Random r = new Random();
         internal static int orderID = r.Next(1000000, 1500000);
-        
+
         internal static int OrderID
-        {
-            get {   return orderID++;  }
+        { 
+            get { return orderID++; }
         }
 
 
-        internal static int productID = r.Next(2000000, 2500000);
+        internal static int productID = r.Next(2000000, 2500000) ;
         internal static int ProductID
         {
 
@@ -108,7 +99,7 @@ internal static class DataSource
         for (int i = 0; i < 10; i++)
         {
 
-            availableProduct++;
+            AvailableProduct++;
 
             products[i].UniqID = Config.ProductID;
             
@@ -202,7 +193,7 @@ internal static class DataSource
         for (int i = 0; i < 20; i++)
         {
             AvailableOrder++;
-            orders[i].UniqID = Config.OrderItemID;
+            orders[i].UniqID = Config.OrderID;
             orders[i].CustomerName = names[i];
             orders[i].CustomerEmail = emails[i];
             orders[i].CustomerAdress = adresses[i];
