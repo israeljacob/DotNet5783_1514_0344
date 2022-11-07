@@ -7,7 +7,7 @@ public class DalOrder
 {
     
     /// <summary>
-    /// 
+    /// Add new order to array
     /// </summary>
     /// <param name="newOrder"></param>
     /// <returns></returns>
@@ -20,7 +20,7 @@ public class DalOrder
         return newOrder.UniqID;
     }
     /// <summary>
-    /// 
+    /// by given id we can find the order, and then return the order
     /// </summary>
     /// <param name="ID"></param>
     /// <returns></returns>

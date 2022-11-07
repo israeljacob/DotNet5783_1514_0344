@@ -4,39 +4,43 @@ using DO;
 namespace DalTest;
 
 
-
-
 public class mainProgram
 {
     static void Main(string[] args)
     {
-        //dal
+        //dal obj initial
         DalProduct Dalproduct = new DalProduct();
         DalOrder Dalorder = new DalOrder();
         DalOrderItem Dalorderitem = new DalOrderItem();
 
-        //DO
+        //DO obj initial
         Product product = new Product();
         Order order = new Order();
         OrderItem orderItem = new OrderItem();
 
+        
         MainOptions menuChoice;
         int idInput = 0;
         string name = null, email, address;
-        int price;
+        int price, inStock;
         Category category;
-        int inStock;
+         
 
-
+        ///while the user will not insert 0 we do 
         do
         {
+            ///Display the options for the main menu
             Menu.MainMenu();
+            ///Ask from the user number 0-3
             menuChoice = (MainOptions)Menu.UserInput();
+
             switch (menuChoice)
             {
+                ///Option-1
                 case MainOptions.ProductCheck:
                     Menu.ProductCheckMenu();
                     ProductOptions AddingMenuChoice = (ProductOptions)Menu.UserInput();
+                    ///All the sub-option for Option-1
                     switch (AddingMenuChoice)
                     {
                         case ProductOptions.Add:
@@ -62,7 +66,7 @@ public class mainProgram
                             break;
                         case ProductOptions.Update:
                             product.UniqID = Menu.IDInput();
-                            Console.Write(Dalproduct.Read(product.UniqID).ToString());
+                            Console.Write(Dalproduct.Read(product.UniqID));
                             product.Name = Menu.NameInput();
                             product.Price = Menu.PriceInput();
                             product.Category = Menu.CategoryInput();
@@ -79,10 +83,11 @@ public class mainProgram
                             break;
                     }
                     break;
-
+                    ///Option 2
                 case MainOptions.OrderCheck:
                     Menu.OrderCheckMenu();
                     OrderOptions UpdateMenuChoice = (OrderOptions)Menu.UserInput();
+                    ///All the sub-option for Option-2
                     switch (UpdateMenuChoice)
                     {
                         case OrderOptions.Add:
@@ -136,7 +141,7 @@ public class mainProgram
                     }
 
                     break;
-
+                    ///Option 3
                 case MainOptions.OrderItemCheck:
                     Menu.OrderItemCheckMenu();
                     OrderItemOptions OrderItemMenuChoice = (OrderItemOptions)Menu.UserInput();

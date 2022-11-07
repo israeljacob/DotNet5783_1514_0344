@@ -15,7 +15,7 @@ public enum MainOptions
     ProductCheck = 1,
     OrderCheck,
     OrderItemCheck,
-   
+
 }
 public enum ProductOptions
 {
@@ -98,8 +98,6 @@ namespace Dal
         public static void DisplayListMenu()
         {
             Console.WriteLine("1.Display ");
-
-
         }
 
         public static int UserInput()

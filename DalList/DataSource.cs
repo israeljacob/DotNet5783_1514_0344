@@ -41,15 +41,7 @@ internal static class DataSource
     
     internal static class Config
     {
-        
-        
-        
-      //  public static int availableProduct;
-        //internal static int AvailableProduct
-        //{
-        //    set { availableProduct=value; }
-        //    get { return availableProduct; }
-        //}
+      
         static Random r = new Random();
         internal static int orderID = r.Next(1000000, 1500000);
         
