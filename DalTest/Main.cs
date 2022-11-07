@@ -12,9 +12,9 @@ public class mainProgram
     {
         
         //dal
-        DalProduct Dalproduct = new DalProduct();
-        DalOrder Dalorder = new DalOrder();
-        DalOrderItem Dalorderitem = new DalOrderItem();
+        DalProduct dalProduct = new DalProduct();
+        DalOrder dalOrder = new DalOrder();
+        DalOrderItem dalOrderItem = new DalOrderItem();
 
         //DO
         Product product = new Product();
@@ -23,9 +23,7 @@ public class mainProgram
         OrderItem orderItem = new OrderItem();
 
         MainOptions menuChoice;
-       
-
-
+     //   dalProduct.Read(15);
         do
         {
             Menu.MainMenu();
@@ -129,14 +127,14 @@ public class mainProgram
             product.Price = Menu.IntInput("Enter the price:");
             product.Category = Menu.CategoryInput();
             product.InStock = Menu.IntInput("Enter How much is in stock:");
-            Console.Write("{0} Was Added Successfully \n", Dalproduct.Add(product));
+            Console.Write("{0} Was Added Successfully \n", dalProduct.Add(product));
         }
         void ReadProduct()
         {
             int idinput = Menu.IntInput("Enter the ID number:");
             try
             {
-                Console.Write(Dalproduct.Read(idinput));
+                Console.Write(dalProduct.Read(idinput));
             }
             catch(Exception e)
             {
@@ -147,7 +145,7 @@ public class mainProgram
         {
             try
             {
-                Product[] products1 = Dalproduct.ReadAll();
+                Product[] products1 = dalProduct.ReadAll();
                 foreach (var productitem in products1)
                 {
                     Console.Write(productitem);
@@ -161,12 +159,12 @@ public class mainProgram
         void UpdateProduct()
         {
             product.UniqID = Menu.IntInput("Entter the ID:");
-            Console.Write(Dalproduct.Read(product.UniqID));
+            Console.Write(dalProduct.Read(product.UniqID));
             product.Name = Menu.StringInput("Enter the name:");
             product.Price = Menu.IntInput("Enter the price:");
             product.Category = Menu.CategoryInput();
             product.InStock = Menu.IntInput("Enter How much is in stock:");
-            Dalproduct.Update(product);
+            dalProduct.Update(product);
             try
             {
                 Console.Write("{0} Was Update Successfully \n", product.UniqID);
@@ -181,7 +179,7 @@ public class mainProgram
             try
             {
                 int del = Menu.IntInput("Entter the ID:");
-                Dalproduct.Delete(del);
+                dalProduct.Delete(del);
                 Console.Write("{0} Was Delete Successfully \n", del);
             }
             catch (Exception e)
@@ -201,14 +199,14 @@ public class mainProgram
             order.ShipDate = Menu.dateinput();
             Console.WriteLine("Enter Delivery Date:");
             order.DeliveryrDate = Menu.dateinput();
-            Console.Write("Order {0} Was Added Successfully \n", Dalorder.Add(order));
+            Console.Write("Order {0} Was Added Successfully \n", dalOrder.Add(order));
         }
         void ReadOrder()
         {
             try
             {
                 int idinput = Menu.IntInput("Entter the ID:");
-                Console.Write(Dalorder.Read(idinput));
+                Console.Write(dalOrder.Read(idinput));
             }
             catch (Exception e)
             {
@@ -219,10 +217,10 @@ public class mainProgram
         {
             try
             {
-                Order[] order1 = Dalorder.ReadAll();
+                Order[] order1 = dalOrder.ReadAll();
                 foreach (var orderitem in order1)
                 {
-                    Console.Write(orderitem);
+                    Console.WriteLine(orderitem);
                 }
             }
             catch (Exception e)
@@ -235,7 +233,7 @@ public class mainProgram
             try
             {
                 order.UniqID = Menu.IntInput("Entter the ID:");
-                Console.Write(Dalorder.Read(order.UniqID));
+                Console.Write(dalOrder.Read(order.UniqID));
                 order.CustomerName = Menu.StringInput("Enter the name:");
                 order.CustomerAdress = Menu.StringInput("Enter the address:");
                 order.CustomerEmail = Menu.emailInput();
@@ -245,7 +243,7 @@ public class mainProgram
                 order.ShipDate = Menu.dateinput();
                 Console.WriteLine("Enter Delivery Date:");
                 order.DeliveryrDate = Menu.dateinput();
-                Dalproduct.Update(product);
+                dalProduct.Update(product);
                 Console.Write("\n{0} Was Update Successfully \n", product.UniqID);
             }
             catch (Exception e)
@@ -258,7 +256,7 @@ public class mainProgram
             try
             {
                 int del = Menu.IntInput("Entter the ID:");
-                Dalorder.Delete(del);
+                dalOrder.Delete(del);
                 Console.Write("{0} Was Delete Successfully \n", del);
             }
             catch (Exception e)
@@ -275,7 +273,7 @@ public class mainProgram
                 orderItem.OrderID = Menu.IntInput("Enter the order ID:");
                 orderItem.Price = Menu.IntInput("Enter the price:");
                 orderItem.Amount = Menu.IntInput("Enter the Amount:");
-                Console.Write("{0} Was Added Successfully \n", Dalorderitem.Add(orderItem));
+                Console.Write("{0} Was Added Successfully \n", dalOrderItem.Add(orderItem));
             }
             catch (Exception e)
             {
@@ -287,7 +285,7 @@ public class mainProgram
             try
             {
                 int idinput = Menu.IntInput("Entter the ID:");
-                Console.Write(Dalorderitem.Read(idinput));
+                Console.Write(dalOrderItem.Read(idinput));
             }
             catch (Exception e)
             {
@@ -299,7 +297,7 @@ public class mainProgram
             try
             {
                 int idinput = Menu.IntInput("Entter the ID:");
-                OrderItem[] orderitem1 = Dalorderitem.ReadByProduct(idinput);
+                OrderItem[] orderitem1 = dalOrderItem.ReadByProduct(idinput);
                 foreach (var orderitem in orderitem1)
                 {
                     Console.Write(orderitem);
@@ -315,7 +313,7 @@ public class mainProgram
             try
             {
                 int idinput = Menu.IntInput("Entter the ID:");
-                OrderItem[] orderitem1 = Dalorderitem.ReadByOrder(idinput);
+                OrderItem[] orderitem1 = dalOrderItem.ReadByOrder(idinput);
                 foreach (var orderitem in orderitem1)
                 {
                     Console.Write(orderitem);
@@ -330,7 +328,7 @@ public class mainProgram
         {
             try
             {
-                OrderItem[] orderitem1 = Dalorderitem.ReadAll();
+                OrderItem[] orderitem1 = dalOrderItem.ReadAll();
                 foreach (var orderitem in orderitem1)
                 {
                     Console.Write(orderitem);
@@ -344,7 +342,7 @@ public class mainProgram
         void UpdateOrderItem()
         {
             orderItem.UniqID = Menu.IntInput("Entter the ID:");
-            Console.Write(Dalorderitem.Read(orderItem.UniqID));
+            Console.Write(dalOrderItem.Read(orderItem.UniqID));
             orderItem.ProductID = Menu.IntInput("Enter the product ID:");
             orderItem.OrderID = Menu.IntInput("Enter the order ID:");
             try
@@ -362,16 +360,9 @@ public class mainProgram
         void DeleteOrderItem()
         {
             int del = Menu.IntInput("Entter the ID:");
-            Dalorderitem.Delete(del);
+            dalOrderItem.Delete(del);
             Console.Write("{0} Was Delete Successfully \n", del);
 
         }
-    
-        
     }
-
-    
 }
-
-
-

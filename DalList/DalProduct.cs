@@ -1,20 +1,33 @@
 ﻿using DO;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Dal;
 
 public class DalProduct
 {
-  //  public Product product=new();
+    public Product product=new();
     
-    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="newProduct"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public int Add(Product newProduct)
     {
-        
+        int i = 0;
+        Product product = DataSource.products[i];
+        while (product.UniqID >= 2000000 && newProduct.Name!= DataSource.products[i].Name)
+        {
+            i++;
+            product = DataSource.products[i];
+        }
+        if (DataSource.products[i].Name == newProduct.Name)
+            throw new Exception("Product allready exists!");
         int locationInArray = DataSource.AvailableProduct;
         newProduct.UniqID = DataSource.Config.ProductID;
         DataSource.products[locationInArray] = newProduct;
-        DataSource.AvailableProduct++;
         return newProduct.UniqID;
     }
     
@@ -46,6 +59,7 @@ public class DalProduct
     /// <exception cref="Exception"></exception>
     public Product[] ReadAll()
     {
+
         Product[] products;
         int i = -1;
 
@@ -106,7 +120,6 @@ public class DalProduct
             {
                 DataSource.products[j] = DataSource.products[j + 1];
             }
-            DataSource.AvailableProduct--;
         }
         else
             throw new Exception("ID dos not exsist");

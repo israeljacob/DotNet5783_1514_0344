@@ -17,7 +17,6 @@ public class DalOrder
         int locationInArray = DataSource.AvailableOrder;
         newOrder.UniqID = DataSource.Config.OrderID;
         DataSource.orders[locationInArray] = newOrder;
-        DataSource.AvailableOrder++;
         return newOrder.UniqID;
     }
     /// <summary>
@@ -113,7 +112,6 @@ public class DalOrder
             {
                 DataSource.orders[j] = DataSource.orders[j + 1];
             }
-            DataSource.AvailableOrder--;
         }
         else
             throw new Exception("ID dos not exsist");

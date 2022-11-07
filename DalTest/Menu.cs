@@ -89,11 +89,13 @@ namespace Dal
         }
         public static void OrderItemCheckMenu()
         {
-            Console.WriteLine("1.Add Order Item");
-            Console.WriteLine("2.See Order Item By ID");
-            Console.WriteLine("3.See List of Orders Item");
-            Console.WriteLine("4.Update Order Item");
-            Console.WriteLine("5.Delete Order Item");
+            Console.WriteLine("1.Add order item");
+            Console.WriteLine("2.See order Item by ID");
+            Console.WriteLine("3.See list of order items by order ID");
+            Console.WriteLine("4.See list of order item by product ID");
+            Console.WriteLine("5.See list of order items");
+            Console.WriteLine("6.Update order item");
+            Console.WriteLine("7.Delete order item");
             Console.WriteLine("0.Return to main menu");
 
         }
@@ -131,7 +133,7 @@ namespace Dal
         
         public static string emailInput()
         {
-            string ?option;
+            string option;
 
             Console.WriteLine("Enter the email:");
             option = Console.ReadLine();
