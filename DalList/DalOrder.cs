@@ -15,8 +15,8 @@ public class DalOrder
     {
 
         int locationInArray = DataSource.AvailableOrder;
+        newOrder.UniqID = DataSource.Config.OrderID;
         DataSource.orders[locationInArray] = newOrder;
-        DataSource.AvailableOrder++;
         return newOrder.UniqID;
     }
     /// <summary>
@@ -29,7 +29,7 @@ public class DalOrder
     public Order Read(int ID)
     {
         int i = 0;
-        while (DataSource.orders[i].UniqID >= 1000000 && ID != DataSource.orders[i].UniqID && DataSource.orders[i].UniqID != 0)
+        while (DataSource.orders[i].UniqID >= 1000000 && ID != DataSource.orders[i].UniqID)
         {
             i++;
         }
@@ -51,7 +51,7 @@ public class DalOrder
         Order[] orders;
         int i = -1;
 
-        while (DataSource.orders[i + 1].UniqID >= 1000000 && DataSource.orders[i + 1].UniqID != 0)
+        while (DataSource.orders[i + 1].UniqID >= 1000000)
         {
             i++;
         }
@@ -106,13 +106,12 @@ public class DalOrder
         {
             i++;
         }
-        if (DataSource.orders[i + 1].UniqID == ID && i < DataSource.AvailableOrder - 1)
+        if (DataSource.orders[i + 1].UniqID == ID )
         {
             for (j = i + 1; DataSource.orders[j].UniqID >= 1000000 && j < DataSource.orders.Length; j++)
             {
                 DataSource.orders[j] = DataSource.orders[j + 1];
             }
-            DataSource.AvailableOrder--;
         }
         else
             throw new Exception("ID dos not exsist");

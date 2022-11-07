@@ -12,46 +12,43 @@ internal static class DataSource
     private static int availableProduct=0;
     internal static int AvailableProduct
     {
-        set { availableProduct =value; }
-        get { return availableProduct; }
+        get { return availableProduct++; }
     }
 
     private static int availableOrder = 0;
     internal static int AvailableOrder
     {
-        set { availableOrder = value; }
-        get { return availableOrder; }
-
+        get { return availableOrder++; }
     }
     private static int availableOrderItem = 0;
     internal static int AvailableOrderItem
     {
-        set { availableOrderItem = value; }
-        get { return availableOrderItem; }
+        get { return availableOrderItem++; }
     }
 
 
-
+    /// <summary>
+    /// static constructor
+    /// </summary>
     static DataSource()
     {
         ProductInitialize();
         OrderInitialize();
         OrderItemInitialize();
     }
-    
+
     internal static class Config
     {
-      
         static Random r = new Random();
         internal static int orderID = r.Next(1000000, 1500000);
-        
+
         internal static int OrderID
-        {
-            get {   return orderID++;  }
+        { 
+            get { return orderID++; }
         }
 
 
-        internal static int productID = r.Next(2000000, 2500000);
+        internal static int productID = r.Next(2000000, 2500000) ;
         internal static int ProductID
         {
 
@@ -99,8 +96,6 @@ internal static class DataSource
 
         for (int i = 0; i < 10; i++)
         {
-
-            availableProduct++;
 
             products[i].UniqID = Config.ProductID;
             
@@ -154,11 +149,6 @@ internal static class DataSource
         }
     }
 
-
-
-
-
-
     private static void  OrderInitialize()
     {
         var names = new string[]
@@ -191,18 +181,29 @@ internal static class DataSource
             "604 The Green","SW95 2RO","25 The Drive","SE90 5GV","63 Park Avenue","London","W49 8YL",
             "59 North Street","SE59 4KN","9669 Chester Road","WC71 5GK"        };
 
+
+        Random random = new Random();
+        TimeSpan ts;
         for (int i = 0; i < 20; i++)
         {
-            AvailableOrder++;
-            orders[i].UniqID = Config.OrderItemID;
+            orders[i].UniqID = Config.OrderID;
             orders[i].CustomerName = names[i];
             orders[i].CustomerEmail = emails[i];
             orders[i].CustomerAdress = adresses[i];
+            orders[i].OrderDate = DateTime.Now.AddDays(random.Next(-1000,-1));
+            do
+            {
+                orders[i].ShipDate = DateTime.Now.AddDays(random.Next(-1000, -1));
+                ts = orders[i].ShipDate - orders[i].OrderDate;
+            }
+            while (ts.TotalDays < 0);
+            do
+            {
+                orders[i].DeliveryrDate = DateTime.Now.AddDays(random.Next(-1000, -1));
+                ts = orders[i].DeliveryrDate - orders[i].ShipDate;
+            }
+            while (ts.TotalDays < 0);
 
-            orders[i].OrderDate = DateTime.Now;
-            orders[i].ShipDate = DateTime.Now;
-            orders[i].DeliveryrDate = DateTime.Now;
-           
         }
     }
 
@@ -212,7 +213,6 @@ internal static class DataSource
          
         for (int i = 0; i < 40; i++)
         {
-            AvailableOrderItem++;
             int rand = r.Next(1, 9);
             orderItems[i].UniqID=Config.OrderItemID;
             orderItems[i].ProductID = orders[r.Next(1,19)].UniqID;

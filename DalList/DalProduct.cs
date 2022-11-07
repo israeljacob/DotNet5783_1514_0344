@@ -1,18 +1,33 @@
 ﻿using DO;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace Dal;
 
 public class DalProduct
 {
-  //  public Product product=new();
+    public Product product=new();
     
-    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="newProduct"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public int Add(Product newProduct)
     {
-        
+        int i = 0;
+        Product product = DataSource.products[i];
+        while (product.UniqID >= 2000000 && newProduct.Name!= DataSource.products[i].Name)
+        {
+            i++;
+            product = DataSource.products[i];
+        }
+        if (DataSource.products[i].Name == newProduct.Name)
+            throw new Exception("Product allready exists!");
         int locationInArray = DataSource.AvailableProduct;
+        newProduct.UniqID = DataSource.Config.ProductID;
         DataSource.products[locationInArray] = newProduct;
-        DataSource.AvailableProduct++;
         return newProduct.UniqID;
     }
     
@@ -25,7 +40,7 @@ public class DalProduct
     public Product Read(int ID)
     {
         int i = 0;
-        while (DataSource.products[i].UniqID >=2000000 && ID != DataSource.products[i].UniqID && DataSource.products[i].UniqID!=0)
+        while (DataSource.products[i].UniqID >=2000000 && ID != DataSource.products[i].UniqID)
         {
             i++;
         }
@@ -44,10 +59,11 @@ public class DalProduct
     /// <exception cref="Exception"></exception>
     public Product[] ReadAll()
     {
+
         Product[] products;
         int i = -1;
 
-        while (DataSource.products[i + 1].UniqID >= 2000000 && DataSource.products[i + 1].UniqID != 0 )
+        while (DataSource.products[i + 1].UniqID >= 2000000 )
         {
             i++;
         }
@@ -98,14 +114,12 @@ public class DalProduct
         {
             i++;
         }
-        if (DataSource.products[i+1].UniqID == ID && i< DataSource.AvailableProduct-1)
+        if (DataSource.products[i+1].UniqID == ID)
         {
             for (j = i+1; DataSource.products[j].UniqID >= 2000000 && j<DataSource.products.Length; j++)
             {
                 DataSource.products[j] = DataSource.products[j + 1];
             }
-           // DataSource.products[j+1].UniqID = 0;
-            DataSource.AvailableProduct--;
         }
         else
             throw new Exception("ID dos not exsist");
