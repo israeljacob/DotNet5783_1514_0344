@@ -17,11 +17,11 @@ public class DalOrderItem
         {
             i++;
         }
-        while (DataSource.products[j].UniqID >= 2000000 && newOrderItem.ProductID != DataSource.products[i].UniqID)
+        while (DataSource.orderItems[j].UniqID >= 2000000 && newOrderItem.ProductID != DataSource.orderItems[i].UniqID)
         {
             j++;
         }
-        if (DataSource.orders[i].UniqID == newOrderItem.OrderID && newOrderItem.ProductID == DataSource.products[i].UniqID)
+        if (DataSource.orders[i].UniqID == newOrderItem.OrderID && newOrderItem.ProductID == DataSource.orderItems[i].UniqID)
         {
             int locationInArray = DataSource.AvailableOrderItem;
             DataSource.orderItems[locationInArray] = newOrderItem;
@@ -31,28 +31,30 @@ public class DalOrderItem
             throw new Exception("ID dos not exsist");
         
     }
+
+    /// <summary>
+    /// Get an order item by ID.
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <returns>The requested order item.</returns>
+    /// <exception cref="Exception"></exception>
+    public OrderItem Read(int ID)
+    {
+        int j = searchOrderItem(ID);
+        //if the order item doesn't exists throw an exeption.
+        if (j == -1)
+            throw new Exception("ID dos not exsist");
+        // if the order item was found
+        OrderItem newOrderItem = DataSource.orderItems[j];
+        return newOrderItem;
+    }
+
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="ID"></param>
+    /// <param name="orderID"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-
-    public OrderItem Read(int ID)
-    {
-        int i = 0;
-        while (DataSource.orderItems[i].UniqID >= 3000000 && ID != DataSource.orderItems[i].UniqID)
-        {
-            i++;
-        }
-        if (DataSource.orderItems[i].UniqID == ID)
-        {
-            OrderItem neworderitem = DataSource.orderItems[i];
-            return neworderitem;
-        }
-        else
-            throw new Exception("ID dos not exsist");
-    }
     public OrderItem[] ReadByOrder(int orderID)
     {
         OrderItem[] ordersItem;
@@ -64,7 +66,7 @@ public class DalOrderItem
                 j++;
         }
         if(j==0)
-            throw new Exception("There are no any products in that order");
+            throw new Exception("There are no any orderItems in that order");
 
         ordersItem = new OrderItem[j];
         j = 0;
@@ -89,7 +91,7 @@ public class DalOrderItem
                 j++;
         }
         if (j == 0)
-            throw new Exception("There are no any such products that have been orderred");
+            throw new Exception("There are no any such orderItems that have been orderred");
 
         ordersItem = new OrderItem[j];
         j = 0;
@@ -103,6 +105,7 @@ public class DalOrderItem
         }
         return ordersItem;
     }
+
     /// <summary>
     /// 
     /// </summary>
@@ -126,54 +129,76 @@ public class DalOrderItem
                     ordersItem[j] = DataSource.orderItems[j];
             }
         }
-        else throw new Exception("There are no any products in the system");
+        else throw new Exception("There are no any orderItems in the system");
         return ordersItem;
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="updatedOrder"></param>
-    /// <exception cref="Exception"></exception>
 
+
+    /// <summary>
+    /// updates details of a spesific order item.
+    /// </summary>
+    /// <param name="updatedOrderItem"></param>
+    /// <exception cref="Exception"></exception>
     public void Update(OrderItem updatedOrderItem)
     {
-        int i = 0;
-        while (DataSource.orderItems[i].UniqID >= 3000000 && updatedOrderItem.UniqID != DataSource.orderItems[i].UniqID)
-        {
-            i++;
-        }
-        if (DataSource.orderItems[i].UniqID == updatedOrderItem.UniqID)
-        {
-            DataSource.orderItems[i].OrderID = updatedOrderItem.OrderID;
-            DataSource.orderItems[i].ProductID = updatedOrderItem.ProductID;
-            DataSource.orderItems[i].Price = updatedOrderItem.Price;
-            DataSource.orderItems[i].Amount = updatedOrderItem.Amount;
-        }
-        else
+        // check if the order item exsists. if yes, update the details.
+        int j = searchOrderItem(updatedOrderItem.UniqID);
+        //if the order item doesn't exists throw an exeption.
+        if (j == -1)
             throw new Exception("ID dos not exsist");
+        // if the order item was found, update it.
+        DataSource.orderItems[j].OrderID = updatedOrderItem.OrderID;
+        DataSource.orderItems[j].ProductID = updatedOrderItem.ProductID;
+        DataSource.orderItems[j].Price = updatedOrderItem.Price;
+        DataSource.orderItems[j].Amount = updatedOrderItem.Amount;
     }
+
     /// <summary>
-    /// 
+    /// Delete an order item by ID.
     /// </summary>
     /// <param name="ID"></param>
-    /// <returns></returns>
-
+    /// <exception cref="Exception"></exception>
     public void Delete(int ID)
     {
-        int i = -1, j;
-        while (DataSource.orderItems[i + 1].UniqID >= 3000000 && ID != DataSource.orderItems[i + 1].UniqID)
+        // check if the order item exsists. if yes, delete the order item.
+        int j = searchOrderItem(ID);
+        //if the order item doesn't exists throw an exeption.
+        if (j == -1)
+            throw new Exception("ID dos not exsist");
+        // if the order item was found, delete it.
+        // if it's the last order item in array.
+        if (j == 199 || DataSource.orderItems[j + 1].UniqID == 0)
         {
+            DataSource.orderItems[j].UniqID = 0;
+            return;
+        }
+        for (int i = j; DataSource.orderItems[i].UniqID >= 1000000 && i <= j; i++)
+        {
+            DataSource.orderItems[j] = DataSource.orderItems[j + 1];
+        }
+    }
+
+    /// <summary>
+    /// Auxiliary function to search an order in array by ID
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <returns>The location i array</returns>
+    private int searchOrderItem(int ID)
+    {
+
+        int i = 0, j = -1;
+        // check where is the order item in the array.
+        while (DataSource.orders[i].UniqID >= 2000000)
+        {
+            // If the location was founded, save it in j;
+            if (ID != DataSource.orders[i].UniqID)
+            {
+                j = i;
+                break;
+            }
             i++;
         }
-        if (DataSource.orderItems[i + 1].UniqID == ID)
-        {
-            for (j = i + 1; DataSource.orderItems[j].UniqID >= 3000000 && j < DataSource.orderItems.Length; j++)
-            {
-                DataSource.orderItems[j] = DataSource.orderItems[j + 1];
-            }
-        }
-        else
-            throw new Exception("ID dos not exsist");
+        return j;
     }
 }
 
