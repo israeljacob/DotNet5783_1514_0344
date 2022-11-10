@@ -9,7 +9,12 @@ public class DalOrderItem
 
 
 
-
+    /// <summary>
+    /// Addes a new order item.
+    /// </summary>
+    /// <param name="newOrderItem"></param>
+    /// <returns>The ID of the new order item</returns>
+    /// <exception cref="Exception"></exception>
     public int Add(OrderItem newOrderItem)
     {
         int i = 0,j=0;
@@ -17,16 +22,18 @@ public class DalOrderItem
         {
             i++;
         }
-        while (DataSource.orderItems[j].UniqID >= 2000000 && newOrderItem.ProductID != DataSource.orderItems[i].UniqID)
+        while (DataSource.products[j].UniqID >= 2000000 && newOrderItem.ProductID != DataSource.products[j].UniqID)
         {
             j++;
         }
+        // Find the first empty place in array and add to there the new order item.
         if (DataSource.orders[i].UniqID == newOrderItem.OrderID && newOrderItem.ProductID == DataSource.orderItems[i].UniqID)
         {
             int locationInArray = DataSource.AvailableOrderItem;
             DataSource.orderItems[locationInArray] = newOrderItem;
             return newOrderItem.UniqID;
         }
+        // If the order or the product toesn't exist.
         else
             throw new Exception("ID dos not exsist");
         
@@ -50,16 +57,18 @@ public class DalOrderItem
     }
 
     /// <summary>
-    /// 
+    /// Gets all the order items that connected to a specific order.
     /// </summary>
     /// <param name="orderID"></param>
-    /// <returns></returns>
+    /// <returns>array that refers to all the relevant order items</returns>
     /// <exception cref="Exception"></exception>
     public OrderItem[] ReadByOrder(int orderID)
     {
         OrderItem[] ordersItem;
-        int j = 0;
 
+
+        int j = 0;
+        //if there is no order items that connected to this order.
         for (int i = 0; i < DataSource.orderItems.Length; i++)
         {
             if (DataSource.orderItems[i].OrderID == orderID)
@@ -70,6 +79,7 @@ public class DalOrderItem
 
         ordersItem = new OrderItem[j];
         j = 0;
+        // coppy the order items to a new aaray
         for (int i = 0; i < DataSource.orderItems.Length; i++)
         {
             if (DataSource.orderItems[i].OrderID == orderID)
@@ -80,11 +90,18 @@ public class DalOrderItem
         }
         return ordersItem;
     }
+
+    /// <summary>
+    /// Gets all the order items of a specific product.
+    /// </summary>
+    /// <param name="orderID"></param>
+    /// <returns>array that refers to all the relevant order items</returns>
+    /// <exception cref="Exception"></exception>
     public OrderItem[] ReadByProduct(int productID)
     {
         OrderItem[] ordersItem;
         int j = 0;
-
+        //if there is no order items of this product.
         for (int i = 0; i < DataSource.orderItems.Length; i++)
         {
             if (DataSource.orderItems[i].ProductID == productID)
@@ -95,6 +112,7 @@ public class DalOrderItem
 
         ordersItem = new OrderItem[j];
         j = 0;
+        // coppy the order items to a new aaray
         for (int i = 0; i < DataSource.orderItems.Length; i++)
         {
             if (DataSource.orderItems[i].ProductID == productID)
@@ -106,22 +124,23 @@ public class DalOrderItem
         return ordersItem;
     }
 
-    /// <summary>
-    /// 
+    ///  /// <summary>
+    /// Gets all the order items.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>An array that refers to all the order items.</returns>
     /// <exception cref="Exception"></exception>
     public OrderItem[] ReadAll()
     {
         OrderItem[] ordersItem;
         int i = -1;
-
+        // Checks where is the last order item.
         while (DataSource.orderItems[i + 1].UniqID >= 3000000)
         {
             i++;
         }
         if (i >= 0)
         {
+            // Create a new array and copy all order items to the new array.
             ordersItem = new OrderItem[i + 1];
             for (int j = 0; j <= i; j++)
             {
@@ -129,13 +148,14 @@ public class DalOrderItem
                     ordersItem[j] = DataSource.orderItems[j];
             }
         }
+        //if there is no any order items throw an exeption.
         else throw new Exception("There are no any orderItems in the system");
         return ordersItem;
     }
 
 
     /// <summary>
-    /// updates details of a spesific order item.
+    /// Updates details of a spesific order item.
     /// </summary>
     /// <param name="updatedOrderItem"></param>
     /// <exception cref="Exception"></exception>
@@ -170,6 +190,8 @@ public class DalOrderItem
         if (j == 199 || DataSource.orderItems[j + 1].UniqID == 0)
         {
             DataSource.orderItems[j].UniqID = 0;
+            DataSource.orderItems[j].OrderID = 0;
+            DataSource.orderItems[j].ProductID = 0;
             return;
         }
         for (int i = j; DataSource.orderItems[i].UniqID >= 1000000 && i <= j; i++)

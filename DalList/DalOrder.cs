@@ -15,7 +15,7 @@ public class DalOrder
     /// <returns>The ID of the new order.</returns>
     public int Add(Order newOrder)
     {
-        // find the first empty place in array and add to there the new order.
+        // Find the first empty place in array and add to there the new order.
         int locationInArray = DataSource.AvailableOrder;
         newOrder.UniqID = DataSource.Config.OrderID;
         DataSource.orders[locationInArray] = newOrder;
@@ -39,15 +39,15 @@ public class DalOrder
     }
 
     /// <summary>
-    /// Gets all the order.
+    /// Gets all the orders.
     /// </summary>
-    /// <returns>array that refers to all the order.</returns>
+    /// <returns>An array that refers to all the order.</returns>
     /// <exception cref="Exception"></exception>
     public Order[] ReadAll()
     {
         Order[] orders;
         int i = -1;
-        // Checks where is the last order.
+        // Checks where is the last orders.
         while (DataSource.orders[i + 1].UniqID >= 1000000)
         {
             i++;

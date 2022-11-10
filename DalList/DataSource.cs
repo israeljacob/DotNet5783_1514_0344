@@ -2,24 +2,39 @@
 using Order = DO.Order;
 
 namespace Dal;
-
+/// <summary>
+/// Stores the arrays of entities.
+/// </summary>
 internal static class DataSource
 {
+    // Orders array
     internal static Order[] orders = new Order[100];
+    // Order items array.
     internal static OrderItem[] orderItems = new OrderItem[200];
+    // Products array.
     internal static Product[] products = new Product[50];
 
+    /// <summary>
+    /// The first available location in the array.
+    /// </summary>
     private static int availableProduct=0;
     internal static int AvailableProduct
     {
         get { return availableProduct++; }
     }
 
+    /// <summary>
+    /// The first available location in the array.
+    /// </summary>
     private static int availableOrder = 0;
     internal static int AvailableOrder
     {
         get { return availableOrder++; }
     }
+
+    /// <summary>
+    /// The first available location in the array.
+    /// </summary>
     private static int availableOrderItem = 0;
     internal static int AvailableOrderItem
     {
@@ -37,11 +52,17 @@ internal static class DataSource
         OrderItemInitialize();
     }
 
+    /// <summary>
+    /// Gets an ID for a new entity.
+    /// </summary>
     internal static class Config
     {
         static Random r = new Random();
         internal static int orderID = r.Next(1000000, 1500000);
 
+        /// <summary>
+        /// Order ID.
+        /// </summary>
         internal static int OrderID
         { 
             get { return orderID++; }
@@ -49,12 +70,19 @@ internal static class DataSource
 
 
         internal static int productID = r.Next(2000000, 2500000) ;
+        /// <summary>
+        /// Product ID.
+        /// </summary>
         internal static int ProductID
         {
 
             get {return productID++; }
         }
         internal static int orderItemID= r.Next(3000000, 3500000);
+
+        /// <summary>
+        /// Order item ID.
+        /// </summary>
         internal static int OrderItemID
         {
             get {return orderItemID++; }
@@ -62,7 +90,9 @@ internal static class DataSource
 
     }
 
-
+    /// <summary>
+    /// Initializes 10 new products.
+    /// </summary>
     private static void ProductInitialize()
     {
         var Productsnames = new string[]
@@ -93,7 +123,7 @@ internal static class DataSource
 
         var r = new Random();
 
-
+        // Store them in the array.
         for (int i = 0; i < 10; i++)
         {
             products[i] = new Product();
@@ -101,7 +131,7 @@ internal static class DataSource
             
             products[i].Name = Productsnames[i];
 
-
+            // Find the category of the product.
             if (products[i].Name.Contains("Shirt"))
             {
                 products[i].Category = DO.Category.Shirts;
@@ -140,6 +170,9 @@ internal static class DataSource
         }
     }
 
+    /// <summary>
+    /// Initializes 20 new orders.
+    /// </summary>
     private static void  OrderInitialize()
     {
         var names = new string[]
@@ -175,6 +208,7 @@ internal static class DataSource
 
         Random random = new Random();
         TimeSpan ts;
+        // Store them in the array.
         for (int i = 0; i < 20; i++)
         {
             orders[i] = new Order();
@@ -183,7 +217,7 @@ internal static class DataSource
             orders[i].CustomerEmail = emails[i];
             orders[i].CustomerAdress = adresses[i];
             orders[i].OrderDate = DateTime.Now.AddDays(random.Next(-1000,-1));
-            if (i <= 4)
+            if (i <= 15)
             {
                 do
                 {
@@ -209,11 +243,13 @@ internal static class DataSource
 
         }
     }
-
+    /// <summary>
+    /// Initializes 40 new order items.
+    /// </summary>
     private static void OrderItemInitialize()
     {
          Random r = new Random();
-         
+        // Store them in the array.
         for (int i = 0; i < 40; i++)
         {
             orderItems[i] = new OrderItem();
