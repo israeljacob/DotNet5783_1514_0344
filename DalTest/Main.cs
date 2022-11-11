@@ -8,8 +8,8 @@ public class mainProgram
 {
     static void Main(string[] args)
     {
-        
-        //dal
+
+        //dal obj initial
         DalProduct dalProduct = new DalProduct();
         DalOrder dalOrder = new DalOrder();
         DalOrderItem dalOrderItem = new DalOrderItem();
@@ -22,7 +22,6 @@ public class mainProgram
 
         
         MainOptions menuChoice;
-     //   dalProduct.Read(15);
         do
         {
             ///Display the options for the main menu
@@ -121,6 +120,9 @@ public class mainProgram
                     break;
             }
         } while (menuChoice != 0);
+
+
+        /// function to add product
         void AddProduct()
         {
             product.UniqID = 0;
@@ -130,6 +132,8 @@ public class mainProgram
             product.InStock = Menu.IntInput("Enter How much is in stock:");
             Console.Write("{0} Was Added Successfully \n", dalProduct.Add(product));
         }
+
+        /// function to read product by ID
         void ReadProduct()
         {
             int idinput = Menu.IntInput("Enter the ID number:");
@@ -142,6 +146,7 @@ public class mainProgram
                 Console.WriteLine(e);
             }
         }
+        /// function to see all the products
         void ReadAllProduct()
         {
             try
@@ -157,6 +162,8 @@ public class mainProgram
                 Console.WriteLine(e);
             }
         }
+
+        /// function to update a product
         void UpdateProduct()
         {
             product.UniqID = Menu.IntInput("Entter the ID:");
@@ -175,6 +182,7 @@ public class mainProgram
                 Console.WriteLine(e);
             }
         }
+        /// function to delete product
         void DeleteProduct()
         {
             try
@@ -187,7 +195,9 @@ public class mainProgram
             {
                 Console.WriteLine(e);
             }
-        }
+        }   
+
+        /// function to add an order
         void AddOrder()
         {
             order.UniqID = 0;
@@ -202,6 +212,7 @@ public class mainProgram
             order.DeliveryrDate = Menu.dateinput();
             Console.Write("Order {0} Was Added Successfully \n", dalOrder.Add(order));
         }
+        /// function to read an order by ID
         void ReadOrder()
         {
             try
@@ -214,6 +225,7 @@ public class mainProgram
                 Console.WriteLine(e);
             }
         }
+        /// function to see all orders
         void ReadAllOrder()
         {
             try
@@ -229,6 +241,7 @@ public class mainProgram
                 Console.WriteLine(e);
             }
         }
+        /// function to update an order
         void UpdateOrder()
         {
             try
@@ -252,6 +265,7 @@ public class mainProgram
                 Console.WriteLine(e);
             }
         }
+        /// function to delete an order
         void DeleteOrder()
         {
             try
@@ -265,6 +279,8 @@ public class mainProgram
                 Console.WriteLine(e);
             }
         }
+
+        /// function to add an orderitem
         void AddOrderItem()
         {
             try
@@ -281,6 +297,8 @@ public class mainProgram
                 Console.WriteLine(e);
             }
         }
+
+        /// function to see an orderitem by id
         void ReadOrderItem()
         {
             try
@@ -293,6 +311,7 @@ public class mainProgram
                 Console.WriteLine(e);
             }
         }
+        /// function to see an orderitem by product id
         void ReadOrderItemByProduct()
         {
             try
@@ -309,6 +328,7 @@ public class mainProgram
                 Console.WriteLine(e);
             }
         }
+        /// function to see an orderitem by order id
         void ReadOrderItemByOrder()
         {
             try
@@ -325,6 +345,8 @@ public class mainProgram
                 Console.WriteLine(e);
             }
         }
+
+        /// function to see all the orderitems
         void ReadAllOrderItem()
         {
             try
@@ -340,6 +362,8 @@ public class mainProgram
                 Console.WriteLine(e);
             }
         }
+
+        /// function to update an orderitem
         void UpdateOrderItem()
         {
             orderItem.UniqID = Menu.IntInput("Entter the ID:");
@@ -358,6 +382,7 @@ public class mainProgram
             Console.Write("\n{0} Was Update Successfully \n", product.UniqID);
         }
 
+        /// function to delete orderitem
         void DeleteOrderItem()
         {
             int del = Menu.IntInput("Entter the ID:");

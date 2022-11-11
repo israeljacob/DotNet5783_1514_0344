@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 
 
 
-
+/// <summary>
+/// Enum for the main menu
+/// </summary>
 public enum MainOptions
 {
     ProductCheck = 1,
@@ -17,6 +19,10 @@ public enum MainOptions
     OrderItemCheck,
 
 }
+
+/// <summary>
+/// Enum for the sub menu option 1
+/// </summary>
 public enum ProductOptions
 {
     Add = 1,
@@ -25,6 +31,10 @@ public enum ProductOptions
     Update,
     Delete
 }
+
+/// <summary>
+/// Emun for the sub menu option 2
+/// </summary>
 public enum OrderOptions
 {
     Add = 1,
@@ -36,6 +46,9 @@ public enum OrderOptions
 
 }
 
+/// <summary>
+/// Enum for the sub menu option 3
+/// </summary>
 public enum OrderItemOptions
 {
     Add = 1,
@@ -58,6 +71,10 @@ namespace Dal
 
         }
 
+
+        /// <summary>
+        /// the main menu options, it keeps running till input 0
+        /// </summary>
         public static void MainMenu()
         {
             Console.WriteLine("\t\t\nMain-Menu\n");
@@ -67,6 +84,9 @@ namespace Dal
             Console.WriteLine("0.Exit");
 
         }
+        /// <summary>
+        /// sub-option from the main-menu: product check 
+        /// </summary>
         public static void ProductCheckMenu()
         {
             Console.WriteLine("1.Add Product");
@@ -77,6 +97,10 @@ namespace Dal
             Console.WriteLine("0.Return to main menu");
 
         }
+
+        /// <summary>
+        /// sub-option from the main-menu: order check
+        /// </summary>
         public static void OrderCheckMenu()
         {
             Console.WriteLine("1.Add Order");
@@ -87,6 +111,10 @@ namespace Dal
             Console.WriteLine("0.Return to main menu");
 
         }
+
+        /// <summary>
+        /// sub-option from the main-menu: orderitem check
+        /// </summary>
         public static void OrderItemCheckMenu()
         {
             Console.WriteLine("1.Add order item");
@@ -99,6 +127,12 @@ namespace Dal
             Console.WriteLine("0.Return to main menu");
 
         }
+
+        /// <summary>
+        /// every string input to call this function
+        /// </summary>
+        /// <param name="output"></param>
+        /// <returns></returns>
         public static string StringInput(string output)
         {
             string? option;
@@ -114,6 +148,10 @@ namespace Dal
             return option;
         }
        
+        /// <summary>
+        /// every category input we call this function
+        /// </summary>
+        /// <returns></returns>
         public static Category CategoryInput()
         {
             int option;
@@ -122,6 +160,12 @@ namespace Dal
             Console.WriteLine("\n");
             return (Category)option;
         }
+
+        /// <summary>
+        /// every int input we call this function
+        /// </summary>
+        /// <param name="messege"></param>
+        /// <returns></returns>
         public static int IntInput(string messege)
         {
             int option;
@@ -130,7 +174,11 @@ namespace Dal
                 Console.WriteLine("you must entar numbers ony. try again!");
             return option;
         }
-        
+
+        /// <summary>
+        /// every email input we call this function that check if the there is @ or period
+        /// </summary>
+        /// <returns></returns>
         public static string emailInput()
         {
             string option;
@@ -146,6 +194,11 @@ namespace Dal
             return option;
         }
 
+
+        /// <summary>
+        /// every date input we call this function, to check if the input is incorrect or correct
+        /// </summary>
+        /// <returns></returns>
         public static DateTime dateinput()
         {
             DateTime date = new DateTime();
