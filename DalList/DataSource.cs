@@ -2,24 +2,39 @@
 using Order = DO.Order;
 
 namespace Dal;
-
+/// <summary>
+/// Stores the arrays of entities.
+/// </summary>
 internal static class DataSource
 {
+    // Orders array
     internal static Order[] orders = new Order[100];
+    // Order items array.
     internal static OrderItem[] orderItems = new OrderItem[200];
+    // Products array.
     internal static Product[] products = new Product[50];
 
+    /// <summary>
+    /// The first available location in the array.
+    /// </summary>
     private static int availableProduct=0;
     internal static int AvailableProduct
     {
         get { return availableProduct++; }
     }
 
+    /// <summary>
+    /// The first available location in the array.
+    /// </summary>
     private static int availableOrder = 0;
     internal static int AvailableOrder
     {
         get { return availableOrder++; }
     }
+
+    /// <summary>
+    /// The first available location in the array.
+    /// </summary>
     private static int availableOrderItem = 0;
     internal static int AvailableOrderItem
     {
@@ -37,11 +52,17 @@ internal static class DataSource
         OrderItemInitialize();
     }
 
+    /// <summary>
+    /// Gets an ID for a new entity.
+    /// </summary>
     internal static class Config
     {
         static Random r = new Random();
         internal static int orderID = r.Next(1000000, 1500000);
 
+        /// <summary>
+        /// Order ID.
+        /// </summary>
         internal static int OrderID
         { 
             get { return orderID++; }
@@ -49,12 +70,19 @@ internal static class DataSource
 
 
         internal static int productID = r.Next(2000000, 2500000) ;
+        /// <summary>
+        /// Product ID.
+        /// </summary>
         internal static int ProductID
         {
 
             get {return productID++; }
         }
         internal static int orderItemID= r.Next(3000000, 3500000);
+
+        /// <summary>
+        /// Order item ID.
+        /// </summary>
         internal static int OrderItemID
         {
             get {return orderItemID++; }
@@ -62,7 +90,9 @@ internal static class DataSource
 
     }
 
-
+    /// <summary>
+    /// Initializes 10 new products.
+    /// </summary>
     private static void ProductInitialize()
     {
         var Productsnames = new string[]
@@ -93,51 +123,42 @@ internal static class DataSource
 
         var r = new Random();
 
-
+        // Store them in the array.
         for (int i = 0; i < 10; i++)
         {
-
+            products[i] = new Product();
             products[i].UniqID = Config.ProductID;
             
             products[i].Name = Productsnames[i];
 
-
-            if (products[i].Name.Contains("Shirt"))//else
+            // Find the category of the product.
+            if (products[i].Name.Contains("Shirt"))
             {
-               var PriceIndexShirt = r.Next(ProductsPriceShirt.Length);
-                products[i].Price = ProductsPriceShirt[PriceIndexShirt];
                 products[i].Category = DO.Category.Shirts;
-
             }
             else if (products[i].Name.Contains("Trouser"))
             {
-               var PriceIndexTrouser = r.Next(ProductsPriceTrouser.Length);
-                products[i].Price = ProductsPriceTrouser[PriceIndexTrouser];
+               
                 products[i].Category = DO.Category.trousers;
 
             }
             else if (products[i].Name.Contains("Shoe"))
             {
-                var PriceIndexShoe = r.Next(ProductsPriceShoe.Length);
-                products[i].Price = ProductsPriceShoe[PriceIndexShoe];
                 products[i].Category = DO.Category.shoes;
 
             }
             else if (products[i].Name.Contains("Caot"))
             {
-                 var PriceIndexCoat = r.Next(ProductsPriceCoat.Length);
-                products[i].Price = ProductsPriceCoat[PriceIndexCoat];
                 products[i].Category = DO.Category.coats;
 
             }
-            else if (products[i].Name.Contains("Sweater"))
+            else
             {
-                var PriceIndexShirt = r.Next(ProductsPriceShirt.Length);
-                products[i].Price = ProductsPriceShirt[PriceIndexShirt];
                 products[i].Category = DO.Category.sweaters;
 
             }
-
+            var PriceIndexTrouser = r.Next(ProductsPriceTrouser.Length);
+            products[i].Price = ProductsPriceTrouser[PriceIndexTrouser];
 
             var stockindex = r.Next(20);
             if (i ==1)
@@ -149,6 +170,9 @@ internal static class DataSource
         }
     }
 
+    /// <summary>
+    /// Initializes 20 new orders.
+    /// </summary>
     private static void  OrderInitialize()
     {
         var names = new string[]
@@ -184,35 +208,51 @@ internal static class DataSource
 
         Random random = new Random();
         TimeSpan ts;
+        // Store them in the array.
         for (int i = 0; i < 20; i++)
         {
+            orders[i] = new Order();
             orders[i].UniqID = Config.OrderID;
             orders[i].CustomerName = names[i];
             orders[i].CustomerEmail = emails[i];
             orders[i].CustomerAdress = adresses[i];
             orders[i].OrderDate = DateTime.Now.AddDays(random.Next(-1000,-1));
-            do
+            if (i <= 15)
             {
-                orders[i].ShipDate = DateTime.Now.AddDays(random.Next(-1000, -1));
-                ts = orders[i].ShipDate - orders[i].OrderDate;
+                do
+                {
+                    orders[i].ShipDate = DateTime.Now.AddDays(random.Next(-1000, -1));
+                    ts = orders[i].ShipDate - orders[i].OrderDate;
+                }
+                while (ts.TotalDays < 0);
             }
-            while (ts.TotalDays < 0);
-            do
+            else
+                orders[i].ShipDate = DateTime.MinValue;
+            if (i <= 10)
             {
-                orders[i].DeliveryrDate = DateTime.Now.AddDays(random.Next(-1000, -1));
-                ts = orders[i].DeliveryrDate - orders[i].ShipDate;
+                do
+                {
+                    orders[i].DeliveryrDate = DateTime.Now.AddDays(random.Next(-1000, -1));
+                    ts = orders[i].DeliveryrDate - orders[i].ShipDate;
+                }
+                while (ts.TotalDays < 0);
             }
-            while (ts.TotalDays < 0);
+            else
+                orders[i].DeliveryrDate = DateTime.MinValue;
+
 
         }
     }
-
+    /// <summary>
+    /// Initializes 40 new order items.
+    /// </summary>
     private static void OrderItemInitialize()
     {
          Random r = new Random();
-         
+        // Store them in the array.
         for (int i = 0; i < 40; i++)
         {
+            orderItems[i] = new OrderItem();
             int rand = r.Next(1, 9);
             orderItems[i].UniqID=Config.OrderItemID;
             orderItems[i].ProductID = orders[r.Next(1,19)].UniqID;
