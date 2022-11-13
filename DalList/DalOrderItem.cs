@@ -1,10 +1,11 @@
-﻿ using DO;
+﻿using DalApi;
+using DO;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace Dal;
 
-public class DalOrderItem
+internal class DalOrderItem:IOrderItem
 {
 
 

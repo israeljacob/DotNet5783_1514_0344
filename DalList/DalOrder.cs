@@ -1,11 +1,12 @@
-﻿using DO;
+﻿using DalApi;
+using System.Collections;
 using Order = DO.Order;
 
 namespace Dal;
 /// <summary>
 /// CRUD of order.
 /// </summary>
-public class DalOrder
+internal class DalOrder : IOrder
 {
 
     /// <summary>
@@ -13,12 +14,11 @@ public class DalOrder
     /// </summary>
     /// <param name="newOrder"></param>
     /// <returns>The ID of the new order.</returns>
-    public int Add(Order newOrder)
+    internal int Add(Order newOrder)
     {
-        // Find the first empty place in array and add to there the new order.
-        int locationInArray = DataSource.AvailableOrder;
+        // Find the first empty place in list and add to there the new order.
         newOrder.UniqID = DataSource.Config.OrderID;
-        DataSource.orders[locationInArray] = newOrder;
+        DataSource.orders.Add(newOrder);
         return newOrder.UniqID;
     }
     /// <summary>
@@ -101,7 +101,7 @@ public class DalOrder
             throw new Exception("ID dos not exsist");
         // if the order was found, delete it.
         // if it's the last order in array.
-        if (j == 99 || DataSource.orders[j+1].UniqID == 0)
+        if (j == 99 || DataSource.orders[j + 1].UniqID == 0)
         {
             DataSource.orders[j].UniqID = 0;
             return;
