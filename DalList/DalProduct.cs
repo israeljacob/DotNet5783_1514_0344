@@ -1,13 +1,15 @@
-﻿using DO;
+﻿using DalApi;
+using DO;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System;
+using System.Collections;
 
 namespace Dal;
 /// <summary>
 /// CRUD of product.
 /// </summary>
-public class DalProduct
+internal class DalProduct:IProduct
 {
     /// <summary>
     /// Addes a new product.
@@ -17,22 +19,12 @@ public class DalProduct
     /// <exception cref="Exception"></exception>
     public int Add(Product newProduct)
     {
-        int i = 0;
-        // Check if the ID exsist allready.
-        Product product = DataSource.products[i];
-        while (product.UniqID >= 2000000 && newProduct.Name!= DataSource.products[i].Name)
-        {
-            i++;
-            product = DataSource.products[i];
-        }
-        // if the product exists throw an exeption.
-        if (DataSource.products[i].Name == newProduct.Name)
-            throw new Exception("Product allready exists!");
+        // If there is such a product throw an exception.
+        foreach(Product pro in DataSource.products)
+            if(pro.UniqID==newProduct.UniqID)
+                throw new ExistException("Product");
 
-        // find the first empty place in array and add to there the new product.
-        int locationInArray = DataSource.AvailableProduct;
-        newProduct.UniqID = DataSource.Config.ProductID;
-        DataSource.products[locationInArray] = newProduct;
+        DataSource.products.Add(newProduct);
         return newProduct.UniqID;
     }
     
@@ -44,20 +36,25 @@ public class DalProduct
     /// <exception cref="Exception"></exception>
     public Product Read(int ID)
     {
-        int j = searchProduct(ID);
-        //if the product doesn't exists throw an exeption.
-        if (j==-1)
-            throw new Exception("ID dos not exsist");
-        // if the product was found
-        Product newProduct = DataSource.products[j];
-        return newProduct;
+        int i = 0;
+        foreach (Product product in DataSource.products)
+        {
+            if (product.UniqID == ID)
+                break;
+            i++;
+        }
+        if (i == DataSource.products.Count)
+            throw new DoesNotExistsException("Product ID");
+        // if the order was found
+        Product newOrder = DataSource.products[i];
+        return newOrder;
     }
     /// <summary>
     /// Gets all the product
     /// </summary>
     /// <returns>array that refers to all the product.</returns>
     /// <exception cref="Exception"></exception>
-    public Product[] ReadAll()
+    public IEnumerable<Product> ReadAll()
     {
 
         Product[] products;
@@ -78,7 +75,7 @@ public class DalProduct
             }
         }
         //if there is no any products throw an exeption.
-        else throw new Exception("There are no any products in the system");
+        else throw new DoesNotExistsException("Any product ID");
         return products;
     }
     /// <summary>
@@ -88,17 +85,18 @@ public class DalProduct
     /// <exception cref="Exception"></exception>
     public void Update(Product updatedProduct)
     {
-        // check if the product exsists. if yes, update the details.
-        int j = searchProduct(updatedProduct.UniqID);
-        //if the product doesn't exists throw an exeption.
-        if (j==-1)
-            throw new Exception("ID dos not exsist");
-        // if the product was found, update it.
-        DataSource.products[j].Name = updatedProduct.Name;
-        DataSource.products[j].Price = updatedProduct.Price;
-        DataSource.products[j].Category = updatedProduct.Category;
-        DataSource.products[j].InStock = updatedProduct.InStock;
-
+        int i = 0;
+        foreach (Product pro in DataSource.products)
+        {
+            if (updatedProduct.UniqID == pro.UniqID)
+            {
+                DataSource.products[i] = updatedProduct;
+                break;
+            }
+            i++;
+        }
+        if (i == DataSource.products.Count)
+            throw new DoesNotExistsException("Product ID");
     }
     /// <summary>
     /// Delete a product by ID.
@@ -107,43 +105,19 @@ public class DalProduct
     /// <exception cref="Exception"></exception>
     public void Delete(int ID)
     {
-        // check if the product exsists. if yes, delete the product.
-        int j = searchProduct(ID);
-        //if the product doesn't exists throw an exeption.
-        if (j == -1)
-            throw new Exception("ID dos not exsist");
-        // if the product was found, delete it.
-        // if it's the last order in array.
-        if (j == 49 || DataSource.products[j + 1].UniqID == 0)
+        bool flag = false;
+        foreach (Product product in DataSource.products)
         {
-            DataSource.products[j].UniqID = 0;
-            return;
-        }
-        for (int i = j; DataSource.products[i].UniqID >= 1000000 && i <= j; i++)
-        {
-            DataSource.products[j] = DataSource.products[j + 1];
-        }
-    }
-    /// <summary>
-    /// Auxiliary function to search a product in array by ID
-    /// </summary>
-    /// <param name="ID"></param>
-    /// <returns>The location i array</returns>
-    private int searchProduct(int ID)
-    {
-
-        int i = 0,j=-1;
-        // check where is the product in the array.
-        while (DataSource.products[i].UniqID >= 2000000)
-        {
-            // If the location was founded, save it in j;
-            if(ID != DataSource.products[i].UniqID)
+            if (product.UniqID == ID)
             {
-                j = i;
+                DataSource.products.Remove(product);
+                flag = true;
                 break;
             }
-            i++;
+
         }
-        return j;
+        if (!flag)
+            throw new DoesNotExistsException("Product ID");
+
     }
 }

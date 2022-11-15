@@ -1,4 +1,5 @@
 ﻿using DalApi;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using System.Collections;
 using Order = DO.Order;
 
@@ -14,9 +15,8 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="newOrder"></param>
     /// <returns>The ID of the new order.</returns>
-    internal int Add(Order newOrder)
+    public int Add(Order newOrder)
     {
-        // Find the first empty place in list and add to there the new order.
         newOrder.UniqID = DataSource.Config.OrderID;
         DataSource.orders.Add(newOrder);
         return newOrder.UniqID;
@@ -29,12 +29,17 @@ internal class DalOrder : IOrder
     /// <exception cref="Exception"></exception>
     public Order Read(int ID)
     {
-        int j = searchOrder(ID);
-        //if the order doesn't exists throw an exeption.
-        if (j == -1)
-            throw new Exception("ID dos not exsist");
+        int i = 0;
+        foreach (Order order in DataSource.orders)
+        {
+            if(order.UniqID == ID)
+                break;
+            i++;
+        }
+       if(i==DataSource.orders.Count)
+         throw new DoesNotExistsException("Order ID");
         // if the order was found
-        Order newOrder = DataSource.orders[j];
+        Order newOrder = DataSource.orders[i];
         return newOrder;
     }
 
@@ -43,28 +48,11 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <returns>An array that refers to all the order.</returns>
     /// <exception cref="Exception"></exception>
-    public Order[] ReadAll()
+    public IEnumerable<Order> ReadAll()
     {
-        Order[] orders;
-        int i = -1;
-        // Checks where is the last orders.
-        while (DataSource.orders[i + 1].UniqID >= 1000000)
-        {
-            i++;
-        }
-        if (i >= 0)
-        {
-            // create a new array and copy all orders to the new array.
-            orders = new Order[i + 1];
-            for (int j = 0; j <= i; j++)
-            {
-                if (DataSource.orders[j].UniqID != 0)
-                    orders[j] = DataSource.orders[j];
-            }
-        }
-        //if there is no any orders throw an exeption.
-        else
-            throw new Exception("There are no any orders in the system");
+        IEnumerable<Order> orders = DataSource.orders;
+        if(!orders.Any())
+            throw new DoesNotExistsException("Any orders");
         return orders;
     }
     /// <summary>
@@ -74,18 +62,18 @@ internal class DalOrder : IOrder
     /// <exception cref="Exception"></exception>
     public void Update(Order updatedOrder)
     {
-        // check if the order exsists. if yes, update the details.
-        int j = searchOrder(updatedOrder.UniqID);
-        //if the order doesn't exists throw an exeption.
-        if (j == -1)
-            throw new Exception("ID dos not exsist");
-        // if the order was found, update it.
-        DataSource.orders[j].CustomerName = updatedOrder.CustomerName;
-        DataSource.orders[j].CustomerEmail = updatedOrder.CustomerEmail;
-        DataSource.orders[j].CustomerAdress = updatedOrder.CustomerAdress;
-        DataSource.orders[j].OrderDate = updatedOrder.OrderDate;
-        DataSource.orders[j].ShipDate = updatedOrder.ShipDate;
-        DataSource.orders[j].DeliveryrDate = updatedOrder.DeliveryrDate;
+        int i = 0;
+        foreach (Order order in DataSource.orders)
+        {
+            if (order.UniqID == updatedOrder.UniqID)
+            {
+                DataSource.orders[i]=updatedOrder;
+                break;
+            }
+            i++;
+        }
+        if (i == DataSource.orders.Count)
+            throw new DoesNotExistsException("Order ID");
     }
     /// <summary>
     /// Delete an order by ID.
@@ -94,44 +82,20 @@ internal class DalOrder : IOrder
     /// <exception cref="Exception"></exception>
     public void Delete(int ID)
     {
-        // check if the order exsists. if yes, delete the order.
-        int j = searchOrder(ID);
-        //if the order doesn't exists throw an exeption.
-        if (j == -1)
-            throw new Exception("ID dos not exsist");
-        // if the order was found, delete it.
-        // if it's the last order in array.
-        if (j == 99 || DataSource.orders[j + 1].UniqID == 0)
+        bool flag = false;
+        foreach (Order order in DataSource.orders)
         {
-            DataSource.orders[j].UniqID = 0;
-            return;
-        }
-        for (int i = j; DataSource.orders[i].UniqID >= 1000000 && i <= j; i++)
-        {
-            DataSource.orders[j] = DataSource.orders[j + 1];
-        }
-    }
-
-    /// <summary>
-    /// Auxiliary function to search an order in array by ID
-    /// </summary>
-    /// <param name="ID"></param>
-    /// <returns>The location i array</returns>
-    private int searchOrder(int ID)
-    {
-
-        int i = 0, j = -1;
-        // check where is the order in the array.
-        while (DataSource.orders[i].UniqID >= 2000000)
-        {
-            // If the location was founded, save it in j;
-            if (ID != DataSource.orders[i].UniqID)
+            if (order.UniqID == ID)
             {
-                j = i;
+                DataSource.orders.Remove(order);
+                flag = true;
                 break;
             }
-            i++;
+           
         }
-        return j;
+        if (!flag)
+            throw new DoesNotExistsException("Order ID");
+
     }
+
 }

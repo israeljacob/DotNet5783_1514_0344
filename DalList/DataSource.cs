@@ -30,31 +30,19 @@ internal static class DataSource
     internal static class Config
     {
         static Random r = new Random();
-        internal static int orderID = r.Next(1000000, 1500000);
-
         /// <summary>
         /// Order ID.
         /// </summary>
+        internal static int orderID = r.Next(1000000, 1500000);
         internal static int OrderID
         { 
             get { return orderID++; }
         }
 
-
-        internal static int productID = r.Next(2000000, 2500000) ;
-        /// <summary>
-        /// Product ID.
-        /// </summary>
-        internal static int ProductID
-        {
-
-            get {return productID++; }
-        }
-        internal static int orderItemID= r.Next(3000000, 3500000);
-
         /// <summary>
         /// Order item ID.
         /// </summary>
+        internal static int orderItemID = r.Next(2000000, 2500000) ;
         internal static int OrderItemID
         {
             get {return orderItemID++; }
@@ -94,12 +82,11 @@ internal static class DataSource
 
 
         var r = new Random();
-
         // Store them in the list.
         for (int i = 0; i < 10; i++)
         {
             Product temp = new Product();
-            temp.UniqID = Config.ProductID;
+            temp.UniqID = r.Next(300000,350000);
 
             temp.Name = Productsnames[i];
 
@@ -227,7 +214,7 @@ internal static class DataSource
             OrderItem temp = new OrderItem();
             int rand = r.Next(1, 9);
             temp.UniqID=Config.OrderItemID;
-            temp.ProductID = orders[r.Next(1,19)].UniqID;
+            temp.ProductID = orders[r.Next(0,19)].UniqID;
             temp.OrderID = products[rand].UniqID;
             temp.Amount= r.Next(1,10);
             temp.Price = products[rand].Price * temp.Amount;
