@@ -16,7 +16,7 @@ internal class DalProduct:IProduct
     /// </summary>
     /// <param name="newProduct"></param>
     /// <returns>The ID of the new product.</returns>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="ExistException"></exception>
     public int Add(Product newProduct)
     {
         // If there is such a product throw an exception.
@@ -44,7 +44,7 @@ internal class DalProduct:IProduct
             i++;
         }
         if (i == DataSource.products.Count)
-            throw new DoesNotExistsException("Product ID");
+            throw new DoesNotExistsException("Product");
         // if the order was found
         Product newOrder = DataSource.products[i];
         return newOrder;
@@ -75,7 +75,7 @@ internal class DalProduct:IProduct
             }
         }
         //if there is no any products throw an exeption.
-        else throw new DoesNotExistsException("Any product ID");
+        else throw new DoesNotExistsException("Any product");
         return products;
     }
     /// <summary>
@@ -96,7 +96,7 @@ internal class DalProduct:IProduct
             i++;
         }
         if (i == DataSource.products.Count)
-            throw new DoesNotExistsException("Product ID");
+            throw new DoesNotExistsException("Product");
     }
     /// <summary>
     /// Delete a product by ID.
@@ -117,7 +117,7 @@ internal class DalProduct:IProduct
 
         }
         if (!flag)
-            throw new DoesNotExistsException("Product ID");
+            throw new DoesNotExistsException("Product");
 
     }
 }

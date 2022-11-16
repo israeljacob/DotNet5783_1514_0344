@@ -13,7 +13,7 @@ public struct Product
     /// <summary>
     /// The product name.
     /// </summary>
-    public string Name { get; set; }
+    public string? Name { get; set; }
     /// <summary>
     /// The price of the product.
     /// </summary>
@@ -21,11 +21,11 @@ public struct Product
     /// <summary>
     /// To wich category the product belongs.
     /// </summary>
-    public Category? Category { get; set; }
+    public Category Category { get; set; }
     /// <summary>
     /// How much from this product is available.
     /// </summary>
-    public int? InStock { get; set; }
+    public int InStock { get; set; }
     /// <summary>
     /// Converts the object to a printable form.
     /// </summary>
