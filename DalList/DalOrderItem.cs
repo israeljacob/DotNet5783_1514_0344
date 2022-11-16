@@ -5,7 +5,7 @@ using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace Dal;
 
-internal class DalOrderItem:IOrderItem
+public class DalOrderItem:IOrderItem
 {
 
 
@@ -18,6 +18,7 @@ internal class DalOrderItem:IOrderItem
     /// <exception cref="Exception"></exception>
     public int Add(OrderItem newOrderItem)
     {
+        newOrderItem.UniqID = DataSource.Config.OrderItemID;
         DataSource.orderItems.Add(newOrderItem);
         return newOrderItem.UniqID;
     }
@@ -28,20 +29,14 @@ internal class DalOrderItem:IOrderItem
     /// <param name="ID"></param>
     /// <returns>The requested order item.</returns>
     /// <exception cref="Exception"></exception>
-    public OrderItem Read(int ID)
+    public OrderItem Get(int ID)
     {
-        int i = 0;
-        foreach (OrderItem orderItem in DataSource.orderItems)
-        {
-            if (orderItem.UniqID == ID)
-                break;
-            i++;
-        }
-        if (i == DataSource.orderItems.Count)
+        OrderItem? tempOrderItem = DataSource.orderItems.Find(orderItem => orderItem.UniqID == ID);
+        // If the order item was not found
+        if (tempOrderItem == null)
             throw new DoesNotExistsException("Order item ID");
-        // if the order item was found
-        OrderItem newOrder = DataSource.orderItems[i];
-        return newOrder;
+        // If the order item was found
+        return (OrderItem)tempOrderItem;
     }
 
     /// <summary>
@@ -50,10 +45,11 @@ internal class DalOrderItem:IOrderItem
     /// <param name="orderID"></param>
     /// <returns>array that refers to all the relevant order items</returns>
     /// <exception cref="Exception"></exception>
-    public IEnumerable<OrderItem> ReadByOrder(int orderID)
+    public IEnumerable<OrderItem> GetByOrder(int orderID)
     {
-       IEnumerable<OrderItem> orderItems = DataSource.orderItems.Where(x=>x.OrderID==orderID);
-        if (!orderItems.Any())
+       IEnumerable<OrderItem>? orderItems = DataSource.orderItems.Where(x=>x.OrderID==orderID);
+        // If there is no such order items.
+        if (orderItems==null)
             throw new DoesNotExistsException("Any of those order items");
         return orderItems;
     }
@@ -64,10 +60,11 @@ internal class DalOrderItem:IOrderItem
     /// <param name="orderID"></param>
     /// <returns>array that refers to all the relevant order items</returns>
     /// <exception cref="Exception"></exception>
-    public IEnumerable<OrderItem> ReadByProduct(int productID)
+    public IEnumerable<OrderItem> GetByProduct(int productID)
     {
-        IEnumerable<OrderItem> orderItems = DataSource.orderItems.Where(x => x.ProductID == productID);
-        if (!orderItems.Any())
+        IEnumerable<OrderItem>? orderItems = DataSource.orderItems.Where(x => x.ProductID == productID);
+        // If there is no such order items.
+        if (orderItems == null)
             throw new DoesNotExistsException("Any of those order items");
         return orderItems;
     }
@@ -77,28 +74,13 @@ internal class DalOrderItem:IOrderItem
     /// </summary>
     /// <returns>An array that refers to all the order items.</returns>
     /// <exception cref="Exception"></exception>
-    public IEnumerable<OrderItem> ReadAll()
+    public IEnumerable<OrderItem> GetAll()
     {
-        OrderItem[] ordersItem;
-        int i = -1;
-        // Checks where is the last order item.
-        while (DataSource.orderItems[i + 1].UniqID >= 3000000)
-        {
-            i++;
-        }
-        if (i >= 0)
-        {
-            // Create a new array and copy all order items to the new array.
-            ordersItem = new OrderItem[i + 1];
-            for (int j = 0; j <= i; j++)
-            {
-                if (DataSource.orderItems[j].UniqID != 0)
-                    ordersItem[j] = DataSource.orderItems[j];
-            }
-        }
-        //if there is no any order items throw an exeption.
-        else throw new Exception("Any order items");
-        return ordersItem;
+        IEnumerable<OrderItem>? orderItems = DataSource.orderItems.Where(x => x.UniqID>0);
+        // If there is no such order items.
+        if (orderItems == null)
+            throw new DoesNotExistsException("Any order items");
+        return orderItems;
     }
 
 
@@ -109,18 +91,20 @@ internal class DalOrderItem:IOrderItem
     /// <exception cref="Exception"></exception>
     public void Update(OrderItem updatedOrderItem)
     {
+        // Find the requested order item.
         int i = 0;
         foreach (OrderItem orderItem in DataSource.orderItems)
         {
+            // If there is such order items.
             if (orderItem.UniqID == updatedOrderItem.UniqID)
             {
                 DataSource.orderItems[i] = updatedOrderItem;
-                break;
+                return;
             }
             i++;
         }
-        if (i == DataSource.orderItems.Count)
-            throw new DoesNotExistsException("Order item ID");
+        // If there is no such order items.
+        throw new DoesNotExistsException("Order item ID");
     }
 
     /// <summary>
@@ -130,18 +114,8 @@ internal class DalOrderItem:IOrderItem
     /// <exception cref="Exception"></exception>
     public void Delete(int ID)
     {
-        bool flag = false;
-        foreach (OrderItem orderItem in DataSource.orderItems)
-        {
-            if (orderItem.UniqID == ID)
-            {
-                DataSource.orderItems.Remove(orderItem);
-                flag = true;
-                break;
-            }
-
-        }
-        if (!flag)
+        // Remove the order item by ID and if the order item does not exists throw an exception.
+        if (DataSource.orderItems.RemoveAll(orderItem => orderItem.UniqID == ID) == 0)
             throw new DoesNotExistsException("Order item ID");
     }
 }

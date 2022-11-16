@@ -26,8 +26,8 @@ public enum MainOptions
 public enum ProductOptions
 {
     Add = 1,
-    Read,
-    ReadAllList,
+    Get,
+    GetAllList,
     Update,
     Delete
 }
@@ -38,8 +38,8 @@ public enum ProductOptions
 public enum OrderOptions
 {
     Add = 1,
-    Read,
-    ReadAllList,
+    Get,
+    GetAllList,
     Update,
     Delete
 
@@ -52,10 +52,10 @@ public enum OrderOptions
 public enum OrderItemOptions
 {
     Add = 1,
-    Read,
-    ReadByOrder,
-    ReadByProduct,
-    ReadAllList,
+    Get,
+    GetByOrder,
+    GetByProduct,
+    GetAllList,
     Update,
     Delete
 }

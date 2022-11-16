@@ -7,7 +7,7 @@ namespace Dal;
 /// <summary>
 /// CRUD of order.
 /// </summary>
-internal class DalOrder : IOrder
+public class DalOrder : IOrder
 {
 
     /// <summary>
@@ -26,32 +26,27 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="ID"></param>
     /// <returns>The requested order.</returns>
-    /// <exception cref="Exception"></exception>
-    public Order Read(int ID)
+    /// <exception cref="DoesNotExistsException"></exception>
+    public Order Get(int ID)
     {
-        int i = 0;
-        foreach (Order order in DataSource.orders)
-        {
-            if(order.UniqID == ID)
-                break;
-            i++;
-        }
-       if(i==DataSource.orders.Count)
+        Order? tempOrder=DataSource.orders.Find(order => order.UniqID == ID);
+        //If the order was not found.
+        if (tempOrder == null)
          throw new DoesNotExistsException("Order ID");
-        // if the order was found
-        Order newOrder = DataSource.orders[i];
-        return newOrder;
+        // If the order was found.
+        return (Order)tempOrder;
     }
 
     /// <summary>
     /// Gets all the orders.
     /// </summary>
     /// <returns>An array that refers to all the order.</returns>
-    /// <exception cref="Exception"></exception>
-    public IEnumerable<Order> ReadAll()
+    /// <exception cref="DoesNotExistsException"></exception>
+    public IEnumerable<Order> GetAll()
     {
-        IEnumerable<Order> orders = DataSource.orders;
-        if(!orders.Any())
+        IEnumerable<Order>? orders = DataSource.orders.Where(order => order.UniqID>0);
+        // If there is no orders.
+        if (orders==null)
             throw new DoesNotExistsException("Any orders");
         return orders;
     }
@@ -59,43 +54,33 @@ internal class DalOrder : IOrder
     /// updates details of a spesific order.
     /// </summary>
     /// <param name="updatedOrder"></param>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="DoesNotExistsException"></exception>
     public void Update(Order updatedOrder)
     {
+        // Find the requested order.
         int i = 0;
         foreach (Order order in DataSource.orders)
         {
+            // If the order was found.
             if (order.UniqID == updatedOrder.UniqID)
             {
                 DataSource.orders[i]=updatedOrder;
-                break;
+                return;
             }
             i++;
         }
-        if (i == DataSource.orders.Count)
-            throw new DoesNotExistsException("Order ID");
+        // If the order was not found.
+        throw new DoesNotExistsException("Order ID");
     }
     /// <summary>
     /// Delete an order by ID.
     /// </summary>
     /// <param name="ID"></param>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="DoesNotExistsException"></exception>
     public void Delete(int ID)
     {
-        bool flag = false;
-        foreach (Order order in DataSource.orders)
-        {
-            if (order.UniqID == ID)
-            {
-                DataSource.orders.Remove(order);
-                flag = true;
-                break;
-            }
-           
-        }
-        if (!flag)
+        // Remove the order by ID and if the order does not exists throw an exception.
+        if(DataSource.orders.RemoveAll(order=>order.UniqID==ID)==0)
             throw new DoesNotExistsException("Order ID");
-
     }
-
 }

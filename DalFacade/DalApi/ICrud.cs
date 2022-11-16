@@ -11,7 +11,7 @@ namespace DalApi
         int Add(T entity);
         void Delete(int ID);
         void Update(T ID);
-        T Read(int ID);
-        IEnumerable<T> ReadAll(); 
+        T Get(int ID);
+        IEnumerable<T> GetAll(); 
     }
 }

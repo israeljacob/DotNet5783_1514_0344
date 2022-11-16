@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace BO
 {
+    /// <summary>
+    /// A shopping cart.
+    /// </summary>
     public class Cart
     {
         /// <summary>
