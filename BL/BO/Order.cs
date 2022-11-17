@@ -59,6 +59,7 @@ namespace BO
         Name: {CustomerName}, 
         Customer Email=  {CustomerEmail}, 
         Customer Adress: {CustomerAdress}
+        Status Of Order: {StatusOfOrder}
         Order Items: {orderItems}
         Order Date: {OrderDate}  
         Ship Date: {ShipDate} 

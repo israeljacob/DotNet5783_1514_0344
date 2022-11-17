@@ -1,4 +1,5 @@
 ﻿using Dal;
+using DalApi;
 using DO;
 
 namespace DalTest;
@@ -10,9 +11,7 @@ public class mainProgram
     {
 
         //dal obj initial
-        DalProduct dalProduct = new DalProduct();
-        DalOrder dalOrder = new DalOrder();
-        DalOrderItem dalOrderItem = new DalOrderItem();
+            DalList dalList = new DalList();
 
         //DO obj initial
         Product product = new Product();
@@ -130,7 +129,7 @@ public class mainProgram
             product.Price = Menu.IntInput("Enter the price:");
             product.Category = Menu.CategoryInput();
             product.InStock = Menu.IntInput("Enter How much is in stock:");
-            Console.Write("{0} Was Added Successfully \n", dalProduct.Add(product));
+            Console.Write("{0} Was Added Successfully \n", dalList.Product.Add(product));
         }
 
         /// function to get product by ID
@@ -139,7 +138,7 @@ public class mainProgram
             int idinput = Menu.IntInput("Enter the ID number:");
             try
             {
-                Console.Write(dalProduct.Get(idinput));
+                Console.Write(dalList.Product.Get(idinput));
             }
             catch (Exception e)
             {
@@ -147,32 +146,32 @@ public class mainProgram
             }
         }
         /// function to see all the products
-        //void GetAllProduct()
-        //{
-        //    try
-        //    {
-        //        Product[] products1 = dalProduct.GetAll();
-        //        foreach (var productitem in products1)
-        //        {
-        //            Console.Write(productitem);
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e);
-        //    }
-        //}
+        void GetAllProduct()
+        {
+            try
+            {
+                IEnumerable<Product> products = dalList.Product.GetAll();
+                foreach (var productitem in products)
+                {
+                    Console.Write(productitem);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
 
         /// function to update a product
         void UpdateProduct()
         {
             product.UniqID = Menu.IntInput("Entter the ID:");
-            Console.Write(dalProduct.Get(product.UniqID));
+            Console.Write(dalList.Product.Get(product.UniqID));
             product.Name = Menu.StringInput("Enter the name:");
             product.Price = Menu.IntInput("Enter the price:");
             product.Category = Menu.CategoryInput();
             product.InStock = Menu.IntInput("Enter How much is in stock:");
-            dalProduct.Update(product);
+            dalList.Product.Update(product);
             try
             {
                 Console.Write("{0} Was Update Successfully \n", product.UniqID);
@@ -188,7 +187,7 @@ public class mainProgram
             try
             {
                 int del = Menu.IntInput("Entter the ID:");
-                dalProduct.Delete(del);
+                dalList.Product.Delete(del);
                 Console.Write("{0} Was Delete Successfully \n", del);
             }
             catch (Exception e)
@@ -210,7 +209,7 @@ public class mainProgram
             order.ShipDate = Menu.dateinput();
             Console.WriteLine("Enter Delivery Date:");
             order.DeliveryrDate = Menu.dateinput();
-            Console.Write("Order {0} Was Added Successfully \n", dalOrder.Add(order));
+            Console.Write("Order {0} Was Added Successfully \n", dalList.Order.Add(order));
         }
         /// function to get an order by ID
         void GetOrder()
@@ -218,7 +217,7 @@ public class mainProgram
             try
             {
                 int idinput = Menu.IntInput("Entter the ID:");
-                Console.Write(dalOrder.Get(idinput));
+                Console.Write(dalList.Order.Get(idinput));
             }
             catch (Exception e)
             {
@@ -226,28 +225,28 @@ public class mainProgram
             }
         }
         /// function to see all orders
-        //void GetAllOrder()
-        //{
-        //    try
-        //    {
-        //        Order[] order1 = dalOrder.GetAll();
-        //        foreach (var orderitem in order1)
-        //        {
-        //            Console.WriteLine(orderitem);
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e);
-        //    }
-        //}
+        void GetAllOrder()
+        {
+            try
+            {
+                IEnumerable<Order> order1 = dalList.Order.GetAll();
+                foreach (var orderitem in order1)
+                {
+                    Console.WriteLine(orderitem);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
         /// function to update an order
         void UpdateOrder()
         {
             try
             {
                 order.UniqID = Menu.IntInput("Entter the ID:");
-                Console.Write(dalOrder.Get(order.UniqID));
+                Console.Write(dalList.Order.Get(order.UniqID));
                 order.CustomerName = Menu.StringInput("Enter the name:");
                 order.CustomerAdress = Menu.StringInput("Enter the address:");
                 order.CustomerEmail = Menu.emailInput();
@@ -257,7 +256,7 @@ public class mainProgram
                 order.ShipDate = Menu.dateinput();
                 Console.WriteLine("Enter Delivery Date:");
                 order.DeliveryrDate = Menu.dateinput();
-                dalProduct.Update(product);
+                dalList.Product.Update(product);
                 Console.Write("\n{0} Was Update Successfully \n", product.UniqID);
             }
             catch (Exception e)
@@ -271,7 +270,7 @@ public class mainProgram
             try
             {
                 int del = Menu.IntInput("Entter the ID:");
-                dalOrder.Delete(del);
+                dalList.Order.Delete(del);
                 Console.Write("{0} Was Delete Successfully \n", del);
             }
             catch (Exception e)
@@ -290,7 +289,7 @@ public class mainProgram
                 orderItem.OrderID = Menu.IntInput("Enter the order ID:");
                 orderItem.Price = Menu.IntInput("Enter the price:");
                 orderItem.Amount = Menu.IntInput("Enter the Amount:");
-                Console.Write("{0} Was Added Successfully \n", dalOrderItem.Add(orderItem));
+                Console.Write("{0} Was Added Successfully \n", dalList.OrderItem.Add(orderItem));
             }
             catch (Exception e)
             {
@@ -304,7 +303,7 @@ public class mainProgram
             try
             {
                 int idinput = Menu.IntInput("Entter the ID:");
-                Console.Write(dalOrderItem.Get(idinput));
+                Console.Write(dalList.OrderItem.Get(idinput));
             }
             catch (Exception e)
             {
@@ -312,62 +311,62 @@ public class mainProgram
             }
         }
         /// function to see an orderitem by product id
-        //void GetOrderItemByProduct()
-        //{
-        //    try
-        //    {
-        //        int idinput = Menu.IntInput("Entter the ID:");
-        //        OrderItem[] orderitem1 = dalOrderItem.GetByProduct(idinput);
-        //        foreach (var orderitem in orderitem1)
-        //        {
-        //            Console.Write(orderitem);
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e);
-        //    }
-        //}
+        void GetOrderItemByProduct()
+        {
+            try
+            {
+                int idinput = Menu.IntInput("Entter the ID:");
+                IEnumerable<OrderItem> orderitem1 = dalList.OrderItem.GetByProduct(idinput);
+                foreach (var orderitem in orderitem1)
+                {
+                    Console.Write(orderitem);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
         /// function to see an orderitem by order id
-        //void GetOrderItemByOrder()
-        //{
-        //    try
-        //    {
-        //        int idinput = Menu.IntInput("Entter the ID:");
-        //        OrderItem[] orderitem1 = dalOrderItem.GetByOrder(idinput);
-        //        foreach (var orderitem in orderitem1)
-        //        {
-        //            Console.Write(orderitem);
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e);
-        //    }
-        //}
+        void GetOrderItemByOrder()
+        {
+            try
+            {
+                int idinput = Menu.IntInput("Entter the ID:");
+                IEnumerable<OrderItem> orderitem1 = dalList.OrderItem.GetByOrder(idinput);
+                foreach (var orderitem in orderitem1)
+                {
+                    Console.Write(orderitem);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
 
         /// function to see all the orderitems
-        //void GetAllOrderItem()
-        //{
-        //    try
-        //    {
-        //        OrderItem[] orderitem1 = dalOrderItem.GetAll();
-        //        foreach (var orderitem in orderitem1)
-        //        {
-        //            Console.Write(orderitem);
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Console.WriteLine(e);
-        //    }
-        //}
+        void GetAllOrderItem()
+        {
+            try
+            {
+                IEnumerable<OrderItem> orderitem1 = dalList.OrderItem.GetAll();
+                foreach (var orderitem in orderitem1)
+                {
+                    Console.Write(orderitem);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
 
         /// function to update an orderitem
         void UpdateOrderItem()
         {
             orderItem.UniqID = Menu.IntInput("Entter the ID:");
-            Console.Write(dalOrderItem.Get(orderItem.UniqID));
+            Console.Write(dalList.OrderItem.Get(orderItem.UniqID));
             orderItem.ProductID = Menu.IntInput("Enter the product ID:");
             orderItem.OrderID = Menu.IntInput("Enter the order ID:");
             try
@@ -386,7 +385,7 @@ public class mainProgram
         void DeleteOrderItem()
         {
             int del = Menu.IntInput("Entter the ID:");
-            dalOrderItem.Delete(del);
+            dalList.OrderItem.Delete(del);
             Console.Write("{0} Was Delete Successfully \n", del);
 
         }

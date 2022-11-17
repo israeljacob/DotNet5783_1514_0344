@@ -7,7 +7,7 @@ namespace Dal;
 /// <summary>
 /// CRUD of order.
 /// </summary>
-public class DalOrder : IOrder
+internal class DalOrder : IOrder
 {
 
     /// <summary>

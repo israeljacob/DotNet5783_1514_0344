@@ -9,7 +9,7 @@ namespace Dal;
 /// <summary>
 /// CRUD of product.
 /// </summary>
-public class DalProduct:IProduct
+internal class DalProduct:IProduct
 {
     /// <summary>
     /// Addes a new product.

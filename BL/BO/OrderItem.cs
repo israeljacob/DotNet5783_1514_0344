@@ -11,10 +11,6 @@ namespace BO
     public class OrderItem
     {
         /// <summary>
-        ///  order item ID.
-        /// </summary>
-        public int UniqID { get; set; }
-        /// <summary>
         /// The ID of the item.
         /// </summary>
         public int ProductID { get; set; }
@@ -22,6 +18,10 @@ namespace BO
         /// The ID of the order that this item was orderred by..
         /// </summary>
         public int OrderID { get; set; }
+        /// <summary>
+        /// The product name.
+        /// </summary>
+        public string ?ProductName { get; set; }
         /// <summary>
         /// The actual price of the product in the current order.
         /// </summary>
@@ -36,9 +36,9 @@ namespace BO
         /// </summary>
         /// <returns> the printable form. </returns>
         public override string ToString() => $@" 
-        Uniq ID: {UniqID}
         Product ID: {ProductID}
         Order ID: {OrderID} 
+        Product Name: {ProductName}
         Amount: {Amount} 
         Price: {Price} 
 

@@ -5,11 +5,8 @@ using DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace Dal;
 
-public class DalOrderItem:IOrderItem
+internal class DalOrderItem:IOrderItem
 {
-
-
-
     /// <summary>
     /// Addes a new order item.
     /// </summary>
