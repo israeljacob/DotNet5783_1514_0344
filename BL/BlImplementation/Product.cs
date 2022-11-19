@@ -34,10 +34,22 @@ namespace BlImplementation
         {
             if (ID <= 0)
                 throw new UnPositiveIDException();
-            DO.Product? product;
-            if (( product = dalList.Product.Get(ID))==null)
+            DO.Product product= new DO.Product();
+            try
+            {
+                product = dalList.Product.Get(ID);
+            }
+            catch
+            {
                 throw new BO.DoesNotExistsException("product ID");
-            BO.Product? BOProduct=(BO.Product)product;
+            }
+            BO.Product BOproduct = new BO.Product();
+            BOproduct.UniqID= product.UniqID;
+            BOproduct.Name= product.Name;
+            BOproduct.Price= product.Price;
+            BOproduct.Category = (BO.Category)product.Category;
+            BOproduct.InStock= product.InStock;
+            return BOproduct;
         }
     }
 }
