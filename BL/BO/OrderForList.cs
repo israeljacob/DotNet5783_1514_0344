@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BO
 {
+    /// <summary>
+    /// An order for a list.
+    /// </summary>
     public class OrderForList
     {
         /// <summary>

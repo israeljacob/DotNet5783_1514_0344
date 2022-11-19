@@ -22,7 +22,12 @@ namespace BO
         /// <summary>
         /// A list of tuples that contains the date of the update and a description of the proress.
         /// </summary>
-        public List<Tuple<DateTime date,string>>? ProgressOfOrder { get; set; }
+        public List<Tuple<DateTime,string>>? ProgressOfOrder { get; set; }
+        public override string ToString() => $@" 
+        UniqID: {UniqID}
+        Status Of Order: {StatusOfOrder}
+        Progress Of Order: {ProgressOfOrder}
 
+";
     }
 }
