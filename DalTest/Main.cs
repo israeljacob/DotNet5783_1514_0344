@@ -11,7 +11,7 @@ public class mainProgram
     {
 
         //dal obj initial
-            DalList dalList = new DalList();
+            IDal dalList = new DalList();
 
         //DO obj initial
         Product product = new Product();

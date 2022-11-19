@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BlTest
+namespace BLApi
 {
-    internal class Program
+    public interface IOrder
     {
     }
 }

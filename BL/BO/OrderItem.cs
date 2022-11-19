@@ -15,9 +15,9 @@ namespace BO
         /// </summary>
         public int ProductID { get; set; }
         /// <summary>
-        /// The ID of the order that this item was orderred by..
+        /// The ID of the order item.
         /// </summary>
-        public int OrderID { get; set; }
+        public int OrderItemID { get; set; }
         /// <summary>
         /// The product name.
         /// </summary>
@@ -30,14 +30,17 @@ namespace BO
         /// The quantity of items of this product in the order.
         /// </summary>
         public int Amount { get; set; }
-
+        /// <summary>
+        /// The total price of the product.
+        /// </summary>
+        public double TotalPrice { get; set; }
         /// <summary>
         /// Converts the object to a printable form.
         /// </summary>
         /// <returns> the printable form. </returns>
         public override string ToString() => $@" 
         Product ID: {ProductID}
-        Order ID: {OrderID} 
+        Order Item ID: {OrderItemID} 
         Product Name: {ProductName}
         Amount: {Amount} 
         Price: {Price} 
