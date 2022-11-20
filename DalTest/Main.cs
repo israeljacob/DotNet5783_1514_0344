@@ -11,7 +11,7 @@ public class mainProgram
     {
 
         //dal obj initial
-            DalList dalList = new DalList();
+            IDal dalList = new DalList();
 
         //DO obj initial
         Product product = new Product();
@@ -41,7 +41,7 @@ public class mainProgram
                             GetProduct();
                             break;
                         case ProductOptions.GetAllList:
-                            //GetAllProduct();
+                            GetAllProduct();
                             break;
                         case ProductOptions.Update:
                             UpdateProduct();
@@ -66,7 +66,7 @@ public class mainProgram
                             GetOrder();
                             break;
                         case OrderOptions.GetAllList:
-                            //GetAllOrder();
+                            GetAllOrder();
                             break;
                         case OrderOptions.Update:
                             UpdateOrder();
@@ -92,13 +92,13 @@ public class mainProgram
                             GetOrderItem();
                             break;
                         case OrderItemOptions.GetByOrder:
-                            //GetOrderItemByOrder();
+                            GetOrderItemByOrder();
                             break;
                         case OrderItemOptions.GetByProduct:
-                            //GetOrderItemByProduct();
+                            GetOrderItemByProduct();
                             break;
                         case OrderItemOptions.GetAllList:
-                            //GetAllOrderItem();
+                            GetAllOrderItem();
                             break;
                         case OrderItemOptions.Update:
 

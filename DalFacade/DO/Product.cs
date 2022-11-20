@@ -41,8 +41,5 @@ Amount in stock: {InStock}
 
 ";
 
-    public static implicit operator IProduct(Product v)
-    {
-        throw new NotImplementedException();
-    }
+  
 }

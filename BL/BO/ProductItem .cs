@@ -30,7 +30,7 @@ namespace BO
         /// <summary>
         /// How much from this product is available.
         /// </summary>
-        public int InStock { get; set; }
+        public bool InStock { get; set; }
         /// <summary>
         /// The amount of the product in the corrent shopping cart.
         /// </summary>

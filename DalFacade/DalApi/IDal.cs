@@ -9,8 +9,8 @@ namespace DalApi
 {
     public class IDal
     {
-        Order Order { get; }
-        Product Product { get; }
-        OrderItem OrderItem { get; }
+        public IOrder Order { get; }
+        public IProduct Product { get; }
+        public IOrderItem OrderItem { get; }
     }
 }

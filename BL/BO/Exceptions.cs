@@ -20,9 +20,9 @@ namespace BO
         public ExistException(string message) : base(message) { _message = message; }
         public override string ToString() => _message + " ID allresdy exists";
     }
-    public class UnPositiveIDException : Exception
+    public class InCorrectDetails : Exception
     {
-        public UnPositiveIDException() : base() {  }
-        public override string ToString() =>   " ID should be positive";
+        public InCorrectDetails() : base() {  }
+        public override string ToString() =>   "The details are incorrect.";
     }
 }
