@@ -49,31 +49,31 @@ namespace BlImplementation
             BOproduct.InStock= product.InStock;
             return BOproduct;
         }
-        BO.ProductItem ProductItemForCostemor(int ID, Cart cart)
-        {
-            if (ID <= 0)
-                throw new BO.InCorrectDetails();
-            DO.Product product = new DO.Product();
-            try
-            {
-                product = dalList.Product.Get(ID);
-            }
-            catch
-            {
-                throw new BO.DoesNotExistsException("product ID");
-            }
-            BO.ProductItem BOproductItem = new BO.ProductItem();
-            BOproductItem.UniqID = product.UniqID;
-            BOproductItem.Name = product.Name;
-            BOproductItem.Price = product.Price;
-            BOproductItem.Category = (BO.Category)product.Category;
-            if (product.InStock == 0)
-                BOproductItem.InStock = false;
-            else
-                BOproductItem.InStock= true;
-           // BOproductItem.Amount=cart.orderItems.Find(ProductItem => ProductItem.ProductID== ID).Amount;
-            return BOproductItem;
-        }
+        //BO.ProductItem ProductItemForCostemor(int ID, Cart cart)
+        //{
+        //    if (ID <= 0)
+        //        throw new BO.InCorrectDetails();
+        //    DO.Product product = new DO.Product();
+        //    try
+        //    {
+        //        product = dalList.Product.Get(ID);
+        //    }
+        //    catch
+        //    {
+        //        throw new BO.DoesNotExistsException("product ID");
+        //    }
+        //    BO.ProductItem BOproductItem = new BO.ProductItem();
+        //    BOproductItem.UniqID = product.UniqID;
+        //    BOproductItem.Name = product.Name;
+        //    BOproductItem.Price = product.Price;
+        //    BOproductItem.Category = (BO.Category)product.Category;
+        //    if (product.InStock == 0)
+        //        BOproductItem.InStock = false;
+        //    else
+        //        BOproductItem.InStock= true;
+        //   // BOproductItem.Amount=cart.orderItems.Find(ProductItem => ProductItem.ProductID== ID).Amount;
+        //    return BOproductItem;
+        //}
         void AddProduct(int ID, string name, double price, BO.Category category, int inStock)
         {
             if(ID<= 0 || name==null || price<=0) throw new BO.InCorrectDetails();
