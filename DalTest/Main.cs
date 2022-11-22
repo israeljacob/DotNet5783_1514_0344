@@ -9,9 +9,8 @@ public class mainProgram
 {
     static void Main(string[] args)
     {
-
         //dal obj initial
-            IDal dalList = new DalList();
+        IDal dalList = DalList.Instance;
 
         //DO obj initial
         Product product = new Product();

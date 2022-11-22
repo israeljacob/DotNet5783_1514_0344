@@ -10,7 +10,7 @@ namespace BlImplementation
 {
     internal class Order
     {
-        IDal dalList = new DalList();
+        IDal dalList = DalList.Instance;
         List<BO.OrderForList> ordersForList()
         {
             List<BO.OrderForList> orderForLists;

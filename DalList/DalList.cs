@@ -9,8 +9,11 @@ namespace Dal
 {
     sealed public class DalList : IDal 
     {
-        public IOrder Order = new DalOrder();
-        public IProduct Product=> new DalProduct();
-        public IOrderItem OrderItem =>new DalOrderItem();
+        private static IDal instance = new DalList();
+        public static IDal Instance { get { return instance; } }
+        private DalList() { }
+        public IOrder Order => new DalOrder();
+        public IProduct Product => new DalProduct();
+        public IOrderItem OrderItem => new DalOrderItem();
     }
 }

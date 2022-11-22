@@ -1,4 +1,5 @@
 ﻿using BLApi;
+using BO;
 using Dal;
 using DalApi;
 using System;
@@ -11,22 +12,30 @@ namespace BlImplementation
 {
     internal class Product: BLApi.IProduct
     {
-        IDal dalList = new DalList();
+        IDal dalList = DalList.Instance;
 
-        List<BO.ProductForList> GetListOfProducts()
+        IEnumerable<BO.ProductForList> GetListOfProducts()
         {
-           BO.ProductForList productForLists1 = new BO.ProductForList();
-            IEnumerable<DO.Product> products = dalList.Product.GetAll();
-            List<BO.ProductForList> productForLists = new List<BO.ProductForList>();
-            foreach (DO.Product product in products)
+            foreach (DO.Product product in dalList.Product.GetAll())
             {
-                productForLists1.UniqID=product.UniqID;
-                productForLists1.Name=product.Name;
-                productForLists1.Price=product.Price;
-                productForLists1.Category = (BO.Category)product.Category;
-                productForLists.Add(productForLists1);
+                string messagge = "";
+                if (product.UniqID == null)
+                    messagge = "ID";
+                else if(product.Name == null)
+                    messagge = "Name";
+                else if (product.Category==null)
+                    messagge = "Category";
+                if (messagge != "")
+                    throw new MissingAttributeException(messagge);
             }
-            return productForLists;
+        return from product in dalList.Product.GetAll()
+               select new ProductForList
+               {
+                   UniqID = product.UniqID,
+                   Name = product.Name ?? throw new Exception(),
+                   Price = product.Price,
+                   Category = (BO.Category)product.Category
+               };
         }
         BO.Product ProductItemForManager(int ID)
         {

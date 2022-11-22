@@ -1,5 +1,4 @@
 ﻿using DO;
-using Order = DO.Order;
 
 namespace Dal;
 /// <summary>
@@ -35,17 +34,17 @@ internal static class DataSource
         /// </summary>
         internal static int orderID = r.Next(1000000, 1500000);
         internal static int OrderID
-        { 
+        {
             get { return orderID++; }
         }
 
         /// <summary>
         /// Order item ID.
         /// </summary>
-        internal static int orderItemID = r.Next(2000000, 2500000) ;
+        internal static int orderItemID = r.Next(2000000, 2500000);
         internal static int OrderItemID
         {
-            get {return orderItemID++; }
+            get { return orderItemID++; }
         }
 
     }
@@ -86,7 +85,7 @@ internal static class DataSource
         for (int i = 0; i < 10; i++)
         {
             Product temp = new Product();
-            temp.UniqID = r.Next(300000,350000);
+            temp.UniqID = r.Next(300000, 350000);
 
             temp.Name = Productsnames[i];
 
@@ -120,10 +119,10 @@ internal static class DataSource
             temp.Price = ProductsPriceTrouser[PriceIndexTrouser];
 
             var stockindex = r.Next(20);
-            if (i ==1)
+            if (i == 1)
                 temp.InStock = 0;
             else
-                temp.InStock =stockindex ;
+                temp.InStock = stockindex;
 
             products.Add(temp);
         }
@@ -132,7 +131,7 @@ internal static class DataSource
     /// <summary>
     /// Initializes 20 new orders.
     /// </summary>
-    private static void  OrderInitialize()
+    private static void OrderInitialize()
     {
         var names = new string[]
          {
@@ -143,7 +142,7 @@ internal static class DataSource
              "Agnes Marquez","Penelope Parsons","Lottie Hancock","Lorraine Trevino"
 
          };
-       
+
 
         var emails = new string[]
         {
@@ -175,7 +174,7 @@ internal static class DataSource
             temp.CustomerName = names[i];
             temp.CustomerEmail = emails[i];
             temp.CustomerAdress = adresses[i];
-            temp.OrderDate = DateTime.Now.AddDays(random.Next(-1000,-1));
+            temp.OrderDate = DateTime.Now.AddDays(random.Next(-1000, -1));
             if (i <= 15)
             {
                 do
@@ -207,18 +206,18 @@ internal static class DataSource
     /// </summary>
     private static void OrderItemInitialize()
     {
-         Random r = new Random();
+        Random r = new Random();
         // Store them in the list.
         for (int i = 0; i < 40; i++)
         {
             OrderItem temp = new OrderItem();
             int rand = r.Next(1, 9);
-            temp.UniqID=Config.OrderItemID;
-            temp.ProductID = orders[r.Next(0,19)].UniqID;
+            temp.UniqID = Config.OrderItemID;
+            temp.ProductID = orders[r.Next(0, 19)].UniqID;
             temp.OrderID = products[rand].UniqID;
-            temp.Amount= r.Next(1,10);
+            temp.Amount = r.Next(1, 10);
             temp.Price = products[rand].Price * temp.Amount;
-            
+
         }
     }
 

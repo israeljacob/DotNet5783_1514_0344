@@ -25,4 +25,11 @@ namespace BO
         public InCorrectDetails() : base() {  }
         public override string ToString() =>   "The details are incorrect.";
     }
+
+    public class MissingAttributeException: Exception
+    {
+        private string _message;
+        public MissingAttributeException(string message) : base(message) { _message = message; }
+        public override string ToString() => _message + "is missing";
+    }
 }
