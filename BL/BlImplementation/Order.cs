@@ -17,10 +17,16 @@ namespace BlImplementation
             //try
             //{ foreach (DO.Order order in dalList.Order.GetAll())
             //    {
-              
+
             //     }
             //}
-            return new List<BO.OrderForList>(); 
+            return new List<BO.OrderForList>();
         }
+    }
+
+
+
+
+
     }
 }

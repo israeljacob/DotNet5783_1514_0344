@@ -20,16 +20,35 @@ namespace BO
         public ExistException(string message) : base(message) { _message = message; }
         public override string ToString() => _message + " ID allresdy exists";
     }
-    public class InCorrectDetails : Exception
+    public class InCorrectDetailsException : Exception
     {
-        public InCorrectDetails() : base() {  }
-        public override string ToString() =>   "The details are incorrect.";
+        public InCorrectDetailsException() : base() { }
+        public override string ToString() => "The details are incorrect.";
     }
 
-    public class MissingAttributeException: Exception
+    public class MissingAttributeException : Exception
     {
         private string _message;
         public MissingAttributeException(string message) : base(message) { _message = message; }
-        public override string ToString() => _message + "is missing";
+        public override string ToString() => _message + " is missing";
     }
+    public class DetailsAreInCorrct : Exception
+    {
+        private string _message;
+        public DetailsAreInCorrct(string message) : base(message) { _message = message; }
+        public override string ToString() => _message + " is incorrect";
+    }
+    public class ItemExustsInOrder : Exception
+    {
+        private string _message;
+        public ItemExustsInOrder(string message) : base(message) { _message = message; }
+        public override string ToString() => _message + " exists in an order";
+    }
+    public class ItemExistsInOrder : Exception
+    {
+        private string _message;
+        public ItemExistsInOrder(string message) : base(message) { _message = message; }
+        public override string ToString() => _message + " exists in an order";
+    }
+
 }
