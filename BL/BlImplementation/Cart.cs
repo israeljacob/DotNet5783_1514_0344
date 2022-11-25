@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DalApi;
+using BLApi;
 using Dal;
 using BO;
 
 namespace BlImplementation
 {
-    internal class Cart : BLApi.ICart
+    internal class Cart : ICart
     {
         IDal dalList = DalList.Instance;
-        BO.Cart AddToCart(BO.Cart cart, int ID)
+        public BO.Cart AddToCart(BO.Cart cart, int ID)
         {
             foreach (var item in cart.orderItems)
             {
@@ -41,7 +42,7 @@ namespace BlImplementation
             });
             return cart;
         }
-        BO.Cart UpdateCart(BO.Cart cart, int ID, int amount)
+        public BO.Cart UpdateCart(BO.Cart cart, int ID, int amount)
         {
             BO.OrderItem? orderItem = cart.orderItems?.FirstOrDefault(x => x.ProductID == ID);
             if (orderItem == null)
@@ -62,7 +63,7 @@ namespace BlImplementation
             }
             return cart;
         }
-        void ExecuteOrder(BO.Cart cart)
+        public void ExecuteOrder(BO.Cart cart)
         {
             if (cart.CustomerName == null)
                 throw new BO.MissingAttributeException("Costemor name is null");

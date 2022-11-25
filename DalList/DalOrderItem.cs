@@ -31,7 +31,7 @@ internal class DalOrderItem:IOrderItem
         OrderItem? tempOrderItem = DataSource.orderItems.Find(orderItem => orderItem.UniqID == ID);
         // If the order item was not found
         if (tempOrderItem == null)
-            throw new DoesNotExistsException("Order item ID");
+            throw new IdNotExist("Order item",ID);
         // If the order item was found
         return (OrderItem)tempOrderItem;
     }
@@ -46,8 +46,9 @@ internal class DalOrderItem:IOrderItem
     {
        IEnumerable<OrderItem>? orderItems = DataSource.orderItems.Where(x=>x.OrderID==orderID);
         // If there is no such order items.
+
         if (orderItems==null)
-            throw new DoesNotExistsException("Any of those order items");
+            throw new IdNotExist("Order in order items", orderID);
         return orderItems;
     }
 
@@ -62,7 +63,7 @@ internal class DalOrderItem:IOrderItem
         IEnumerable<OrderItem>? orderItems = DataSource.orderItems.Where(x => x.ProductID == productID);
         // If there is no such order items.
         if (orderItems == null)
-            throw new DoesNotExistsException("Any of those order items");
+            throw new IdNotExist("Product in order items", productID);
         return orderItems;
     }
 
@@ -76,7 +77,7 @@ internal class DalOrderItem:IOrderItem
         IEnumerable<OrderItem>? orderItems = DataSource.orderItems.Where(x => x.UniqID>0);
         // If there is no such order items.
         if (orderItems == null)
-            throw new DoesNotExistsException("Any order items");
+            throw new Empty("order items");
         return orderItems;
     }
 
@@ -101,7 +102,7 @@ internal class DalOrderItem:IOrderItem
             i++;
         }
         // If there is no such order items.
-        throw new DoesNotExistsException("Order item ID");
+        throw new IdNotExist("Order item", updatedOrderItem.UniqID);
     }
 
     /// <summary>
@@ -113,7 +114,7 @@ internal class DalOrderItem:IOrderItem
     {
         // Remove the order item by ID and if the order item does not exists throw an exception.
         if (DataSource.orderItems.RemoveAll(orderItem => orderItem.UniqID == ID) == 0)
-            throw new DoesNotExistsException("Order item ID");
+            throw new IdNotExist("Order item",ID);
     }
 }
 

@@ -7,6 +7,62 @@ using System.Threading.Tasks;
 namespace BO
 {
 
+
+    public class Empty : Exception
+    {
+        string label;
+        public string getLabel() { return label; }
+        public Empty(string label)
+        {
+            this.label = label;
+        }
+        public override string ToString()
+        {
+            return $"[Error] There is no {label} in the List.\n";
+        }
+
+    }
+    public class IdNotExist : Exception
+    {
+        int id;
+        string label;
+        public int getId() { return id; }
+        public string getLabel() { return label; }
+        public IdNotExist(string label, int id)
+        {
+            this.id = id;
+            this.label = label;
+        }
+        public override string ToString()
+        {
+            return $"[Error] There is no {label} with id number {id}.\n";
+        }
+
+    }
+    public class IdAlreadyExist : Exception
+    {
+
+        int id;
+        string label;
+        public IdAlreadyExist(string label, int id)
+        {
+            this.id = id;
+            this.label = label;
+        }
+        public int getId() { return id; }
+        public string getLabel() { return label; }
+        public override string ToString()
+        {
+            return $"[Error] {label} with id number {id} already exist.\n";
+        }
+
+    }
+
+
+
+
+
+
     public class DisplayException : Exception
     {
         string ex;
@@ -21,41 +77,137 @@ namespace BO
     }
 
 
-    public class DoesNotExistsException : Exception
+    //public class DoesNotExistsException : Exception
+    //{
+
+
+
+
+    //    private string _message;
+
+    //    public DoesNotExistsException(string message) : base(message) { _message = message; }
+    //    public override string ToString() => _message + " does not exists";
+    //}
+    //public class ExistException : Exception
+    //{
+    //    private string _message;
+
+    //    public ExistException(string message) : base(message) { _message = message; }
+    //    public override string ToString() => _message + " ID allresdy exists";
+    //}
+
+
+
+    public class InCorrectIntException : Exception
     {
 
+        int id;
+        string label;
+        public InCorrectIntException(string label, int id)
+        {
+            this.id = id;
+            this.label = label;
+        }
+        public int getId() { return id; }
+        public string getLabel() { return label; }
+        public override string ToString()
+        {
+            return $"[Error] {label} :  {id} is incorrect input.\n";
+        }
 
-
-
-        private string _message;
-
-        public DoesNotExistsException(string message) : base(message) { _message = message; }
-        public override string ToString() => _message + " does not exists";
     }
-    public class ExistException : Exception
+
+    public class InCorrectStringException : Exception
     {
-        private string _message;
 
-        public ExistException(string message) : base(message) { _message = message; }
-        public override string ToString() => _message + " ID allresdy exists";
+        string n;
+        string label;
+        public InCorrectStringException(string label, String n)
+        {
+            this.n = n;
+            this.label = label;
+        }
+        public string getId() { return n; }
+        public string getLabel() { return label; }
+        public override string ToString()
+        {
+            return $"[Error] {label} :  {n} is incorrect input.\n";
+        }
+
     }
+
+    public class InCorrectDoubleException : Exception
+    {
+
+        double n;
+        string label;
+        public InCorrectDoubleException(string label, double n)
+        {
+            this.n = n;
+            this.label = label;
+        }
+        public double getId() { return n; }
+        public string getLabel() { return label; }
+        public override string ToString()
+        {
+            return $"[Error] {label} :  {n} is incorrect input.\n";
+        }
+
+    }
+
+
     public class InCorrectDetailsException : Exception
     {
         public InCorrectDetailsException() : base() { }
         public override string ToString() => "The details are incorrect.";
     }
 
-    public class MissingAttributeException : Exception
+
+    public class MissingDataException : Exception
     {
-        private string _message;
-        public MissingAttributeException(string message) : base(message) { _message = message; }
-        public override string ToString() => _message + " is missing";
+        string label;
+        public string getLabel() { return label; }
+        public MissingDataException(string label)
+        {
+            this.label = label;
+        }
+        public override string ToString()
+        {
+            return $"[Error] There is no {label} in the List.\n";
+        }
+
     }
-    public class DetailsAreInCorrctException : Exception
+
+    //public class MissingAttributeException : Exception
+    //{
+    //    private string _message;
+    //    public MissingAttributeException(string message) : base(message) { _message = message; }
+    //    public override string ToString() => _message + " is missing";
+    //}
+    //public class DetailsAreInCorrctException : Exception
+    //{
+    //    private string _message;
+    //    public DetailsAreInCorrctException(string message) : base(message) { _message = message; }
+    //    public override string ToString() => _message + " is incorrect";
+    //}
+
+
+    public class ItemExistsInOrderException : Exception
     {
-        private string _message;
-        public DetailsAreInCorrctException(string message) : base(message) { _message = message; }
-        public override string ToString() => _message + " is incorrect";
+        int id;
+        string label;
+        public int getId() { return id; }
+        public string getLabel() { return label; }
+        public ItemExistsInOrderException(string label, int id)
+        {
+            this.id = id;
+            this.label = label;
+        }
+        public override string ToString()
+        {
+            return $"[Error] There is no {label} with id number {id}.\n";
+        }
+
     }
     public class ItemExistsInOrder : Exception
     {

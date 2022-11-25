@@ -29,8 +29,9 @@ namespace BlImplementation
         /// </summary>
         /// <returns>An IEnumerable of all the products.</returns>
         /// <exception cref="MissingAttributeException"></exception>
-        IEnumerable<BO.ProductForList> GetListOfProducts()
+        public IEnumerable<BO.ProductForList> GetListOfProducts()
         {
+
 
             return from product in dalList.Product.GetAll()
                    select new BO.ProductForList
@@ -40,20 +41,25 @@ namespace BlImplementation
                        Price = product.Price,
                        Category = (BO.Category)product.Category
                    };
+
+
         }
-        BO.Product ProductItemForManager(int ID)
+        public BO.Product ProductItemForManager(int ID)
         {
+            var exceptions = new List<Exception>();
             if (ID <= 0)
-                throw new BO.InCorrectDetailsException();
-            DO.Product product = new DO.Product();/// צריך לבדוק איך להגדיר
+                exceptions.Add(new BO.InCorrectIntException("Product ID", ID));
+            DO.Product product = new DO.Product();/// 
             try
             {
                 product = dalList.Product.Get(ID);
             }
-            catch (Exception e)
+            catch (DO.IdNotExist)
             {
-                throw new BO.InCorrectDetailsException();
+                exceptions.Add(new BO.IdNotExist("Product", ID));
             }
+            if (exceptions.Count != 0)
+                throw new AggregateException(exceptions);
             return new BO.Product
             {
                 UniqID = product.UniqID,
@@ -62,19 +68,23 @@ namespace BlImplementation
                 Category = (BO.Category)product.Category,
                 InStock = product.InStock
             };
+            
         }
-        BO.ProductItem ProductItemForCostemor(int ID, BO.Cart cart)
+        public BO.ProductItem ProductItemForCostemor(int ID, BO.Cart cart)
         {
+            var exceptions = new List<Exception>();
+
             if (ID <= 0)
-                throw new BO.InCorrectDetailsException();
+                exceptions.Add(new BO.InCorrectIntException("Product ID", ID));
             DO.Product product = new DO.Product();
             try
             {
                 product = dalList.Product.Get(ID);
             }
-            catch (Exception e)
+            catch (DO.IdNotExist)
             {
-                throw new BO.InCorrectDetailsException();
+                exceptions.Add(new BO.InCorrectIntException("Product ID", ID));
+
             }
             bool inStock = true;
             if (product.InStock == 0)
@@ -92,16 +102,22 @@ namespace BlImplementation
                 Amount = amount
             };
         }
-        void AddProduct(int ID, string name, double price, BO.Category category, int inStock)
+        public void AddProduct(int ID, string name, double price, BO.Category category, int inStock)
         {
+            ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
+            ///in the end if the list is not empty throw AggregateException: kind of build in function
+            ///that hold and represents one or more errors.
+            var exceptions = new List<Exception>();
+
+
             if (ID <= 0)
-                throw new DetailsAreInCorrctException("ID");
+                exceptions.Add(new BO.InCorrectIntException("Product ID", ID));
             if (name == null)
-                throw new DetailsAreInCorrctException("Name");
+                exceptions.Add(new BO.InCorrectStringException("Product Name", name));
             if (price <= 0)
-                throw new DetailsAreInCorrctException("Price");
+                exceptions.Add(new BO.InCorrectDoubleException("Product Price", price));
             if (inStock < 0)
-                throw new DetailsAreInCorrctException("InStock");
+                exceptions.Add(new BO.InCorrectIntException("Product Instock", inStock));
             try
             {
                 dalList.Product.Add(new DO.Product
@@ -113,34 +129,52 @@ namespace BlImplementation
                     InStock = inStock
                 });
             }
-            catch (DalApi.DoesNotExistsException e)
+            catch (DO.ExistException)
             {
-                throw new BO.ExistException("Product");
+                exceptions.Add(new BO.IdAlreadyExist("Product",ID));
             }
+
+
+
+            if (exceptions.Count != 0)
+                throw new AggregateException(exceptions);
         }
         public void DeleteProduct(int ID)
         {
+            ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
+            ///in the end if the list is not empty throw AggregateException: kind of build in function
+            ///that hold and represents one or more errors.
+            var exceptions = new List<Exception>();
+
             if (dalList.OrderItem.GetByProduct(ID) != null)
-                throw new ItemExistsInOrder("Product");
+                exceptions.Add(new ItemExistsInOrderException("Product",ID));
             try
             {
                 dalList.Product.Delete(ID);
             }
-            catch (DalApi.DoesNotExistsException e)
+            catch (DO.IdNotExist)
             {
-                throw new BO.DoesNotExistsException(e.Message);
+                exceptions.Add( new BO.IdNotExist("Product",ID));
             }
+
+            if (exceptions.Count != 0)
+                throw new AggregateException(exceptions);
+
         }
         public void UpdateProduct(BO.Product product)
         {
+
+            var exceptions = new List<Exception>();
+
+
             if (product.UniqID <= 0)
-                throw new DetailsAreInCorrctException("ID");
+                exceptions.Add(new BO.InCorrectIntException("Product ID", product.UniqID));
             else if (product.Name == null)
-                throw new DetailsAreInCorrctException("Name");
+                exceptions.Add(new BO.InCorrectStringException("Product Name", product.Name));
             else if (product.Price <= 0)
-                throw new DetailsAreInCorrctException("Price");
+                exceptions.Add(new BO.InCorrectDoubleException("Product Price", product.Price));
             else if (product.InStock < 0)
-                throw new DetailsAreInCorrctException("InStock");
+                exceptions.Add(new BO.InCorrectIntException("Product Instock", product.InStock));
             try
             {
                 dalList.Product.Update(new DO.Product
@@ -152,10 +186,14 @@ namespace BlImplementation
                     InStock = product.InStock
                 });
             }
-            catch (DalApi.DoesNotExistsException e)
+            catch (DO.IdNotExist)
             {
-                throw new BO.ExistException(e.Message);
+                exceptions.Add(new BO.IdNotExist("Product", product.UniqID));
             }
+
+
+            if (exceptions.Count != 0)
+                throw new AggregateException(exceptions);
         }
     }
 }

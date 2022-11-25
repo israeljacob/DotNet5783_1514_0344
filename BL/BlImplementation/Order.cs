@@ -8,7 +8,7 @@ using Dal;
 
 namespace BlImplementation;
 
-internal class Order
+internal class Order : BLApi.IOrder
 {
     /// <summary>
     /// Handles everything related an order.
@@ -20,7 +20,7 @@ internal class Order
     /// </summary>
     /// <returns>An IEnumerable of all the orders.</returns>
     /// <exception cref="MissingAttributeException"></exception>
-    IEnumerable<BO.OrderForList> GetListOfOrders()
+    public IEnumerable<BO.OrderForList> GetListOfOrders()
     {
         return from order in dalList.Order.GetAll()
                select new BO.OrderForList
@@ -33,11 +33,11 @@ internal class Order
                };
     }
 
-    BO.Order OrderBYID(int ID)
+    public BO.Order OrderBYID(int ID)
     {
         if (ID <= 0)
             throw new BO.InCorrectDetailsException();
-        DO.Order order = new DO.Order();/// צריך לבדוק איך להגדיר
+        DO.Order order = new DO.Order();
         try
         {
             order = dalList.Order.Get(ID);
@@ -55,7 +55,7 @@ internal class Order
             OrderDate = order.OrderDate,
             ShipDate = order.ShipDate,
             DeliveryrDate = order.DeliveryrDate,
-            orderItems = orderItems(order.UniqID),
+            orderItems = (List<BO.OrderItem>)orderItems(order.UniqID),
             StatusOfOrder = statusOfOrder(order),
             TotalPrice = totalPrice(order)
         };
@@ -63,7 +63,7 @@ internal class Order
 
 
 
-    BO.StatusOfOrder statusOfOrder(DO.Order order)
+    public BO.StatusOfOrder statusOfOrder(DO.Order order)
     {
         BO.StatusOfOrder statusOfOrder = BO.StatusOfOrder.Orderred;
         if (order.DeliveryrDate > DateTime.MinValue)
@@ -73,7 +73,7 @@ internal class Order
         return statusOfOrder;
     }
 
-    int amoutOfItems(DO.Order order)
+    public int amoutOfItems(DO.Order order)
     {
         int amountOfItems = 0;
         foreach (DO.OrderItem orderItem in dalList.OrderItem.GetByOrder(order.UniqID))
@@ -89,7 +89,7 @@ internal class Order
         return totalPrice;
     }
 
-    IEnumerable<BO.OrderItem> orderItems(int ID)
+    public IEnumerable<BO.OrderItem> orderItems(int ID)
     {
         return from orderItem in dalList.OrderItem.GetByOrder(ID)
                select new BO.OrderItem
