@@ -32,7 +32,7 @@ namespace BO
         /// <summary>
         /// All the items of this list.
         /// </summary>
-        public List<OrderItem>? orderItems { get; set; }
+        public IEnumerable<OrderItem>? orderItems { get; set; }
         /// <summary>
         /// The date (and time) that the order has been accepted.
         /// </summary>

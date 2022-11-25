@@ -95,13 +95,13 @@ namespace BlImplementation
         void AddProduct(int ID, string name, double price, BO.Category category, int inStock)
         {
             if (ID <= 0)
-                throw new DetailsAreInCorrct("ID");
+                throw new DetailsAreInCorrctException("ID");
             if (name == null)
-                throw new DetailsAreInCorrct("Name");
+                throw new DetailsAreInCorrctException("Name");
             if (price <= 0)
-                throw new DetailsAreInCorrct("Price");
+                throw new DetailsAreInCorrctException("Price");
             if (inStock < 0)
-                throw new DetailsAreInCorrct("InStock");
+                throw new DetailsAreInCorrctException("InStock");
             try
             {
                 dalList.Product.Add(new DO.Product
@@ -134,13 +134,13 @@ namespace BlImplementation
         public void UpdateProduct(BO.Product product)
         {
             if (product.UniqID <= 0)
-                throw new DetailsAreInCorrct("ID");
+                throw new DetailsAreInCorrctException("ID");
             else if (product.Name == null)
-                throw new DetailsAreInCorrct("Name");
+                throw new DetailsAreInCorrctException("Name");
             else if (product.Price <= 0)
-                throw new DetailsAreInCorrct("Price");
+                throw new DetailsAreInCorrctException("Price");
             else if (product.InStock < 0)
-                throw new DetailsAreInCorrct("InStock");
+                throw new DetailsAreInCorrctException("InStock");
             try
             {
                 dalList.Product.Update(new DO.Product

@@ -32,17 +32,11 @@ namespace BO
         public MissingAttributeException(string message) : base(message) { _message = message; }
         public override string ToString() => _message + " is missing";
     }
-    public class DetailsAreInCorrct : Exception
+    public class DetailsAreInCorrctException : Exception
     {
         private string _message;
-        public DetailsAreInCorrct(string message) : base(message) { _message = message; }
+        public DetailsAreInCorrctException(string message) : base(message) { _message = message; }
         public override string ToString() => _message + " is incorrect";
-    }
-    public class ItemExustsInOrder : Exception
-    {
-        private string _message;
-        public ItemExustsInOrder(string message) : base(message) { _message = message; }
-        public override string ToString() => _message + " exists in an order";
     }
     public class ItemExistsInOrder : Exception
     {
