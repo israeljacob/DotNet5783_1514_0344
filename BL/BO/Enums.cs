@@ -4,26 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BO
+namespace BO;
+
+/// <summary>
+/// Categories of clothing.
+/// </summary>
+public enum Category
 {
-    /// <summary>
-    /// Categories of clothing.
-    /// </summary>
-    public enum Category
-    {
-        Shirts = 1,//חולצות
-        trousers,//מכנסיים
-        shoes,//נעלים
-        coats,//מעילים
-        sweaters//סוודרים
+    Shirts = 1,//חולצות
+    trousers,//מכנסיים
+    shoes,//נעלים
+    coats,//מעילים
+    sweaters//סוודרים
 
-    }
+}
 
-    public enum StatusOfOrder
-    {
-        InProcess=1,
-        Orderred,
-        Sent,
-        Delivered
-    }
+public enum StatusOfOrder
+{
+    InProcess=1,
+    Orderred,
+    Sent,
+    Delivered
 }

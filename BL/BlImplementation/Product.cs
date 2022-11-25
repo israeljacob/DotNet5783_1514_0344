@@ -25,7 +25,7 @@ namespace BlImplementation
         IDal dalList = DalList.Instance;
 
         /// <summary>
-        /// Returns all the priducts.
+        /// Returns all the products.
         /// </summary>
         /// <returns>An IEnumerable of all the products.</returns>
         /// <exception cref="MissingAttributeException"></exception>
