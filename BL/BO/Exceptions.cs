@@ -6,8 +6,27 @@ using System.Threading.Tasks;
 
 namespace BO
 {
+
+    public class DisplayException : Exception
+    {
+        string ex;
+        public DisplayException(string ex)
+        {
+            this.ex = ex;
+        }
+        public override string ToString()
+        {
+            return $"{ex.ToString()}\n";
+        }
+    }
+
+
     public class DoesNotExistsException : Exception
     {
+
+
+
+
         private string _message;
 
         public DoesNotExistsException(string message) : base(message) { _message = message; }
