@@ -8,7 +8,10 @@ using DalApi;
 
 namespace BlImplementation
 {
-    sealed public class Bl : IBL
-    {
-    }
+        sealed public class Bl : IBL
+        {
+            public BLApi.IProduct Product => new Product();
+            public BLApi.IOrder Order => new Order();
+            public BLApi.ICart Cart => new Cart();
+        }
 }

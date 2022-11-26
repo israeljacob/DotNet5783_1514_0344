@@ -8,11 +8,11 @@ namespace BO
 {
 
 
-    public class Empty : Exception
+    public class EmptyException : Exception
     {
         string label;
         public string getLabel() { return label; }
-        public Empty(string label)
+        public EmptyException(string label)
         {
             this.label = label;
         }
@@ -22,13 +22,13 @@ namespace BO
         }
 
     }
-    public class IdNotExist : Exception
+    public class IdNotExistException : Exception
     {
         int id;
         string label;
         public int getId() { return id; }
         public string getLabel() { return label; }
-        public IdNotExist(string label, int id)
+        public IdNotExistException(string label, int id)
         {
             this.id = id;
             this.label = label;
@@ -39,12 +39,12 @@ namespace BO
         }
 
     }
-    public class IdAlreadyExist : Exception
+    public class IdAlreadyExistException : Exception
     {
 
         int id;
         string label;
-        public IdAlreadyExist(string label, int id)
+        public IdAlreadyExistException(string label, int id)
         {
             this.id = id;
             this.label = label;

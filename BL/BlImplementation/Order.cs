@@ -51,7 +51,7 @@ internal class Order : BLApi.IOrder
         }
         catch (DO.IdNotExist)
         {
-            exceptions.Add(new BO.IdNotExist("Order", ID));
+            exceptions.Add(new BO.IdNotExistException("Order", ID));
 
         }
         if (exceptions.Count != 0)
@@ -87,7 +87,7 @@ internal class Order : BLApi.IOrder
         try { order = dalList.Order.Get(ID); }
         catch(DO.IdNotExist)
         {
-            exceptions.Add(new BO.IdNotExist("Order ID", ID));
+            exceptions.Add(new BO.IdNotExistException("Order ID", ID));
         }
         try {
             if (order.ShipDate > DateTime.MinValue)
@@ -133,7 +133,7 @@ internal class Order : BLApi.IOrder
         try { order = dalList.Order.Get(ID); }
         catch(DO.IdNotExist)
         {
-            exceptions.Add(new BO.IdNotExist("Product", ID));
+            exceptions.Add(new BO.IdNotExistException("Product", ID));
         }
         try {
                if (order.DeliveryrDate > DateTime.MinValue)
