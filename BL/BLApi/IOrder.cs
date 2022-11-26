@@ -11,11 +11,6 @@ namespace BLApi
         public BO.Order OrderBYID(int ID);
         public IEnumerable<BO.OrderForList> GetListOfOrders();
 
-        public BO.StatusOfOrder statusOfOrder(DO.Order order);
-
-        public int amoutOfItems(DO.Order order);
-
-        public IEnumerable<BO.OrderItem> orderItems(int ID);
 
         public BO.Order UpdateShipDate(int ID);
 

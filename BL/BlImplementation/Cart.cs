@@ -34,7 +34,7 @@ namespace BlImplementation
                     }
                     catch (DO.IdNotExist)
                     {
-                        
+
                         exceptions.Add(new BO.IdNotExistException("Cart ID", ID));
                     }
                     if(dalList.Product.Get(ID).InStock == 0)///לא מבין למה צריך
