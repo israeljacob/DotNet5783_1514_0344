@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using DO;
+using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using System.Collections;
 using Order = DO.Order;
@@ -86,5 +87,11 @@ internal class DalOrder : IOrder
         // Remove the order by ID and if the order does not exists throw an exception.
         if(DataSource.orders.RemoveAll(order=>order.UniqID==ID)==0)
             throw new IdNotExist("Order",ID);
+    }
+
+    public void CompareDates(DateTime d1,DateTime d2)
+    {
+        if (d1 > d2)
+            throw new DatesException("Order:", d1, d2);
     }
 }

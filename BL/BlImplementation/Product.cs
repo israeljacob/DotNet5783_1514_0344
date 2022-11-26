@@ -46,10 +46,13 @@ namespace BlImplementation
         }
         public BO.Product ProductItemForManager(int ID)
         {
+            ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
+            ///in the end if the list is not empty throw AggregateException: kind of build in function
+            ///that hold and represents one or more errors.
             var exceptions = new List<Exception>();
             if (ID <= 0)
                 exceptions.Add(new BO.InCorrectIntException("Product ID", ID));
-            DO.Product product = new DO.Product();/// 
+            DO.Product product = new DO.Product();
             try
             {
                 product = dalList.Product.Get(ID);
@@ -72,6 +75,9 @@ namespace BlImplementation
         }
         public BO.ProductItem ProductItemForCostemor(int ID, BO.Cart cart)
         {
+            ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
+            ///in the end if the list is not empty throw AggregateException: kind of build in function
+            ///that hold and represents one or more errors.
             var exceptions = new List<Exception>();
 
             if (ID <= 0)
@@ -163,7 +169,9 @@ namespace BlImplementation
         }
         public void UpdateProduct(BO.Product product)
         {
-
+            ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
+            ///in the end if the list is not empty throw AggregateException: kind of build in function
+            ///that hold and represents one or more errors.
             var exceptions = new List<Exception>();
 
 

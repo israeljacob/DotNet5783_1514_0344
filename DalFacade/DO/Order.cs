@@ -35,6 +35,8 @@ public struct Order
     /// </summary>
     public DateTime DeliveryrDate { get; set; }
 
+
+
     /// <summary>
     /// Converts the object to a printable form.
     /// </summary>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dal;
+using DocumentFormat.OpenXml.Drawing;
 
 namespace BlImplementation;
 
@@ -35,17 +36,26 @@ internal class Order : BLApi.IOrder
 
     public BO.Order OrderBYID(int ID)
     {
+        ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
+        ///in the end if the list is not empty throw AggregateException: kind of build in function
+        ///that hold and represents one or more errors.
+        var exceptions = new List<Exception>();
+
+
         if (ID <= 0)
-            throw new BO.InCorrectDetailsException();
+            exceptions.Add(new BO.InCorrectIntException("Order ID", ID));
         DO.Order order = new DO.Order();
         try
         {
             order = dalList.Order.Get(ID);
         }
-        catch (Exception e)
+        catch (DO.IdNotExist)
         {
-            throw new BO.InCorrectDetailsException();
+            exceptions.Add(new BO.IdNotExist("Order", ID));
+
         }
+        if (exceptions.Count != 0)
+            throw new AggregateException(exceptions);
         return new BO.Order
         {
             UniqID = order.UniqID,
@@ -59,19 +69,43 @@ internal class Order : BLApi.IOrder
             StatusOfOrder = statusOfOrder(order),
             TotalPrice = totalPrice(order)
         };
+
+
+
     }
 
 
 
      public BO.Order UpdateShipDate(int ID)
     {
+        ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
+        ///in the end if the list is not empty throw AggregateException: kind of build in function
+        ///that hold and represents one or more errors.
+        var exceptions = new List<Exception>();
+
         DO.Order order = new DO.Order();
         try { order = dalList.Order.Get(ID); }
-        catch { throw new Exception(); } /// לתקןןןן
-        if(order.ShipDate>DateTime.MinValue)
-            throw new Exception();
+        catch(DO.IdNotExist)
+        {
+            exceptions.Add(new BO.IdNotExist("Order ID", ID));
+        }
+        try {
+            if (order.ShipDate > DateTime.MinValue)
+                throw new DO.DatesException("Order:", order.ShipDate, DateTime.MinValue); ///Not sure if this is the correct way
+
+
+
+        }
+        catch(DO.DatesException)
+        {
+            exceptions.Add(new BO.DatesException("Order:", order.ShipDate, DateTime.MinValue));
+        }
+
+
         order.ShipDate= DateTime.Now;
          dalList.Order.Update(order);
+        if (exceptions.Count != 0)
+            throw new AggregateException(exceptions);
         return new BO.Order
         {
             UniqID = order.UniqID,
@@ -88,13 +122,34 @@ internal class Order : BLApi.IOrder
     }
     public BO.Order UpdateDeliveryDate(int ID)
     {
+
+        ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
+        ///in the end if the list is not empty throw AggregateException: kind of build in function
+        ///that hold and represents one or more errors.
+        var exceptions = new List<Exception>();
+
         DO.Order order = new DO.Order();
+
         try { order = dalList.Order.Get(ID); }
-        catch { throw new Exception(); } /// לתקןןןן
-        if (order.DeliveryrDate > DateTime.MinValue)
-            throw new Exception();
+        catch(DO.IdNotExist)
+        {
+            exceptions.Add(new BO.IdNotExist("Product", ID));
+        }
+        try {
+               if (order.DeliveryrDate > DateTime.MinValue)
+                throw new DO.DatesException("Order:", order.ShipDate, DateTime.MinValue); ///Not sure if this is the correct way
+
+        }
+        catch (DO.DatesException)
+        {
+            exceptions.Add(new BO.DatesException("Order:", order.ShipDate, DateTime.MinValue));
+
+        }
         order.DeliveryrDate = DateTime.Now;
         dalList.Order.Update(order);
+
+        if (exceptions.Count != 0)
+            throw new AggregateException(exceptions);
         return new BO.Order
         {
             UniqID = order.UniqID,

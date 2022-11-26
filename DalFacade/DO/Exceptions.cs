@@ -67,6 +67,27 @@ namespace DO
 
     }
 
+    public class DatesException : Exception
+    {
+        DateTime d1;
+        DateTime d2;
+        string label;
+        public DateTime getD1() { return d1; }
+        public DateTime getD2() { return d2; }
+        public string getLabel() { return label; }
+        public DatesException(string label, DateTime d1,DateTime d2)
+        {
+            this.d1 = d1;
+            this.d2 = d2;
+            this.label = label;
+        }
+        public override string ToString()
+        {
+            return $"[Error] {label} Can not compare between {d1} to {d2}.\n";
+        }
+
+    }
+
 
 
     public class ExistException : Exception

@@ -12,6 +12,13 @@ namespace DalApi
         void Delete(int ID);
         void Update(T ID);
         T Get(int ID);
-        IEnumerable<T> GetAll(); 
+        IEnumerable<T> GetAll();
+
+        /// <summary>
+        /// to comper two dates
+        /// </summary>
+        /// <param name="d1"></param>
+        /// <param name="d2"></param>
+        public void CompareDates(DateTime d1, DateTime d2);
     }
 }
