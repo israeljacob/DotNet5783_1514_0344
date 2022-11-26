@@ -36,7 +36,7 @@ internal class Order : BLApi.IOrder
 
     public BO.Order OrderBYID(int ID)
     {
-        ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
+        ///All the exception that comes from DO we catch it, then insert the appropriate exception to list,
         ///in the end if the list is not empty throw AggregateException: kind of build in function
         ///that hold and represents one or more errors.
         var exceptions = new List<Exception>();
@@ -164,26 +164,26 @@ internal class Order : BLApi.IOrder
             TotalPrice = totalPrice(order)
         };
     }
-    //BO.OrderTracking OrderTrack(int ID)
-    //{
-    //    DO.Order track = new DO.Order();
-    //    try {track = dalList.Order.Get(ID); }
-    //    catch { throw new Exception(); } /// לתקןןןןןןןןןןןן
-    //    List<Tuple<DateTime,string>> tracking = new List<Tuple<DateTime,string>>();
-    //    Tuple<DateTime, string> tuple = new Tuple<DateTime, string>;
-    //    if (track.OrderDate > DateTime.MinValue)
-    //    {
+    BO.OrderTracking OrderTrack(int ID)
+    {
+        DO.Order track = new DO.Order();
+        try { track = dalList.Order.Get(ID); }
+        catch { throw new BO.InCorrectIntException("Order ID", ID); }
+        List<Tuple<DateTime, string>> tracking = new List<Tuple<DateTime, string>>();
+        if (track.OrderDate > DateTime.MinValue)
+            tracking.Add(Tuple.Create(track.OrderDate, "The order has been created"));
+        if (track.ShipDate > DateTime.MinValue)
+            tracking.Add(Tuple.Create(track.ShipDate, "The order has been sent"));
+        if (track.DeliveryrDate > DateTime.MinValue)
+            tracking.Add(Tuple.Create(track.DeliveryrDate, "The order has been delivered"));
+        return new BO.OrderTracking
+        {
+            UniqID = track.UniqID,
+            StatusOfOrder = statusOfOrder(track),
+            ProgressOfOrder = tracking
+        };
+    }
 
-    //        tracking.Add(track.OrderDate, "The order was created");
-
-    //    }
-    //    return new BO.OrderTracking
-    //    {
-    //        UniqID= track.UniqID,
-    //        StatusOfOrder = statusOfOrder(track),
-    //        ProgressOfOrder = 
-    //    }
-    //}
     public BO.StatusOfOrder statusOfOrder(DO.Order order)
     {
         BO.StatusOfOrder statusOfOrder = BO.StatusOfOrder.Orderred;
