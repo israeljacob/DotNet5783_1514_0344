@@ -17,8 +17,9 @@ namespace BLApi
 
         public IEnumerable<BO.OrderItem> orderItems(int ID);
 
+        public BO.Order UpdateShipDate(int ID);
 
-
+        public BO.Order UpdateDeliveryDate(int ID);
 
     }
 }

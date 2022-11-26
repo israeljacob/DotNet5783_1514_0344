@@ -63,7 +63,7 @@ internal class Order : BLApi.IOrder
 
 
 
-    BO.Order UpdateShipDate(int ID)
+     public BO.Order UpdateShipDate(int ID)
     {
         DO.Order order = new DO.Order();
         try { order = dalList.Order.Get(ID); }
@@ -86,7 +86,7 @@ internal class Order : BLApi.IOrder
             TotalPrice = totalPrice(order)
         };
     }
-    BO.Order UpdateDeliveryDate(int ID)
+    public BO.Order UpdateDeliveryDate(int ID)
     {
         DO.Order order = new DO.Order();
         try { order = dalList.Order.Get(ID); }
@@ -129,7 +129,7 @@ internal class Order : BLApi.IOrder
     //        ProgressOfOrder = 
     //    }
     //}
-    BO.StatusOfOrder statusOfOrder(DO.Order order)
+    public BO.StatusOfOrder statusOfOrder(DO.Order order)
     {
         BO.StatusOfOrder statusOfOrder = BO.StatusOfOrder.Orderred;
         if (order.DeliveryrDate > DateTime.MinValue)
