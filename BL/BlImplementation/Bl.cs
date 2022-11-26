@@ -8,7 +8,5 @@ using DalApi;
 
 namespace BlImplementation
 {
-    sealed public class Bl : IBL
-    {
-    }
+   
 }
