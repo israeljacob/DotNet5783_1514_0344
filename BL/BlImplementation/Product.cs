@@ -59,7 +59,7 @@ namespace BlImplementation
             }
             catch (DO.IdNotExist)
             {
-                exceptions.Add(new BO.IdNotExist("Product", ID));
+                exceptions.Add(new BO.IdNotExistException("Product", ID));
             }
             if (exceptions.Count != 0)
                 throw new AggregateException(exceptions);
@@ -137,7 +137,7 @@ namespace BlImplementation
             }
             catch (DO.ExistException)
             {
-                exceptions.Add(new BO.IdAlreadyExist("Product",ID));
+                exceptions.Add(new BO.IdAlreadyExistException("Product",ID));
             }
 
 
@@ -160,7 +160,7 @@ namespace BlImplementation
             }
             catch (DO.IdNotExist)
             {
-                exceptions.Add( new BO.IdNotExist("Product",ID));
+                exceptions.Add( new BO.IdNotExistException("Product",ID));
             }
 
             if (exceptions.Count != 0)
@@ -196,7 +196,7 @@ namespace BlImplementation
             }
             catch (DO.IdNotExist)
             {
-                exceptions.Add(new BO.IdNotExist("Product", product.UniqID));
+                exceptions.Add(new BO.IdNotExistException("Product", product.UniqID));
             }
 
 

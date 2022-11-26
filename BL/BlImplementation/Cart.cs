@@ -35,7 +35,7 @@ namespace BlImplementation
                     catch (DO.IdNotExist)
                     {
 
-                        exceptions.Add(new BO.IdNotExist("Cart ID", ID));
+                        exceptions.Add(new BO.IdNotExistException("Cart ID", ID));
                     }
                     if(dalList.Product.Get(ID).InStock == 0)///לא מבין למה צריך
                         exceptions.Add(new BO.InCorrectIntException("Cart ID", ID));
@@ -50,7 +50,7 @@ namespace BlImplementation
             try { product = dalList.Product.Get(ID); }
             catch (DO.IdNotExist)
             {
-                exceptions.Add(new BO.IdNotExist("Cart", ID));
+                exceptions.Add(new BO.IdNotExistException("Cart", ID));
                 
             };
             if (product.InStock == 0)
@@ -120,7 +120,7 @@ namespace BlImplementation
                 try { dalList.Product.Get(orderItem.ProductID); }
                 catch (DO.IdNotExist)
                 {
-                    exceptions.Add(new BO.IdNotExist("Product", orderItem.ProductID));
+                    exceptions.Add(new BO.IdNotExistException("Product", orderItem.ProductID));
                 } 
                 
                 if (dalList.Product.Get(orderItem.ProductID).InStock < orderItem.Amount)

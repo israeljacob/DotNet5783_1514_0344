@@ -133,7 +133,7 @@ internal class Order : BLApi.IOrder
         try { order = dalList.Order.Get(ID); }
         catch(DO.IdNotExist)
         {
-            exceptions.Add(new BO.IdNotExistException("Product", ID));
+            exceptions.Add(new BO.IdNotExistException("Order", ID));
         }
         try {
                if (order.DeliveryrDate > DateTime.MinValue)
@@ -184,7 +184,35 @@ internal class Order : BLApi.IOrder
         };
     }
 
-    public BO.StatusOfOrder statusOfOrder(DO.Order order)
+    public BO.OrderItem UpdateOrder(BO.OrderItem orderItem)
+    {
+
+        ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
+        ///in the end if the list is not empty throw AggregateException: kind of build in function
+        ///that hold and represents one or more errors.
+        var exceptions = new List<Exception>();
+        DO.OrderItem DOorderItem = new DO.OrderItem();
+        DO.Order  order = new DO.Order();
+        try { 
+                DOorderItem = dalList.OrderItem.Get(orderItem.OrderItemID);
+            order = dalList.Order.Get(DOorderItem.OrderID);
+            }
+        catch (DO.IdNotExist)
+        {
+            exceptions.Add(new BO.IdNotExistException("Order item", orderItem.OrderItemID));///הבז
+        }
+        if(order.ShipDate>DateTime.MinValue) { throw new BO.InCorrectDetailsException(); }////לוודא
+        return new BO.OrderItem
+        {
+            OrderItemID = orderItem.OrderItemID,
+            ProductID = orderItem.ProductID,
+            ProductName = dalList.Product.Get(DOorderItem.ProductID).Name,
+            Price = orderItem.Price,
+            Amount = orderItem.Amount,
+            TotalPrice = orderItem.TotalPrice
+        };
+    }
+    private BO.StatusOfOrder statusOfOrder(DO.Order order)
     {
         BO.StatusOfOrder statusOfOrder = BO.StatusOfOrder.Orderred;
         if (order.DeliveryrDate > DateTime.MinValue)
@@ -194,7 +222,7 @@ internal class Order : BLApi.IOrder
         return statusOfOrder;
     }
 
-    public int amoutOfItems(DO.Order order)
+    private int amoutOfItems(DO.Order order)
     {
         int amountOfItems = 0;
         foreach (DO.OrderItem orderItem in dalList.OrderItem.GetByOrder(order.UniqID))
@@ -202,7 +230,7 @@ internal class Order : BLApi.IOrder
         return amountOfItems;
     }
 
-    double totalPrice(DO.Order order)
+    private double totalPrice(DO.Order order)
     {
         double totalPrice = 0;
         foreach (DO.OrderItem orderItem in dalList.OrderItem.GetByOrder(order.UniqID))
@@ -210,7 +238,7 @@ internal class Order : BLApi.IOrder
         return totalPrice;
     }
 
-    public IEnumerable<BO.OrderItem> orderItems(int ID)
+    private IEnumerable<BO.OrderItem> orderItems(int ID)
     {
         return from orderItem in dalList.OrderItem.GetByOrder(ID)
                select new BO.OrderItem
