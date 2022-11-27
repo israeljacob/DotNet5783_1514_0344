@@ -41,7 +41,7 @@ public class mainProgram
                 case MainOptions.OrderCheck:
                     OrderCheckSwitch();
                     break;
-                     ///Option 3
+                ///Option 3
                 case MainOptions.CartCheck:
                     CartCheckSwitch();
                     break;
@@ -143,7 +143,7 @@ public class mainProgram
 
         void GetProductForManagger()
         {
-            int ID=Menu.IntInput("Enter the id");
+            int ID = Menu.IntInput("Enter the id");
             try { Console.WriteLine(bl.Product.ProductItemForManager(ID)); }
             catch (BO.IdNotExistException ex) { Console.WriteLine(ex.Message); }
         }
