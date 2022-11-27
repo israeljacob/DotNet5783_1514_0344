@@ -16,7 +16,7 @@ public enum MainOptions
 {
     ProductCheck = 1,
     OrderCheck,
-    OrderItemCheck,
+    CartCheck,
 
 }
 
@@ -26,7 +26,8 @@ public enum MainOptions
 public enum ProductOptions
 {
     Add = 1,
-    Get,
+    GetForManagger,
+    GetForCostemor,
     GetAllList,
     Update,
     Delete
@@ -37,27 +38,22 @@ public enum ProductOptions
 /// </summary>
 public enum OrderOptions
 {
-    Add = 1,
-    Get,
+    Get = 1,
     GetAllList,
     Update,
-    Delete
-
-
+    UpdateShipDate,
+    UpdateDeliveryDate,
+    Track
 }
 
 /// <summary>
 /// Enum for the sub menu option 3
 /// </summary>
-public enum OrderItemOptions
+public enum CartOptions
 {
     Add = 1,
-    Get,
-    GetByOrder,
-    GetByProduct,
-    GetAllList,
     Update,
-    Delete
+    ExecuteOrder
 }
 
 
@@ -80,7 +76,7 @@ namespace Dal
             Console.WriteLine("\t\t\nMain-Menu\n");
             Console.WriteLine("1.Product Check");
             Console.WriteLine("2.Order Check");
-            Console.WriteLine("3.Order Item Check");
+            Console.WriteLine("3.Cart Check");
             Console.WriteLine("0.Exit");
 
         }
@@ -90,10 +86,11 @@ namespace Dal
         public static void ProductCheckMenu()
         {
             Console.WriteLine("1.Add Product");
-            Console.WriteLine("2.See Product By ID");
-            Console.WriteLine("3.See List of Products");
-            Console.WriteLine("4.Update Product");
-            Console.WriteLine("5.Delete Product");
+            Console.WriteLine("2.See Product By ID for managger");
+            Console.WriteLine("3.See Product By ID for costemor");
+            Console.WriteLine("4.See List of Products");
+            Console.WriteLine("5.Update Product");
+            Console.WriteLine("6.Delete Product");
             Console.WriteLine("0.Return to main menu");
 
         }
@@ -103,11 +100,12 @@ namespace Dal
         /// </summary>
         public static void OrderCheckMenu()
         {
-            Console.WriteLine("1.Add Order");
-            Console.WriteLine("2.See Order By ID");
-            Console.WriteLine("3.See List of Orders");
-            Console.WriteLine("4.Update Order");
-            Console.WriteLine("5.Delete Oreder");
+            Console.WriteLine("1.See Order By ID");
+            Console.WriteLine("2.See List of Orders");
+            Console.WriteLine("3.Update Order");
+            Console.WriteLine("4.Update ship date");
+            Console.WriteLine("5.Update delivery date");
+            Console.WriteLine("6.Track order");
             Console.WriteLine("0.Return to main menu");
 
         }
@@ -115,15 +113,11 @@ namespace Dal
         /// <summary>
         /// sub-option from the main-menu: orderitem check
         /// </summary>
-        public static void OrderItemCheckMenu()
+        public static void CartCheckMenu()
         {
             Console.WriteLine("1.Add order item");
-            Console.WriteLine("2.See order Item by ID");
-            Console.WriteLine("3.See list of order items by order ID");
-            Console.WriteLine("4.See list of order item by product ID");
-            Console.WriteLine("5.See list of order items");
-            Console.WriteLine("6.Update order item");
-            Console.WriteLine("7.Delete order item");
+            Console.WriteLine("2.Update order item");
+            Console.WriteLine("3.Execute order");
             Console.WriteLine("0.Return to main menu");
 
         }
