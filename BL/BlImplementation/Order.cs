@@ -184,7 +184,7 @@ internal class Order : BLApi.IOrder
         };
     }
 
-    public BO.OrderItem UpdateOrder(BO.OrderItem orderItem)
+    public BO.OrderItem UpdateOrderItemAmount(BO.OrderItem orderItem)
     {
 
         ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
