@@ -157,16 +157,11 @@ public class mainProgram
             Console.Write("{0} Was Added Successfully \n", bl.Product.ProductItemForManager(UniqID));
         }
 
-        void AddProduct()
-        {
-            throw new NotImplementedException();
-        }
+
     }
 
-//                default:
-//                    break;
-//            }
-//        } while (menuChoice != 0);
+    
+               
 
-//    }
-//}
+    
+}
