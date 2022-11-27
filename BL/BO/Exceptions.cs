@@ -76,28 +76,6 @@ namespace BO
         }
     }
 
-
-    //public class DoesNotExistsException : Exception
-    //{
-
-
-
-
-    //    private string _message;
-
-    //    public DoesNotExistsException(string message) : base(message) { _message = message; }
-    //    public override string ToString() => _message + " does not exists";
-    //}
-    //public class ExistException : Exception
-    //{
-    //    private string _message;
-
-    //    public ExistException(string message) : base(message) { _message = message; }
-    //    public override string ToString() => _message + " ID allresdy exists";
-    //}
-
-
-
     public class InCorrectIntException : Exception
     {
 
@@ -178,19 +156,7 @@ namespace BO
 
     }
 
-    //public class MissingAttributeException : Exception
-    //{
-    //    private string _message;
-    //    public MissingAttributeException(string message) : base(message) { _message = message; }
-    //    public override string ToString() => _message + " is missing";
-    //}
-    //public class DetailsAreInCorrctException : Exception
-    //{
-    //    private string _message;
-    //    public DetailsAreInCorrctException(string message) : base(message) { _message = message; }
-    //    public override string ToString() => _message + " is incorrect";
-    //}
-
+    
 
     public class ItemExistsInOrderException : Exception
     {
@@ -209,14 +175,6 @@ namespace BO
         }
 
     }
-    public class ItemExistsInOrder : Exception
-    {
-        private string _message;
-        public ItemExistsInOrder(string message) : base(message) { _message = message; }
-        public override string ToString() => _message + " exists in an order";
-    }
-
-
 
     public class DatesException : Exception
     {
