@@ -114,7 +114,7 @@ namespace BlImplementation
             ///in the end if the list is not empty throw AggregateException: kind of build in function
             ///that hold and represents one or more errors.
             var exceptions = new List<Exception>();
-
+            Product product = new Product();
 
             if (ID <= 0)
                 exceptions.Add(new BO.InCorrectIntException("Product ID", ID));
