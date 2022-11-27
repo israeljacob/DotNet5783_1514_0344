@@ -188,37 +188,11 @@ public class mainProgram
             Console.WriteLine("The product has been deletted succesfully");
         }
 
-
-        void addItemToCart()
+        void AddProduct()
         {
-            int ID = Menu.IntInput("Enter the ID");
-            try
-            {
-                bl.Cart.AddToCart(cart, ID);
-            }
-            catch (Exception ex) { Console.WriteLine(ex.Message); }
-            Console.WriteLine("The item has been added succesfully");
+            throw new NotImplementedException();
         }
-        void updateCart()
-        {
-            int ID = Menu.IntInput("Enter the ID"), amount = Menu.IntInput("Enter the new amount");
-            try
-            {
-                bl.Cart.UpdateCart(cart, ID, amount);
-            }
-            catch (Exception ex) { Console.WriteLine(ex.Message); }
-            Console.WriteLine("The amount of item has been updated succesfully");
-        }
-
-        void executeOrder()
-        {
-            try
-            {
-                bl.Cart.ExecuteOrder(cart);
-            }
-            catch (Exception ex) { Console.WriteLine(ex.Message); }
-            Console.WriteLine("The order has been executed succesfully");
-        }
-
     }
+
+    
 }
