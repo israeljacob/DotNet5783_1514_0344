@@ -49,7 +49,7 @@ internal class Order : BLApi.IOrder
         {
             order = dalList.Order.Get(ID);
         }
-        catch (DO.IdNotExist)
+        catch (DO.IdNotExistException)
         {
             exceptions.Add(new BO.IdNotExistException("Order", ID));
 
@@ -85,7 +85,7 @@ internal class Order : BLApi.IOrder
 
         DO.Order order = new DO.Order();
         try { order = dalList.Order.Get(ID); }
-        catch(DO.IdNotExist)
+        catch(DO.IdNotExistException)
         {
             exceptions.Add(new BO.IdNotExistException("Order ID", ID));
         }
@@ -131,7 +131,7 @@ internal class Order : BLApi.IOrder
         DO.Order order = new DO.Order();
 
         try { order = dalList.Order.Get(ID); }
-        catch(DO.IdNotExist)
+        catch(DO.IdNotExistException)
         {
             exceptions.Add(new BO.IdNotExistException("Order", ID));
         }
@@ -164,7 +164,7 @@ internal class Order : BLApi.IOrder
             TotalPrice = totalPrice(order)
         };
     }
-    BO.OrderTracking OrderTrack(int ID)
+    public BO.OrderTracking OrderTrack(int ID)
     {
         DO.Order track = new DO.Order();
         try { track = dalList.Order.Get(ID); }
@@ -197,7 +197,7 @@ internal class Order : BLApi.IOrder
                 DOorderItem = dalList.OrderItem.Get(orderItem.OrderItemID);
             order = dalList.Order.Get(DOorderItem.OrderID);
             }
-        catch (DO.IdNotExist)
+        catch (DO.IdNotExistException)
         {
             exceptions.Add(new BO.IdNotExistException("Order item", orderItem.OrderItemID));///הבז
         }
@@ -212,6 +212,28 @@ internal class Order : BLApi.IOrder
             TotalPrice = orderItem.TotalPrice
         };
     }
+    public BO.OrderItem GetOrderItem(int ID)
+    {
+        var exceptions = new List<Exception>();
+
+        DO.OrderItem orderItem = new DO.OrderItem();
+        try {orderItem=  dalList.OrderItem.Get(ID); }
+        catch (DO.IdNotExistException)
+        {
+            exceptions.Add(new BO.IdNotExistException("Order", ID));
+
+        }
+        return new BO.OrderItem
+        {
+            OrderItemID = orderItem.UniqID,
+            ProductID = orderItem.ProductID,
+            ProductName = dalList.Product.Get(orderItem.ProductID).Name,
+            Price = orderItem.Price,
+            Amount = orderItem.Amount,
+            TotalPrice = orderItem.Price * orderItem.Amount
+        };
+    }
+
     private BO.StatusOfOrder statusOfOrder(DO.Order order)
     {
         BO.StatusOfOrder statusOfOrder = BO.StatusOfOrder.Orderred;
@@ -251,5 +273,5 @@ internal class Order : BLApi.IOrder
                    TotalPrice = orderItem.Price * orderItem.Amount
                };
     }
-
+    
 }

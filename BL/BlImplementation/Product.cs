@@ -57,7 +57,7 @@ namespace BlImplementation
             {
                 product = dalList.Product.Get(ID);
             }
-            catch (DO.IdNotExist)
+            catch (DO.IdNotExistException)
             {
                 exceptions.Add(new BO.IdNotExistException("Product", ID));
             }
@@ -87,7 +87,7 @@ namespace BlImplementation
             {
                 product = dalList.Product.Get(ID);
             }
-            catch (DO.IdNotExist)
+            catch (DO.IdNotExistException)
             {
                 exceptions.Add(new BO.InCorrectIntException("Product ID", ID));
 
@@ -126,7 +126,7 @@ namespace BlImplementation
                 exceptions.Add(new BO.InCorrectIntException("Product Instock", inStock));
             try
             {
-                dalList.Product.Add(new DO.Product
+                int returnedID = dalList.Product.Add(new DO.Product
                 {
                     UniqID = ID,
                     Name = name,
@@ -158,7 +158,7 @@ namespace BlImplementation
             {
                 dalList.Product.Delete(ID);
             }
-            catch (DO.IdNotExist)
+            catch (DO.IdNotExistException)
             {
                 exceptions.Add( new BO.IdNotExistException("Product",ID));
             }
@@ -194,7 +194,7 @@ namespace BlImplementation
                     InStock = product.InStock
                 });
             }
-            catch (DO.IdNotExist)
+            catch (DO.IdNotExistException)
             {
                 exceptions.Add(new BO.IdNotExistException("Product", product.UniqID));
             }

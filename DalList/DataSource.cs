@@ -4,19 +4,22 @@ namespace Dal;
 /// <summary>
 /// Stores the lists of entities.
 /// </summary>
-internal static class DataSource
+internal class DataSource
 {
     // Orders list
-    internal static List<Order> orders = new List<Order>();
+    internal List<Order> orders = new List<Order>();
     // Order items list.
-    internal static List<OrderItem> orderItems = new List<OrderItem>();
+    internal List<OrderItem> orderItems = new List<OrderItem>();
     // Products list.
-    internal static List<Product> products = new List<Product>();
+    internal List<Product> products = new List<Product>();
 
+    private static readonly DataSource instace = new DataSource();
+    static DataSource() { }
+    public static DataSource Instance { get { return instace; } }
     /// <summary>
     /// static constructor
     /// </summary>
-    static DataSource()
+    private DataSource()
     {
         ProductInitialize();
         OrderInitialize();
@@ -52,7 +55,7 @@ internal static class DataSource
     /// <summary>
     /// Initializes 10 new products.
     /// </summary>
-    private static void ProductInitialize()
+    private void ProductInitialize()
     {
         var Productsnames = new string[]
          {
@@ -123,7 +126,7 @@ internal static class DataSource
                 temp.InStock = 0;
             else
                 temp.InStock = stockindex;
-
+            
             products.Add(temp);
         }
     }
@@ -131,7 +134,7 @@ internal static class DataSource
     /// <summary>
     /// Initializes 20 new orders.
     /// </summary>
-    private static void OrderInitialize()
+    private void OrderInitialize()
     {
         var names = new string[]
          {
@@ -204,7 +207,7 @@ internal static class DataSource
     /// <summary>
     /// Initializes 40 new order items.
     /// </summary>
-    private static void OrderItemInitialize()
+    private void OrderItemInitialize()
     {
         Random r = new Random();
         // Store them in the list.

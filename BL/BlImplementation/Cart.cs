@@ -32,7 +32,7 @@ namespace BlImplementation
                         dalList.Product.Get(ID);
 
                     }
-                    catch (DO.IdNotExist)
+                    catch (DO.IdNotExistException)
                     {
 
                         exceptions.Add(new BO.IdNotExistException("Cart ID", ID));
@@ -48,7 +48,7 @@ namespace BlImplementation
             }
             DO.Product product = new DO.Product();// לתקן
             try { product = dalList.Product.Get(ID); }
-            catch (DO.IdNotExist)
+            catch (DO.IdNotExistException)
             {
                 exceptions.Add(new BO.IdNotExistException("Cart", ID));
                 
@@ -118,7 +118,7 @@ namespace BlImplementation
             foreach (BO.OrderItem orderItem in cart.orderItems)
             {
                 try { dalList.Product.Get(orderItem.ProductID); }
-                catch (DO.IdNotExist)
+                catch (DO.IdNotExistException)
                 {
                     exceptions.Add(new BO.IdNotExistException("Product", orderItem.ProductID));
                 } 

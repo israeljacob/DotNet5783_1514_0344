@@ -16,5 +16,10 @@ namespace BLApi
 
         public BO.Order UpdateDeliveryDate(int ID);
 
+        public BO.OrderItem UpdateOrderItemAmount(BO.OrderItem orderItem);
+
+        public BO.OrderTracking OrderTrack(int ID);
+        public BO.OrderItem GetOrderItem(int ID);
+
     }
 }
