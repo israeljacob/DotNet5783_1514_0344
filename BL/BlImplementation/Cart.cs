@@ -24,9 +24,6 @@ namespace BlImplementation
         public BO.Cart AddToCart(BO.Cart cart, int productID)
         {
 
-            ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
-            ///in the end if the list is not empty throw AggregateException: kind of build in function
-            ///that hold and represents one or more errors.
             
 
             foreach (var item in cart.orderItems)
@@ -88,9 +85,6 @@ namespace BlImplementation
         public BO.Cart UpdateCart(BO.Cart cart, int ID, int amount)
         {
 
-            ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
-            ///in the end if the list is not empty throw AggregateException: kind of build in function
-            ///that hold and represents one or more errors.
 
             ///find the orderItem by id
             BO.OrderItem? orderItem = cart.orderItems?.FirstOrDefault(x => x.ProductID == ID);
@@ -123,10 +117,6 @@ namespace BlImplementation
         public void ExecuteOrder(BO.Cart cart)
         {
 
-            ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
-            ///in the end if the list is not empty throw AggregateException: kind of build in function
-            ///that hold and represents one or more errors.
-            ///all the possibilities to go something worg 
             if (cart.CustomerName == null)
                 throw new BO.InCorrectStringException("Customer Name in Cart", "null");
             if (cart.CustomerAdress == null)
@@ -147,7 +137,7 @@ namespace BlImplementation
                 } 
                 ///if the order amount is large then in the product stock
                 if (dalList.Product.Get(orderItem.ProductID).InStock < orderItem.Amount)
-                    throw new BO.InCorrectIntException("Product InStock is less then", orderItem.Amount);
+                    throw new BO.InCorrectIntException($"Product InStock is less then {orderItem.Amount}",orderItem.ProductID );
 
                 if (orderItem.Amount <= 0)
                     throw new BO.InCorrectIntException("Product Amount", orderItem.Amount);
