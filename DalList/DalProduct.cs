@@ -11,6 +11,7 @@ namespace Dal;
 /// </summary>
 internal class DalProduct:IProduct
 {
+    DataSource dataSource = DataSource.Instance;
     /// <summary>
     /// Addes a new product.
     /// </summary>
@@ -20,10 +21,10 @@ internal class DalProduct:IProduct
     public int Add(Product newProduct)
     {
         // If there is such a product throw an exception.
-        if(DataSource.products.Exists(product => product.UniqID == newProduct.UniqID))
+        if(dataSource.products.Exists(product => product.UniqID == newProduct.UniqID))
             throw new IdAlreadyExist("Product",newProduct.UniqID);
         // Add the new product.
-        DataSource.products.Add(newProduct);
+        dataSource.products.Add(newProduct);
         return newProduct.UniqID;
     }
     
@@ -35,7 +36,7 @@ internal class DalProduct:IProduct
     /// <exception cref="Exception"></exception>
     public Product Get(int ID)
     {
-        Product? tempProduct = DataSource.products.Find(product => product.UniqID == ID);
+        Product? tempProduct = dataSource.products.Find(product => product.UniqID == ID);
         // If the product was not found
         if (tempProduct == null)
             throw new IdNotExistException("Product",ID);
@@ -49,7 +50,7 @@ internal class DalProduct:IProduct
     /// <exception cref="Exception"></exception>
     public IEnumerable<Product> GetAll()
     {
-        IEnumerable<Product> products = DataSource.products.Where(product => product.UniqID > 0);
+        IEnumerable<Product> products = dataSource.products.Where(product => product.UniqID > 0);
         // If there is no products.
         if (products == null)
             throw new Empty("products");
@@ -64,12 +65,12 @@ internal class DalProduct:IProduct
     {
         // Find the requested product.
         int i = 0;
-        foreach (Product pro in DataSource.products)
+        foreach (Product pro in dataSource.products)
         {
             // If the product was found
             if (updatedProduct.UniqID == pro.UniqID)
             {
-                DataSource.products[i] = updatedProduct;
+                dataSource.products[i] = updatedProduct;
                 return;
             }
             i++;
@@ -85,7 +86,7 @@ internal class DalProduct:IProduct
     public void Delete(int ID)
     {
         // Remove the product by ID and if the product does not exists throw an exception.
-        if (DataSource.products.RemoveAll(product => product.UniqID == ID) == 0)
+        if (dataSource.products.RemoveAll(product => product.UniqID == ID) == 0)
             throw new IdNotExistException("Product",ID);
     }
 }

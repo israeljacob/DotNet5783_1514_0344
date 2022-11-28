@@ -7,6 +7,7 @@ namespace Dal;
 
 internal class DalOrderItem:IOrderItem
 {
+    DataSource dataSource = DataSource.Instance;
     /// <summary>
     /// Addes a new order item.
     /// </summary>
@@ -16,7 +17,7 @@ internal class DalOrderItem:IOrderItem
     public int Add(OrderItem newOrderItem)
     {
         newOrderItem.UniqID = DataSource.Config.OrderItemID;
-        DataSource.orderItems.Add(newOrderItem);
+        dataSource.orderItems.Add(newOrderItem);
         return newOrderItem.UniqID;
     }
 
@@ -28,7 +29,7 @@ internal class DalOrderItem:IOrderItem
     /// <exception cref="Exception"></exception>
     public OrderItem Get(int ID)
     {
-        OrderItem? tempOrderItem = DataSource.orderItems.Find(orderItem => orderItem.UniqID == ID);
+        OrderItem? tempOrderItem = dataSource.orderItems.Find(orderItem => orderItem.UniqID == ID);
         // If the order item was not found
         if (tempOrderItem == null)
             throw new IdNotExistException("Order item",ID);
