@@ -20,7 +20,7 @@ public enum MainOptions
 
 }
 
-/// <summary>
+/// <summary> 
 /// Enum for the sub menu option 1
 /// </summary>
 public enum ProductOptions
