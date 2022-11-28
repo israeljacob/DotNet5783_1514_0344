@@ -233,7 +233,7 @@ internal class Order : BLApi.IOrder
         {
             exceptions.Add(new BO.IdNotExistException("Order item", orderItem.OrderItemID));///הבז
         }
-        if(order.ShipDate>DateTime.MinValue) { throw new BO.InCorrectDetailsException(); }////לוודא
+        if(order.ShipDate>DateTime.MinValue) { throw new BO.InCorrectDetailsException("O", orderItem.OrderItemID); }////לוודא
         return new BO.OrderItem
         {
             OrderItemID = orderItem.OrderItemID,

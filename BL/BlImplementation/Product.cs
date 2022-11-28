@@ -105,9 +105,12 @@ namespace BlImplementation
             }
             catch (DO.IdNotExistException)
             {
-                exceptions.Add(new BO.InCorrectIntException("Product ID", ID));
+                exceptions.Add(new BO.IdNotExistException("Product ID", ID));
 
             }
+
+            if (exceptions.Count != 0)
+                throw new AggregateException(exceptions);
             bool inStock = true;
             if (product.InStock == 0)
                 inStock = false;
@@ -185,7 +188,7 @@ namespace BlImplementation
             var exceptions = new List<Exception>();
 
             if (dalList.OrderItem.GetByProduct(ID) != null)
-                exceptions.Add(new ItemExistsInOrderException("Product",ID));
+                exceptions.Add(new ItemExistsInOrderException("Product"));
             try
             {
                 dalList.Product.Delete(ID);

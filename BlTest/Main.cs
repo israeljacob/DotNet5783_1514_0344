@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Dal;
 using DalApi;
 using DocumentFormat.OpenXml.Wordprocessing;
+using BO;
 
 namespace BLTest;
 
@@ -153,7 +154,7 @@ public class mainProgram
             {
                bl.Product.AddProduct(ID, name, price, category, inStock);
             }
-            catch (BO.EmptyException ex) { Console.WriteLine(ex.Message);return; }
+            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
             Console.WriteLine("The product has been added succesfully");
         }
         ///<summary>
@@ -164,7 +165,8 @@ public class mainProgram
             // Try to add and throw an exception if not succeed
             int ID = Menu.IntInput("Enter the id");
             try { Console.WriteLine(bl.Product.ProductItemForManager(ID)); }
-            catch (BO.IdNotExistException ex) { Console.WriteLine(ex.Message);return; }
+            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
+          //  catch (BO.IdNotExistException ex) { Console.WriteLine(ex.Message);return; }
         }
         ///<summary>
         ///Get product for costemor
@@ -174,7 +176,7 @@ public class mainProgram
             // Try to get and throw an exception if not succeed
             int ID = Menu.IntInput("Enter the id");
             try { Console.WriteLine(bl.Product.ProductItemForCostemor(ID, cart)); }
-            catch (BO.IdNotExistException ex) { Console.WriteLine(ex.Message);return; }
+            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
         }
         ///<summary>
         ///Get all products
@@ -204,7 +206,7 @@ public class mainProgram
                     InStock = Menu.IntInput("Enter the amount that is un stock")
                 });
             }
-            catch (BO.IdNotExistException ex) { Console.WriteLine(ex.Message); return; }
+            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
             Console.WriteLine("The product has been updated succesfully");
         }
         ///<summary>
@@ -215,7 +217,7 @@ public class mainProgram
             // Try to delete and throw an exception if not succeed
             int ID = Menu.IntInput("Enter the id");
             try { bl.Product.DeleteProduct(ID); }
-            catch (BO.IdNotExistException ex) { Console.WriteLine(ex.Message);return; }
+            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
             Console.WriteLine("The product has been deletted succesfully");
         }
 
@@ -229,7 +231,7 @@ public class mainProgram
             {
                 bl.Cart.AddToCart(cart, ID);
             }
-            catch (Exception ex) { Console.WriteLine(ex.Message);return; }
+            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
             Console.WriteLine("The item has been added succesfully");
         }
         ///<summary>
@@ -242,7 +244,7 @@ public class mainProgram
             {
                 bl.Cart.UpdateCart(cart, ID, amount);
             }
-            catch (Exception ex) { Console.WriteLine(ex.Message);return; }
+            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
             Console.WriteLine("The amount of item has been updated succesfully");
         }
         ///<summary>
@@ -254,7 +256,7 @@ public class mainProgram
             {
                 bl.Cart.ExecuteOrder(cart);
             }
-            catch (Exception ex) { Console.WriteLine(ex.Message);return; }
+            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
             Console.WriteLine("The order has been executed succesfully");
         }
         ///<summary>
@@ -264,7 +266,7 @@ public class mainProgram
         {
             int ID = Menu.IntInput("Enter the ID");
             try { Console.WriteLine(bl.Order.OrderBYID(ID)); }
-            catch (Exception ex) { Console.WriteLine(ex.Message);return; }
+            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
 
         }
         ///<summary>
@@ -284,7 +286,7 @@ public class mainProgram
         {
             int ID = Menu.IntInput("Enter the ID");
             try { Console.WriteLine(bl.Order.UpdateOrderItemAmount(bl.Order.GetOrderItem(ID))); }
-            catch (Exception ex) { Console.WriteLine(ex.Message);return; }
+            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
         }
         ///<summary>
         ///
@@ -293,7 +295,7 @@ public class mainProgram
         {
             int ID = Menu.IntInput("Enter the ID");
             try { Console.WriteLine(bl.Order.UpdateShipDate(ID)); }
-            catch (Exception ex) { Console.WriteLine(ex.Message);return; }
+            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
         }
         ///<summary>
         ///
@@ -302,7 +304,7 @@ public class mainProgram
         {
             int ID = Menu.IntInput("Enter the ID");
             try { Console.WriteLine(bl.Order.UpdateDeliveryDate(ID)); }
-            catch (Exception ex) { Console.WriteLine(ex.Message); return; }
+            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
 
         }
         ///<summary>
@@ -312,7 +314,7 @@ public class mainProgram
         {
             int ID = Menu.IntInput("Enter the ID");
             try { Console.WriteLine(bl.Order.OrderTrack(ID)); }
-            catch (Exception ex) { Console.WriteLine(ex.Message); return; }
+            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
         }
     }
 }

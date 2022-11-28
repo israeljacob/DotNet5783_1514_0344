@@ -38,7 +38,7 @@ internal class DalProduct:IProduct
     {
         Product? tempProduct = dataSource.products.Find(product => product.UniqID == ID);
         // If the product was not found
-        if (tempProduct == null)
+        if (tempProduct.Value.Name == null)
             throw new IdNotExistException("Product",ID);
         // If the product was found
         return (Product)tempProduct;

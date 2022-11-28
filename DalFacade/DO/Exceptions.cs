@@ -62,7 +62,7 @@ namespace DO
         }
         public override string ToString()
         {
-            return $"[Error] There is no {label} with id number {id}.\n";
+            return $"[Error] There is noo {label} with id number {id}.\n";
         }
 
     }
