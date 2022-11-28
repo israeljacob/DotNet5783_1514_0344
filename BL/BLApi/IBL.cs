@@ -8,6 +8,8 @@ namespace BLApi;
 
 public interface IBL
 {
+        ///declare the 3 entities
+
     public ICart Cart { get; }
     public IProduct Product { get; }
     public IOrder Order { get; }

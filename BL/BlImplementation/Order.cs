@@ -33,7 +33,9 @@ internal class Order : BLApi.IOrder
                    TotalPrice = totalPrice(order)
                };
     }
+    
 
+    ///Get order by Id
     public BO.Order OrderBYID(int ID)
     {
         ///All the exception that comes from DO we catch it, then insert the appropriate exception to list,
@@ -56,6 +58,7 @@ internal class Order : BLApi.IOrder
         }
         if (exceptions.Count != 0)
             throw new AggregateException(exceptions);
+        ///return BO entitie
         return new BO.Order
         {
             UniqID = order.UniqID,
@@ -75,7 +78,7 @@ internal class Order : BLApi.IOrder
     }
 
 
-
+    ///Update ship date by ID
      public BO.Order UpdateShipDate(int ID)
     {
         ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
@@ -84,6 +87,7 @@ internal class Order : BLApi.IOrder
         var exceptions = new List<Exception>();
 
         DO.Order order = new DO.Order();
+        ///get the ID
         try { order = dalList.Order.Get(ID); }
         catch(DO.IdNotExistException)
         {
@@ -101,7 +105,7 @@ internal class Order : BLApi.IOrder
             exceptions.Add(new BO.DatesException("Order:", order.ShipDate, DateTime.MinValue));
         }
 
-
+        ///update the ship date
         order.ShipDate= DateTime.Now;
          dalList.Order.Update(order);
         if (exceptions.Count != 0)
@@ -120,6 +124,7 @@ internal class Order : BLApi.IOrder
             TotalPrice = totalPrice(order)
         };
     }
+    ///Update Delivery Date by ID
     public BO.Order UpdateDeliveryDate(int ID)
     {
 
@@ -129,7 +134,7 @@ internal class Order : BLApi.IOrder
         var exceptions = new List<Exception>();
 
         DO.Order order = new DO.Order();
-
+        ///get the order by id
         try { order = dalList.Order.Get(ID); }
         catch(DO.IdNotExistException)
         {
@@ -145,6 +150,7 @@ internal class Order : BLApi.IOrder
             exceptions.Add(new BO.DatesException("Order:", order.ShipDate, DateTime.MinValue));
 
         }
+        ///Update Delivery
         order.DeliveryrDate = DateTime.Now;
         dalList.Order.Update(order);
 
@@ -164,6 +170,7 @@ internal class Order : BLApi.IOrder
             TotalPrice = totalPrice(order)
         };
     }
+    ///Track the order status
     public BO.OrderTracking OrderTrack(int ID)
     {
         DO.Order track = new DO.Order();
@@ -183,7 +190,7 @@ internal class Order : BLApi.IOrder
             ProgressOfOrder = tracking
         };
     }
-
+    ///Update OrderItem Amount 
     public BO.OrderItem UpdateOrderItemAmount(BO.OrderItem orderItem)
     {
 
@@ -212,6 +219,7 @@ internal class Order : BLApi.IOrder
             TotalPrice = orderItem.TotalPrice
         };
     }
+    ///Get OrderItem by ID
     public BO.OrderItem GetOrderItem(int ID)
     {
         var exceptions = new List<Exception>();
@@ -233,7 +241,7 @@ internal class Order : BLApi.IOrder
             TotalPrice = orderItem.Price * orderItem.Amount
         };
     }
-
+    ///return the status Of Order
     private BO.StatusOfOrder statusOfOrder(DO.Order order)
     {
         BO.StatusOfOrder statusOfOrder = BO.StatusOfOrder.Orderred;
@@ -259,7 +267,7 @@ internal class Order : BLApi.IOrder
             totalPrice += orderItem.Price * orderItem.Amount;
         return totalPrice;
     }
-
+    ///return orderitems by id
     private IEnumerable<BO.OrderItem> orderItems(int ID)
     {
         return from orderItem in dalList.OrderItem.GetByOrder(ID)
