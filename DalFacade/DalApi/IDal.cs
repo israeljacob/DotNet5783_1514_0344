@@ -7,7 +7,7 @@ using DO;
 
 namespace DalApi
 {
-    public class IDal
+    public interface IDal
     {
         public IOrder Order { get; }
         public IProduct Product { get; }
