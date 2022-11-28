@@ -59,9 +59,6 @@ public class IdAlreadyExistException : Exception
 
 
 
-
-
-
 public class DisplayException : Exception
 {
     string ex;

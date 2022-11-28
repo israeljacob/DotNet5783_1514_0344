@@ -159,7 +159,8 @@ public class mainProgram
         {
             int ID = Menu.IntInput("Enter the id");
             try { Console.WriteLine(bl.Product.ProductItemForManager(ID)); }
-            catch (BO.IdNotExistException ex) { Console.WriteLine(ex.Message); }
+            catch (AggregateException ex) { new BO.DisplayException(ex.Message); };
+           // catch (BO.IdNotExistException ex) { Console.WriteLine(ex.Message); }
         }
 
         void GetProductForCostemor()
