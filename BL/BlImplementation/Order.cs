@@ -33,9 +33,14 @@ internal class Order : BLApi.IOrder
                    TotalPrice = totalPrice(order)
                };
     }
-    
 
-    ///Get order by Id
+
+    /// <summary>
+    /// Get order by Id
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <returns></returns>
+    /// <exception cref="AggregateException"></exception>
     public BO.Order OrderBYID(int ID)
     {
         ///All the exception that comes from DO we catch it, then insert the appropriate exception to list,
