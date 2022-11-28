@@ -6,20 +6,6 @@ namespace Dal;
 /// </summary>
 internal class DataSource
 {
-
-        private DataSource? instance = null;
-
-        public DataSource Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new DataSource();
-                }
-                return instance;
-            }
-        }
     // Orders list
     internal List<Order> orders = new List<Order>();
     // Order items list.
@@ -27,6 +13,9 @@ internal class DataSource
     // Products list.
     internal List<Product> products = new List<Product>();
 
+    private static readonly DataSource instace = new DataSource();
+    static DataSource() { }
+    public static DataSource Instance { get { return instace; } }
     /// <summary>
     /// static constructor
     /// </summary>
