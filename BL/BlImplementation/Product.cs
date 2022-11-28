@@ -44,6 +44,8 @@ namespace BlImplementation
 
 
         }
+
+        ///Display more features if the mameger asking product by Id
         public BO.Product ProductItemForManager(int ID)
         {
             ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
@@ -63,6 +65,7 @@ namespace BlImplementation
             }
             if (exceptions.Count != 0)
                 throw new AggregateException(exceptions);
+            ///return new entitie product 
             return new BO.Product
             {
                 UniqID = product.UniqID,
@@ -73,6 +76,8 @@ namespace BlImplementation
             };
             
         }
+
+        ///Display less features if the customer asking product by Id
         public BO.ProductItem ProductItemForCostemor(int ID, BO.Cart cart)
         {
             ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
@@ -108,6 +113,8 @@ namespace BlImplementation
                 Amount = amount
             };
         }
+
+        ///Add product
         public void AddProduct(int ID, string name, double price, BO.Category category, int inStock)
         {
             ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
@@ -145,6 +152,8 @@ namespace BlImplementation
             if (exceptions.Count != 0)
                 throw new AggregateException(exceptions);
         }
+
+        ///Delete product
         public void DeleteProduct(int ID)
         {
             ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
@@ -167,6 +176,7 @@ namespace BlImplementation
                 throw new AggregateException(exceptions);
 
         }
+        ///Uptate Product
         public void UpdateProduct(BO.Product product)
         {
             ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
