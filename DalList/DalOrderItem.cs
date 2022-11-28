@@ -7,6 +7,7 @@ namespace Dal;
 
 internal class DalOrderItem:IOrderItem
 {
+    
     DataSource dataSource = DataSource.Instance;
     /// <summary>
     /// Addes a new order item.
