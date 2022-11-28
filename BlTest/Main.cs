@@ -25,6 +25,7 @@ public class mainProgram
         BO.Cart cart = new BO.Cart();
 
 
+        
         MainOptions menuChoice;
         do
         {
@@ -148,6 +149,8 @@ public class mainProgram
                 //    Menu.CategoryInput(),
                 //    );
             }
+          //  catch (AggregateException ex) { bl.DisplayExceptions(ex); };
+            
             catch (BO.EmptyException ex) { Console.WriteLine(ex.Message); }
             Console.WriteLine("The product has been added succesfully");
         }
@@ -163,7 +166,9 @@ public class mainProgram
         {
             int ID = Menu.IntInput("Enter the id");
             try { Console.WriteLine(bl.Product.ProductItemForCostemor(ID, cart)); }
-            catch (BO.IdNotExistException ex) { Console.WriteLine(ex.Message); }
+            catch (AggregateException ex) { new BO.DisplayException(ex.Message); };
+           // catch (BO.IdNotExistException ex) { Console.WriteLine(ex.Message); }
+
         }
 
         void GetAllProducts()

@@ -8,11 +8,15 @@ using DalApi;
 
 namespace BlImplementation
 {
+    /// <summary>
+    /// Ibl entites
+    /// </summary>
         sealed public class Bl : IBL
         {
-              ///declare the 3 entities and build them
+           
 
             public BLApi.IProduct Product => new Product();
+
             public BLApi.IOrder Order => new Order();
             public BLApi.ICart Cart => new Cart();
         }

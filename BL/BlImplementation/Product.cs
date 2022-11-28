@@ -32,7 +32,6 @@ namespace BlImplementation
         public IEnumerable<BO.ProductForList> GetListOfProducts()
         {
 
-
             return from product in dalList.Product.GetAll()
                    select new BO.ProductForList
                    {
@@ -45,7 +44,13 @@ namespace BlImplementation
 
         }
 
-        ///Display more features if the mameger asking product by Id
+        /// <summary>
+        /// Display more features if the mameger asking product by Id
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        /// <exception cref="AggregateException"></exception>
+        /// <exception cref="Exception"></exception>
         public BO.Product ProductItemForManager(int ID)
         {
             ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
@@ -77,7 +82,13 @@ namespace BlImplementation
             
         }
 
-        ///Display less features if the customer asking product by Id
+        /// <summary>
+        /// Display less features if the customer asking product by Id
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="cart"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         public BO.ProductItem ProductItemForCostemor(int ID, BO.Cart cart)
         {
             ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
@@ -114,7 +125,15 @@ namespace BlImplementation
             };
         }
 
-        ///Add product
+        /// <summary>
+        /// Add product
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="name"></param>
+        /// <param name="price"></param>
+        /// <param name="category"></param>
+        /// <param name="inStock"></param>
+        /// <exception cref="AggregateException"></exception>
         public void AddProduct(int ID, string name, double price, BO.Category category, int inStock)
         {
             ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
@@ -153,7 +172,11 @@ namespace BlImplementation
                 throw new AggregateException(exceptions);
         }
 
-        ///Delete product
+        /// <summary>
+        /// Delete product
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <exception cref="AggregateException"></exception>
         public void DeleteProduct(int ID)
         {
             ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
@@ -176,7 +199,11 @@ namespace BlImplementation
                 throw new AggregateException(exceptions);
 
         }
-        ///Uptate Product
+        /// <summary>
+        /// Uptate Product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <exception cref="AggregateException"></exception>
         public void UpdateProduct(BO.Product product)
         {
             ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
