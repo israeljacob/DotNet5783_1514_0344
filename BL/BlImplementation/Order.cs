@@ -43,11 +43,6 @@ internal class Order : BLApi.IOrder
     /// <exception cref="AggregateException"></exception>
     public BO.Order OrderBYID(int ID)
     {
-        ///All the exception that comes from DO we catch it, then insert the appropriate exception to list,
-        ///in the end if the list is not empty throw AggregateException: kind of build in function
-        ///that hold and represents one or more errors.
-
-
         if (ID <= 0)
             throw new BO.InCorrectIntException("Order ID", ID);
         DO.Order order = new DO.Order();
@@ -88,10 +83,6 @@ internal class Order : BLApi.IOrder
     /// <exception cref="AggregateException"></exception>
      public BO.Order UpdateShipDate(int ID)
     {
-        ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
-        ///in the end if the list is not empty throw AggregateException: kind of build in function
-        ///that hold and represents one or more errors.
-
         DO.Order order = new DO.Order();
         ///get the ID
         try { order = dalList.Order.Get(ID); }
@@ -136,10 +127,6 @@ internal class Order : BLApi.IOrder
     /// <exception cref="AggregateException"></exception>
     public BO.Order UpdateDeliveryDate(int ID)
     {
-
-        ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
-        ///in the end if the list is not empty throw AggregateException: kind of build in function
-        ///that hold and represents one or more errors.
 
         DO.Order order = new DO.Order();
         ///get the order by id
@@ -210,9 +197,6 @@ internal class Order : BLApi.IOrder
     public BO.OrderItem UpdateOrderItemAmount(BO.OrderItem orderItem)
     {
 
-        ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
-        ///in the end if the list is not empty throw AggregateException: kind of build in function
-        ///that hold and represents one or more errors.
         DO.OrderItem DOorderItem = new DO.OrderItem();
         DO.Order  order = new DO.Order();
         try { 

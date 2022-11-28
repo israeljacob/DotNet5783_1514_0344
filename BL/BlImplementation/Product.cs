@@ -53,9 +53,6 @@ namespace BlImplementation
         /// <exception cref="Exception"></exception>
         public BO.Product ProductItemForManager(int ID)
         {
-            ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
-            ///in the end if the list is not empty throw AggregateException: kind of build in function
-            ///that hold and represents one or more errors.
             if (ID <= 0)
                 throw new BO.InCorrectIntException("Product ID", ID);
             DO.Product product = new DO.Product();
@@ -88,9 +85,6 @@ namespace BlImplementation
         /// <exception cref="Exception"></exception>
         public BO.ProductItem ProductItemForCostemor(int ID, BO.Cart cart)
         {
-            ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
-            ///in the end if the list is not empty throw AggregateException: kind of build in function
-            ///that hold and represents one or more errors.
 
             if (ID <= 0)
                 throw new BO.InCorrectIntException("Product ID", ID);
@@ -133,9 +127,6 @@ namespace BlImplementation
         /// <exception cref="AggregateException"></exception>
         public void AddProduct(int ID, string name, double price, BO.Category category, int inStock)
         {
-            ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
-            ///in the end if the list is not empty throw AggregateException: kind of build in function
-            ///that hold and represents one or more errors.
             Product product = new Product();
 
             if (ID <= 0)
@@ -170,9 +161,6 @@ namespace BlImplementation
         /// <exception cref="AggregateException"></exception>
         public void DeleteProduct(int ID)
         {
-            ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
-            ///in the end if the list is not empty throw AggregateException: kind of build in function
-            ///that hold and represents one or more errors.
 
             if (dalList.OrderItem.GetByProduct(ID) != null)
                 throw new BO.ItemExistsInOrderException("Product");
@@ -192,9 +180,6 @@ namespace BlImplementation
         /// <exception cref="AggregateException"></exception>
         public void UpdateProduct(BO.Product product)
         {
-            ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
-            ///in the end if the list is not empty throw AggregateException: kind of build in function
-            ///that hold and represents one or more errors.
 
 
             if (product.UniqID <= 0)
