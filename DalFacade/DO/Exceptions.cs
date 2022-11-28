@@ -49,13 +49,13 @@ namespace DO
 
     }
 
-    public class IdNotExist : Exception
+    public class IdNotExistException : Exception
     {
         int id;
         string label;
         public int getId() { return id; }
         public string getLabel() { return label; }
-        public IdNotExist(string label, int id)
+        public IdNotExistException(string label, int id)
         {
             this.id = id;
             this.label = label;

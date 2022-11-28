@@ -38,7 +38,7 @@ internal class DalProduct:IProduct
         Product? tempProduct = DataSource.products.Find(product => product.UniqID == ID);
         // If the product was not found
         if (tempProduct == null)
-            throw new IdNotExist("Product",ID);
+            throw new IdNotExistException("Product",ID);
         // If the product was found
         return (Product)tempProduct;
     }
@@ -75,7 +75,7 @@ internal class DalProduct:IProduct
             i++;
         }
         // If the product was not found
-        throw new IdNotExist("Product", updatedProduct.UniqID);
+        throw new IdNotExistException("Product", updatedProduct.UniqID);
     }
     /// <summary>
     /// Delete a product by ID.
@@ -86,6 +86,6 @@ internal class DalProduct:IProduct
     {
         // Remove the product by ID and if the product does not exists throw an exception.
         if (DataSource.products.RemoveAll(product => product.UniqID == ID) == 0)
-            throw new IdNotExist("Product",ID);
+            throw new IdNotExistException("Product",ID);
     }
 }

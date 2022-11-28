@@ -82,28 +82,31 @@ public class mainProgram
 
         void OrderCheckSwitch()
         {
-            //Menu.OrderCheckMenu();
-            //OrderOptions UpdateMenuChoice = (OrderOptions)Menu.IntInput("Enter your choice:");
-            //switch (UpdateMenuChoice)
-            //{
-            //    case OrderOptions.Add:
-            //        AddOrder();
-            //        break;
-            //    case OrderOptions.Get:
-            //        GetOrder();
-            //        break;
-            //    case OrderOptions.GetAllList:
-            //        GetAllOrder();
-            //        break;
-            //    case OrderOptions.Update:
-            //        UpdateOrder();
-            //        break;
-            //    case OrderOptions.Delete:
-            //        DeleteOrder();
-            //        break;
-            //    default:
-            //        break;
-            //}
+            Menu.OrderCheckMenu();
+            OrderOptions UpdateMenuChoice = (OrderOptions)Menu.IntInput("Enter your choice:");
+            switch (UpdateMenuChoice)
+            {
+                case OrderOptions.Get:
+                    getOrder();
+                    break;
+                case OrderOptions.GetAllList:
+                    getAllOrders();
+                    break;
+                case OrderOptions.Update:
+                    updateOrder();
+                    break;
+                case OrderOptions.UpdateShipDate:
+                    updateShipDate();
+                    break;
+                case OrderOptions.UpdateDeliveryDate:
+                    updateDeliveryDate();
+                    break;
+                case OrderOptions.Track:
+                    trackOrder();
+                    break;
+                default:
+                    break;
+            }
         }
         void CartCheckSwitch()
         {
@@ -219,6 +222,49 @@ public class mainProgram
             catch (Exception ex) { Console.WriteLine(ex.Message); }
             Console.WriteLine("The order has been executed succesfully");
         }
+        void getOrder()
+        {
+            int ID = Menu.IntInput("Enter the ID");
+            try { Console.WriteLine(bl.Order.OrderBYID(ID));}
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+            
+        }
 
+        void getAllOrders()
+        {
+            foreach (BO.OrderForList order in bl.Order.GetListOfOrders())
+            {
+                Console.WriteLine(order);
+            }
+        }
+
+        void updateOrder()
+        {
+            int ID = Menu.IntInput("Enter the ID");
+            try { Console.WriteLine(bl.Order.UpdateOrderItemAmount(bl.Order.GetOrderItem(ID))); }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+        }
+
+        void updateShipDate()
+        {
+            int ID = Menu.IntInput("Enter the ID");
+            try { Console.WriteLine(bl.Order.UpdateShipDate(ID)); }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+        }
+
+        void updateDeliveryDate()
+        {
+            int ID = Menu.IntInput("Enter the ID");
+            try { Console.WriteLine(bl.Order.UpdateDeliveryDate(ID)); }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+
+        }
+
+        void trackOrder()
+        {
+            int ID = Menu.IntInput("Enter the ID");
+            try { Console.WriteLine(bl.Order.OrderTrack(ID)); }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+        }
     }
 }

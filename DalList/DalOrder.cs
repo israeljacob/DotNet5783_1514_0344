@@ -35,7 +35,7 @@ internal class DalOrder : IOrder
         Order? tempOrder=DataSource.orders.Find(order => order.UniqID == ID);
         //If the order was not found.
         if (tempOrder == null)
-         throw new IdNotExist("Order",ID);
+         throw new IdNotExistException("Order",ID);
         // If the order was found.
         return (Order)tempOrder;
     }
@@ -75,7 +75,7 @@ internal class DalOrder : IOrder
             i++;
         }
         // If the order was not found.
-        throw new IdNotExist("Order", updatedOrder.UniqID);
+        throw new IdNotExistException("Order", updatedOrder.UniqID);
     }
     /// <summary>
     /// Delete an order by ID.
@@ -86,7 +86,7 @@ internal class DalOrder : IOrder
     {
         // Remove the order by ID and if the order does not exists throw an exception.
         if(DataSource.orders.RemoveAll(order=>order.UniqID==ID)==0)
-            throw new IdNotExist("Order",ID);
+            throw new IdNotExistException("Order",ID);
     }
 
     public void CompareDates(DateTime d1,DateTime d2)

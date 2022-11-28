@@ -4,7 +4,7 @@ namespace Dal;
 /// <summary>
 /// Stores the lists of entities.
 /// </summary>
-internal static class DataSource
+internal class DataSource
 {
     // Orders list
     internal static List<Order> orders = new List<Order>();
