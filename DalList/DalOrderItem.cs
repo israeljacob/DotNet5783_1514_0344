@@ -50,7 +50,7 @@ internal class DalOrderItem:IOrderItem
         // If there is no such order items.
 
         if (orderItems==null)
-            throw new IdNotExistException("Order in order items", orderID);
+            throw new Empty("Order in order items");
         return orderItems;
     }
 
