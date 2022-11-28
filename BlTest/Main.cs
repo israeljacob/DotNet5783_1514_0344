@@ -12,7 +12,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 namespace BLTest;
 
 public class mainProgram
-{
+{//gbdb
     static void Main(string[] args)
     {
         //dl obj initial
