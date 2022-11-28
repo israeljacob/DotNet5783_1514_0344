@@ -4,8 +4,10 @@ namespace Dal;
 /// <summary>
 /// Stores the lists of entities.
 /// </summary>
-internal class DataSource
+internal sealed class DataSource
 {
+
+
     // Orders list
     internal List<Order> orders = new List<Order>();
     // Order items list.
@@ -13,12 +15,18 @@ internal class DataSource
     // Products list.
     internal List<Product> products = new List<Product>();
 
-    private static readonly DataSource instace = new DataSource();
-    static DataSource() { }
-    public static DataSource Instance { get { return instace; } }
+    private static DataSource instance;
+    public static DataSource Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
     /// <summary>
     /// static constructor
     /// </summary>
+    static DataSource() => instance = new DataSource();
     private DataSource()
     {
         ProductInitialize();

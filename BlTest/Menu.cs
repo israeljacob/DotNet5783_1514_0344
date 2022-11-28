@@ -150,7 +150,7 @@ namespace Dal
         {
             int option;
             do Console.Write("Enter Category: 1 - Shirts, 2 - trousers, 3 - shoes, 4 - coats,5 - sweaters  \n");
-            while (!int.TryParse(Console.ReadLine(), out option) && (option > 0 || option < 5));
+            while (!int.TryParse(Console.ReadLine(), out option) || (option < 0 || option > 5));
             Console.WriteLine("\n");
             return (BO.Category)option;
         }
