@@ -23,8 +23,14 @@ public class mainProgram
         BO.Product product = new BO.Product();
 
         BO.Order order = new BO.Order();
-        BO.Cart cart = new BO.Cart();
-
+        BO.Cart cart = new BO.Cart
+        {
+            CustomerName = "eazy",
+            CustomerAdress = "JCT",
+            CustomerEmail = "ijacob@g.jct.ac.il",
+            orderItems = new List<OrderItem>(),
+            TotalPrice = 0
+        };
 
         
         MainOptions menuChoice;
@@ -144,17 +150,17 @@ public class mainProgram
         void AddProduct()
         {
             // Get the details
-            int ID = Menu.IntInput("Enter the ID");
-            string name = Menu.StringInput("Enter the name");
-            int price = Menu.IntInput("Enter the price");
+            int ID = Menu.IntInput("Enter the product ID");
+            string name = Menu.StringInput("Enter the product name");
+            int price = Menu.IntInput("Enter the product price");
             BO.Category category = Menu.CategoryInput();
-            int inStock = Menu.IntInput("Enter the amount that is un stock");
+            int inStock = Menu.IntInput("Enter the amount that is in stock");
             // Try to add and throw an exception if not succeed
             try
             {
                bl.Product.AddProduct(ID, name, price, category, inStock);
             }
-            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
+            catch (Exception ex) { Console.WriteLine(ex.Message); return; };
             Console.WriteLine("The product has been added succesfully");
         }
         ///<summary>
@@ -163,9 +169,9 @@ public class mainProgram
         void GetProductForManagger()
         {
             // Try to add and throw an exception if not succeed
-            int ID = Menu.IntInput("Enter the id");
+            int ID = Menu.IntInput("Enter the product id");
             try { Console.WriteLine(bl.Product.ProductItemForManager(ID)); }
-            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
+            catch (Exception ex) { Console.WriteLine(ex.Message); return; };
           //  catch (BO.IdNotExistException ex) { Console.WriteLine(ex.Message);return; }
         }
         ///<summary>
@@ -174,9 +180,9 @@ public class mainProgram
         void GetProductForCostemor()
         {
             // Try to get and throw an exception if not succeed
-            int ID = Menu.IntInput("Enter the id");
+            int ID = Menu.IntInput("Enter the product id");
             try { Console.WriteLine(bl.Product.ProductItemForCostemor(ID, cart)); }
-            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
+            catch (Exception ex) { Console.WriteLine(ex.Message); return; };
         }
         ///<summary>
         ///Get all products
@@ -199,14 +205,14 @@ public class mainProgram
             {
                 bl.Product.UpdateProduct(new BO.Product
                 {
-                    UniqID = Menu.IntInput("Enter the ID"),
-                    Name = Menu.StringInput("Enter the name"),
-                    Price = Menu.IntInput("Enter the price"),
+                    UniqID = Menu.IntInput("Enter the product ID"),
+                    Name = Menu.StringInput("Enter the product name"),
+                    Price = Menu.IntInput("Enter the product price"),
                     Category = Menu.CategoryInput(),
-                    InStock = Menu.IntInput("Enter the amount that is un stock")
+                    InStock = Menu.IntInput("Enter the amount that is in stock")
                 });
             }
-            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
+            catch (Exception ex) { Console.WriteLine(ex.Message); return; };
             Console.WriteLine("The product has been updated succesfully");
         }
         ///<summary>
@@ -215,106 +221,115 @@ public class mainProgram
         void DeleteProduct()
         {
             // Try to delete and throw an exception if not succeed
-            int ID = Menu.IntInput("Enter the id");
+            int ID = Menu.IntInput("Enter the product id");
             try { bl.Product.DeleteProduct(ID); }
-            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
+            catch (Exception ex) { Console.WriteLine(ex.Message); return; };
             Console.WriteLine("The product has been deletted succesfully");
         }
 
         ///<summary>
-        ///
+        ///add item to cart
         /// </summary>
         void addItemToCart()
         {
-            int ID = Menu.IntInput("Enter the ID");
+            // Try to add and throw an exception if not succeed
+            int ID = Menu.IntInput("Enter the product ID");
             try
             {
                 bl.Cart.AddToCart(cart, ID);
             }
-            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
+            catch (Exception ex) { Console.WriteLine(ex.Message); return; };
             Console.WriteLine("The item has been added succesfully");
         }
         ///<summary>
-        ///
+        ///Update cart
         /// </summary>
         void updateCart()
         {
-            int ID = Menu.IntInput("Enter the ID"), amount = Menu.IntInput("Enter the new amount");
+            // Try to update and throw an exception if not succeed
+            int ID = Menu.IntInput("Enter the product ID"), amount = Menu.IntInput("Enter the new amount");
             try
             {
                 bl.Cart.UpdateCart(cart, ID, amount);
             }
-            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
+            catch (Exception ex) { Console.WriteLine(ex.Message); return; };
             Console.WriteLine("The amount of item has been updated succesfully");
         }
         ///<summary>
-        ///
+        ///Execute an order
         /// </summary>
         void executeOrder()
         {
+            // Try to execute and throw an exception if not succeed
             try
             {
                 bl.Cart.ExecuteOrder(cart);
             }
-            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
+            catch (Exception ex) { Console.WriteLine(ex.Message); return; };
             Console.WriteLine("The order has been executed succesfully");
         }
         ///<summary>
-        ///
+        ///Get order
         /// </summary>
         void getOrder()
         {
-            int ID = Menu.IntInput("Enter the ID");
+            // Try to get and throw an exception if not succeed
+            int ID = Menu.IntInput("Enter the order ID");
             try { Console.WriteLine(bl.Order.OrderBYID(ID)); }
-            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
+            catch (Exception ex) { Console.WriteLine(ex.Message); return; };
 
         }
         ///<summary>
-        ///
+        ///Get all orders
         /// </summary>
         void getAllOrders()
         {
+            // print all orders
             foreach (BO.OrderForList order in bl.Order.GetListOfOrders())
             {
                 Console.WriteLine(order);
             }
         }
         ///<summary>
-        ///
+        ///update order (for managger)
         /// </summary>
         void updateOrder()
         {
-            int ID = Menu.IntInput("Enter the ID");
+            // Try to update and throw an exception if not succeed
+            int ID = Menu.IntInput("Enter the order ID");
             try { Console.WriteLine(bl.Order.UpdateOrderItemAmount(bl.Order.GetOrderItem(ID))); }
-            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
+            catch (Exception ex) { Console.WriteLine(ex.Message); return; };
         }
         ///<summary>
-        ///
+        ///Updte ship date
         /// </summary>
         void updateShipDate()
         {
-            int ID = Menu.IntInput("Enter the ID");
+            // Try to update and throw an exception if not succeed
+            int ID = Menu.IntInput("Enter the order ID");
             try { Console.WriteLine(bl.Order.UpdateShipDate(ID)); }
-            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
+            catch (Exception ex) { Console.WriteLine(ex.Message); return; };
         }
         ///<summary>
-        ///
+        ///Updte delivery date
         /// </summary>
         void updateDeliveryDate()
         {
-            int ID = Menu.IntInput("Enter the ID");
+            // Try to update and throw an exception if not succeed
+            int ID = Menu.IntInput("Enter the order ID");
             try { Console.WriteLine(bl.Order.UpdateDeliveryDate(ID)); }
-            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
+            catch (Exception ex) { Console.WriteLine(ex.Message); return; };
 
         }
         ///<summary>
-        ///
+        ///track order
         /// </summary>
         void trackOrder()
         {
-            int ID = Menu.IntInput("Enter the ID");
+            // try tomprint the track and throw an exception if not succeed
+            int ID = Menu.IntInput("Enter the order ID");
             try { Console.WriteLine(bl.Order.OrderTrack(ID)); }
-            catch (AggregateException ex) { Console.WriteLine(ex.Message); return; };
+            catch (Exception ex) { Console.WriteLine(ex.Message); return; };
         }
     }
 }

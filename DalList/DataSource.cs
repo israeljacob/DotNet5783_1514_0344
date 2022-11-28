@@ -96,7 +96,7 @@ internal sealed class DataSource
         for (int i = 0; i < 10; i++)
         {
             Product temp = new Product();
-            temp.UniqID = r.Next(300000, 350000);
+            temp.UniqID = r.Next(100, 999);
 
             temp.Name = Productsnames[i];
 

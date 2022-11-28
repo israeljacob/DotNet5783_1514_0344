@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using DalApi;
 using BLApi;
 using Dal;
-using BO;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Wordprocessing;
 
@@ -19,36 +18,35 @@ namespace BlImplementation
         /// Add to cart by Id and the corrent cart
         /// </summary>
         /// <param name="cart"></param>
-        /// <param name="ID"></param>
+        /// <param name="productID"></param>
         /// <returns></returns>
         /// <exception cref="AggregateException"></exception>
-        public BO.Cart AddToCart(BO.Cart cart, int ID)
+        public BO.Cart AddToCart(BO.Cart cart, int productID)
         {
 
             ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
             ///in the end if the list is not empty throw AggregateException: kind of build in function
             ///that hold and represents one or more errors.
-            var exceptions = new List<Exception>();
             
 
             foreach (var item in cart.orderItems)
             {
                 ///id found
-                if (item.ProductID == ID)
+                if (item.ProductID == productID)
                 {
                     try
                     {
                         ///get the product by id
-                        dalList.Product.Get(ID);
+                        dalList.Product.Get(productID);
 
                     }
                     catch (DO.IdNotExistException)
                     {
 
-                        exceptions.Add(new BO.IdNotExistException("Cart ID", ID));
+                        throw new BO.IdNotExistException("Cart ID", productID);
                     }
-                    if(dalList.Product.Get(ID).InStock == 0)///לא מבין למה צריך
-                        exceptions.Add(new BO.InCorrectIntException("Cart ID", ID));
+                    if(dalList.Product.Get(productID).InStock == 0)///לא מבין למה צריך
+                        throw new BO.InCorrectIntException("Cart ID", productID);
                     ///add one to amount and update the price
                     item.Amount++;
                     item.TotalPrice += item.Price;
@@ -59,14 +57,14 @@ namespace BlImplementation
 
             ///connect between the product to id
             DO.Product product = new DO.Product();
-            try { product = dalList.Product.Get(ID); }
+            try { product = dalList.Product.Get(productID); }
             catch (DO.IdNotExistException)
             {
-                exceptions.Add(new BO.IdNotExistException("Cart", ID));
+                throw new BO.IdNotExistException("Cart", productID);
                 
             };
             if (product.InStock == 0)
-                exceptions.Add(new BO.InCorrectIntException("Cart InStock", product.InStock));
+                throw new BO.InCorrectIntException("Cart InStock", product.InStock);
             ///if there is product in the stock add it to order item
             cart.orderItems.Add(new BO.OrderItem
             {
@@ -76,8 +74,6 @@ namespace BlImplementation
                 Amount = 1,
                 TotalPrice = product.Price
             });
-            if (exceptions.Count != 0)
-                throw new AggregateException(exceptions);
             return cart;
         }
 
@@ -95,12 +91,11 @@ namespace BlImplementation
             ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
             ///in the end if the list is not empty throw AggregateException: kind of build in function
             ///that hold and represents one or more errors.
-            var exceptions = new List<Exception>();
 
             ///find the orderItem by id
             BO.OrderItem? orderItem = cart.orderItems?.FirstOrDefault(x => x.ProductID == ID);
             if (orderItem == null)
-                exceptions.Add(new BO.InCorrectIntException("OrderItem is null", 0));
+                throw new BO.InCorrectIntException("OrderItem", ID);
             ///update the amount
             int dif = amount - orderItem.Amount;
             if (dif == 0)
@@ -118,8 +113,6 @@ namespace BlImplementation
                 orderItem.TotalPrice += dif * orderItem.Price;
                 cart.TotalPrice += dif * orderItem.Price;
             }
-            if (exceptions.Count != 0)
-                throw new AggregateException(exceptions);
             return cart;
         }
         /// <summary>
@@ -133,16 +126,15 @@ namespace BlImplementation
             ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
             ///in the end if the list is not empty throw AggregateException: kind of build in function
             ///that hold and represents one or more errors.
-            var exceptions = new List<Exception>();
             ///all the possibilities to go something worg 
             if (cart.CustomerName == null)
-                exceptions.Add(new BO.InCorrectStringException("Customer Name in Cart", "null"));
+                throw new BO.InCorrectStringException("Customer Name in Cart", "null");
             if (cart.CustomerAdress == null)
-                exceptions.Add(new BO.InCorrectStringException("Customer Adress in Cart", "null"));
+                throw new BO.InCorrectStringException("Customer Adress in Cart", "null");
             if (!(cart.CustomerEmail.Contains("@") && cart.CustomerEmail.Contains(".")))
-                exceptions.Add(new BO.InCorrectStringException("Customer Email in Cart", "null"));
+                throw new BO.InCorrectStringException("Customer Email in Cart", "null");
             if (cart.TotalPrice <= 0)
-                exceptions.Add(new BO.InCorrectDoubleException("Total Price in Cart", cart.TotalPrice));
+                throw new BO.InCorrectDoubleException("Total Price in Cart", cart.TotalPrice);
 
             
             foreach (BO.OrderItem orderItem in cart.orderItems)
@@ -151,14 +143,14 @@ namespace BlImplementation
                 try { dalList.Product.Get(orderItem.ProductID); }
                 catch (DO.IdNotExistException)
                 {
-                    exceptions.Add(new BO.IdNotExistException("Product", orderItem.ProductID));
+                    throw new BO.IdNotExistException("Product", orderItem.ProductID);
                 } 
                 ///if the order amount is large then in the product stock
                 if (dalList.Product.Get(orderItem.ProductID).InStock < orderItem.Amount)
-                    exceptions.Add(new BO.InCorrectIntException("Product InStock is less then", orderItem.Amount));
+                    throw new BO.InCorrectIntException("Product InStock is less then", orderItem.Amount);
 
                 if (orderItem.Amount <= 0)
-                    exceptions.Add(new BO.InCorrectIntException("Product Amount", orderItem.Amount));
+                    throw new BO.InCorrectIntException("Product Amount", orderItem.Amount);
             }
             //build BO entitie
             BO.Order order = new BO.Order
@@ -169,7 +161,7 @@ namespace BlImplementation
                 CustomerEmail = cart.CustomerEmail,
                 orderItems = cart.orderItems,
                 TotalPrice = cart.TotalPrice,
-                StatusOfOrder = StatusOfOrder.Orderred,
+                StatusOfOrder = BO.StatusOfOrder.Orderred,
                 OrderDate = DateTime.Now,
                 ShipDate = DateTime.MinValue,
                 DeliveryrDate = DateTime.MinValue,
@@ -203,8 +195,6 @@ namespace BlImplementation
 
             }
 
-            if (exceptions.Count != 0)
-                throw new AggregateException(exceptions);
         }
     }
 }

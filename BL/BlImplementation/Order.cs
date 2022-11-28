@@ -46,11 +46,10 @@ internal class Order : BLApi.IOrder
         ///All the exception that comes from DO we catch it, then insert the appropriate exception to list,
         ///in the end if the list is not empty throw AggregateException: kind of build in function
         ///that hold and represents one or more errors.
-        var exceptions = new List<Exception>();
 
 
         if (ID <= 0)
-            exceptions.Add(new BO.InCorrectIntException("Order ID", ID));
+            throw new BO.InCorrectIntException("Order ID", ID);
         DO.Order order = new DO.Order();
         try
         {
@@ -58,11 +57,9 @@ internal class Order : BLApi.IOrder
         }
         catch (DO.IdNotExistException)
         {
-            exceptions.Add(new BO.IdNotExistException("Order", ID));
+            throw new BO.IdNotExistException("Order", ID);
 
         }
-        if (exceptions.Count != 0)
-            throw new AggregateException(exceptions);
         ///return BO entitie
         return new BO.Order
         {
@@ -94,14 +91,13 @@ internal class Order : BLApi.IOrder
         ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
         ///in the end if the list is not empty throw AggregateException: kind of build in function
         ///that hold and represents one or more errors.
-        var exceptions = new List<Exception>();
 
         DO.Order order = new DO.Order();
         ///get the ID
         try { order = dalList.Order.Get(ID); }
         catch(DO.IdNotExistException)
         {
-            exceptions.Add(new BO.IdNotExistException("Order ID", ID));
+            throw new BO.IdNotExistException("Order ID", ID);
         }
         try {
             if (order.ShipDate > DateTime.MinValue)
@@ -112,14 +108,12 @@ internal class Order : BLApi.IOrder
         }
         catch(DO.DatesException)
         {
-            exceptions.Add(new BO.DatesException("Order:", order.ShipDate, DateTime.MinValue));
+            throw new BO.DatesException("Order:", order.ShipDate, DateTime.MinValue);
         }
 
         ///update the ship date
         order.ShipDate= DateTime.Now;
          dalList.Order.Update(order);
-        if (exceptions.Count != 0)
-            throw new AggregateException(exceptions);
         return new BO.Order
         {
             UniqID = order.UniqID,
@@ -146,14 +140,13 @@ internal class Order : BLApi.IOrder
         ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
         ///in the end if the list is not empty throw AggregateException: kind of build in function
         ///that hold and represents one or more errors.
-        var exceptions = new List<Exception>();
 
         DO.Order order = new DO.Order();
         ///get the order by id
         try { order = dalList.Order.Get(ID); }
         catch(DO.IdNotExistException)
         {
-            exceptions.Add(new BO.IdNotExistException("Order", ID));
+            throw new BO.IdNotExistException("Order", ID);
         }
         try {
                if (order.DeliveryrDate > DateTime.MinValue)
@@ -162,14 +155,12 @@ internal class Order : BLApi.IOrder
         }
         catch (DO.DatesException)
         {
-            exceptions.Add(new BO.DatesException("Order:", order.ShipDate, DateTime.MinValue));
+            throw new BO.DatesException("Order:", order.ShipDate, DateTime.MinValue);
 
         }
         order.DeliveryrDate = DateTime.Now;
         dalList.Order.Update(order);
 
-        if (exceptions.Count != 0)
-            throw new AggregateException(exceptions);
         return new BO.Order
         {
             UniqID = order.UniqID,
@@ -222,7 +213,6 @@ internal class Order : BLApi.IOrder
         ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
         ///in the end if the list is not empty throw AggregateException: kind of build in function
         ///that hold and represents one or more errors.
-        var exceptions = new List<Exception>();
         DO.OrderItem DOorderItem = new DO.OrderItem();
         DO.Order  order = new DO.Order();
         try { 
@@ -231,7 +221,7 @@ internal class Order : BLApi.IOrder
             }
         catch (DO.IdNotExistException)
         {
-            exceptions.Add(new BO.IdNotExistException("Order item", orderItem.OrderItemID));///הבז
+            throw new BO.IdNotExistException("Order item", orderItem.OrderItemID);///הבז
         }
         if(order.ShipDate>DateTime.MinValue) { throw new BO.InCorrectDetailsException("O", orderItem.OrderItemID); }////לוודא
         return new BO.OrderItem
@@ -251,13 +241,12 @@ internal class Order : BLApi.IOrder
     /// <returns></returns>
     public BO.OrderItem GetOrderItem(int ID)
     {
-        var exceptions = new List<Exception>();
 
         DO.OrderItem orderItem = new DO.OrderItem();
         try {orderItem=  dalList.OrderItem.Get(ID); }
         catch (DO.IdNotExistException)
         {
-            exceptions.Add(new BO.IdNotExistException("Order", ID));
+            throw new BO.IdNotExistException("Order", ID);
 
         }
         return new BO.OrderItem
@@ -285,6 +274,11 @@ internal class Order : BLApi.IOrder
         return statusOfOrder;
     }
 
+    /// <summary>
+    /// Amount of items
+    /// </summary>
+    /// <param name="order"></param>
+    /// <returns>The amount of items</returns>
     private int amoutOfItems(DO.Order order)
     {
         int amountOfItems = 0;
@@ -293,6 +287,11 @@ internal class Order : BLApi.IOrder
         return amountOfItems;
     }
 
+    /// <summary>
+    /// The total price of order
+    /// </summary>
+    /// <param name="order"></param>
+    /// <returns>The total price</returns>
     private double totalPrice(DO.Order order)
     {
         double totalPrice = 0;

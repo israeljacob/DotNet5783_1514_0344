@@ -56,9 +56,8 @@ namespace BlImplementation
             ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
             ///in the end if the list is not empty throw AggregateException: kind of build in function
             ///that hold and represents one or more errors.
-            var exceptions = new List<Exception>();
             if (ID <= 0)
-                exceptions.Add(new BO.InCorrectIntException("Product ID", ID));
+                throw new BO.InCorrectIntException("Product ID", ID);
             DO.Product product = new DO.Product();
             try
             {
@@ -66,10 +65,8 @@ namespace BlImplementation
             }
             catch (DO.IdNotExistException)
             {
-                exceptions.Add(new BO.IdNotExistException("Product", ID));
+                throw new BO.IdNotExistException("Product", ID);
             }
-            if (exceptions.Count != 0)
-                throw new AggregateException(exceptions);
             ///return new entitie product 
             return new BO.Product
             {
@@ -94,10 +91,9 @@ namespace BlImplementation
             ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
             ///in the end if the list is not empty throw AggregateException: kind of build in function
             ///that hold and represents one or more errors.
-            var exceptions = new List<Exception>();
 
             if (ID <= 0)
-                exceptions.Add(new BO.InCorrectIntException("Product ID", ID));
+                throw new BO.InCorrectIntException("Product ID", ID);
             DO.Product product = new DO.Product();
             try
             {
@@ -105,12 +101,10 @@ namespace BlImplementation
             }
             catch (DO.IdNotExistException)
             {
-                exceptions.Add(new BO.IdNotExistException("Product ID", ID));
+                throw new BO.IdNotExistException("Product ID", ID);
 
             }
 
-            if (exceptions.Count != 0)
-                throw new AggregateException(exceptions);
             bool inStock = true;
             if (product.InStock == 0)
                 inStock = false;
@@ -142,17 +136,16 @@ namespace BlImplementation
             ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
             ///in the end if the list is not empty throw AggregateException: kind of build in function
             ///that hold and represents one or more errors.
-            var exceptions = new List<Exception>();
             Product product = new Product();
 
             if (ID <= 0)
-                exceptions.Add(new BO.InCorrectIntException("Product ID", ID));
+                throw new BO.InCorrectIntException("Product ID", ID);
             if (name == null)
-                exceptions.Add(new BO.InCorrectStringException("Product Name", name));
+                throw new BO.InCorrectStringException("Product Name", name);
             if (price <= 0)
-                exceptions.Add(new BO.InCorrectDoubleException("Product Price", price));
+                throw new BO.InCorrectDoubleException("Product Price", price);
             if (inStock < 0)
-                exceptions.Add(new BO.InCorrectIntException("Product Instock", inStock));
+                throw new BO.InCorrectIntException("Product Instock", inStock);
             try
             {
                 int returnedID = dalList.Product.Add(new DO.Product
@@ -166,13 +159,8 @@ namespace BlImplementation
             }
             catch (DO.ExistException)
             {
-                exceptions.Add(new BO.IdAlreadyExistException("Product",ID));
+                throw new BO.IdAlreadyExistException("Product", ID);
             }
-
-
-
-            if (exceptions.Count != 0)
-                throw new AggregateException(exceptions);
         }
 
         /// <summary>
@@ -185,22 +173,17 @@ namespace BlImplementation
             ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
             ///in the end if the list is not empty throw AggregateException: kind of build in function
             ///that hold and represents one or more errors.
-            var exceptions = new List<Exception>();
 
             if (dalList.OrderItem.GetByProduct(ID) != null)
-                exceptions.Add(new ItemExistsInOrderException("Product"));
+                throw new BO.ItemExistsInOrderException("Product");
             try
             {
                 dalList.Product.Delete(ID);
             }
             catch (DO.IdNotExistException)
             {
-                exceptions.Add( new BO.IdNotExistException("Product",ID));
+                throw new BO.IdNotExistException("Product", ID);
             }
-
-            if (exceptions.Count != 0)
-                throw new AggregateException(exceptions);
-
         }
         /// <summary>
         /// Uptate Product
@@ -212,17 +195,16 @@ namespace BlImplementation
             ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
             ///in the end if the list is not empty throw AggregateException: kind of build in function
             ///that hold and represents one or more errors.
-            var exceptions = new List<Exception>();
 
 
             if (product.UniqID <= 0)
-                exceptions.Add(new BO.InCorrectIntException("Product ID", product.UniqID));
+                throw new BO.InCorrectIntException("Product ID", product.UniqID);
             else if (product.Name == null)
-                exceptions.Add(new BO.InCorrectStringException("Product Name", product.Name));
+                throw new BO.InCorrectStringException("Product Name", product.Name);
             else if (product.Price <= 0)
-                exceptions.Add(new BO.InCorrectDoubleException("Product Price", product.Price));
+                throw new BO.InCorrectDoubleException("Product Price", product.Price);
             else if (product.InStock < 0)
-                exceptions.Add(new BO.InCorrectIntException("Product Instock", product.InStock));
+                throw new BO.InCorrectIntException("Product Instock", product.InStock);
             try
             {
                 dalList.Product.Update(new DO.Product
@@ -236,12 +218,9 @@ namespace BlImplementation
             }
             catch (DO.IdNotExistException)
             {
-                exceptions.Add(new BO.IdNotExistException("Product", product.UniqID));
+                throw new BO.IdNotExistException("Product", product.UniqID);
             }
 
-
-            if (exceptions.Count != 0)
-                throw new AggregateException(exceptions);
         }
     }
 }

@@ -21,8 +21,7 @@ public enum Category
 
 public enum StatusOfOrder
 {
-    InProcess=1,
-    Orderred,
+    Orderred=1,
     Sent,
     Delivered
 }

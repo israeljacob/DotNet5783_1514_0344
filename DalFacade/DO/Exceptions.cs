@@ -22,7 +22,7 @@ namespace DO
         public string getLabel() { return label; }
         public override string ToString()
         {
-            return $"[Error] {label} with id number {id} already exist.\n";
+            return $" {label} with id number {id} already exist.\n";
         }
 
     }
