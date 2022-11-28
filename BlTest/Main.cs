@@ -131,14 +131,22 @@ public class mainProgram
 
         void AddProduct()
         {
+            
+
+            int ID = Menu.IntInput("Enter the ID");
+            string name = Menu.StringInput("Enter the name");
+            int price = Menu.IntInput("Enter the price");
+            BO.Category category = Menu.CategoryInput();
+            int inStock = Menu.IntInput("Enter the amount that is un stock");
             try
             {
-                bl.Product.AddProduct(
-                    Menu.IntInput("Enter the ID"),
-                    Menu.StringInput("Enter the name"),
-                    Menu.IntInput("Enter the price"),
-                    Menu.CategoryInput(),
-                    Menu.IntInput("Enter the amount that is un stock"));
+               bl.Product.AddProduct(ID, name, price, category, inStock);
+                //bl.Product.AddProduct(
+                //    Menu.IntInput("Enter the ID"),
+                //    Menu.StringInput("Enter the name"),
+                //    Menu.IntInput("Enter the price"),
+                //    Menu.CategoryInput(),
+                //    );
             }
             catch (BO.EmptyException ex) { Console.WriteLine(ex.Message); }
             Console.WriteLine("The product has been added succesfully");
