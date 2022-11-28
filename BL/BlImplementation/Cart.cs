@@ -15,7 +15,13 @@ namespace BlImplementation
     internal class Cart : ICart
     {
         IDal dalList = DalList.Instance;
-        ///Add to cart by Id and the corrent cart
+        /// <summary>
+        /// Add to cart by Id and the corrent cart
+        /// </summary>
+        /// <param name="cart"></param>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        /// <exception cref="AggregateException"></exception>
         public BO.Cart AddToCart(BO.Cart cart, int ID)
         {
 
@@ -27,7 +33,7 @@ namespace BlImplementation
 
             foreach (var item in cart.orderItems)
             {
-                /// id found
+                ///id found
                 if (item.ProductID == ID)
                 {
                     try
@@ -75,7 +81,14 @@ namespace BlImplementation
             return cart;
         }
 
-        ///update the cart 
+        /// <summary>
+        /// update the cart
+        /// </summary>
+        /// <param name="cart"></param>
+        /// <param name="ID"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        /// <exception cref="AggregateException"></exception>
         public BO.Cart UpdateCart(BO.Cart cart, int ID, int amount)
         {
 
@@ -109,6 +122,11 @@ namespace BlImplementation
                 throw new AggregateException(exceptions);
             return cart;
         }
+        /// <summary>
+        /// GET the cart and creat new order
+        /// </summary>
+        /// <param name="cart"></param>
+        /// <exception cref="AggregateException"></exception>
         public void ExecuteOrder(BO.Cart cart)
         {
 

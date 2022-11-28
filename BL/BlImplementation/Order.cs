@@ -83,7 +83,12 @@ internal class Order : BLApi.IOrder
     }
 
 
-    ///Update ship date by ID
+    /// <summary>
+    /// pdate ship date by ID
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <returns></returns>
+    /// <exception cref="AggregateException"></exception>
      public BO.Order UpdateShipDate(int ID)
     {
         ///All the exception that comes from DO we catch it, than insert the appropriate exception to list,
@@ -129,7 +134,12 @@ internal class Order : BLApi.IOrder
             TotalPrice = totalPrice(order)
         };
     }
-    ///Update Delivery Date by ID
+    /// <summary>
+    /// Update Delivery Date by ID
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <returns></returns>
+    /// <exception cref="AggregateException"></exception>
     public BO.Order UpdateDeliveryDate(int ID)
     {
 
@@ -155,7 +165,6 @@ internal class Order : BLApi.IOrder
             exceptions.Add(new BO.DatesException("Order:", order.ShipDate, DateTime.MinValue));
 
         }
-        ///Update Delivery
         order.DeliveryrDate = DateTime.Now;
         dalList.Order.Update(order);
 
@@ -175,7 +184,12 @@ internal class Order : BLApi.IOrder
             TotalPrice = totalPrice(order)
         };
     }
-    ///Track the order status
+    /// <summary>
+    ///  Track the order status
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.InCorrectIntException"></exception>
     public BO.OrderTracking OrderTrack(int ID)
     {
         DO.Order track = new DO.Order();
@@ -195,7 +209,13 @@ internal class Order : BLApi.IOrder
             ProgressOfOrder = tracking
         };
     }
-    ///Update OrderItem Amount 
+
+    /// <summary>
+    ///  Update OrderItem Amount 
+    /// </summary>
+    /// <param name="orderItem"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.InCorrectDetailsException"></exception>
     public BO.OrderItem UpdateOrderItemAmount(BO.OrderItem orderItem)
     {
 
@@ -224,7 +244,11 @@ internal class Order : BLApi.IOrder
             TotalPrice = orderItem.TotalPrice
         };
     }
-    ///Get OrderItem by ID
+    /// <summary>
+    /// Get OrderItem by ID
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <returns></returns>
     public BO.OrderItem GetOrderItem(int ID)
     {
         var exceptions = new List<Exception>();
@@ -246,7 +270,11 @@ internal class Order : BLApi.IOrder
             TotalPrice = orderItem.Price * orderItem.Amount
         };
     }
-    ///return the status Of Order
+    /// <summary>
+    /// return the status Of Order
+    /// </summary>
+    /// <param name="order"></param>
+    /// <returns></returns>
     private BO.StatusOfOrder statusOfOrder(DO.Order order)
     {
         BO.StatusOfOrder statusOfOrder = BO.StatusOfOrder.Orderred;
@@ -272,7 +300,11 @@ internal class Order : BLApi.IOrder
             totalPrice += orderItem.Price * orderItem.Amount;
         return totalPrice;
     }
-    ///return orderitems by id
+    /// <summary>
+    /// return orderitems by id
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <returns></returns>
     private IEnumerable<BO.OrderItem> orderItems(int ID)
     {
         return from orderItem in dalList.OrderItem.GetByOrder(ID)
