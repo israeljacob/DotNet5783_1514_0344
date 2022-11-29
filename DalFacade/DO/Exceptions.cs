@@ -8,12 +8,12 @@ namespace DO
 {
 
 
-    public class IdAlreadyExist : Exception
+    public class IdAlreadyExistException : Exception
     {
 
         int id;
         string label;
-        public IdAlreadyExist(string label, int id)
+        public IdAlreadyExistException(string label, int id)
         {
             this.id = id;
             this.label = label;
@@ -69,13 +69,13 @@ namespace DO
 
     public class DatesException : Exception
     {
-        DateTime d1;
-        DateTime d2;
+        DateTime? d1;
+        DateTime? d2;
         string label;
-        public DateTime getD1() { return d1; }
-        public DateTime getD2() { return d2; }
+        public DateTime? getD1() { return d1; }
+        public DateTime? getD2() { return d2; }
         public string getLabel() { return label; }
-        public DatesException(string label, DateTime d1,DateTime d2)
+        public DatesException(string label, DateTime? d1,DateTime d2)
         {
             this.d1 = d1;
             this.d2 = d2;

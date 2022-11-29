@@ -22,7 +22,7 @@ namespace BO
         /// <summary>
         /// The status of the order.
         /// </summary>
-        public StatusOfOrder StatusOfOrder { get; set; }
+        public StatusOfOrder? StatusOfOrder { get; set; }
         /// <summary>
         /// The amount of the items in the order.
         /// </summary>

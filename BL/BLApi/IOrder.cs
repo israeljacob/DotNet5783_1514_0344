@@ -11,7 +11,7 @@ namespace BLApi
         ///get order by ID
         public BO.Order OrderBYID(int ID);
         ///get list of order
-        public IEnumerable<BO.OrderForList> GetListOfOrders();
+        public IEnumerable<BO.OrderForList?> GetListOfOrders();
         ///Update Ship Date
         public BO.Order UpdateShipDate(int ID);
         ///Update Delivery Date

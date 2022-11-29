@@ -60,9 +60,9 @@ namespace BlImplementation
             {
                 product = dalList.Product.Get(ID);
             }
-            catch (DO.IdNotExistException)
+            catch (DO.IdNotExistException e)
             {
-                throw new BO.IdNotExistException("Product", ID);
+                throw new BO.IdNotExistException("Product", ID, e);
             }
             ///return new entitie product 
             return new BO.Product
@@ -148,7 +148,7 @@ namespace BlImplementation
                     InStock = inStock
                 });
             }
-            catch (DO.ExistException)
+            catch (DO.IdAlreadyExistException)
             {
                 throw new BO.IdAlreadyExistException("Product", ID);
             }

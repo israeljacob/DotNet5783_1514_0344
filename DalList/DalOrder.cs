@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using DO;
+using DocumentFormat.OpenXml.Drawing.ChartDrawing;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using System.Collections;
@@ -32,7 +33,7 @@ internal class DalOrder : IOrder
     /// <exception cref="DoesNotExistsException"></exception>
     public Order Get(int ID)
     {
-        Order? tempOrder= dataSource.orders.Find(order => order.UniqID == ID);
+        Order? tempOrder= dataSource.orders.Find(order => order?.UniqID == ID);
         //If the order was not found.
         if (tempOrder.Value.CustomerName == null)
          throw new IdNotExistException("Order",ID);
@@ -45,14 +46,24 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <returns>An array that refers to all the order.</returns>
     /// <exception cref="DoesNotExistsException"></exception>
-    public IEnumerable<Order> GetAll()
+    public IEnumerable<Order?> GetAll(Func<Order?, bool>? func = null)
     {
-        
-        IEnumerable<Order>? orders = dataSource.orders.Where(order => order.UniqID>0);
         // If there is no orders.
-        if (orders==null)
+        if (dataSource.orders.Count == 0)
             throw new Empty("There is no Orders at all");
-        return orders;
+        List<Order?> result = new List<Order?>();
+        foreach (var order in dataSource.orders)
+        {
+            if (order == null) continue;
+            result.Add(order);
+        }
+
+        return from order in result
+               select order;
+
+        
+
+
     }
 
     /// <summary>
@@ -85,7 +96,7 @@ internal class DalOrder : IOrder
     public void Delete(int ID)
     {
         // Remove the order by ID and if the order does not exists throw an exception.
-        if(dataSource.orders.RemoveAll(order=>order.UniqID==ID)==0)
+        if(dataSource.orders.RemoveAll(order=>order?.UniqID ==ID)==0)
             throw new IdNotExistException("Order",ID);
     }
 
@@ -94,4 +105,6 @@ internal class DalOrder : IOrder
         if (d1 > d2)
             throw new DatesException("Order:", d1, d2);
     }
+
+    
 }

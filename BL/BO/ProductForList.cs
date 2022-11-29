@@ -26,7 +26,7 @@ namespace BO
         /// <summary>
         /// To wich category the product belongs.
         /// </summary>
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
         /// Converts the object to a printable form.
         /// </summary>
         /// <returns> the printable form. </returns>

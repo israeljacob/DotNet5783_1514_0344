@@ -28,23 +28,23 @@ namespace BO
         /// <summary>
         /// The status of the order.
         /// </summary>
-        public StatusOfOrder StatusOfOrder { get; set; }
+        public StatusOfOrder? StatusOfOrder { get; set; }
         /// <summary>
         /// All the items of this list.
         /// </summary>
-        public IEnumerable<OrderItem>? orderItems { get; set; }
+        public IEnumerable<BO.OrderItem?>? orderItems { get; set; }
         /// <summary>
         /// The date (and time) that the order has been accepted.
         /// </summary>
-        public DateTime OrderDate { get; set; }
+        public DateTime? OrderDate { get; set; }
         /// <summary>
         /// The date (and time) that the order has been sent.
         /// </summary>
-        public DateTime ShipDate { get; set; }
+        public DateTime? ShipDate { get; set; }
         /// <summary>
         /// The date (and time) that the order has been Deliverred.
         /// </summary>
-        public DateTime DeliveryrDate { get; set; }
+        public DateTime? DeliveryrDate { get; set; }
         /// <summary>
         /// The total price of the order.
         /// </summary>

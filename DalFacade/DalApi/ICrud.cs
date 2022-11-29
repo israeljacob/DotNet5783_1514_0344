@@ -12,7 +12,7 @@ namespace DalApi
         void Delete(int ID);
         void Update(T ID);
         T Get(int ID);
-        IEnumerable<T> GetAll();
+       
 
        
     }

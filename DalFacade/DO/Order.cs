@@ -25,15 +25,15 @@ public struct Order
     /// <summary>
     /// The date (and time) that the order has been accepted.
     /// </summary>
-    public DateTime OrderDate { get; set; } 
+    public DateTime? OrderDate { get; set; } 
     /// <summary>
     /// The date (and time) that the order has been sent.
     /// </summary>
-    public DateTime ShipDate { get; set; }
+    public DateTime? ShipDate { get; set; }
     /// <summary>
     /// The date (and time) that the order has been Deliverred.
     /// </summary>
-    public DateTime DeliveryrDate { get; set; }
+    public DateTime? DeliveryrDate { get; set; }
 
 
 

@@ -26,7 +26,7 @@ namespace BO
         /// <summary>
         /// To wich category the product belongs.
         /// </summary>
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
         /// <summary>
         /// How much from this product is available.
         /// </summary>

@@ -10,12 +10,12 @@ namespace BO;
 public class EmptyException : Exception
 {
     public EmptyException(string? label, int id)
-       : base($"{label?? ""} with id number {id} not exist.\n")
+       : base($"{label?? ""} with id number {id} does not exist.\n")
     {
     }
 
     public EmptyException(string? label, int id, Exception? innerException)
-        : base($"{label} with id number {id} not exist.\n", innerException)
+        : base($"{label} with id number {id} does not exist.\n", innerException)
     {
     }
 }
@@ -23,12 +23,12 @@ public class EmptyException : Exception
 public class IdNotExistException : Exception
 {
     public IdNotExistException(string? label, int id)
-       : base($"{label} with id number {id} not exist.\n")
+       : base($"{label} with id number {id} does not exist.\n")
     {
     }
 
     public IdNotExistException(string? label, int id, Exception? innerException)
-        : base($" {label} with id number {id} not exist.\n", innerException)
+        : base($" {label} with id number {id} does not exist.\n", innerException)
     {
     }
 }
@@ -58,7 +58,7 @@ public class IdAlreadyExistException : Exception
     }
 
     public IdAlreadyExistException(string? label, int id, Exception? innerException)
-        : base($"{label} with id number {id} not  exist.\n", innerException)
+        : base($"{label} with id number {id} does not  exist.\n", innerException)
     {
     }
 }

@@ -9,11 +9,11 @@ internal sealed class DataSource
 
 
     // Orders list
-    internal List<Order> orders = new List<Order>();
+    internal List<Order?> orders = new List<Order?>();
     // Order items list.
-    internal List<OrderItem> orderItems = new List<OrderItem>();
+    internal List<OrderItem?> orderItems = new List<OrderItem?>();
     // Products list.
-    internal List<Product> products = new List<Product>();
+    internal List<Product?> products = new List<Product?>();
 
     private static DataSource instance;
     public static DataSource Instance
@@ -176,7 +176,7 @@ internal sealed class DataSource
 
 
         Random random = new Random();
-        TimeSpan ts;
+        TimeSpan? ts;
         // Store them in the list.
         for (int i = 0; i < 20; i++)
         {
@@ -193,7 +193,7 @@ internal sealed class DataSource
                     temp.ShipDate = DateTime.Now.AddDays(random.Next(-1000, -1));
                     ts = temp.ShipDate - temp.OrderDate;
                 }
-                while (ts.TotalDays < 0);
+                while (ts?.TotalDays < 0);
             }
             else
                 temp.ShipDate = DateTime.MinValue;
@@ -204,7 +204,7 @@ internal sealed class DataSource
                     temp.DeliveryrDate = DateTime.Now.AddDays(random.Next(-1000, -1));
                     ts = temp.DeliveryrDate - temp.ShipDate;
                 }
-                while (ts.TotalDays < 0);
+                while (ts?.TotalDays < 0);
             }
             else
                 temp.DeliveryrDate = DateTime.MinValue;
@@ -224,10 +224,10 @@ internal sealed class DataSource
             OrderItem temp = new OrderItem();
             int rand = r.Next(1, 9);
             temp.UniqID = Config.OrderItemID;
-            temp.ProductID = orders[r.Next(0, 19)].UniqID;
-            temp.OrderID = products[rand].UniqID;
+            temp.ProductID = 0;
+            temp.OrderID = 0;
             temp.Amount = r.Next(1, 10);
-            temp.Price = products[rand].Price * temp.Amount;
+            temp.Price = 0;
 
         }
     }

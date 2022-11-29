@@ -173,7 +173,7 @@ internal class Order : BLApi.IOrder
         DO.Order track = new DO.Order();
         try { track = dalList.Order.Get(ID); }
         catch { throw new BO.InCorrectIntException("Order ID", ID); }
-        List<Tuple<DateTime, string>> tracking = new List<Tuple<DateTime, string>>();
+        List<Tuple<DateTime?, string?>?>? tracking = new List<Tuple<DateTime?, string?>?>();
         if (track.OrderDate > DateTime.MinValue)
             tracking.Add(Tuple.Create(track.OrderDate, "The order has been created"));
         if (track.ShipDate > DateTime.MinValue)
