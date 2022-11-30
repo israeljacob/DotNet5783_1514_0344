@@ -53,15 +53,15 @@ internal class DalProduct:IProduct
         // If there is no orders.
         if (dataSource.products.Count == 0)
             throw new Empty("There is no products at all");
-        List<Product?> result = new List<Product?>();
+        if(func == null)
+            return from product in dataSource.products
+                   where product != null
+                   select product;
         foreach (var product in dataSource.products)
         {
             if (product == null) continue;
             result.Add(product);
         }
-
-        return from product in result
-               select product;
     }
     /// <summary>
     /// updates details of a spesific product.

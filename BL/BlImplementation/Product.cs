@@ -31,14 +31,13 @@ namespace BlImplementation
         /// <exception cref="MissingAttributeException"></exception>
         public IEnumerable<BO.ProductForList> GetListOfProducts()
         {
-
-            return from product in dalList.Product.GetAll()
+            return from product in dalList?.Product.GetAll()
                    select new BO.ProductForList
                    {
-                       UniqID = product.UniqID,
-                       Name = product.Name,
-                       Price = product.Price,
-                       Category = (BO.Category)product.Category
+                       UniqID = product?.UniqID ?? throw new BO.MissingDataException("Product","ID"),
+                       Name = product?.Name,
+                       Price = product?.Price ?? throw new BO.MissingDataException("Product", "price"),
+                       Category = (BO.Category)product?.Category
                    };
 
 

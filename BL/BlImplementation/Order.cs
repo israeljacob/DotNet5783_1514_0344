@@ -26,8 +26,8 @@ internal class Order : BLApi.IOrder
         return from order in dalList.Order.GetAll()
                select new BO.OrderForList
                {
-                   UniqID = order.UniqID,
-                   CustomerName = order.CustomerName,
+                   UniqID = order?.UniqID ?? throw new BO.MissingDataException("Order", "ID"),
+                   CustomerName = order?.CustomerName,
                    StatusOfOrder = statusOfOrder(order),
                    AmountOfItems = amoutOfItems(order),
                    TotalPrice = totalPrice(order)
@@ -207,7 +207,7 @@ internal class Order : BLApi.IOrder
         {
             throw new BO.IdNotExistException("Order item", orderItem.OrderItemID);///הבז
         }
-        if(order.ShipDate>DateTime.MinValue) { throw new BO.InCorrectDetailsException("O", orderItem.OrderItemID); }////לוודא
+        if(order.ShipDate>DateTime.MinValue) { throw new BO.InCorrectDetailsException("O", orderItem.OrderItemID); }
         return new BO.OrderItem
         {
             OrderItemID = orderItem.OrderItemID,
@@ -248,12 +248,12 @@ internal class Order : BLApi.IOrder
     /// </summary>
     /// <param name="order"></param>
     /// <returns></returns>
-    private BO.StatusOfOrder statusOfOrder(DO.Order order)
+    private BO.StatusOfOrder? statusOfOrder(DO.Order? order)
     {
-        BO.StatusOfOrder statusOfOrder = BO.StatusOfOrder.Orderred;
-        if (order.DeliveryrDate > DateTime.MinValue)
+        BO.StatusOfOrder? statusOfOrder = BO.StatusOfOrder.Orderred;
+        if (order?.DeliveryrDate > DateTime.MinValue)
             statusOfOrder = BO.StatusOfOrder.Delivered;
-        else if (order.ShipDate > DateTime.MinValue)
+        else if (order?.ShipDate > DateTime.MinValue)
             statusOfOrder = BO.StatusOfOrder.Sent;
         return statusOfOrder;
     }
@@ -263,10 +263,10 @@ internal class Order : BLApi.IOrder
     /// </summary>
     /// <param name="order"></param>
     /// <returns>The amount of items</returns>
-    private int amoutOfItems(DO.Order order)
+    private int amoutOfItems(DO.Order? order)
     {
         int amountOfItems = 0;
-        foreach (DO.OrderItem orderItem in dalList.OrderItem.GetByOrder(order.UniqID))
+        foreach (DO.OrderItem orderItem in dalList.OrderItem.GetByOrder(order?.UniqID ?? throw new BO.MissingDataException("Order", "ID")))
             amountOfItems++;
         return amountOfItems;
     }
@@ -276,10 +276,10 @@ internal class Order : BLApi.IOrder
     /// </summary>
     /// <param name="order"></param>
     /// <returns>The total price</returns>
-    private double totalPrice(DO.Order order)
+    private double totalPrice(DO.Order? order)
     {
         double totalPrice = 0;
-        foreach (DO.OrderItem orderItem in dalList.OrderItem.GetByOrder(order.UniqID))
+        foreach (DO.OrderItem orderItem in dalList.OrderItem.GetByOrder(order?.UniqID ?? throw new BO.MissingDataException("Order", "ID")))
             totalPrice += orderItem.Price * orderItem.Amount;
         return totalPrice;
     }
@@ -288,17 +288,17 @@ internal class Order : BLApi.IOrder
     /// </summary>
     /// <param name="ID"></param>
     /// <returns></returns>
-    private IEnumerable<BO.OrderItem> orderItems(int ID)
+    private IEnumerable<BO.OrderItem?>? orderItems(int ID)
     {
         return from orderItem in dalList.OrderItem.GetByOrder(ID)
                select new BO.OrderItem
                {
-                   OrderItemID = orderItem.UniqID,
-                   ProductID = orderItem.ProductID,
-                   ProductName = dalList.Product.Get(orderItem.ProductID).Name,
-                   Price = orderItem.Price,
-                   Amount = orderItem.Amount,
-                   TotalPrice = orderItem.Price * orderItem.Amount
+                   OrderItemID = orderItem?.UniqID ?? throw new BO.MissingDataException("Order", "ID"),
+                   ProductID = orderItem?.ProductID ?? throw new BO.MissingDataException("Product", "ID"),
+                   ProductName = dalList.Product.Get(orderItem?.ProductID ?? throw new BO.MissingDataException("Product", "name")).Name,
+                   Price = orderItem?.Price ?? throw new BO.MissingDataException("Order item", "price"),
+                   Amount = orderItem?.Amount ?? throw new BO.MissingDataException("Order item", "amount"),
+                   TotalPrice = orderItem?.Price * orderItem?.Amount ?? throw new BO.MissingDataException("Order item","Total price")
                };
     }
     
