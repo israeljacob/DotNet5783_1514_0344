@@ -51,19 +51,14 @@ internal class DalOrder : IOrder
         // If there is no orders.
         if (dataSource.orders.Count == 0)
             throw new Empty("There is no Orders at all");
-        List<Order?> result = new List<Order?>();
-        foreach (var order in dataSource.orders)
-        {
-            if (order?.UniqID==0??0) continue;
-            result.Add(order);
-        }
-
-        return from order in result
-               select order;
-
-        
-
-
+        if (func == null)
+            return from order in dataSource.orders
+                   where order != null
+                   select order; 
+        else
+            return from order in dataSource.orders
+                   where order != null && func(order)
+                   select order;
     }
 
     /// <summary>

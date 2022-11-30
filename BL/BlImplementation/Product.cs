@@ -29,17 +29,28 @@ namespace BlImplementation
         /// </summary>
         /// <returns>An IEnumerable of all the products.</returns>
         /// <exception cref="MissingAttributeException"></exception>
-        public IEnumerable<BO.ProductForList> GetListOfProducts()
+        public IEnumerable<BO.ProductForList?> GetListOfProducts(Func<DO.Product?, bool>? func = null)
         {
-
-            return from product in dalList.Product.GetAll()
+            if(func == null)
+            return from product in dalList?.Product.GetAll()
+                   where product != null
                    select new BO.ProductForList
                    {
-                       UniqID = product.UniqID,
-                       Name = product.Name,
-                       Price = product.Price,
-                       Category = (BO.Category)product.Category
+                       UniqID = product?.UniqID ?? throw new BO.MissingDataException("Product","ID"),
+                       Name = product?.Name,
+                       Price = product?.Price ?? throw new BO.MissingDataException("Product", "price"),
+                       Category = (BO.Category)product?.Category
                    };
+            else
+                return from product in dalList?.Product.GetAll()
+                       where func(product)
+                       select new BO.ProductForList
+                       {
+                           UniqID = product?.UniqID ?? throw new BO.MissingDataException("Product", "ID"),
+                           Name = product?.Name,
+                           Price = product?.Price ?? throw new BO.MissingDataException("Product", "price"),
+                           Category = (BO.Category)product?.Category
+                       };
 
 
         }
@@ -161,8 +172,8 @@ namespace BlImplementation
         /// <exception cref="AggregateException"></exception>
         public void DeleteProduct(int ID)
         {
-
-            if (dalList.OrderItem.GetByProduct(ID) != null)
+            Func<DO.OrderItem?, bool> func = orderItem => orderItem?.ProductID == ID;
+            if (dalList.OrderItem.GetAll(func) != null)
                 throw new BO.ItemExistsInOrderException("Product");
             try
             {
@@ -207,5 +218,7 @@ namespace BlImplementation
             }
 
         }
+
+       
     }
 }

@@ -38,52 +38,8 @@ internal class DalOrderItem:IOrderItem
         return (OrderItem)tempOrderItem;
     }
 
-    /// <summary>
-    /// Gets all the order items that connected to a specific order.
-    /// </summary>
-    /// <param name="orderID"></param>
-    /// <returns>array that refers to all the relevant order items</returns>
-    /// <exception cref="Exception"></exception>
-    public IEnumerable<OrderItem?> GetByOrder(int orderID, Func<OrderItem?, bool> func = null)
-    {
-        // If there is no orders.
-        if (dataSource.orderItems.Count == 0)
-            throw new Empty("There is no Order items at all");
-        List<OrderItem?> result = new List<OrderItem?>();
-        foreach (var orderItem in dataSource.orderItems)
-        {
-            if (orderItem == null) continue;
-            if (orderItem?.OrderID != orderID) continue;
-            result.Add(orderItem);
-        }
-
-        return from orderItem in result
-               select orderItem;
-    }
-
-    /// <summary>
-    /// Gets all the order items of a specific product.
-    /// </summary>
-    /// <param name="orderID"></param>
-    /// <returns>array that refers to all the relevant order items</returns>
-    /// <exception cref="Exception"></exception>
-    public IEnumerable<OrderItem?> GetByProduct(int productID, Func<OrderItem?, bool> func = null)
-    {
-        // If there is no orders.
-        if (dataSource.orderItems.Count == 0)
-            throw new Empty("There is no Order items at all");
-        List<OrderItem?> result = new List<OrderItem?>();
-        foreach (var orderItem in dataSource.orderItems)
-        {
-            if (orderItem == null) continue;
-            if (orderItem?.OrderID != productID) continue;
-            result.Add(orderItem);
-        }
-
-        return from orderItem in result
-               select orderItem;
-    }
-
+   
+    
     ///  /// <summary>
     /// Gets all the order items.
     /// </summary>
@@ -94,15 +50,14 @@ internal class DalOrderItem:IOrderItem
         // If there is no orders.
         if (dataSource.orderItems.Count == 0)
             throw new Empty("There is no Order items at all");
-        List<OrderItem?> result = new List<OrderItem?>();
-        foreach (var orderItem in dataSource.orderItems)
-        {
-            if (orderItem == null) continue;
-            result.Add(orderItem);
-        }
-
-        return from orderItem in result
-               select orderItem;
+        if (func == null)
+            return from orderItem in dataSource.orderItems
+                   where orderItem != null 
+                   select orderItem;
+        else
+            return from orderItem in dataSource.orderItems
+                   where func(orderItem)
+                   select orderItem;
     }
 
 

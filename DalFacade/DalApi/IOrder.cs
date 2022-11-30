@@ -15,6 +15,5 @@ namespace DalApi
         /// <param name="d1"></param>
         /// <param name="d2"></param>
         public void CompareDates(DateTime d1, DateTime d2);
-        IEnumerable<Order?> GetAll(Func<Order?, bool>? func = null);
     }
 }
