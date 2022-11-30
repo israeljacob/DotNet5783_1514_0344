@@ -57,11 +57,10 @@ internal class DalProduct:IProduct
             return from product in dataSource.products
                    where product != null
                    select product;
-        foreach (var product in dataSource.products)
-        {
-            if (product == null) continue;
-            result.Add(product);
-        }
+        else
+            return from product in dataSource.products
+                   where product != null && func(Order)
+                   select product;
     }
     /// <summary>
     /// updates details of a spesific product.
