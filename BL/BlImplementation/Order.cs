@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dal;
 using DocumentFormat.OpenXml.Drawing;
+using BO;
 
 namespace BlImplementation;
 
@@ -21,7 +22,7 @@ internal class Order : BLApi.IOrder
     /// </summary>
     /// <returns>An IEnumerable of all the orders.</returns>
     /// <exception cref="MissingAttributeException"></exception>
-    public IEnumerable<BO.OrderForList> GetListOfOrders()
+    public IEnumerable<BO.OrderForList?> GetListOfOrders()
     {
         return from order in dalList.Order.GetAll()
                select new BO.OrderForList
@@ -266,7 +267,8 @@ internal class Order : BLApi.IOrder
     private int amoutOfItems(DO.Order? order)
     {
         int amountOfItems = 0;
-        foreach (DO.OrderItem orderItem in dalList.OrderItem.GetByOrder(order?.UniqID ?? throw new BO.MissingDataException("Order", "ID")))
+        Func<DO.OrderItem? , bool> func = orderItem => orderItem?.OrderID == order?.UniqID;
+        foreach (DO.OrderItem orderItem in dalList.OrderItem.GetAll(func))
             amountOfItems++;
         return amountOfItems;
     }
@@ -279,7 +281,8 @@ internal class Order : BLApi.IOrder
     private double totalPrice(DO.Order? order)
     {
         double totalPrice = 0;
-        foreach (DO.OrderItem orderItem in dalList.OrderItem.GetByOrder(order?.UniqID ?? throw new BO.MissingDataException("Order", "ID")))
+        Func<DO.OrderItem?, bool> func = orderItem => orderItem?.OrderID == order?.UniqID;
+        foreach (DO.OrderItem orderItem in dalList.OrderItem.GetAll(func))
             totalPrice += orderItem.Price * orderItem.Amount;
         return totalPrice;
     }
@@ -290,7 +293,8 @@ internal class Order : BLApi.IOrder
     /// <returns></returns>
     private IEnumerable<BO.OrderItem?>? orderItems(int ID)
     {
-        return from orderItem in dalList.OrderItem.GetByOrder(ID)
+        Func<DO.OrderItem?, bool> func = orderItem => orderItem?.OrderID ==ID;
+            return from orderItem in dalList.OrderItem.GetAll(func)
                select new BO.OrderItem
                {
                    OrderItemID = orderItem?.UniqID ?? throw new BO.MissingDataException("Order", "ID"),

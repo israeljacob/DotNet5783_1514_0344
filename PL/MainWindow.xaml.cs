@@ -24,5 +24,10 @@ namespace PL
         {
             InitializeComponent();
         }
+
+        private void Admin_Click(object sender, RoutedEventArgs e)
+        {
+           new ProductListWindow().Show();
+        }
     }
 }

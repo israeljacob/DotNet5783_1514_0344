@@ -8,7 +8,7 @@ namespace BLApi
 {
     public interface IProduct
     {
-        public IEnumerable<BO.ProductForList?> GetListOfProducts();
+        public IEnumerable<BO.ProductForList?> GetListOfProducts(Func<DO.Product?,bool>? func =null);
         public BO.Product ProductItemForManager(int ID);
 
         public BO.ProductItem ProductItemForCostemor(int ID, BO.Cart cart);

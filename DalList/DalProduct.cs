@@ -59,7 +59,7 @@ internal class DalProduct:IProduct
                    select product;
         else
             return from product in dataSource.products
-                   where product != null && func(Order)
+                   where func(product)
                    select product;
     }
     /// <summary>
