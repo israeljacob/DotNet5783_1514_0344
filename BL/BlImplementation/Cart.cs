@@ -65,6 +65,7 @@ namespace BlImplementation
             ///if there is product in the stock add it to order item
             cart.orderItems.Add(new BO.OrderItem
             {
+                
                 ProductID = product.UniqID,
                 ProductName = product.Name,
                 Price = product.Price,
