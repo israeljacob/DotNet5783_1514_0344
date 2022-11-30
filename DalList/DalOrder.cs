@@ -54,7 +54,7 @@ internal class DalOrder : IOrder
         List<Order?> result = new List<Order?>();
         foreach (var order in dataSource.orders)
         {
-            if (order == null) continue;
+            if (order?.UniqID==0??0) continue;
             result.Add(order);
         }
 
