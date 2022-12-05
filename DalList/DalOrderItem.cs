@@ -2,6 +2,7 @@
 using DO;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.Office2010.Excel;
+using System.Linq;
 
 namespace Dal;
 
@@ -38,14 +39,24 @@ internal class DalOrderItem:IOrderItem
         return (OrderItem)tempOrderItem;
     }
 
-   
-    
+    /// <summary>
+    /// Gets an order item by a boolyan deligate.
+    /// </summary>
+    /// <param name="func"></param>
+    /// <returns>The requested order item.</returns>
+    /// <exception cref="DoesNotExistsException"></exception>
+    public OrderItem? Get(Func<OrderItem?, bool> func)
+    {
+        try { return dataSource.orderItems.First(func); }
+        catch { throw new DoesNotExistsException("Order item by func"); }
+    }
+
     ///  /// <summary>
     /// Gets all the order items.
     /// </summary>
     /// <returns>An array that refers to all the order items.</returns>
     /// <exception cref="Exception"></exception>
-    public IEnumerable<OrderItem?>? GetAll(Func<OrderItem?, bool> func = null)
+    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool> func = null)
     {
         // If there is no orders.
         if (dataSource.orderItems.Count == 0)
@@ -95,6 +106,8 @@ internal class DalOrderItem:IOrderItem
         if (dataSource.orderItems.RemoveAll(orderItem => orderItem?.UniqID == ID) == 0)
             throw new IdNotExistException("Order item",ID);
     }
+
+   
 }
 
 

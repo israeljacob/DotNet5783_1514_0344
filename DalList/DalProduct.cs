@@ -4,6 +4,7 @@ using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Wordprocessing;
 using System;
 using System.Collections;
+using System.Linq;
 
 namespace Dal;
 /// <summary>
@@ -29,7 +30,7 @@ internal class DalProduct:IProduct
     }
     
     /// <summary>
-    /// Get a product by ID.
+    /// Gets a product by ID.
     /// </summary>
     /// <param name="ID"></param>
     /// <returns>The requested product.</returns>
@@ -42,6 +43,17 @@ internal class DalProduct:IProduct
             throw new IdNotExistException("Product",ID);
         // If the product was found
         return (Product)tempProduct;
+    }
+    /// <summary>
+    ///  Gets a product by a boolyan deligate.
+    /// </summary>
+    /// <param name="func"></param>
+    /// <returns>The requested product.</returns>
+    /// <exception cref="DoesNotExistsException"></exception>
+    public Product? Get(Func<Product?, bool> func)
+    {
+        try { return dataSource.products.First(func); }
+        catch { throw new DoesNotExistsException("Product by func"); }
     }
     /// <summary>
     /// Gets all the product
@@ -95,4 +107,6 @@ internal class DalProduct:IProduct
         if (dataSource.products.RemoveAll(product => product?.UniqID == ID) == 0)
             throw new IdNotExistException("Product",ID);
     }
+
+   
 }

@@ -1,5 +1,5 @@
 ﻿using BLApi;
-using BO;
+
 using Dal;
 using DalApi;
 using DO;
@@ -31,19 +31,18 @@ namespace BlImplementation
         /// <exception cref="MissingAttributeException"></exception>
         public IEnumerable<BO.ProductForList?> GetListOfProducts(Func<DO.Product?, bool>? func = null)
         {
-            if(func == null)
-            return from product in dalList?.Product.GetAll()
-                   where product != null
-                   select new BO.ProductForList
-                   {
-                       UniqID = product?.UniqID ?? throw new BO.MissingDataException("Product","ID"),
-                       Name = product?.Name,
-                       Price = product?.Price ?? throw new BO.MissingDataException("Product", "price"),
-                       Category = (BO.Category)product?.Category
-                   };
-            else
+            if (func == null)
                 return from product in dalList?.Product.GetAll()
-                       where func(product)
+                       where product != null
+                       select new BO.ProductForList
+                       {
+                           UniqID = product?.UniqID ?? throw new BO.MissingDataException("Product", "ID"),
+                           Name = product?.Name,
+                           Price = product?.Price ?? throw new BO.MissingDataException("Product", "price"),
+                           Category = (BO.Category)product?.Category
+                       };
+            else
+                return from product in dalList?.Product.GetAll((func))
                        select new BO.ProductForList
                        {
                            UniqID = product?.UniqID ?? throw new BO.MissingDataException("Product", "ID"),

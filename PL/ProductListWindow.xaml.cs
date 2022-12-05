@@ -28,14 +28,19 @@ namespace PL
         {
             InitializeComponent();
             ProductListview.ItemsSource = bl.Product.GetListOfProducts();
-            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            CategorySelector.ItemsSource = Enum.GetValues(typeof(DO.Category));
         }
 
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Func<BO.Product?, bool> func = product => product.Category== (BO.Category)CategorySelector.SelectedItem;
-            BO.Category selectedCategory = (BO.Category)(CategorySelector.SelectedItem as PropertyInfo).GetValue(null, null);
-            this.CategorySelector.SelectedItem = bl.Product.GetListOfProducts(func);
+            InitializeComponent();
+            Func<DO.Product?, bool> func = product => product?.Category == (DO.Category)CategorySelector.SelectedItem;
+            ProductListview.ItemsSource = bl.Product.GetListOfProducts(func);
+        }
+
+        private void AddProdct_Click(object sender, RoutedEventArgs e)
+        {
+           new ProductWindow().Show();
         }
     }
 }
