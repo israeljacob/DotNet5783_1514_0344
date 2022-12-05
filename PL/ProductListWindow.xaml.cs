@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlImplementation;
 using System.Reflection;
+using BO;
 
 namespace PL
 {
@@ -33,9 +34,16 @@ namespace PL
 
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Func<BO.Product?, bool> func = product => product.Category== (BO.Category)CategorySelector.SelectedItem;
-            BO.Category selectedCategory = (BO.Category)(CategorySelector.SelectedItem as PropertyInfo).GetValue(null, null);
-            this.CategorySelector.SelectedItem = bl.Product.GetListOfProducts(func);
+
+            if(ProductListview.SelectedItem != null)
+            { 
+                BO.ProductForList ourCustomer = (ProductForList)ProductListview.SelectedItem;
+             //   new ProductWindow(ourCustomer.UniqID).Show();
+            }
+
+            //Func<BO.Product?, bool> func = product => product.Category== (BO.Category)CategorySelector.SelectedItem;
+            //BO.Category selectedCategory = (BO.Category)(CategorySelector.SelectedItem as PropertyInfo).GetValue(null, null);
+           // this.CategorySelector.SelectedItem = bl.Product.GetListOfProducts(func);
         }
     }
 }
