@@ -6,14 +6,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="ProductListWindow" Height="640" Width="800">
-        <Grid Name="MainGrid">
-       
+        Title="ProductListWindow" Height="640" Width="815">
+    <Grid Name="MainGrid">
+
         <Grid.RowDefinitions>
-                <RowDefinition Height="40*"/>
-                <RowDefinition Height="500*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="500*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" 
               VerticalAlignment="Stretch" Width="auto">
             <Grid.ColumnDefinitions>
@@ -23,10 +23,10 @@
             <ComboBox Name="CategorySelector" HorizontalAlignment= "Stretch"
                       VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged"/>
             <Label x:Name="ComboboxLabal" Content="Category:" FontSize="24" />
-            
+
         </Grid>
         <ListView  x:Name="ProductListview" Grid.Row="1"/>
-        <Button x:Name="AddProdct" Content="Add new Product" Grid.Row="2" 
-                HorizontalAlignment="Right" Margin="5" Padding="5" Click="AddProdct_Click"/>
+        <Button x:Name="AddProduct" Content="Add new Product" Grid.Row="2" 
+                HorizontalAlignment="Left" Margin="691,5,0,0" Padding="5" Click="AddProdct_Click"/>
     </Grid>
 </Window>

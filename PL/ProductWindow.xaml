@@ -7,6 +7,23 @@
         mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="id" HorizontalAlignment="Left" Margin="58,0,0,0"
+               VerticalAlignment="Center" Width="116" FontSize="18"/>
+        <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="75,39,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <ComboBox Grid.Column="1" HorizontalAlignment="Left" Margin="178,0,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
+
+
     </Grid>
 </Window>

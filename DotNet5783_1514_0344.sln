@@ -9,9 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{B83B2A7A-E3A6-4975-A838-88F5D432670F}"
-	ProjectSection(SolutionItems) = preProject
-		bin\xml\dal-config.xml = bin\xml\dal-config.xml
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Targil0", "Targil0\Targil0.csproj", "{980CB136-D56D-4AE6-861D-0B60F60EDF0C}"
 EndProject

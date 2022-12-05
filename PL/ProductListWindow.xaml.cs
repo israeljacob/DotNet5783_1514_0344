@@ -41,7 +41,7 @@ namespace PL
             }
             else
             {
-                InitializeComponent();
+               
                 Func<DO.Product?, bool> func = product => product?.Category == (DO.Category)CategorySelector.SelectedItem;
                 ProductListview.ItemsSource = bl.Product.GetListOfProducts(func);
             }

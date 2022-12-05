@@ -18,7 +18,6 @@ public class mainProgram
     {
         //dl obj initial
         IBL bl = new Bl();
-
         //BO obj initial
         BO.Product product = new BO.Product();
 

@@ -1,4 +1,5 @@
-﻿using BlImplementation;
+﻿using BLApi;
+using BlImplementation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +21,11 @@ namespace PL
     /// </summary>
     public partial class ProductWindow : Window
     {
+        IBL bl = new Bl();
         public ProductWindow()
         {
             InitializeComponent();
-            //ProductListview.ItemsSource = bl.Product.GetListOfProducts();
-            //CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            bl.Product.AddProduct(1, "", 1, BO.Category.shoes, 1);
         }
     }
 }

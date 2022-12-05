@@ -21,9 +21,6 @@ namespace BlImplementation
         /// <exception cref="AggregateException"></exception>
         public BO.Cart AddToCart(BO.Cart cart, int productID)
         {
-
-            
-
             foreach (var item in cart.orderItems)
             {
                 ///id found
@@ -40,7 +37,7 @@ namespace BlImplementation
 
                         throw new BO.IdNotExistException("Cart ID", productID);
                     }
-                    if(dalList.Product.Get(productID).InStock == 0)///לא מבין למה צריך
+                    if(dalList.Product.Get(productID).InStock == 0)
                         throw new BO.InCorrectIntException("Cart ID", productID);
                     ///add one to amount and update the price
                     item.Amount++;
