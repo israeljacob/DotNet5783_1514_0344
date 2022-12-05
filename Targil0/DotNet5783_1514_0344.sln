@@ -20,7 +20,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "..\BL\BL.csproj", "{F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlTest", "..\BlTest\BlTest.csproj", "{F46D9815-2E56-4AC7-ACF5-423E96869A6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PL", "..\PL\PL.csproj", "{2D47B43B-E87F-45DD-8C38-EADD96123A21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PL", "..\PL\PL.csproj", "{2D47B43B-E87F-45DD-8C38-EADD96123A21}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{B83B2A7A-E3A6-4975-A838-88F5D432670F}"
+	ProjectSection(SolutionItems) = preProject
+		bin\xml\dal-config.xml = bin\xml\dal-config.xml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

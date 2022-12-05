@@ -35,7 +35,7 @@ internal class DalOrder : IOrder
     {
         Order? tempOrder= dataSource.orders.Find(order => order?.UniqID == ID);
         //If the order was not found.
-        if (tempOrder.Value.CustomerName == null)
+        if (tempOrder?.CustomerName == null)
          throw new IdNotExistException("Order",ID);
         // If the order was found.
         return (Order)tempOrder;

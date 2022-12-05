@@ -6,8 +6,6 @@ using System.Threading.Tasks;
 using DalApi;
 using BLApi;
 using Dal;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace BlImplementation
 {
