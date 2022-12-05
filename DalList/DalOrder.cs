@@ -26,7 +26,7 @@ internal class DalOrder : IOrder
         return newOrder.UniqID;
     }
     /// <summary>
-    /// Get an order by ID.
+    /// Gets an order by ID.
     /// </summary>
     /// <param name="ID"></param>
     /// <returns>The requested order.</returns>
@@ -39,6 +39,17 @@ internal class DalOrder : IOrder
          throw new IdNotExistException("Order",ID);
         // If the order was found.
         return (Order)tempOrder;
+    }
+    /// <summary>
+    ///  Gets an order by a boolyan deligate.
+    /// </summary>
+    /// <param name="func"></param>
+    /// <returns>The requested order.</returns>
+    /// <exception cref="DoesNotExistsException"></exception>
+    public Order? Get(Func<Order?, bool> func)
+    {
+        try { return dataSource.orders.First(func); }
+        catch { throw new DoesNotExistsException("Order by func"); }
     }
 
     /// <summary>
@@ -101,5 +112,5 @@ internal class DalOrder : IOrder
             throw new DatesException("Order:", d1, d2);
     }
 
-    
+   
 }

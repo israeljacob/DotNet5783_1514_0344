@@ -23,8 +23,10 @@
             <ComboBox Name="CategorySelector" HorizontalAlignment= "Stretch"
                       VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged"/>
             <Label x:Name="ComboboxLabal" Content="Category:" FontSize="24" />
+            
         </Grid>
         <ListView  x:Name="ProductListview" Grid.Row="1"/>
-
+        <Button x:Name="AddProdct" Content="Add new Product" Grid.Row="2" 
+                HorizontalAlignment="Right" Margin="5" Padding="5" Click="AddProdct_Click"/>
     </Grid>
 </Window>
