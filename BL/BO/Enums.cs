@@ -15,7 +15,8 @@ public enum Category
     trousers,//מכנסיים
     shoes,//נעלים
     coats,//מעילים
-    sweaters//סוודרים
+    sweaters,//סוודרים
+    all
 
 }
 

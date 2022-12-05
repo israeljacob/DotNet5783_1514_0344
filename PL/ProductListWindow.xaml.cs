@@ -34,9 +34,17 @@ namespace PL
 
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            InitializeComponent();
-            Func<DO.Product?, bool> func = product => product?.Category == (DO.Category)CategorySelector.SelectedItem;
-            ProductListview.ItemsSource = bl.Product.GetListOfProducts(func);
+            if((DO.Category)CategorySelector.SelectedItem==DO.Category.all)
+            {
+                ProductListview.ItemsSource = bl.Product.GetListOfProducts();
+
+            }
+            else
+            {
+                InitializeComponent();
+                Func<DO.Product?, bool> func = product => product?.Category == (DO.Category)CategorySelector.SelectedItem;
+                ProductListview.ItemsSource = bl.Product.GetListOfProducts(func);
+            }
         }
 
         private void AddProdct_Click(object sender, RoutedEventArgs e)
