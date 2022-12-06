@@ -10,8 +10,9 @@ namespace BLApi
     {
         ///get order by ID
         public BO.Order OrderBYID(int ID);
+        public BO.Order OrderBYID(Func<BO.Product, bool> func);
         ///get list of order
-        public IEnumerable<BO.OrderForList?> GetListOfOrders();
+        public IEnumerable<BO.OrderForList?> GetListOfOrders(Func<BO.Order?,bool>? func =null);
         ///Update Ship Date
         public BO.Order UpdateShipDate(int ID);
         ///Update Delivery Date

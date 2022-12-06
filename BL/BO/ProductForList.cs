@@ -31,11 +31,10 @@ namespace BO
         /// </summary>
         /// <returns> the printable form. </returns>
         public override string ToString() => $@"
-        UniqID: {UniqID}
-        {Name}
-        category - {Category}
-        Price: {Price}
-
+UniqID: {UniqID}
+{Name}
+category - {Category}
+Price: {Price}
 ";
     }
 }

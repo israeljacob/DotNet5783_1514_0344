@@ -14,7 +14,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlImplementation;
 using System.Reflection;
-using BO;
 
 namespace PL
 {
@@ -41,8 +40,8 @@ namespace PL
             }
             else
             {
-               
-                Func<DO.Product?, bool> func = product => product?.Category == (DO.Category)CategorySelector.SelectedItem;
+
+                Func<BO.Product?, bool> func = product => product?.Category == (BO.Category)CategorySelector.SelectedItem;
                 ProductListview.ItemsSource = bl.Product.GetListOfProducts(func);
             }
         }

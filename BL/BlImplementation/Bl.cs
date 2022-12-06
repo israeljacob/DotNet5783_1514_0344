@@ -13,10 +13,7 @@ namespace BlImplementation
     /// </summary>
         sealed public class Bl : IBL
         {
-           
-
             public BLApi.IProduct Product => new Product();
-
             public BLApi.IOrder Order => new Order();
             public BLApi.ICart Cart => new Cart();
         }

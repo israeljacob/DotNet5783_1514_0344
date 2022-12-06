@@ -31,12 +31,8 @@ internal class DalOrderItem:IOrderItem
     /// <exception cref="Exception"></exception>
     public OrderItem Get(int ID)
     {
-        OrderItem? tempOrderItem = dataSource.orderItems.Find(orderItem => orderItem?.UniqID == ID);
-        // If the order item was not found
-        if (tempOrderItem == null)
-            throw new IdNotExistException("Order item",ID);
-        // If the order item was found
-        return (OrderItem)tempOrderItem;
+        return dataSource.orderItems?.Find(orderItem => orderItem?.UniqID == ID)
+          ?? throw new DoesNotExistException("order item", ID);
     }
 
     /// <summary>
@@ -45,10 +41,9 @@ internal class DalOrderItem:IOrderItem
     /// <param name="func"></param>
     /// <returns>The requested order item.</returns>
     /// <exception cref="DoesNotExistsException"></exception>
-    public OrderItem? Get(Func<OrderItem?, bool> func)
+    public OrderItem Get(Func<OrderItem?, bool> func)
     {
-        try { return dataSource.orderItems.First(func); }
-        catch { throw new DoesNotExistsException("Order item by func"); }
+         return dataSource.orderItems.First(func) ?? throw new DO.DoesNotExistException("Order item"); 
     }
 
     ///  /// <summary>
@@ -56,11 +51,11 @@ internal class DalOrderItem:IOrderItem
     /// </summary>
     /// <returns>An array that refers to all the order items.</returns>
     /// <exception cref="Exception"></exception>
-    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool> func = null)
+    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? func = null)
     {
         // If there is no orders.
         if (dataSource.orderItems.Count == 0)
-            throw new Empty("There is no Order items at all");
+            throw new EmptyException("order item");
         if (func == null)
             return from orderItem in dataSource.orderItems
                    where orderItem != null 
@@ -79,20 +74,17 @@ internal class DalOrderItem:IOrderItem
     /// <exception cref="Exception"></exception>
     public void Update(OrderItem updatedOrderItem)
     {
-        // Find the requested order item.
         int i = 0;
-        foreach (OrderItem orderItem in dataSource.orderItems)
+        foreach (OrderItem? orderItem in dataSource.orderItems)// Find the requested order item.
         {
-            // If there is such order items.
-            if (orderItem.UniqID == updatedOrderItem.UniqID)
+            if (orderItem?.UniqID == updatedOrderItem.UniqID)// If there is such order items.
             {
                 dataSource.orderItems[i] = updatedOrderItem;
                 return;
             }
             i++;
         }
-        // If there is no such order items.
-        throw new IdNotExistException("Order item", updatedOrderItem.UniqID);
+        throw new DoesNotExistException("Order item", updatedOrderItem.UniqID);// If there is no such order items.
     }
 
     /// <summary>
@@ -102,9 +94,8 @@ internal class DalOrderItem:IOrderItem
     /// <exception cref="Exception"></exception>
     public void Delete(int ID)
     {
-        // Remove the order item by ID and if the order item does not exists throw an exception.
-        if (dataSource.orderItems.RemoveAll(orderItem => orderItem?.UniqID == ID) == 0)
-            throw new IdNotExistException("Order item",ID);
+        if (dataSource.orderItems.RemoveAll(orderItem => orderItem?.UniqID == ID) == 0)// Remove the order item by ID and if the order item does not exists throw an exception.
+            throw new DoesNotExistException("Order item",ID);
     }
 
    

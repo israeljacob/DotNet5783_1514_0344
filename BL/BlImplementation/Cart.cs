@@ -21,44 +21,40 @@ namespace BlImplementation
         /// <exception cref="AggregateException"></exception>
         public BO.Cart AddToCart(BO.Cart cart, int productID)
         {
-            foreach (var item in cart.orderItems)
+            foreach (BO.OrderItem? item in cart.orderItems!)
             {
-                ///id found
-                if (item.ProductID == productID)
+                if (item?.ProductID == productID)//id found
                 {
                     try
                     {
-                        ///get the product by id
-                        dalList.Product.Get(productID);
-
+                        if (dalList.Product.Get(productID).InStock == 0)
+                            throw new BO.InCorrectDetailsException("Cart ID", productID);
                     }
-                    catch (DO.IdNotExistException)
+                    catch (DO.DoesNotExistException ex)
                     {
-
-                        throw new BO.IdNotExistException("Cart ID", productID);
+                        throw new BO.IdNotExistException(ex);
                     }
-                    if(dalList.Product.Get(productID).InStock == 0)
-                        throw new BO.InCorrectIntException("Cart ID", productID);
-                    ///add one to amount and update the price
-                    item.Amount++;
+                    catch (BO.InCorrectDetailsException ex) { throw ex; }
+                    
+                    
+                    item.Amount++;//add one to amount and update the price
                     item.TotalPrice += item.Price;
                     cart.TotalPrice += item.Price;
                     return cart;
                 }
             }
 
-            ///connect between the product to id
-            DO.Product product = new DO.Product();
+            
+            DO.Product product = new DO.Product();//connect between the product to id
             try { product = dalList.Product.Get(productID); }
-            catch (DO.IdNotExistException)
+            catch (DO.DoesNotExistException ex)
             {
-                throw new BO.IdNotExistException("Cart", productID);
+                throw new BO.IdNotExistException(ex);
                 
             };
             if (product.InStock == 0)
-                throw new BO.InCorrectIntException("Cart InStock", product.InStock);
-            ///if there is product in the stock add it to order item
-            cart.orderItems.Add(new BO.OrderItem
+                throw new BO.InCorrectDetailsException("Cart InStock", product.InStock);
+            cart.orderItems.Add(new BO.OrderItem //if there is product in the stock add it to order item
             {
                 
                 ProductID = product.UniqID,
@@ -80,33 +76,27 @@ namespace BlImplementation
         /// <exception cref="AggregateException"></exception>
         public BO.Cart UpdateCart(BO.Cart cart, int ID, int amount)
         {
-
-
-            ///find the orderItem by id
-            BO.OrderItem? orderItem = cart.orderItems?.FirstOrDefault(x => x.ProductID == ID);
+            BO.OrderItem? orderItem = cart.orderItems?.FirstOrDefault(x => x?.ProductID == ID); //find the orderItem by id
             if (orderItem == null)
-                throw new BO.InCorrectIntException("OrderItem", ID);
-            ///update the amount
-            int dif = amount - orderItem.Amount;
+                throw new BO.InCorrectDetailsException("Order Item", ID);
+            int dif = amount - orderItem.Amount; //update the amount
             if (dif == 0)
                 return cart;
             if (amount == 0)
             {
-                ///update the total price
-                cart.TotalPrice -= orderItem.TotalPrice;
+                cart.TotalPrice -= orderItem.TotalPrice; //update the total price
                 cart.orderItems?.Remove(orderItem);
             }
             else
             {
-                ///if amount > 1, add the dit
-                orderItem.Amount += dif;
+                orderItem.Amount += dif; //if amount > 1, add the dit
                 orderItem.TotalPrice += dif * orderItem.Price;
                 cart.TotalPrice += dif * orderItem.Price;
             }
             return cart;
         }
         /// <summary>
-        /// GET the cart and creat new order
+        /// Get the cart and creat new order
         /// </summary>
         /// <param name="cart"></param>
         /// <exception cref="AggregateException"></exception>
@@ -114,32 +104,29 @@ namespace BlImplementation
         {
 
             if (cart.CustomerName == null)
-                throw new BO.InCorrectStringException("Customer Name in Cart", "null");
+                throw new BO.MissingDataException("Customer Name");
             if (cart.CustomerAdress == null)
-                throw new BO.InCorrectStringException("Customer Adress in Cart", "null");
-            if (!(cart.CustomerEmail.Contains("@") && cart.CustomerEmail.Contains(".")))
-                throw new BO.InCorrectStringException("Customer Email in Cart", "null");
+                throw new BO.MissingDataException("Customer Adress");
+            if (!(cart.CustomerEmail!.Contains("@") && cart.CustomerEmail.Contains(".")))
+                throw new BO.InCorrectDetailsException("Customer Email", cart.CustomerEmail);
             if (cart.TotalPrice <= 0)
-                throw new BO.InCorrectDoubleException("Total Price in Cart", cart.TotalPrice);
+                throw new BO.InCorrectDetailsException("Total Price in Cart", (int)cart.TotalPrice);
 
             
-            foreach (BO.OrderItem orderItem in cart.orderItems)
+            foreach (BO.OrderItem? orderItem in cart.orderItems!)
             {
-                ///find the product
-                try { dalList.Product.Get(orderItem.ProductID); }
-                catch (DO.IdNotExistException)
+                try { dalList.Product.Get(orderItem!.ProductID); } //find the product
+                catch (DO.DoesNotExistException ex)
                 {
-                    throw new BO.IdNotExistException("Product", orderItem.ProductID);
+                    throw new BO.IdNotExistException(ex);
                 } 
-                ///if the order amount is large then in the product stock
-                if (dalList.Product.Get(orderItem.ProductID).InStock < orderItem.Amount)
-                    throw new BO.InCorrectIntException($"Product InStock is less then {orderItem.Amount}",orderItem.ProductID );
+                if (dalList.Product.Get(orderItem.ProductID).InStock < orderItem.Amount) //if the order amount is large then in the product stock
+                    throw new BO.InCorrectDetailsException($"Product In Stock {orderItem.ProductID} is less then",orderItem.ProductID );
 
                 if (orderItem.Amount <= 0)
-                    throw new BO.InCorrectIntException("Product Amount", orderItem.Amount);
+                    throw new BO.InCorrectDetailsException("Product Amount", orderItem.Amount);
             }
-            //build BO entitie
-            BO.Order order = new BO.Order
+            BO.Order order = new BO.Order //build BO entitie
             {
                 UniqID = 0,
                 CustomerName = cart.CustomerName,
@@ -152,8 +139,7 @@ namespace BlImplementation
                 ShipDate = DateTime.MinValue,
                 DeliveryrDate = DateTime.MinValue,
             };
-            //add it to dal
-            order.UniqID = dalList.Order.Add(new DO.Order
+            order.UniqID = dalList.Order.Add(new DO.Order //add it to dal
             {
                 UniqID = 0,
                 CustomerAdress = order.CustomerAdress,
@@ -163,10 +149,9 @@ namespace BlImplementation
                 ShipDate = order.ShipDate,
                 DeliveryrDate = order.DeliveryrDate,
             });
-            foreach (BO.OrderItem orderItem1 in order.orderItems)
+            foreach (BO.OrderItem? orderItem1 in order.orderItems)
             {
-                ///add to Bo
-                DO.Product product = dalList.Product.Get(orderItem1.ProductID);
+                DO.Product product = dalList.Product.Get(orderItem1!.ProductID); //add to Bo
                 product.InStock -= orderItem1.Amount;
                 dalList.Product.Update(product);
 

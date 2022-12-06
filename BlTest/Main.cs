@@ -169,7 +169,7 @@ public class mainProgram
         {
             // Try to add and throw an exception if not succeed
             int ID = Menu.IntInput("Enter the product id");
-            try { Console.WriteLine(bl.Product.ProductItemForManager(ID)); }
+            try { Console.WriteLine(bl.Product.ProductItemForManagger(ID)); }
             catch (Exception ex) { Console.WriteLine(ex.Message); return; };
           //  catch (BO.IdNotExistException ex) { Console.WriteLine(ex.Message);return; }
         }

@@ -36,9 +36,5 @@ Product ID: {ProductID}
 Order ID: {OrderID} 
 Amount: {Amount} 
 Price: {Price} 
-
 ";
-
-
-
 }

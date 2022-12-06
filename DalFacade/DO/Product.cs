@@ -1,8 +1,4 @@
-﻿
-
-using DalApi;
-
-namespace DO;
+﻿namespace DO;
 /// <summary>
 /// A product in the shop
 /// </summary>
@@ -33,12 +29,11 @@ public struct Product
     /// </summary>
     /// <returns> the printable form. </returns>
     public override string ToString() => $@"
-UniqID: {UniqID}
-{Name}
+uniqID: {UniqID}
+name: {Name}
 category - {Category}
 Price: {Price}
 Amount in stock: {InStock} 
-
 ";
 
   
