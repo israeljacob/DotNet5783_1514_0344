@@ -25,7 +25,18 @@
             <Label x:Name="ComboboxLabal" Content="Category:" FontSize="24" />
 
         </Grid>
-        <ListView  x:Name="ProductListview" Grid.Row="1"/>
+        <ListView  x:Name="ProductListview" Grid.Row="1" MouseDoubleClick="ProductListview_MouseDoubleClick" >
+            <ListView.View>
+            <GridView >
+                    <GridViewColumn Header="Product Id" Width="auto" DisplayMemberBinding="{Binding UniqID}"></GridViewColumn>
+                <GridViewColumn Header="Sender Name" Width="auto" DisplayMemberBinding="{Binding Category}"></GridViewColumn>
+                <GridViewColumn Header="Receiver Name" Width="auto" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                <GridViewColumn Header="Weight" Width="auto" DisplayMemberBinding="{Binding Price}"></GridViewColumn>
+                <GridViewColumn Header="Priority" Width="auto" DisplayMemberBinding="{Binding InStock}"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
         <Button x:Name="AddProduct" Content="Add new Product" Grid.Row="2" 
                 HorizontalAlignment="Left" Margin="691,5,0,0" Padding="5" Click="AddProdct_Click"/>
     </Grid>

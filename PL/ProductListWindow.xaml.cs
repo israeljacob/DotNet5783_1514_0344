@@ -49,6 +49,29 @@ namespace PL
         private void AddProdct_Click(object sender, RoutedEventArgs e)
         {
            new ProductWindow().Show();
+            this.Close();
         }
+
+        private void ProductListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            BO.Product ourProduct = (Product)ProductListview.SelectedItem;
+             if (ourProduct != null) { new ProductWindow().Show(); }
+        }
+
+        //private void ProductListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+
+        //}
+
+        //private void ProductListview_Selected(object sender, RoutedEventArgs e)
+        //{
+
+        //}
+
+        //private void ProductListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    BO.Product ourProduct = (Product)ProductListview.SelectedItem;
+        //   // if (ourProduct != null) { new ProductWindow().Show(); }
+        //}
     }
 }
