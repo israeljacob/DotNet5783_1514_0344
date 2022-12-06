@@ -54,7 +54,7 @@ namespace PL
 
         private void ProductListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            BO.Product ourProduct = (Product)ProductListview.SelectedItem;
+            BO.Product ourProduct = (BO.Product)ProductListview.SelectedItem;
              if (ourProduct != null) { new ProductWindow().Show(); }
         }
 
