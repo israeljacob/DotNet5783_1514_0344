@@ -21,9 +21,9 @@ internal class Order : BLApi.IOrder
     /// </summary>
     /// <returns>An IEnumerable of all the orders.</returns>
     /// <exception cref="MissingAttributeException"></exception>
-    public IEnumerable<BO.OrderForList?> GetListOfOrders(Func<BO.Order?,bool>? func =null)
+    public IEnumerable<BO.OrderForList?> GetListOfOrders(Func<BO.OrderForList?,bool>? func =null)
     {
-        if(func==null)
+        if (func == null)
             return from order in dalList.Order.GetAll()
                    select new BO.OrderForList
                    {
@@ -34,16 +34,9 @@ internal class Order : BLApi.IOrder
                        TotalPrice = totalPrice(order)
                    };
         else
-            return from order in dalList.Order.GetAll(/*func*/)
-                   select new BO.OrderForList
-                   {
-                       UniqID = order?.UniqID ?? throw new BO.MissingDataException("Order ID"),
-                       CustomerName = order?.CustomerName,
-                       StatusOfOrder = statusOfOrder(order),
-                       AmountOfItems = amoutOfItems(order),
-                       TotalPrice = totalPrice(order)
-                   };
-
+            return from order in GetListOfOrders()
+                   where func(order)
+                   select order;
     }
 
 
@@ -60,32 +53,6 @@ internal class Order : BLApi.IOrder
         try
         {
             DO.Order order = dalList.Order.Get(ID);
-            return new BO.Order
-            {
-                UniqID = order.UniqID,
-                CustomerName = order.CustomerName,
-                CustomerAdress = order.CustomerAdress,
-                CustomerEmail = order.CustomerEmail,
-                OrderDate = order.OrderDate,
-                ShipDate = order.ShipDate,
-                DeliveryrDate = order.DeliveryrDate,
-                orderItems = (List<BO.OrderItem>)orderItems(order.UniqID)!,
-                StatusOfOrder = statusOfOrder(order),
-                TotalPrice = totalPrice(order)
-            };
-        }
-        catch (DO.DoesNotExistException ex)
-        {
-            throw new BO.IdNotExistException(ex);
-
-        }
-    }
-
-    public BO.Order OrderBYID(Func<BO.Product,bool> func)
-    {
-        try
-        {
-            DO.Order order = dalList.Order.Get(/*func*/1);
             return new BO.Order
             {
                 UniqID = order.UniqID,

@@ -18,7 +18,7 @@ namespace BlImplementation
         /// </summary>
         /// <returns>An IEnumerable of all the products.</returns>
         /// <exception cref="MissingAttributeException"></exception>
-        public IEnumerable<BO.ProductForList?> GetListOfProducts(Func<BO.Product?, bool>? func = null)
+        public IEnumerable<BO.ProductForList?> GetListOfProducts(Func<BO.ProductForList?, bool>? func = null)
         {
             try
             {
@@ -32,14 +32,9 @@ namespace BlImplementation
                                Category = (BO.Category)product?.Category!
                            };
                 else
-                    return from product in dalList.Product.GetAll(/*func*/)
-                           select new BO.ProductForList
-                           {
-                               UniqID = product?.UniqID ?? throw new BO.MissingDataException("Product ID"),
-                               Name = product?.Name,
-                               Price = product?.Price ?? throw new BO.MissingDataException("Product price"),
-                               Category = (BO.Category)product?.Category!
-                           };
+                    return from product in GetListOfProducts()
+                           where func(product)
+                           select product;
             }
             catch (DO.EmptyException ex){ throw new BO.EmptyException(ex);  }
         }
@@ -58,33 +53,6 @@ namespace BlImplementation
             try
             {
                 DO.Product product = dalList.Product.Get(ID);
-                return new BO.Product //return new entitie product 
-                {
-                    UniqID = product.UniqID,
-                    Name = product.Name,
-                    Price = product.Price,
-                    Category = (BO.Category)product.Category!,
-                    InStock = product.InStock
-                };
-            }
-            catch (DO.DoesNotExistException ex)
-            {
-                throw new BO.IdNotExistException(ex);
-            }
-        }
-
-        /// <summary>
-        /// Display more features if the mameger asking product by Id
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <returns></returns>
-        /// <exception cref="AggregateException"></exception>
-        /// <exception cref="Exception"></exception>
-        public BO.Product ProductItemForManagger(Func<BO.Product?, bool> func)
-        {
-            try
-            {
-                DO.Product product = dalList.Product.Get(1/*func*/);
                 return new BO.Product //return new entitie product 
                 {
                     UniqID = product.UniqID,
@@ -130,34 +98,7 @@ namespace BlImplementation
             }
         }
 
-        /// <summary>
-        /// Display less features if the customer asking product by Id
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <param name="cart"></param>
-        /// <returns></returns>
-        /// <exception cref="Exception"></exception>
-        public BO.ProductItem ProductItemForCostemor(Func<BO.Product?, bool> func, BO.Cart cart)
-        {
-            try
-            {
-                DO.Product product = dalList.Product.Get(1/*func*/);
-                return new BO.ProductItem
-                {
-                    UniqID = product.UniqID,
-                    Name = product.Name,
-                    Price = product.Price,
-                    Category = (BO.Category)product.Category!,
-                    InStock = true ? product.InStock != 0 : false
-                };
-            }
-            catch (DO.DoesNotExistException ex)
-            {
-                throw new BO.IdNotExistException(ex);
-
-            }
-        }
-
+        
         /// <summary>
         /// Add product
         /// </summary>

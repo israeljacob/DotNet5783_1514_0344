@@ -8,11 +8,11 @@ namespace BLApi
 {
     public interface ICart
     {
-        ///Add to cart
+        //Add to cart
         public BO.Cart AddToCart(BO.Cart cart, int ID);
-        ///Update the cart
+        //Update the cart
         public BO.Cart UpdateCart(BO.Cart cart, int ID, int amount);
-        ///do the order that in the cart
+        //Do the order that in the cart
         public void ExecuteOrder(BO.Cart cart);
     }
 }

@@ -41,7 +41,7 @@ namespace PL
             else
             {
 
-                Func<BO.Product?, bool> func = product => product?.Category == (BO.Category)CategorySelector.SelectedItem;
+                Func<BO.ProductForList?, bool> func = product => product?.Category == (BO.Category)CategorySelector.SelectedItem;
                 ProductListview.ItemsSource = bl.Product.GetListOfProducts(func);
             }
         }
