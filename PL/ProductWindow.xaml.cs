@@ -119,24 +119,24 @@ namespace PL
 
             if (!int.TryParse(idtxt.Text, out int id))
             {
-                idtxtMsg.Background = (Brush)bc.ConvertFrom("#DD4A48");
+                idtxtMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
                 idtxtMsg.Content = "Enter a integer !";
             }
           //  if (id < 0) { txtBoxId.Background = (Brush)bc.ConvertFrom("#DD4A48"); txtBoxId.Text = "Positive integer only !"; }
             if (!double.TryParse(price.Text, out double priceInt))
             {
 
-                priceMsg.Background = (Brush)bc.ConvertFrom("#DD4A48");
+                priceMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
                 priceMsg.Content = "Enter a Double !";
             }
             if (!int.TryParse(inStock.Text, out int InStock))
             {
-                inStockMsg.Background = (Brush)bc.ConvertFrom("#DD4A48");
+                inStockMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
                 inStockMsg.Content = "Enter a integer !";
             }
             if(categoryBox.Text.ToString()==BO.Category.all.ToString() || categoryBox.Text =="")
             {
-                categoryBoxMsg.Background = (Brush)bc.ConvertFrom("#DD4A48");
+                categoryBoxMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
                 categoryBoxMsg.Content = "Enter a Category except all !";
             }
             else
@@ -144,7 +144,7 @@ namespace PL
                 try
                 {
                     bl.Product.AddProduct(id, name.Text, priceInt, (BO.Category)categoryBox.SelectedItem, InStock);
-                    this.Close(); Window win = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.Name == "ProductListWindow");
+                    this.Close(); Window win = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.Name == "ProductListWindow")!;
                     if (win != null) { win.Close(); }
                     new ProductListWindow().Show();
                         //.CustomerList(bl).Show();
@@ -154,7 +154,7 @@ namespace PL
                 {
                     foreach (Exception innerException in ex.InnerExceptions)
                     {
-                        if (innerException.GetType() == typeof(IdAlreadyExistException)) { idtxt.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#DD4A48"); }
+                        if (innerException.GetType() == typeof(IdAlreadyExistException)) { idtxt.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#DD4A48")!; }
                         MessageBox.Show(innerException.ToString());
                     }
                 }

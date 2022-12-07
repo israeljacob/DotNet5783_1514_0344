@@ -133,13 +133,13 @@ namespace Dal
 
             Console.WriteLine(output);
             option = Console.ReadLine();
-            while (!Regex.IsMatch(option, @"^[a-zA-Z]+$"))
+            while (!Regex.IsMatch(option!, @"^[a-zA-Z]+$"))
             {
                 Console.WriteLine("you must enter letters onlt. Try again!");
                 option = Console.ReadLine();
             }
             Console.WriteLine("\n");
-            return option;
+            return option!;
         }
 
         /// <summary>
@@ -175,11 +175,11 @@ namespace Dal
         /// <returns></returns>
         public static string emailInput()
         {
-            string option;
+            string? option;
 
             Console.WriteLine("Enter the email:");
             option = Console.ReadLine();
-            while (!option.Contains("@") || !option.Contains("."))
+            while (!option!.Contains("@") || !option.Contains("."))
             {
                 Console.WriteLine("You must enter a correct email address. Try again!");
                 option = Console.ReadLine();
