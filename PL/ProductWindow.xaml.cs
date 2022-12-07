@@ -25,11 +25,13 @@ namespace PL;
 /// </summary>
 public partial class ProductWindow : Window
 {
+    
     IBL bl = new Bl();
     public ProductWindow(object sender)
     {
         
         InitializeComponent();
+        
         categoryBox.ItemsSource = Enum.GetValues(typeof(DO.Category));
         Button? button = sender as Button;
         if(button !=null)
@@ -51,10 +53,10 @@ public partial class ProductWindow : Window
     //{
 
     //}
-
+    
     private void categoryBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-
+        
     }
 
     private void id_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -86,6 +88,7 @@ public partial class ProductWindow : Window
             e.Key != Key.Left)
 {
             e.Handled = true;
+            
         }
 
     }
@@ -125,6 +128,7 @@ public partial class ProductWindow : Window
 
     private void AddButton_Click(object sender, RoutedEventArgs e)
     {
+        
         var bc = new BrushConverter();
 
         if (!int.TryParse(idtxt.Text, out int id))
