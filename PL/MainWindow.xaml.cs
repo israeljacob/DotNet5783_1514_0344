@@ -28,6 +28,7 @@ namespace PL
         private void Admin_Click(object sender, RoutedEventArgs e)
         {
            new ProductListWindow().Show();
+            this.Close();
         }
     }
 }

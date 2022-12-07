@@ -55,22 +55,9 @@ public partial class ProductListWindow : Window
     private void ProductListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         BO.ProductForList ourProduct = (BO.ProductForList)ProductListview.SelectedItem;
-         if (ourProduct != null) { new ProductWindow(sender).Show();}
+         if (ourProduct != null) { new ProductWindow(sender,ourProduct.UniqID).Show();}
+         Close();
     }
 
-    //private void ProductListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    //{
-
-    //}
-
-    //private void ProductListview_Selected(object sender, RoutedEventArgs e)
-    //{
-
-    //}
-
-    //private void ProductListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    //{
-    //    BO.Product ourProduct = (Product)ProductListview.SelectedItem;
-    //   // if (ourProduct != null) { new ProductWindow().Show(); }
-    //}
+   
 }
