@@ -9,7 +9,7 @@ namespace BLApi
     public interface IProduct
     {
         // Get a list of products
-        public IEnumerable<BO.ProductForList?> GetListOfProducts(Func<BO.ProductForList?,bool>? func =null);
+        public IEnumerable<BO.ProductForList?> GetListOfProducts(Func<BO.ProductForList?,bool>? func = null);
         // Get a product for managger
         public BO.Product ProductItemForManagger(int ID);
         // Get a product for costemor
