@@ -28,7 +28,7 @@ public partial class ProductListWindow : Window
     {
         InitializeComponent();
         ProductListview.ItemsSource = bl.Product.GetListOfProducts();
-        CategorySelector.ItemsSource = Enum.GetValues(typeof(DO.Category));
+        CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
     }
 
     private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -47,7 +47,7 @@ public partial class ProductListWindow : Window
 
     private void AddProdct_Click(object sender, RoutedEventArgs e)
     {
-       new ProductWindow(sender as Button).Show();
+       new ProductWindow(sender).Show();
         
         this.Close();
     }
@@ -55,7 +55,7 @@ public partial class ProductListWindow : Window
     private void ProductListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         BO.ProductForList ourProduct = (BO.ProductForList)ProductListview.SelectedItem;
-         if (ourProduct != null) { new ProductWindow(sender as Button).Show();}
+         if (ourProduct != null) { new ProductWindow(sender).Show();}
     }
 
     //private void ProductListview_SelectionChanged(object sender, SelectionChangedEventArgs e)

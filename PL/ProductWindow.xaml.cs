@@ -26,14 +26,19 @@ namespace PL;
 public partial class ProductWindow : Window
 {
     IBL bl = new Bl();
-    public ProductWindow(Button button)
+    public ProductWindow(object sender)
     {
+        
         InitializeComponent();
         categoryBox.ItemsSource = Enum.GetValues(typeof(DO.Category));
-        if (button == AddButton)
+        Button? button = sender as Button;
+        if(button !=null)
             UpdateButton.Visibility = Visibility.Hidden;
+
         else
             AddButton.Visibility = Visibility.Hidden;
+        
+
             
         //bl.Product.AddProduct(1, "", 1, BO.Category.shoes, 1);
     }
@@ -174,6 +179,11 @@ public partial class ProductWindow : Window
             MessageBox.Show("This textbox accepts only alphabetical characters");
             name.Text.Remove(name.Text.Length - 1);
         }
+
+    }
+
+    private void UpdateButton_Click(object sender, RoutedEventArgs e)
+    {
 
     }
 }
