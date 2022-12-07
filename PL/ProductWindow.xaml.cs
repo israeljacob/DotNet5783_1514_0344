@@ -154,7 +154,7 @@ namespace PL
                 {
                     foreach (Exception innerException in ex.InnerExceptions)
                     {
-                        if (innerException.GetType() == typeof(IdAlreadyExistException)) { idtxt.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#DD4A48"); }
+                        if (innerException.GetType() == typeof(IdAlreadyExistException)) { idtxtMsg.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#DD4A48"); }
                         MessageBox.Show(innerException.ToString());
                     }
                 }
