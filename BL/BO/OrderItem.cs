@@ -17,7 +17,7 @@ namespace BO
         /// <summary>
         /// The ID of the order item.
         /// </summary>
-        public int OrderItemID { get; set; }
+        public int UniqID { get; set; }
         /// <summary>
         /// The product name.
         /// </summary>
@@ -39,12 +39,11 @@ namespace BO
         /// </summary>
         /// <returns> the printable form. </returns>
         public override string ToString() => $@" 
-        Product ID: {ProductID}
-        Order Item ID: {OrderItemID} 
-        Product Name: {ProductName}
-        Amount: {Amount} 
-        Price: {Price} 
-
+Product ID: {ProductID}
+Order Item ID: {UniqID} 
+Product Name: {ProductName}
+Amount: {Amount} 
+Price: {Price} 
         ";
     }
 }

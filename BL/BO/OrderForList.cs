@@ -36,12 +36,11 @@ namespace BO
         /// </summary>
         /// <returns> the printable form. </returns>
         public override string ToString() => $@" 
-        UniqID: {UniqID}
-        Name: {CustomerName}, 
-        Status Of Order: {StatusOfOrder}
-        Amount Of Items: {AmountOfItems}
-        Total Price: {TotalPrice}
-
+UniqID: {UniqID}
+Name: {CustomerName}, 
+Status Of Order: {StatusOfOrder}
+Amount Of Items: {AmountOfItems}
+Total Price: {TotalPrice}
 ";
     }
 }

@@ -1,16 +1,5 @@
-﻿using BLApi;
-
-using Dal;
+﻿using Dal;
 using DalApi;
-using DO;
-using DocumentFormat.OpenXml.Drawing.Diagrams;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using DocumentFormat.OpenXml.Wordprocessing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BlImplementation
 {
@@ -29,29 +18,25 @@ namespace BlImplementation
         /// </summary>
         /// <returns>An IEnumerable of all the products.</returns>
         /// <exception cref="MissingAttributeException"></exception>
-        public IEnumerable<BO.ProductForList?> GetListOfProducts(Func<DO.Product?, bool>? func = null)
+        public IEnumerable<BO.ProductForList?> GetListOfProducts(Func<BO.ProductForList?, bool>? func = null)
         {
-            if (func == null)
-                return from product in dalList?.Product.GetAll()
-                       where product != null
-                       select new BO.ProductForList
-                       {
-                           UniqID = product?.UniqID ?? throw new BO.MissingDataException("Product", "ID"),
-                           Name = product?.Name,
-                           Price = product?.Price ?? throw new BO.MissingDataException("Product", "price"),
-                           Category = (BO.Category)product?.Category
-                       };
-            else
-                return from product in dalList?.Product.GetAll((func))
-                       select new BO.ProductForList
-                       {
-                           UniqID = product?.UniqID ?? throw new BO.MissingDataException("Product", "ID"),
-                           Name = product?.Name,
-                           Price = product?.Price ?? throw new BO.MissingDataException("Product", "price"),
-                           Category = (BO.Category)product?.Category
-                       };
-
-
+            try
+            {
+                if (func == null)
+                    return from product in dalList.Product.GetAll()
+                           select new BO.ProductForList
+                           {
+                               UniqID = product?.UniqID ?? throw new BO.MissingDataException("Product ID"),
+                               Name = product?.Name,
+                               Price = product?.Price ?? throw new BO.MissingDataException("Product price"),
+                               Category = (BO.Category)product?.Category!
+                           };
+                else
+                    return from product in GetListOfProducts()
+                           where func(product)
+                           select product;
+            }
+            catch (DO.EmptyException ex){ throw new BO.EmptyException(ex);  }
         }
 
         /// <summary>
@@ -61,29 +46,26 @@ namespace BlImplementation
         /// <returns></returns>
         /// <exception cref="AggregateException"></exception>
         /// <exception cref="Exception"></exception>
-        public BO.Product ProductItemForManager(int ID)
+        public BO.Product ProductItemForManagger(int ID)
         {
             if (ID <= 0)
-                throw new BO.InCorrectIntException("Product ID", ID);
-            DO.Product product = new DO.Product();
+                throw new BO.InCorrectDetailsException("Product ID", ID);
             try
             {
-                product = dalList.Product.Get(ID);
+                DO.Product product = dalList.Product.Get(ID);
+                return new BO.Product //return new entitie product 
+                {
+                    UniqID = product.UniqID,
+                    Name = product.Name,
+                    Price = product.Price,
+                    Category = (BO.Category)product.Category!,
+                    InStock = product.InStock
+                };
             }
-            catch (DO.IdNotExistException e)
+            catch (DO.DoesNotExistException ex)
             {
-                throw new BO.IdNotExistException("Product", ID, e);
+                throw new BO.IdNotExistException(ex);
             }
-            ///return new entitie product 
-            return new BO.Product
-            {
-                UniqID = product.UniqID,
-                Name = product.Name ?? throw new Exception(),
-                Price = product.Price,
-                Category = (BO.Category)product.Category,
-                InStock = product.InStock
-            };
-            
         }
 
         /// <summary>
@@ -95,37 +77,28 @@ namespace BlImplementation
         /// <exception cref="Exception"></exception>
         public BO.ProductItem ProductItemForCostemor(int ID, BO.Cart cart)
         {
-
             if (ID <= 0)
-                throw new BO.InCorrectIntException("Product ID", ID);
-            DO.Product product = new DO.Product();
+                throw new BO.InCorrectDetailsException("Product ID", ID);
             try
             {
-                product = dalList.Product.Get(ID);
+                DO.Product product = dalList.Product.Get(ID);
+                return new BO.ProductItem
+                {
+                    UniqID = product.UniqID,
+                    Name = product.Name,
+                    Price = product.Price,
+                    Category = (BO.Category)product.Category!,
+                    InStock = true ? product.InStock !=0 : false
+                };
             }
-            catch (DO.IdNotExistException)
+            catch (DO.DoesNotExistException ex)
             {
-                throw new BO.IdNotExistException("Product ID", ID);
+                throw new BO.IdNotExistException(ex);
 
             }
-
-            bool inStock = true;
-            if (product.InStock == 0)
-                inStock = false;
-            int amount = 0;
-            if (cart.orderItems?.FirstOrDefault(X => X.ProductID == ID) != null)
-                amount = cart.orderItems.First(X => X.ProductID == ID).Amount;
-            return new BO.ProductItem
-            {
-                UniqID = product.UniqID,
-                Name = product.Name ?? throw new Exception(),
-                Price = product.Price,
-                Category = (BO.Category)product.Category,
-                InStock = inStock,
-                Amount = amount
-            };
         }
 
+        
         /// <summary>
         /// Add product
         /// </summary>
@@ -140,13 +113,13 @@ namespace BlImplementation
             Product product = new Product();
 
             if (ID <= 0)
-                throw new BO.InCorrectIntException("Product ID", ID);
+                throw new BO.InCorrectDetailsException("product ID", ID);
             if (name == null)
-                throw new BO.InCorrectStringException("Product Name", name);
+                throw new BO.MissingDataException("product name");
             if (price <= 0)
-                throw new BO.InCorrectDoubleException("Product Price", price);
+                throw new BO.InCorrectDetailsException("product price", price);
             if (inStock < 0)
-                throw new BO.InCorrectIntException("Product Instock", inStock);
+                throw new BO.InCorrectDetailsException("product in stock", inStock);
             try
             {
                 int returnedID = dalList.Product.Add(new DO.Product
@@ -158,9 +131,9 @@ namespace BlImplementation
                     InStock = inStock
                 });
             }
-            catch (DO.IdAlreadyExistException)
+            catch (DO.IdAlreadyExistException ex)
             {
-                throw new BO.IdAlreadyExistException("Product", ID);
+                throw new BO.IdAlreadyExistException(ex);
             }
         }
 
@@ -178,9 +151,9 @@ namespace BlImplementation
             {
                 dalList.Product.Delete(ID);
             }
-            catch (DO.IdNotExistException)
+            catch (DO.DoesNotExistException ex)
             {
-                throw new BO.IdNotExistException("Product", ID);
+                throw new BO.IdNotExistException(ex);
             }
         }
         /// <summary>
@@ -193,13 +166,15 @@ namespace BlImplementation
 
 
             if (product.UniqID <= 0)
-                throw new BO.InCorrectIntException("Product ID", product.UniqID);
-            else if (product.Name == null)
-                throw new BO.InCorrectStringException("Product Name", product.Name);
-            else if (product.Price <= 0)
-                throw new BO.InCorrectDoubleException("Product Price", product.Price);
-            else if (product.InStock < 0)
-                throw new BO.InCorrectIntException("Product Instock", product.InStock);
+                throw new BO.InCorrectDetailsException("Product ID", product.UniqID);
+            if (product.Name == null)
+                throw new BO.MissingDataException("Product name");
+            if (product.Price <= 0)
+                throw new BO.InCorrectDetailsException("Product price",product.Price);
+            if (product.Category == null)
+                throw new BO.MissingDataException("Product category");
+            if (product.InStock < 0)
+                throw new BO.InCorrectDetailsException("Product in stock", product.InStock);
             try
             {
                 dalList.Product.Update(new DO.Product
@@ -211,9 +186,9 @@ namespace BlImplementation
                     InStock = product.InStock
                 });
             }
-            catch (DO.IdNotExistException)
+            catch (DO.DoesNotExistException ex)
             {
-                throw new BO.IdNotExistException("Product", product.UniqID);
+                throw new BO.IdNotExistException(ex);
             }
 
         }

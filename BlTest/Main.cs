@@ -27,7 +27,7 @@ public class mainProgram
             CustomerName = "eazy",
             CustomerAdress = "JCT",
             CustomerEmail = "ijacob@g.jct.ac.il",
-            orderItems = new List<OrderItem>(),
+            orderItems = new List<OrderItem>()!,
             TotalPrice = 0
         };
 
@@ -169,7 +169,7 @@ public class mainProgram
         {
             // Try to add and throw an exception if not succeed
             int ID = Menu.IntInput("Enter the product id");
-            try { Console.WriteLine(bl.Product.ProductItemForManager(ID)); }
+            try { Console.WriteLine(bl.Product.ProductItemForManagger(ID)); }
             catch (Exception ex) { Console.WriteLine(ex.Message); return; };
           //  catch (BO.IdNotExistException ex) { Console.WriteLine(ex.Message);return; }
         }
@@ -189,7 +189,7 @@ public class mainProgram
         void GetAllProducts()
         {
             /// print all products
-            foreach (BO.ProductForList product in bl.Product.GetListOfProducts())
+            foreach (BO.ProductForList? product in bl.Product.GetListOfProducts())
             {
                 Console.WriteLine(product);
             }
@@ -284,7 +284,7 @@ public class mainProgram
         void getAllOrders()
         {
             // print all orders
-            foreach (BO.OrderForList order in bl.Order.GetListOfOrders())
+            foreach (BO.OrderForList? order in bl.Order.GetListOfOrders())
             {
                 Console.WriteLine(order);
             }

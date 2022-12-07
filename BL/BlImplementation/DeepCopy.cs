@@ -12,9 +12,9 @@ namespace BlImplementation
     {
         public static void CopyPropertiesTo<T, S>(this S from, T to)
         {
-            foreach (PropertyInfo propTo in to.GetType().GetProperties())
+            foreach (PropertyInfo propTo in to?.GetType().GetProperties()!)
             {
-                PropertyInfo propFrom = typeof(S).GetProperty(propTo.Name);
+                PropertyInfo propFrom = typeof(S).GetProperty(propTo.Name)!;
                 if (propFrom == null)
                     continue;
                 var value = propFrom.GetValue(from, null);
@@ -25,9 +25,9 @@ namespace BlImplementation
 
         public static object CopyPropertiesToNew<S>(this S from, Type type)
         {
-            object to = Activator.CreateInstance(type); // new object of Type
+            object to = Activator.CreateInstance(type)!; // new object of Type
             from.CopyPropertiesTo(to);
-            return to;
+            return to!;
         }
     }
 }

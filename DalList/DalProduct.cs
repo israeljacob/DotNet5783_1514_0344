@@ -21,11 +21,9 @@ internal class DalProduct:IProduct
     /// <exception cref="ExistException"></exception>
     public int Add(Product newProduct)
     {
-        // If there is such a product throw an exception.
-        if(dataSource.products.Exists(product => product?.UniqID == newProduct.UniqID))
+        if(dataSource.products.Exists(product => product?.UniqID == newProduct.UniqID))// If there is such a product throw an exception.
             throw new IdAlreadyExistException("Product",newProduct.UniqID);
-        // Add the new product.
-        dataSource.products.Add(newProduct);
+        dataSource.products.Add(newProduct); // Add the new product.
         return newProduct.UniqID;
     }
     
@@ -37,12 +35,8 @@ internal class DalProduct:IProduct
     /// <exception cref="Exception"></exception>
     public Product Get(int ID)
     {
-        Product? tempProduct = dataSource.products.Find(product => product?.UniqID == ID);
-        // If the product was not found
-        if (tempProduct.Value.Name == null)
-            throw new IdNotExistException("Product",ID);
-        // If the product was found
-        return (Product)tempProduct;
+        return dataSource.products?.Find(product => product?.UniqID == ID)
+            ?? throw new DoesNotExistException("product", ID);
     }
     /// <summary>
     ///  Gets a product by a boolyan deligate.
@@ -50,21 +44,19 @@ internal class DalProduct:IProduct
     /// <param name="func"></param>
     /// <returns>The requested product.</returns>
     /// <exception cref="DoesNotExistsException"></exception>
-    public Product? Get(Func<Product?, bool> func)
+    public Product Get(Func<Product?, bool> func)
     {
-        try { return dataSource.products.First(func); }
-        catch { throw new DoesNotExistsException("Product by func"); }
+         return dataSource.products?.First(func) ?? throw new DoesNotExistException("product");
     }
     /// <summary>
     /// Gets all the product
     /// </summary>
     /// <returns>array that refers to all the product.</returns>
     /// <exception cref="Exception"></exception>
-    public IEnumerable<Product?>? GetAll( Func<Product?, bool>? func = null)
+    public IEnumerable<Product?> GetAll( Func<Product?, bool>? func = null)
     {
-        // If there is no orders.
-        if (dataSource.products.Count == 0)
-            throw new Empty("There is no products at all");
+        if (dataSource.products?.Count == 0)// If there is no orders.
+            throw new EmptyException("product");
         if(func == null)
             return from product in dataSource.products
                    where product != null
@@ -81,20 +73,17 @@ internal class DalProduct:IProduct
     /// <exception cref="Exception"></exception>
     public void Update(Product updatedProduct)
     {
-        // Find the requested product.
         int i = 0;
-        foreach (Product pro in dataSource.products)
+        foreach (Product? pro in dataSource.products) // Find the requested product.
         {
-            // If the product was found
-            if (updatedProduct.UniqID == pro.UniqID)
+            if (updatedProduct.UniqID == pro?.UniqID)// If the product was found
             {
                 dataSource.products[i] = updatedProduct;
                 return;
             }
             i++;
         }
-        // If the product was not found
-        throw new IdNotExistException("Product", updatedProduct.UniqID);
+        throw new DoesNotExistException("product", updatedProduct.UniqID);// If the product was not found
     }
     /// <summary>
     /// Delete a product by ID.
@@ -103,9 +92,8 @@ internal class DalProduct:IProduct
     /// <exception cref="Exception"></exception>
     public void Delete(int ID)
     {
-        // Remove the product by ID and if the product does not exists throw an exception.
-        if (dataSource.products.RemoveAll(product => product?.UniqID == ID) == 0)
-            throw new IdNotExistException("Product",ID);
+        if (dataSource.products.RemoveAll(product => product?.UniqID == ID) == 0)// Remove the product by ID and if the product does not exists throw an exception.
+            throw new DoesNotExistException("product",ID);
     }
 
    

@@ -1,4 +1,5 @@
-﻿using DO;
+﻿
+using DO;
 
 namespace Dal;
 /// <summary>
@@ -9,11 +10,11 @@ internal sealed class DataSource
 
 
     // Orders list
-    internal List<Order?> orders = new List<Order?>();
+    internal List<DO.Order?> orders = new List<DO.Order?>();
     // Order items list.
-    internal List<OrderItem?> orderItems = new List<OrderItem?>();
+    internal List<DO.OrderItem?> orderItems = new List<DO.OrderItem?>();
     // Products list.
-    internal List<Product?> products = new List<Product?>();
+    internal List<DO.Product?> products = new List<DO.Product?>();
 
     private static DataSource instance;
     public static DataSource Instance
@@ -67,10 +68,10 @@ internal sealed class DataSource
     {
         var Productsnames = new string[]
          {
-                "Shirt Slender","Shirt Bent","Shirt Attire","Shirt Kin","Trouser Minute",
+                 "Shirt Slender","Shirt Bent","Shirt Attire","Shirt Kin" ,"Trouser Minute",
              "Trouser Agro","Trouser Places","Trouser Lustrous","Trouser Surge","Shoe Threads",
              "Shoe Array","Shoe Hype","Shoe Gene","Coat Fix","Coat Supreme","Coat Support","Coat Alpha",
-             "Sweater Above","Sweater Manage","Sweater Gusto","Sweater Scout"
+             "Sweater Above","Sweater Manage","Sweater Gusto","Sweater Scout" 
          };
 
         var ProductsPriceShirt = new double[]
@@ -89,13 +90,16 @@ internal sealed class DataSource
        {
                 380,299,500,750
        };
-
+        var ProductsPricesweaters = new double[]
+      {
+                380,305,389,250
+      };
 
         var r = new Random();
         // Store them in the list.
         for (int i = 0; i < 10; i++)
         {
-            Product temp = new Product();
+            DO.Product temp = new DO.Product();
             temp.UniqID = r.Next(100, 999);
 
             temp.Name = Productsnames[i];
@@ -103,21 +107,28 @@ internal sealed class DataSource
             // Find the category of the product.
             if (temp.Name.Contains("Shirt"))
             {
+                var PriceIndexshirt = r.Next(ProductsPriceShirt.Length);
+                temp.Price = ProductsPriceShirt[PriceIndexshirt];
                 temp.Category = DO.Category.Shirts;
             }
             else if (temp.Name.Contains("Trouser"))
             {
-
+                var PriceIndexTrouser = r.Next(ProductsPriceTrouser.Length);
+                temp.Price = ProductsPriceTrouser[PriceIndexTrouser];
                 temp.Category = DO.Category.trousers;
 
             }
             else if (temp.Name.Contains("Shoe"))
             {
+                var PriceIndexshoe = r.Next(ProductsPriceShoe.Length);
+                temp.Price = ProductsPriceShoe[PriceIndexshoe];
                 temp.Category = DO.Category.shoes;
 
             }
             else if (temp.Name.Contains("Caot"))
             {
+                var PriceIndexcoat = r.Next(ProductsPriceCoat.Length);
+                temp.Price = ProductsPriceCoat[PriceIndexcoat];
                 temp.Category = DO.Category.coats;
 
             }
@@ -126,8 +137,7 @@ internal sealed class DataSource
                 temp.Category = DO.Category.sweaters;
 
             }
-            var PriceIndexTrouser = r.Next(ProductsPriceTrouser.Length);
-            temp.Price = ProductsPriceTrouser[PriceIndexTrouser];
+            
 
             var stockindex = r.Next(20);
             if (i == 1)
@@ -180,7 +190,7 @@ internal sealed class DataSource
         // Store them in the list.
         for (int i = 0; i < 20; i++)
         {
-            Order temp = new Order();
+            DO.Order temp = new DO.Order();
             temp.UniqID = Config.OrderID;
             temp.CustomerName = names[i];
             temp.CustomerEmail = emails[i];
@@ -196,7 +206,7 @@ internal sealed class DataSource
                 while (ts?.TotalDays < 0);
             }
             else
-                temp.ShipDate = DateTime.MinValue;
+                temp.ShipDate = null;
             if (i <= 10)
             {
                 do
@@ -207,7 +217,7 @@ internal sealed class DataSource
                 while (ts?.TotalDays < 0);
             }
             else
-                temp.DeliveryrDate = DateTime.MinValue;
+                temp.DeliveryrDate = null;
 
             orders.Add(temp);
         }
@@ -221,13 +231,13 @@ internal sealed class DataSource
         // Store them in the list.
         for (int i = 0; i < 40; i++)
         {
-            OrderItem temp = new OrderItem();
+            DO.OrderItem temp = new DO.OrderItem();
             int rand = r.Next(1, 9);
             temp.UniqID = Config.OrderItemID;
-            temp.ProductID = 0;
-            temp.OrderID = 0;
+            temp.ProductID = products[rand]?.UniqID ?? 0;
+            temp.OrderID = orders[rand]?.UniqID ?? 0;
             temp.Amount = r.Next(1, 10);
-            temp.Price = 0;
+            temp.Price = products[rand]?.Price ?? 0;
 
         }
     }

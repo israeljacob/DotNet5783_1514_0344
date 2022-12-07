@@ -34,7 +34,8 @@
         <TextBox x:Name="name" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Center" TextChanged="name_TextChanged" Width="120"  Height="28" Grid.Row="2"/>
         <TextBox x:Name="price" PreviewKeyDown="id_PreviewKeyDown1" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="3"/>
         <TextBox x:Name="inStock"  Grid.Column="1" PreviewKeyDown="id_PreviewKeyDown" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="4"/>
-        <Button Grid.Column="1" Content="ADD" HorizontalAlignment="Left" Margin="40,20,0,0" Grid.Row="5" VerticalAlignment="Top" Click="Button_Click"/>
+        <Button x:Name="AddButton" Grid.Column="1" Content="ADD" HorizontalAlignment="Left" Margin="40,20,0,0" Grid.Row="5" VerticalAlignment="Top" Click="AddButton_Click"/>
+        <Button x:Name="UpdateButton" Grid.Column="1" Content="UPDATE" HorizontalAlignment="Left" Margin="40,20,0,0" Grid.Row="5" VerticalAlignment="Top" Click="AddButton_Click"/>
         <Label x:Name="idtxtMsg" Content="" HorizontalAlignment="Left" Margin="158,36,0,0"
             VerticalAlignment="Top" Width="213" Grid.Column="1"/>
         <Label x:Name="categoryBoxMsg" Content="" HorizontalAlignment="Left" Margin="158,0,0,0"

@@ -24,10 +24,9 @@ namespace BO
         /// </summary>
         public List<Tuple<DateTime?,string?>?>? ProgressOfOrder { get; set; }
         public override string ToString() => $@" 
-        UniqID: {UniqID}
-        Status Of Order: {StatusOfOrder}
-        Progress Of Order: {ProgressOfOrder}
-
+UniqID: {UniqID}
+Status Of Order: {StatusOfOrder}
+Progress Of Order: {ProgressOfOrder}
 ";
     }
 }

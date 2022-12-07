@@ -42,14 +42,13 @@ public struct Order
     /// </summary>
     /// <returns> the printable form. </returns>
     public override string ToString() => $@" 
-        UniqID: {UniqID}
-        Name: {CustomerName}, 
-        Customer Email=  {CustomerEmail}, 
-        Customer Adress: {CustomerAdress} 
-        Order Date: {OrderDate}  
-        Ship Date: {ShipDate} 
-        Deliveryr Date: {DeliveryrDate}
-
+UniqID: {UniqID}
+Name: {CustomerName}, 
+Customer Email=  {CustomerEmail}, 
+Customer Adress: {CustomerAdress} 
+Order Date: {OrderDate}  
+Ship Date: {ShipDate} 
+Deliveryr Date: {DeliveryrDate}
 ";
 
 
