@@ -28,7 +28,11 @@ public partial class ProductListWindow : Window
     public ProductListWindow(BO.Category? category= null)
     {
         InitializeComponent();
-        ProductListview.ItemsSource = bl.Product.GetListOfProducts();
+        try
+        {
+            ProductListview.ItemsSource = bl.Product.GetListOfProducts();
+        }
+        catch(Exception ex) { MessageBox.Show(ex.Message); }
         List<BO.Category> categories = Enum.GetValues(typeof(BO.Category)).Cast<BO.Category>().ToList();
         foreach (BO.Category category1 in categories)
             if(category1 != BO.Category.all)
@@ -42,15 +46,22 @@ public partial class ProductListWindow : Window
         {
             if ((BO.Category)CategorySelector.SelectedItem==BO.Category.all)
             {
-                ProductListview.ItemsSource = bl.Product.GetListOfProducts();
-
+                try
+                {
+                    ProductListview.ItemsSource = bl.Product.GetListOfProducts();
+                }
+                catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
             else
             {
                 Func<BO.ProductForList?, bool> func = product => product?.Category == (BO.Category)CategorySelector.SelectedItem;
-                ProductListview.ItemsSource = bl.Product.GetListOfProducts(func);
+                try
+                {
+                    ProductListview.ItemsSource = bl.Product.GetListOfProducts(func);
+                }
+                catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
-        
+
             CategorySelector.Items.Add(removedItem);
             removedItem = (BO.Category)CategorySelector.SelectedItem;
             CategorySelector.Items.Remove(removedItem);

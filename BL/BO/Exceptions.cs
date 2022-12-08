@@ -6,27 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BO;
-[Serializable]
-public class EmptyException : Exception
-{
-    public EmptyException(Exception innerException)
-        : base($"{innerException}\n", innerException)
-    {
-    }
-}
-[Serializable]
-public class IdNotExistException : Exception
-{
-    public IdNotExistException(Exception innerException)
-        : base($"{innerException}\n")
-    {
-    }
-}
+
 
 [Serializable]
-public class IdAlreadyExistException : Exception
+public class CatchetDOException : Exception
 {
-    public IdAlreadyExistException( Exception innerException)
+    public CatchetDOException( Exception innerException)
         : base($"{innerException}\n")
     {
     }
@@ -34,8 +19,14 @@ public class IdAlreadyExistException : Exception
 
 
 
-
-
+[Serializable]
+public class missingItemsException : Exception
+{
+    public missingItemsException(int label, int detail)
+        : base($"Product {label} In Stock  is less then {detail}\n")
+    {
+    }
+}
 [Serializable]
 public class InCorrectDetailsException : Exception
 {

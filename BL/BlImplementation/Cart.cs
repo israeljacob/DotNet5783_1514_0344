@@ -32,7 +32,7 @@ namespace BlImplementation
                     }
                     catch (DO.DoesNotExistException ex)
                     {
-                        throw new BO.IdNotExistException(ex);
+                        throw new BO.CatchetDOException(ex);
                     }
                     catch (BO.InCorrectDetailsException ex) { throw ex; }
                     
@@ -49,7 +49,7 @@ namespace BlImplementation
             try { product = dalList.Product.Get(productID); }
             catch (DO.DoesNotExistException ex)
             {
-                throw new BO.IdNotExistException(ex);
+                throw new BO.CatchetDOException(ex);
                 
             };
             if (product.InStock == 0)
@@ -115,14 +115,17 @@ namespace BlImplementation
             
             foreach (BO.OrderItem? orderItem in cart.orderItems!)
             {
-                try { dalList.Product.Get(orderItem!.ProductID); } //find the product
+                try
+                {
+                    dalList.Product.Get(orderItem!.ProductID);  //find the product
+                    if (dalList.Product.Get(orderItem.ProductID).InStock < orderItem.Amount) //if the order amount is large then in the product stock
+                        throw new BO.missingItemsException( orderItem.ProductID , orderItem.Amount);
+                }
                 catch (DO.DoesNotExistException ex)
                 {
-                    throw new BO.IdNotExistException(ex);
+                    throw new BO.CatchetDOException(ex);
                 } 
-                if (dalList.Product.Get(orderItem.ProductID).InStock < orderItem.Amount) //if the order amount is large then in the product stock
-                    throw new BO.InCorrectDetailsException($"Product In Stock {orderItem.ProductID} is less then",orderItem.ProductID );
-
+                catch(BO.InCorrectDetailsException ex) { throw ex; }
                 if (orderItem.Amount <= 0)
                     throw new BO.InCorrectDetailsException("Product Amount", orderItem.Amount);
             }
@@ -151,9 +154,14 @@ namespace BlImplementation
             });
             foreach (BO.OrderItem? orderItem1 in order.orderItems)
             {
-                DO.Product product = dalList.Product.Get(orderItem1!.ProductID); //add to Bo
-                product.InStock -= orderItem1.Amount;
-                dalList.Product.Update(product);
+                try
+                {
+                    DO.Product product = dalList.Product.Get(orderItem1!.ProductID); //add to Bo
+                    product.InStock -= orderItem1.Amount;
+                    dalList.Product.Update(product);
+                }
+                catch(DO.DoesNotExistException ex) { throw new BO.CatchetDOException(ex); }
+               
 
                 dalList.OrderItem.Add(new DO.OrderItem
                 {

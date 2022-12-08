@@ -36,7 +36,7 @@ namespace BlImplementation
                            where func(product)
                            select product;
             }
-            catch (DO.EmptyException ex){ throw new BO.EmptyException(ex);  }
+            catch (DO.EmptyException ex){ throw new BO.CatchetDOException(ex);  }
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace BlImplementation
             }
             catch (DO.DoesNotExistException ex)
             {
-                throw new BO.IdNotExistException(ex);
+                throw new BO.CatchetDOException(ex);
             }
         }
 
@@ -93,7 +93,7 @@ namespace BlImplementation
             }
             catch (DO.DoesNotExistException ex)
             {
-                throw new BO.IdNotExistException(ex);
+                throw new BO.CatchetDOException(ex);
 
             }
         }
@@ -133,7 +133,7 @@ namespace BlImplementation
             }
             catch (DO.IdAlreadyExistException ex)
             {
-                throw new BO.IdAlreadyExistException(ex);
+                throw new BO.CatchetDOException(ex);
             }
         }
 
@@ -145,15 +145,19 @@ namespace BlImplementation
         public void DeleteProduct(int ID)
         {
             Func<DO.OrderItem?, bool> func = orderItem => orderItem?.ProductID == ID;
+            try
+            {
             if (dalList.OrderItem.GetAll(func) != null)
                 throw new BO.ItemExistsInOrderException("Product");
+            }
+            catch (DO.EmptyException ex) { throw new BO.CatchetDOException(ex); }
             try
             {
                 dalList.Product.Delete(ID);
             }
             catch (DO.DoesNotExistException ex)
             {
-                throw new BO.IdNotExistException(ex);
+                throw new BO.CatchetDOException(ex);
             }
         }
         /// <summary>
@@ -188,7 +192,7 @@ namespace BlImplementation
             }
             catch (DO.DoesNotExistException ex)
             {
-                throw new BO.IdNotExistException(ex);
+                throw new BO.CatchetDOException(ex);
             }
 
         }

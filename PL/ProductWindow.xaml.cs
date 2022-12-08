@@ -201,7 +201,7 @@ public partial class ProductWindow : Window
          }
          catch (Exception ex)
          {
-                 if (ex.GetType() == typeof(IdAlreadyExistException)) { idtxt.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#DD4A48")!; }
+                 if (ex.GetType() == typeof(CatchetDOException)) { idtxt.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#DD4A48")!; }
                  MessageBox.Show(ex.Message);
          }
     }
