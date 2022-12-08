@@ -2,7 +2,7 @@
 /// <summary>
 /// A product in the shop
 /// </summary>
-public struct Product
+public struct Product:IComparable<Product>
 {
     /// <summary>
     ///Product ID.
@@ -24,6 +24,16 @@ public struct Product
     /// How much from this product is available.
     /// </summary>
     public int InStock { get; set; }
+
+    public int CompareTo(Product other)
+    {
+        if(this.Category<other.Category)
+            return 1;
+        else if(this.Category > other.Category)
+            return -1;
+        else return 0;
+    }
+
     /// <summary>
     /// Converts the object to a printable form.
     /// </summary>

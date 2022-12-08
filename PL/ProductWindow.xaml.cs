@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BO;
 using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace PL;
 
@@ -31,12 +32,13 @@ public partial class ProductWindow : Window
     {
         
         InitializeComponent();
-        
-        categoryBox.ItemsSource = Enum.GetValues(typeof(DO.Category));
+        List<BO.Category> categories = Enum.GetValues(typeof(BO.Category)).Cast<BO.Category>().ToList();
+        foreach (BO.Category category in categories)
+            if (category != BO.Category.all)
+                categoryBox.Items.Add(category);
         Button? button = sender as Button;
         if(button !=null)
             UpdateButton.Visibility = Visibility.Hidden;
-
         else
         {
             AddButton.Visibility = Visibility.Hidden;
@@ -44,12 +46,6 @@ public partial class ProductWindow : Window
             string title = id.ToString();
              idtxt.Text= title;
              idtxt.IsEnabled = false;
-
-
-           
-
-
-
         }
 
     }
@@ -86,7 +82,7 @@ public partial class ProductWindow : Window
             e.Key != Key.Delete && 
             e.Key != Key.Right && 
             e.Key != Key.Left)
-{
+        {
             e.Handled = true;
             
         }
@@ -125,120 +121,131 @@ public partial class ProductWindow : Window
         }
 
     }
-
-    private void AddButton_Click(object sender, RoutedEventArgs e)
+    private void AddButton_or_UpdateButton_Click(object sender, RoutedEventArgs e)
     {
-        
         var bc = new BrushConverter();
+        bool flag = true;
         if (!int.TryParse(idtxt.Text, out int id))
         {
             idtxtMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
             idtxtMsg.Content = "Enter a integer !";
-        }else
-        if (name ==null) { nameMsg.Background = (Brush)bc.ConvertFrom("#DD4A48"); nameMsg.Content = "This textbox accepts only alphabetical characters"; }
-        if (!double.TryParse(price.Text, out double priceInt))
+            flag = false;
+        }
+        else
+        {
+            idtxtMsg.Background = (Brush)bc.ConvertFrom("#FFFFFFFF")!;
+            idtxtMsg.Content = "";
+        }
+        if (name?.Text == "" || !Regex.IsMatch(name?.Text!, "^[a-zA-Z ]"))
+        {
+            nameMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
+            nameMsg.Content = "Enter only alphabetical characters";
+            flag = false;
+        }
+        else
+        {
+            nameMsg.Background = (Brush)bc.ConvertFrom("#FFFFFFFF")!;
+            nameMsg.Content = "";
+        }
+        if (!double.TryParse(price.Text, out double priceDoble))
         {
 
             priceMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
             priceMsg.Content = "Enter a Double !";
-        }else
+            flag = false;
+        }
+        else
+        {
+            priceMsg.Background = (Brush)bc.ConvertFrom("#FFFFFFFF")!;
+            priceMsg.Content = "";
+        }
         if (!int.TryParse(inStock.Text, out int InStock))
         {
             inStockMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
             inStockMsg.Content = "Enter a integer !";
-        }else
-        if(categoryBox.Text.ToString()==BO.Category.all.ToString() || categoryBox.Text =="")
-        {
-            categoryBoxMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
-            categoryBoxMsg.Content = "Enter a Category except all !";
+            flag = false;
         }
         else
         {
-            try
-            {
-                bl.Product.AddProduct(id, name.Text, priceInt, (BO.Category)categoryBox.SelectedItem, InStock);
-                //Window win = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.Name == "ProductListWindow")!;
-              //  if (win != null) { win.Close(); }
-                new ProductListWindow().Show();
-                this.Close(); 
-              
-                   
-
-            }
-            catch (Exception ex)
-            {
-                
-                    if (ex.GetType() == typeof(IdAlreadyExistException)) { idtxt.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#DD4A48")!; }
-                    MessageBox.Show(ex.ToString());
-                
-            }
+            inStockMsg.Background = (Brush)bc.ConvertFrom("#FFFFFFFF")!;
+            inStockMsg.Content = "";
+        }
+        if (categoryBox.Text.ToString() == BO.Category.all.ToString() || categoryBox.Text == "")
+        {
+            categoryBoxMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
+            categoryBoxMsg.Content = "Enter a Category!";
+            flag = false;
+        }
+        else
+        {
+            categoryBoxMsg.Background = (Brush)bc.ConvertFrom("#FFFFFFFF")!;
+            categoryBoxMsg.Content = "";
+        }
+        if (flag)
+        {
+            //MessageBox.Show(sender.ToString());
+            if (sender.Equals(AddButton))
+                AddButton_Click(id, priceDoble, InStock);
+            else
+                UpdateButton_Click(id, priceDoble, InStock);
         }
     }
-
-    //private void name_TextChanged(object sender, TextChangedEventArgs e)
-    //{
-    //    if (name.Text == "") return;
-    //    if (!System.Text.RegularExpressions.Regex.IsMatch(name.Text, "^[a-zA-Z ]"))
-    //    {
-    //        MessageBox.Show("This textbox accepts only alphabetical characters");
-    //        name.Text.Remove(name.Text.Length - 10);
-    //    }
-
-    //}
-
-    private void UpdateButton_Click(object sender, RoutedEventArgs e)
+    private void AddButton_Click(int id, double priceDouble, int InStock)
     {
-        var bc = new BrushConverter();
+        
+         try
+         {
+             bl.Product.AddProduct(id, name?.Text!, priceDouble, (BO.Category)categoryBox.SelectedItem, InStock);
+             new ProductListWindow().Show();
+             this.Close(); 
+         }
+         catch (Exception ex)
+         {
+                 if (ex.GetType() == typeof(IdAlreadyExistException)) { idtxt.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#DD4A48")!; }
+                 MessageBox.Show(ex.Message);
+         }
+    }
 
 
-        if (!double.TryParse(price.Text, out double priceInt))
+    private void UpdateButton_Click(int id, double priceDouble, int InStock)
+    {
+        Product product = new Product
         {
-
-            priceMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
-            priceMsg.Content = "Enter a Double !";
-        }
-        else
-   if (!int.TryParse(inStock.Text, out int InStock))
+            UniqID = id,
+            Name = name.Text,
+            Price = priceDouble,
+            Category = (BO.Category)categoryBox.SelectedItem,
+            InStock = InStock
+        };
+        try
         {
-            inStockMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
-            inStockMsg.Content = "Enter a integer !";
+            bl.Product.UpdateProduct(product);
         }
-        else
-   if (categoryBox.Text.ToString() == BO.Category.all.ToString() || categoryBox.Text == "")
+        catch(Exception ex)
         {
-            categoryBoxMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
-            categoryBoxMsg.Content = "Enter a Category except all !";
+            MessageBox.Show(ex.Message);
         }
-        else
-        {
-           // try
-          //  {
-                int.TryParse(idtxt.Text, out int id);
-            Product product = new Product();
-            product.UniqID = id;
-            product.Name = name.Text;
-            product.Price = priceInt;
-            product.Category = (BO.Category)categoryBox.SelectedItem;
-            product.InStock=InStock;
-                bl.Product.UpdateProduct(product);
-                
-                new ProductListWindow().Show();
-                this.Close();
-
-
-
-          
-        }
+        Window win = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.Name == "productListWindow")!;
+        if (win != null) { win.Close(); }
+        new ProductListWindow().Show();
+        this.Close();
     }
 
     private void name_PreviewKeyDown(object sender, KeyEventArgs e)
     {
-       // TextChanged = "name_TextChanged"
-        if (name.Text == "") return;
-        if (!System.Text.RegularExpressions.Regex.IsMatch(name.Text, "^[a-zA-Z ]"))
-        {
-            MessageBox.Show("This textbox accepts only alphabetical characters");
-            name.Text.Remove(name.Text.Length - 1);
-        }
+
+
+        // TextChanged = "name_TextChanged"
+        //if (!(System.Text.RegularExpressions.Regex.IsMatch(name.Text, "^[a-zA-Z ]")||
+        //    e.Key== Key.Delete||
+        //    e.Key == Key.Right ||
+        //    e.Key == Key.Left ||
+        //     e.Key == Key.Back||
+        //      e.Key == Key.Enter))
+        //{
+        //    MessageBox.Show("This textbox accepts only alphabetical characters");
+        //    e.Handled = true;
+        //}
+        
     }
 }

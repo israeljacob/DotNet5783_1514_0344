@@ -24,31 +24,39 @@ public partial class ProductListWindow : Window
 {
     
     private IBL bl = new Bl();
-    List<BO.Category> categories = Enum.GetValues(typeof(BO.Category)).Cast<BO.Category>().ToList();
     BO.Category removedItem = BO.Category.all;
-    public ProductListWindow()
+    public ProductListWindow(BO.Category? category= null)
     {
         InitializeComponent();
         ProductListview.ItemsSource = bl.Product.GetListOfProducts();
-        categories.Remove(BO.Category.all);
-        CategorySelector.ItemsSource = categories;
+        List<BO.Category> categories = Enum.GetValues(typeof(BO.Category)).Cast<BO.Category>().ToList();
+        foreach (BO.Category category1 in categories)
+            if(category1 != BO.Category.all)
+                CategorySelector.Items.Add(category1);
     }
-
+    
     private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        categories.Add(removedItem);
-        categories.Remove((BO.Category)CategorySelector.SelectedItem);
-        CategorySelector.ItemsSource = categories;
-        if ((BO.Category)CategorySelector.SelectedItem==BO.Category.all)
+        
+        if (CategorySelector.Items.Count > 0 && CategorySelector.SelectedItem != null)
         {
-            ProductListview.ItemsSource = bl.Product.GetListOfProducts();
+            if ((BO.Category)CategorySelector.SelectedItem==BO.Category.all)
+            {
+                ProductListview.ItemsSource = bl.Product.GetListOfProducts();
 
+            }
+            else
+            {
+                Func<BO.ProductForList?, bool> func = product => product?.Category == (BO.Category)CategorySelector.SelectedItem;
+                ProductListview.ItemsSource = bl.Product.GetListOfProducts(func);
+            }
+        
+            CategorySelector.Items.Add(removedItem);
+            removedItem = (BO.Category)CategorySelector.SelectedItem;
+            CategorySelector.Items.Remove(removedItem);
         }
-        else
-        {
-            Func<BO.ProductForList?, bool> func = product => product?.Category == (BO.Category)CategorySelector.SelectedItem;
-            ProductListview.ItemsSource = bl.Product.GetListOfProducts(func);
-        }
+
+
     }
 
     private void AddProdct_Click(object sender, RoutedEventArgs e)
@@ -62,7 +70,6 @@ public partial class ProductListWindow : Window
     {
         BO.ProductForList ourProduct = (BO.ProductForList)ProductListview.SelectedItem;
          if (ourProduct != null) { new ProductWindow(sender,ourProduct.UniqID).Show();}
-         Close();
     }
 
    
