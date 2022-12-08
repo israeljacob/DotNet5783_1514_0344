@@ -235,10 +235,10 @@ internal sealed class DataSource
             int rand = r.Next(1, 9);
             temp.UniqID = Config.OrderItemID;
             temp.ProductID = products[rand]?.UniqID ?? 0;
-            temp.OrderID = orders[rand]?.UniqID ?? 0;
+            temp.OrderID = orders[i/2]?.UniqID ?? 0;
             temp.Amount = r.Next(1, 10);
             temp.Price = products[rand]?.Price ?? 0;
-
+            orderItems.Add(temp);
         }
     }
 

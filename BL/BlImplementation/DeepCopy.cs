@@ -30,6 +30,27 @@ namespace BlImplementation
             object to = Activator.CreateInstance(type)!; // new object of Type
             from.CopyPropertiesTo(to);
             return to!;
+
+        }
+
+        public static void PrintProperties<S>(this S print)
+        {
+            foreach (PropertyInfo propTo in print?.GetType().GetProperties()!)
+            {
+                if (propTo != null)
+                {
+                    if (propTo.GetValue(print, null) is List<BO.OrderItem?>)
+                        foreach (BO.OrderItem item in (List<BO.OrderItem>)propTo.GetValue(print,null)!)
+                        item.PrintProperties();
+                    else
+                        Console.WriteLine($"{propTo.Name}: {propTo.GetValue(print, null)}");
+                        
+                }
+            }
+            Console.WriteLine(@"
+
+
+");
         }
     }
 }

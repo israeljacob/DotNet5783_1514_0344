@@ -19,18 +19,7 @@ public class mainProgram
         //dl obj initial
         IBL bl = new Bl();
         //BO obj initial
-        DO.Product product1 = new DO.Product
-        {
-            UniqID = 1,
-            Name = "gf",
-            Price = 1,
-            Category = DO.Category.all,
-            InStock = 1
-        };
-        BO.Product product2 = new BO.Product();
-        product1.CopyPropertiesTo(product2);
         BO.Product product = new BO.Product();
-
         BO.Order order = new BO.Order();
         BO.Cart cart = new BO.Cart
         {
@@ -179,9 +168,11 @@ public class mainProgram
         {
             // Try to add and throw an exception if not succeed
             int ID = Menu.IntInput("Enter the product id");
-            try { Console.WriteLine(bl.Product.ProductItemForManagger(ID)); }
-            catch (Exception ex) { Console.WriteLine(ex.Message); return; };
-          //  catch (BO.IdNotExistException ex) { Console.WriteLine(ex.Message);return; }
+            try 
+            {
+                bl.Product.ProductItemForManagger(ID).PrintProperties();
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); return; }
         }
         ///<summary>
         ///Get product for costemor
@@ -190,7 +181,7 @@ public class mainProgram
         {
             // Try to get and throw an exception if not succeed
             int ID = Menu.IntInput("Enter the product id");
-            try { Console.WriteLine(bl.Product.ProductItemForCostemor(ID, cart)); }
+            try { bl.Product.ProductItemForCostemor(ID, cart).PrintProperties(); }
             catch (Exception ex) { Console.WriteLine(ex.Message); return; };
         }
         ///<summary>
@@ -201,7 +192,7 @@ public class mainProgram
             /// print all products
             foreach (BO.ProductForList? product in bl.Product.GetListOfProducts())
             {
-                Console.WriteLine(product);
+                product.PrintProperties();
             }
         }
         ///<summary>
@@ -284,7 +275,7 @@ public class mainProgram
         {
             // Try to get and throw an exception if not succeed
             int ID = Menu.IntInput("Enter the order ID");
-            try { Console.WriteLine(bl.Order.OrderBYID(ID)); }
+            try { bl.Order.OrderBYID(ID).PrintProperties(); }
             catch (Exception ex) { Console.WriteLine(ex.Message); return; };
 
         }
@@ -296,7 +287,7 @@ public class mainProgram
             // print all orders
             foreach (BO.OrderForList? order in bl.Order.GetListOfOrders())
             {
-                Console.WriteLine(order);
+                order.PrintProperties();
             }
         }
         ///<summary>
@@ -306,7 +297,7 @@ public class mainProgram
         {
             // Try to update and throw an exception if not succeed
             int ID = Menu.IntInput("Enter the order ID");
-            try { Console.WriteLine(bl.Order.UpdateOrderItemAmount(bl.Order.GetOrderItem(ID))); }
+            try { bl.Order.UpdateOrderItemAmount(bl.Order.GetOrderItem(ID)).PrintProperties(); }
             catch (Exception ex) { Console.WriteLine(ex.Message); return; };
         }
         ///<summary>
@@ -316,7 +307,7 @@ public class mainProgram
         {
             // Try to update and throw an exception if not succeed
             int ID = Menu.IntInput("Enter the order ID");
-            try { Console.WriteLine(bl.Order.UpdateShipDate(ID)); }
+            try { bl.Order.UpdateShipDate(ID).PrintProperties(); }
             catch (Exception ex) { Console.WriteLine(ex.Message); return; };
         }
         ///<summary>
@@ -326,7 +317,7 @@ public class mainProgram
         {
             // Try to update and throw an exception if not succeed
             int ID = Menu.IntInput("Enter the order ID");
-            try { Console.WriteLine(bl.Order.UpdateDeliveryDate(ID)); }
+            try { bl.Order.UpdateDeliveryDate(ID).PrintProperties(); }
             catch (Exception ex) { Console.WriteLine(ex.Message); return; };
 
         }
@@ -337,7 +328,7 @@ public class mainProgram
         {
             // try tomprint the track and throw an exception if not succeed
             int ID = Menu.IntInput("Enter the order ID");
-            try { Console.WriteLine(bl.Order.OrderTrack(ID)); }
+            try { bl.Order.OrderTrack(ID).PrintProperties(); }
             catch (Exception ex) { Console.WriteLine(ex.Message); return; };
         }
     }

@@ -53,14 +53,8 @@ namespace BlImplementation
             try
             {
                 DO.Product product = dalList.Product.Get(ID);
-                return new BO.Product //return new entitie product 
-                {
-                    UniqID = product.UniqID,
-                    Name = product.Name,
-                    Price = product.Price,
-                    Category = (BO.Category)product.Category!,
-                    InStock = product.InStock
-                };
+                BO.Product returnedProduct = (BO.Product)product.CopyPropertiesToNew(typeof(BO.Product));
+                return returnedProduct; //return new entitie product 
             }
             catch (DO.DoesNotExistException ex)
             {

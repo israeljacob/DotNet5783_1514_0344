@@ -69,7 +69,7 @@ internal class Order : BLApi.IOrder
                 OrderDate = order.OrderDate,
                 ShipDate = order.ShipDate,
                 DeliveryrDate = order.DeliveryrDate,
-                orderItems = (List<BO.OrderItem>)orderItems(order.UniqID)!,
+                orderItems = orderItems(order.UniqID),
                 StatusOfOrder = statusOfOrder(order),
                 TotalPrice = totalPrice(order)
             };
@@ -307,21 +307,24 @@ internal class Order : BLApi.IOrder
     /// </summary>
     /// <param name="ID"></param>
     /// <returns></returns>
-    private IEnumerable<BO.OrderItem?>? orderItems(int ID)
+    private List<BO.OrderItem?> orderItems(int ID)
     {
         Func<DO.OrderItem?, bool> func = orderItem => orderItem?.OrderID ==ID;
         try
         {
-        return from orderItem in dalList.OrderItem.GetAll(func)
-               select new BO.OrderItem
-               {
-                   UniqID = orderItem?.UniqID ?? throw new BO.MissingDataException("Order ID"),
-                   ProductID = orderItem?.ProductID ?? throw new BO.MissingDataException("Product ID"),
-                   ProductName = dalList.Product.Get(orderItem?.ProductID ?? throw new BO.MissingDataException("Product name")).Name,
-                   Price = orderItem?.Price ?? throw new BO.MissingDataException("Order item price"),
-                   Amount = orderItem?.Amount ?? throw new BO.MissingDataException("Order item amount"),
-                   TotalPrice = orderItem?.Price * orderItem?.Amount ?? throw new BO.MissingDataException("Order item total price")
-               };
+            List<BO.OrderItem?>? list = new List<BO.OrderItem?>();
+            foreach (DO.OrderItem? orderItem in dalList.OrderItem.GetAll())
+                if (orderItem?.OrderID == ID)
+                    list.Add(new BO.OrderItem
+                    {
+                        UniqID = orderItem?.UniqID ?? throw new BO.MissingDataException("Order ID"),
+                        ProductID = orderItem?.ProductID ?? throw new BO.MissingDataException("Product ID"),
+                        ProductName = dalList.Product.Get(orderItem?.ProductID ?? throw new BO.MissingDataException("Product name")).Name,
+                        Price = orderItem?.Price ?? throw new BO.MissingDataException("Order item price"),
+                        Amount = orderItem?.Amount ?? throw new BO.MissingDataException("Order item amount"),
+                        TotalPrice = orderItem?.Price * orderItem?.Amount ?? throw new BO.MissingDataException("Order item total price")
+                    });
+        return list;
         }
         catch (DO.EmptyException ex) { throw new BO.CatchetDOException(ex); }
     }
