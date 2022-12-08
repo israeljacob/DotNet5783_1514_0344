@@ -18,7 +18,9 @@ namespace BlImplementation
                 if (propFrom == null)
                     continue;
                 var value = propFrom.GetValue(from, null);
-                if (value is ValueType || value is string || value is Location)
+                if (value is DO.Category)
+                    propTo.SetValue(to, (BO.Category)value);
+                else if (value is ValueType || value is string)
                     propTo.SetValue(to, value);
             }
         }

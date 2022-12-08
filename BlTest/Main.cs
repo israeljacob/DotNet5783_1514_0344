@@ -19,6 +19,16 @@ public class mainProgram
         //dl obj initial
         IBL bl = new Bl();
         //BO obj initial
+        DO.Product product1 = new DO.Product
+        {
+            UniqID = 1,
+            Name = "gf",
+            Price = 1,
+            Category = DO.Category.all,
+            InStock = 1
+        };
+        BO.Product product2 = new BO.Product();
+        product1.CopyPropertiesTo(product2);
         BO.Product product = new BO.Product();
 
         BO.Order order = new BO.Order();
