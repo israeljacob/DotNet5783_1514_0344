@@ -24,16 +24,22 @@ public partial class ProductListWindow : Window
 {
     
     private IBL bl = new Bl();
+    List<BO.Category> categories = Enum.GetValues(typeof(BO.Category)).Cast<BO.Category>().ToList();
+    BO.Category removedItem = BO.Category.all;
     public ProductListWindow()
     {
         InitializeComponent();
         ProductListview.ItemsSource = bl.Product.GetListOfProducts();
-        CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+        categories.Remove(BO.Category.all);
+        CategorySelector.ItemsSource = categories;
     }
 
     private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if((DO.Category)CategorySelector.SelectedItem==DO.Category.all)
+        categories.Add(removedItem);
+        categories.Remove((BO.Category)CategorySelector.SelectedItem);
+        CategorySelector.ItemsSource = categories;
+        if ((BO.Category)CategorySelector.SelectedItem==BO.Category.all)
         {
             ProductListview.ItemsSource = bl.Product.GetListOfProducts();
 
