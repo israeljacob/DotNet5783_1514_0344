@@ -28,11 +28,10 @@
         <ListView  x:Name="ProductListview" Grid.Row="1" MouseDoubleClick="ProductListview_MouseDoubleClick" >
             <ListView.View>
             <GridView >
-                    <GridViewColumn Header="Product Id" Width="auto" DisplayMemberBinding="{Binding UniqID}"></GridViewColumn>
-                <GridViewColumn Header="Sender Name" Width="auto" DisplayMemberBinding="{Binding Category}"></GridViewColumn>
-                <GridViewColumn Header="Receiver Name" Width="auto" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
-                <GridViewColumn Header="Weight" Width="auto" DisplayMemberBinding="{Binding Price}"></GridViewColumn>
-                <GridViewColumn Header="Priority" Width="auto" DisplayMemberBinding="{Binding InStock}"></GridViewColumn>
+                <GridViewColumn Header="Product Id" Width="auto" DisplayMemberBinding="{Binding UniqID}"></GridViewColumn>
+                <GridViewColumn Header="Category" Width="auto" DisplayMemberBinding="{Binding Category}"></GridViewColumn>
+                <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                <GridViewColumn Header="Price" Width="auto" DisplayMemberBinding="{Binding Price}"></GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
