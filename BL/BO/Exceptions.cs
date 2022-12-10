@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace BO;
 
 
+/// Catch DO Exception
 [Serializable]
 public class CatchetDOException : Exception
 {
@@ -18,7 +19,7 @@ public class CatchetDOException : Exception
 }
 
 
-
+///missing Items Exception
 [Serializable]
 public class missingItemsException : Exception
 {
@@ -27,6 +28,7 @@ public class missingItemsException : Exception
     {
     }
 }
+///InCorrec tDetails Exception
 [Serializable]
 public class InCorrectDetailsException : Exception
 {
@@ -36,7 +38,7 @@ public class InCorrectDetailsException : Exception
     }
 }
 
-
+///Missing Data Exception
 [Serializable]
 public class MissingDataException : Exception
 {
@@ -47,7 +49,7 @@ public class MissingDataException : Exception
 
     
 }
-
+///Item Exists InOrder Exception
 [Serializable]
 public class ItemExistsInOrderException : Exception
 {
@@ -56,6 +58,7 @@ public class ItemExistsInOrderException : Exception
     {
     }
 }
+///Dates Exception
 [Serializable]
 public class DatesException : Exception
 {
