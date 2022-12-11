@@ -23,11 +23,17 @@ namespace PL;
 /// </summary>
 public partial class ProductListWindow : Window
 {
-    
+    /// <summary>
+    /// show of only one bl
+    /// </summary>
     private IBL bl = new Bl();
     BO.Category removedItem = BO.Category.all;
-    
-    public ProductListWindow()
+
+    /// <summary>
+    /// add the products to the list in according to combox click
+    /// </summary>
+    /// <param name="category"></param>
+    public ProductListWindow(BO.Category? category= null)
     {
         InitializeComponent();
         try
@@ -41,10 +47,15 @@ public partial class ProductListWindow : Window
                 CategorySelector.Items.Add(category1);
     }
     
+    /// <summary>
+    /// if the user click on one of the item combox
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        
-        if ( CategorySelector.SelectedItem != null)
+        ///if we select somthing
+        if (CategorySelector.Items.Count > 0 && CategorySelector.SelectedItem != null)
         {
             if ((BO.Category)CategorySelector.SelectedItem==BO.Category.all)
             {
@@ -73,12 +84,22 @@ public partial class ProductListWindow : Window
 
     }
 
+    /// <summary>
+    /// add product button will open new window to add a product
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void AddProdct_Click(object sender, RoutedEventArgs e)
     {
        new ProductWindow(sender).Show();
        this.Close();
     }
 
+    /// <summary>
+    /// if the user click on one of the product in the list
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ProductListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         BO.ProductForList ourProduct = (BO.ProductForList)ProductListview.SelectedItem;

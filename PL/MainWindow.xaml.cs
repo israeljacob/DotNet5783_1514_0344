@@ -24,9 +24,14 @@ namespace PL
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// if the user preesed the admin button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Admin_Click(object sender, RoutedEventArgs e)
         {
+            ///show the list of all the products
            new ProductListWindow().Show();
             this.Close();
         }

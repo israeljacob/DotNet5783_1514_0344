@@ -26,18 +26,22 @@ namespace PL;
 /// </summary>
 public partial class ProductWindow : Window
 {
-    
+    /// <summary>
+    /// show of only one bl
+    /// </summary>
     IBL bl = new Bl();
     BO.Category? removedItem = null;
     public ProductWindow(object sender, int id=0)
     {
         
         InitializeComponent();
+        ///get the enums to combobox
         List<BO.Category> categories = Enum.GetValues(typeof(BO.Category)).Cast<BO.Category>().ToList();
         foreach (BO.Category category in categories)
             if (category != BO.Category.all)
-                CategoryBox.Items.Add(category);
+                categoryBox.Items.Add(category);///add in to the opened list
         Button? button = sender as Button;
+        ///to see if we press on update or add button
         if(button !=null)
             UpdateButton.Visibility = Visibility.Hidden;
         else
@@ -61,6 +65,11 @@ public partial class ProductWindow : Window
         }
     }
 
+    /// <summary>
+    /// check evrey type of the user and make sure only numbers will take place in the box
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void id_PreviewKeyDown(object sender, KeyEventArgs e)
     {
         ///Only numbers..
@@ -94,6 +103,11 @@ public partial class ProductWindow : Window
         }
 
     }
+    /// <summary>
+    /// check evrey type of the user and make sure only numbers and dote (for the price) will take place in the box
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void id_PreviewKeyDown1(object sender, KeyEventArgs e)
     {
         ///Only numbers with period
@@ -127,10 +141,17 @@ public partial class ProductWindow : Window
         }
 
     }
+
+    /// <summary>
+    /// one function to see if we press "add" or "update" button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void AddButton_or_UpdateButton_Click(object sender, RoutedEventArgs e)
     {
         var bc = new BrushConverter();
         bool flag = true;
+        ///to convert it to letters , if not make sure the user will see it
         if (!int.TryParse(idtxt.Text, out int id))
         {
             idtxtMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
@@ -152,7 +173,7 @@ public partial class ProductWindow : Window
         {
             nameMsg.Background = (Brush)bc.ConvertFrom("#FFFFFFFF")!;
             nameMsg.Content = "";
-        }
+        }///to convert it to double, if not make sure the user will see it
         if (!double.TryParse(price.Text, out double priceDoble))
         {
 
@@ -164,7 +185,7 @@ public partial class ProductWindow : Window
         {
             priceMsg.Background = (Brush)bc.ConvertFrom("#FFFFFFFF")!;
             priceMsg.Content = "";
-        }
+        }///to convert it to int, if not make sure the user will see it
         if (!int.TryParse(inStock.Text, out int InStock))
         {
             inStockMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
@@ -175,8 +196,8 @@ public partial class ProductWindow : Window
         {
             inStockMsg.Background = (Brush)bc.ConvertFrom("#FFFFFFFF")!;
             inStockMsg.Content = "";
-        }
-        if (CategoryBox.Text.ToString() == BO.Category.all.ToString() || CategoryBox.Text == "")
+        }//to see if the user chosed somthing on the combox, if not make sure the user will see it
+        if (categoryBox.Text.ToString() == BO.Category.all.ToString() || categoryBox.Text == "")
         {
             categoryBoxMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
             categoryBoxMsg.Content = "Enter a Category!";
@@ -189,13 +210,19 @@ public partial class ProductWindow : Window
         }
         if (flag)
         {
-            //MessageBox.Show(sender.ToString());
+            
             if (sender.Equals(AddButton))
                 AddButton_Click(id, priceDoble, InStock);
             else
                 UpdateButton_Click(id, priceDoble, InStock);
         }
     }
+    /// <summary>
+    /// add to the list new product
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="priceDouble"></param>
+    /// <param name="InStock"></param>
     private void AddButton_Click(int id, double priceDouble, int InStock)
     {
         
@@ -212,7 +239,12 @@ public partial class ProductWindow : Window
          }
     }
 
-
+    /// <summary>
+    /// update product in the chosen item in the list, if m=not make sure the user will see it
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="priceDouble"></param>
+    /// <param name="InStock"></param>
     private void UpdateButton_Click(int id, double priceDouble, int InStock)
     {
         Product product = new Product

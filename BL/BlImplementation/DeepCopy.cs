@@ -49,7 +49,6 @@ namespace BlImplementation
             }
             Console.WriteLine(@"
 
-
 ");
         }
     }
