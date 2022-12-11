@@ -164,7 +164,7 @@ public class mainProgram
         /// function to update a product
         void UpdateProduct()
         {
-            product.UniqID = Menu.IntInput("Entter the ID:");
+            product.UniqID = Menu.IntInput("Enter the ID:");
             dalList.Product.Get(product.UniqID).DOPrintProperties();
             product.Name = Menu.StringInput("Enter the name:");
             product.Price = Menu.IntInput("Enter the price:");
@@ -185,7 +185,7 @@ public class mainProgram
         {
             try
             {
-                int del = Menu.IntInput("Entter the ID:");
+                int del = Menu.IntInput("Enter the ID:");
                 dalList.Product.Delete(del);
                 Console.Write("{0} Was Delete Successfully \n", del);
             }
@@ -215,7 +215,7 @@ public class mainProgram
         {
             try
             {
-                int idinput = Menu.IntInput("Entter the ID:");
+                int idinput = Menu.IntInput("Enter the ID:");
                 dalList.Order.Get(idinput).DOPrintProperties();
             }
             catch (Exception e)
@@ -244,7 +244,7 @@ public class mainProgram
         {
             try
             {
-                order.UniqID = Menu.IntInput("Entter the ID:");
+                order.UniqID = Menu.IntInput("Enter the ID:");
                 dalList.Order.Get(order.UniqID).DOPrintProperties();
                 order.CustomerName = Menu.StringInput("Enter the name:");
                 order.CustomerAdress = Menu.StringInput("Enter the address:");
@@ -268,7 +268,7 @@ public class mainProgram
         {
             try
             {
-                int del = Menu.IntInput("Entter the ID:");
+                int del = Menu.IntInput("Enter the ID:");
                 dalList.Order.Delete(del);
                 Console.Write("{0} Was Delete Successfully \n", del);
             }
@@ -301,7 +301,7 @@ public class mainProgram
         {
             try
             {
-                int idinput = Menu.IntInput("Entter the ID:");
+                int idinput = Menu.IntInput("Enter the ID:");
                 dalList.OrderItem.Get(idinput).DOPrintProperties();
             }
             catch (Exception e)
@@ -314,7 +314,7 @@ public class mainProgram
         {
             try
             {
-                int idinput = Menu.IntInput("Entter the ID:");
+                int idinput = Menu.IntInput("Enter the ID:");
                 Func<OrderItem?, bool> func = orderItem => orderItem?.ProductID == idinput;
                 IEnumerable < OrderItem?> orderitem1 = dalList.OrderItem.GetAll(func);
                 foreach (var orderitem in orderitem1)
@@ -332,7 +332,7 @@ public class mainProgram
         {
             try
             {
-                int idinput = Menu.IntInput("Entter the ID:");
+                int idinput = Menu.IntInput("Enter the ID:");
                 Func<OrderItem?, bool> func = orderItem => orderItem?.OrderID == idinput;
                 IEnumerable<OrderItem?> orderitem1 = dalList.OrderItem.GetAll(func);
                 foreach (var orderitem in orderitem1)
@@ -366,7 +366,7 @@ public class mainProgram
         /// function to update an orderitem
         void UpdateOrderItem()
         {
-            orderItem.UniqID = Menu.IntInput("Entter the ID:");
+            orderItem.UniqID = Menu.IntInput("Enter the ID:");
             dalList.OrderItem.Get(orderItem.UniqID).DOPrintProperties();
             orderItem.ProductID = Menu.IntInput("Enter the product ID:");
             orderItem.OrderID = Menu.IntInput("Enter the order ID:");
@@ -384,8 +384,8 @@ public class mainProgram
 
         /// function to delete orderitem
         void DeleteOrderItem()
-        {
-            int del = Menu.IntInput("Entter the ID:");
+        {   
+            int del = Menu.IntInput("Enter the ID:");
             dalList.OrderItem.Delete(del);
             Console.Write("{0} Was Delete Successfully \n", del);
 

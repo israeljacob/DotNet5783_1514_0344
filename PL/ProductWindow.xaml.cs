@@ -57,12 +57,7 @@ public partial class ProductWindow : Window
    
     private void categoryBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        //if (CategoryBox.Items.Count > 0 && CategoryBox.SelectedItem != null)
-        //{
-        //    CategoryBox.Items.Add(removedItem);
-        //    removedItem = (BO.Category)CategoryBox.SelectedItem;
-        //    CategoryBox.Items.Remove(removedItem);
-        //}
+        
     }
 
     /// <summary>
@@ -110,7 +105,7 @@ public partial class ProductWindow : Window
     /// <param name="e"></param>
     private void id_PreviewKeyDown1(object sender, KeyEventArgs e)
     {
-        TextBox textBox = sender as TextBox?? null!;
+        TextBox textBox = sender as TextBox ?? null!;
         ///Only numbers with period
         if (e.Key != Key.D0 &&
             e.Key != Key.D1 &&
@@ -135,13 +130,50 @@ public partial class ProductWindow : Window
             e.Key != Key.NumPad9 &&
             e.Key != Key.Delete &&
             e.Key != Key.Right &&
-            e.Key != Key.Left  &&
+            e.Key != Key.Left &&
             (e.Key != Key.Decimal || textBox!.Text.Contains(".")))
         {
             e.Handled = true;
         }
     }
-
+    private void name_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key != Key.A &&
+            e.Key != Key.B &&
+            e.Key != Key.C &&
+            e.Key != Key.D &&
+            e.Key != Key.E &&
+            e.Key != Key.F &&
+            e.Key != Key.G &&
+            e.Key != Key.H &&
+            e.Key != Key.I &&
+            e.Key != Key.J &&
+            e.Key != Key.K &&
+            e.Key != Key.L &&
+            e.Key != Key.M &&
+            e.Key != Key.N &&
+            e.Key != Key.P &&
+            e.Key != Key.Q &&
+            e.Key != Key.R &&
+            e.Key != Key.S &&
+            e.Key != Key.T &&
+            e.Key != Key.U &&
+            e.Key != Key.V &&
+            e.Key != Key.W &&
+            e.Key != Key.X &&
+            e.Key != Key.Y &&
+            e.Key != Key.Z &&
+            e.Key != Key.Back &&
+            e.Key != Key.Delete &&
+            e.Key != Key.Right &&
+            e.Key != Key.Left &&
+            e.Key != Key.Space &&
+            e.Key != Key.LeftShift &&
+            e.Key != Key.RightShift)
+        {
+            e.Handled = true;
+        }
+    }
     /// <summary>
     /// one function to see if we press "add" or "update" button
     /// </summary>
@@ -266,6 +298,8 @@ public partial class ProductWindow : Window
         new ProductListWindow().Show();
         this.Close();
     }
+
+    
 }
 
 

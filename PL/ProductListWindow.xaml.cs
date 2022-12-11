@@ -27,7 +27,6 @@ public partial class ProductListWindow : Window
     /// show of only one bl
     /// </summary>
     private IBL bl = new Bl();
-    BO.Category removedItem = BO.Category.all;
     /// <summary>
     /// add the products to the list in according to combox click
     /// </summary>
@@ -40,11 +39,7 @@ public partial class ProductListWindow : Window
             ProductListview.ItemsSource = bl.Product.GetListOfProducts();
         }
         catch(Exception ex) { MessageBox.Show(ex.Message); }
-        List<BO.Category> categories = Enum.GetValues(typeof(BO.Category)).Cast<BO.Category>().ToList();
-        categories.Remove(BO.Category.all);
-        foreach (BO.Category category1 in categories)
-            if (category1 != BO.Category.all)
-                CategorySelector.Items.Add(category1);
+        CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
     }
     
     /// <summary>
@@ -54,10 +49,11 @@ public partial class ProductListWindow : Window
     /// <param name="e"></param>
     private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
+        ComboBox comboBox = sender as ComboBox ?? null!;
         ///if we select somthing
-        if (CategorySelector.Items.Count > 0 && CategorySelector.SelectedItem != null)
+       if(CategorySelector.SelectedItem!=null)
         {
-            if ((BO.Category)CategorySelector.SelectedItem==BO.Category.all)
+            if ((BO.Category)CategorySelector.SelectedItem == BO.Category.all)
             {
                 try
                 {
@@ -74,12 +70,8 @@ public partial class ProductListWindow : Window
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
-            CategorySelector.Items.Add(removedItem);
-            removedItem = (BO.Category)CategorySelector.SelectedItem;
-            CategorySelector.Items.Remove(removedItem);
         }
-
-
+        
     }
 
     /// <summary>
