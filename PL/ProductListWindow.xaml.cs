@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlImplementation;
 using System.Reflection;
+using System.Windows.Controls.Primitives;
 
 namespace PL;
 
@@ -25,7 +26,8 @@ public partial class ProductListWindow : Window
     
     private IBL bl = new Bl();
     BO.Category removedItem = BO.Category.all;
-    public ProductListWindow(BO.Category? category= null)
+    
+    public ProductListWindow()
     {
         InitializeComponent();
         try
@@ -35,14 +37,14 @@ public partial class ProductListWindow : Window
         catch(Exception ex) { MessageBox.Show(ex.Message); }
         List<BO.Category> categories = Enum.GetValues(typeof(BO.Category)).Cast<BO.Category>().ToList();
         foreach (BO.Category category1 in categories)
-            if(category1 != BO.Category.all)
+            if (category1 != BO.Category.all)
                 CategorySelector.Items.Add(category1);
     }
     
     private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         
-        if (CategorySelector.Items.Count > 0 && CategorySelector.SelectedItem != null)
+        if ( CategorySelector.SelectedItem != null)
         {
             if ((BO.Category)CategorySelector.SelectedItem==BO.Category.all)
             {
@@ -61,10 +63,11 @@ public partial class ProductListWindow : Window
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
-
+            string text = CategorySelector.SelectedItem.ToString();
             CategorySelector.Items.Add(removedItem);
             removedItem = (BO.Category)CategorySelector.SelectedItem;
             CategorySelector.Items.Remove(removedItem);
+            CategorySelector.Text= text;
         }
 
 
@@ -73,8 +76,7 @@ public partial class ProductListWindow : Window
     private void AddProdct_Click(object sender, RoutedEventArgs e)
     {
        new ProductWindow(sender).Show();
-        
-        this.Close();
+       this.Close();
     }
 
     private void ProductListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)

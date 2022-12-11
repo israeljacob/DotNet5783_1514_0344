@@ -28,6 +28,7 @@ public partial class ProductWindow : Window
 {
     
     IBL bl = new Bl();
+    BO.Category? removedItem = null;
     public ProductWindow(object sender, int id=0)
     {
         
@@ -35,7 +36,7 @@ public partial class ProductWindow : Window
         List<BO.Category> categories = Enum.GetValues(typeof(BO.Category)).Cast<BO.Category>().ToList();
         foreach (BO.Category category in categories)
             if (category != BO.Category.all)
-                categoryBox.Items.Add(category);
+                CategoryBox.Items.Add(category);
         Button? button = sender as Button;
         if(button !=null)
             UpdateButton.Visibility = Visibility.Hidden;
@@ -52,7 +53,12 @@ public partial class ProductWindow : Window
    
     private void categoryBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        
+        if (CategoryBox.Items.Count > 0 && CategoryBox.SelectedItem != null)
+        {
+            CategoryBox.Items.Add(removedItem);
+            removedItem = (BO.Category)CategoryBox.SelectedItem;
+            CategoryBox.Items.Remove(removedItem);
+        }
     }
 
     private void id_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -170,7 +176,7 @@ public partial class ProductWindow : Window
             inStockMsg.Background = (Brush)bc.ConvertFrom("#FFFFFFFF")!;
             inStockMsg.Content = "";
         }
-        if (categoryBox.Text.ToString() == BO.Category.all.ToString() || categoryBox.Text == "")
+        if (CategoryBox.Text.ToString() == BO.Category.all.ToString() || CategoryBox.Text == "")
         {
             categoryBoxMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
             categoryBoxMsg.Content = "Enter a Category!";
@@ -195,7 +201,7 @@ public partial class ProductWindow : Window
         
          try
          {
-             bl.Product.AddProduct(id, name?.Text!, priceDouble, (BO.Category)categoryBox.SelectedItem, InStock);
+             bl.Product.AddProduct(id, name?.Text!, priceDouble, (BO.Category)CategoryBox.SelectedItem, InStock);
              new ProductListWindow().Show();
              this.Close(); 
          }
@@ -214,7 +220,7 @@ public partial class ProductWindow : Window
             UniqID = id,
             Name = name.Text,
             Price = priceDouble,
-            Category = (BO.Category)categoryBox.SelectedItem,
+            Category = (BO.Category)CategoryBox.SelectedItem,
             InStock = InStock
         };
         try
@@ -231,21 +237,4 @@ public partial class ProductWindow : Window
         this.Close();
     }
 
-    private void name_PreviewKeyDown(object sender, KeyEventArgs e)
-    {
-
-
-        // TextChanged = "name_TextChanged"
-        //if (!(System.Text.RegularExpressions.Regex.IsMatch(name.Text, "^[a-zA-Z ]")||
-        //    e.Key== Key.Delete||
-        //    e.Key == Key.Right ||
-        //    e.Key == Key.Left ||
-        //     e.Key == Key.Back||
-        //      e.Key == Key.Enter))
-        //{
-        //    MessageBox.Show("This textbox accepts only alphabetical characters");
-        //    e.Handled = true;
-        //}
-        
-    }
 }
