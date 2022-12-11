@@ -28,7 +28,6 @@ public partial class ProductListWindow : Window
     /// </summary>
     private IBL bl = new Bl();
     BO.Category removedItem = BO.Category.all;
-
     /// <summary>
     /// add the products to the list in according to combox click
     /// </summary>
@@ -42,6 +41,7 @@ public partial class ProductListWindow : Window
         }
         catch(Exception ex) { MessageBox.Show(ex.Message); }
         List<BO.Category> categories = Enum.GetValues(typeof(BO.Category)).Cast<BO.Category>().ToList();
+        categories.Remove(BO.Category.all);
         foreach (BO.Category category1 in categories)
             if (category1 != BO.Category.all)
                 CategorySelector.Items.Add(category1);
@@ -74,11 +74,9 @@ public partial class ProductListWindow : Window
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
-            string text = CategorySelector.SelectedItem.ToString();
             CategorySelector.Items.Add(removedItem);
             removedItem = (BO.Category)CategorySelector.SelectedItem;
             CategorySelector.Items.Remove(removedItem);
-            CategorySelector.Text= text;
         }
 
 

@@ -20,7 +20,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="CategorySelector" HorizontalAlignment= "Stretch"
+            <ComboBox Name="CategorySelector"  HorizontalAlignment= "Stretch"
                       VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged"/>
             <Label x:Name="ComboboxLabal" Content="Category:" FontSize="24" />
 

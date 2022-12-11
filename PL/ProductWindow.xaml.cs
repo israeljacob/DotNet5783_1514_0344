@@ -39,7 +39,7 @@ public partial class ProductWindow : Window
         List<BO.Category> categories = Enum.GetValues(typeof(BO.Category)).Cast<BO.Category>().ToList();
         foreach (BO.Category category in categories)
             if (category != BO.Category.all)
-                categoryBox.Items.Add(category);///add in to the opened list
+                CategoryBox.Items.Add(category);///add in to the opened list
         Button? button = sender as Button;
         ///to see if we press on update or add button
         if(button !=null)
@@ -110,6 +110,7 @@ public partial class ProductWindow : Window
     /// <param name="e"></param>
     private void id_PreviewKeyDown1(object sender, KeyEventArgs e)
     {
+        TextBox textBox = sender as TextBox?? null!;
         ///Only numbers with period
         if (e.Key != Key.D0 &&
             e.Key != Key.D1 &&
@@ -135,11 +136,10 @@ public partial class ProductWindow : Window
             e.Key != Key.Delete &&
             e.Key != Key.Right &&
             e.Key != Key.Left  &&
-            e.Key != Key.Decimal)
+            (e.Key != Key.Decimal || textBox!.Text.Contains(".")))
         {
             e.Handled = true;
         }
-
     }
 
     /// <summary>
@@ -197,7 +197,7 @@ public partial class ProductWindow : Window
             inStockMsg.Background = (Brush)bc.ConvertFrom("#FFFFFFFF")!;
             inStockMsg.Content = "";
         }//to see if the user chosed somthing on the combox, if not make sure the user will see it
-        if (categoryBox.Text.ToString() == BO.Category.all.ToString() || categoryBox.Text == "")
+        if (CategoryBox.Text.ToString() == BO.Category.all.ToString() || CategoryBox.Text == "")
         {
             categoryBoxMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
             categoryBoxMsg.Content = "Enter a Category!";
