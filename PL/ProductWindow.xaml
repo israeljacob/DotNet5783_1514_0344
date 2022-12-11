@@ -44,7 +44,7 @@
             VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="3"/>
         <Label Content="In Stock:" HorizontalAlignment="Left" Foreground="White" FontFamily="Sitka Small Semibold" Margin="231,0,0,0"
             VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="4"/>
-        <TextBox x:Name="name" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="2" PreviewKeyDown="name_PreviewKeyDown" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
+        <TextBox x:Name="name" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="2"  Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
         <TextBox x:Name="price" PreviewKeyDown="id_PreviewKeyDown1" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="3" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
         <TextBox x:Name="inStock"  Grid.Column="1" PreviewKeyDown="id_PreviewKeyDown" HorizontalAlignment="Left" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="4" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
         <Button x:Name="AddButton"  FontFamily="Sitka Small Semibold" Grid.Column="1" Content="ADD" HorizontalAlignment="Left" Margin="10,20,0,0" Grid.Row="5" VerticalAlignment="Top" Click="AddButton_or_UpdateButton_Click" Width="73" Height="34">
@@ -57,16 +57,16 @@
                 <RectangleGeometry RadiusX="10" RadiusY="10" Rect="1,1,70,30"/>
             </Button.Clip>
         </Button>
-        <Label x:Name="idtxtMsg" Content="" HorizontalAlignment="Left" Margin="153,40,0,0"
-            VerticalAlignment="Top" Width="223" Grid.Column="1"/>
-        <Label x:Name="categoryBoxMsg" Content="" HorizontalAlignment="Left" Margin="153,0,0,0"
-            VerticalAlignment="Center" Width="223" Grid.Column="1" Grid.Row="1"/>
-        <Label x:Name="priceMsg" Content="" HorizontalAlignment="Left" Margin="153,0,0,0"
-            VerticalAlignment="Center" Width="218" Grid.Column="1" Grid.Row="3"/>
-        <Label x:Name="inStockMsg" Content="" HorizontalAlignment="Left" Margin="153,0,0,0"
-            VerticalAlignment="Center" Width="223" Grid.Column="1" Grid.Row="4"/>
-        <Label x:Name="nameMsg" Content="" HorizontalAlignment="Left" Margin="153,0,0,0"
-            VerticalAlignment="Center" Width="218" Grid.Column="1" Grid.Row="2"/>
+        <Label x:Name="idtxtMsg" Content="Enter an integer !" Background="Red" Visibility="Hidden"
+               HorizontalAlignment="Left" Margin="153,40,0,0" VerticalAlignment="Top" Width="223" Grid.Column="1"/>
+        <Label x:Name="categoryBoxMsg" Content="Choose a Category !" Background="Red" Visibility="Hidden"
+               HorizontalAlignment="Left" Margin="153,0,0,0" VerticalAlignment="Center" Width="223" Grid.Column="1" Grid.Row="1"/>
+        <Label x:Name="priceMsg" Content="Enter a double !" Background="Red" Visibility="Hidden"
+               HorizontalAlignment="Left" Margin="153,0,0,0" VerticalAlignment="Center" Width="218" Grid.Column="1" Grid.Row="3"/>
+        <Label x:Name="inStockMsg" Content="Enter an integer !" Background="Red" Visibility="Hidden"
+               HorizontalAlignment="Left" Margin="153,0,0,0" VerticalAlignment="Center" Width="223" Grid.Column="1" Grid.Row="4"/>
+        <Label x:Name="nameMsg" Content="Enter only alphabetical characters !" Background="Red" Visibility="Hidden"
+               HorizontalAlignment="Left" Margin="153,0,0,0" VerticalAlignment="Center" Width="218" Grid.Column="1" Grid.Row="2"/>
 
         <Button x:Name="back" Content="Cancel" Grid.Row="5" 
                 HorizontalAlignment="Left" Margin="5,147,0,10" Padding="5"  FontFamily="Sitka Small Semibold" FontSize="20" Width="195" Background="#FF839ED4" Click="back_Click">

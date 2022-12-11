@@ -40,16 +40,17 @@ namespace BlImplementation
                 if (propTo != null)
                 {
                     if (propTo.GetValue(print, null) is List<BO.OrderItem?>)
-                        foreach (BO.OrderItem item in (List<BO.OrderItem>)propTo.GetValue(print,null)!)
-                        item.PrintProperties();
+                        foreach (BO.OrderItem item in (List<BO.OrderItem>)propTo.GetValue(print, null)!)
+                        {
+                            Console.Write("    ");
+                            item.PrintProperties();
+                        }
+
                     else
                         Console.WriteLine($"{propTo.Name}: {propTo.GetValue(print, null)}");
-                        
                 }
             }
-            Console.WriteLine(@"
-
-");
+            Console.WriteLine();
         }
     }
 }

@@ -57,12 +57,12 @@ public partial class ProductWindow : Window
    
     private void categoryBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (CategoryBox.Items.Count > 0 && CategoryBox.SelectedItem != null)
-        {
-            CategoryBox.Items.Add(removedItem);
-            removedItem = (BO.Category)CategoryBox.SelectedItem;
-            CategoryBox.Items.Remove(removedItem);
-        }
+        //if (CategoryBox.Items.Count > 0 && CategoryBox.SelectedItem != null)
+        //{
+        //    CategoryBox.Items.Add(removedItem);
+        //    removedItem = (BO.Category)CategoryBox.SelectedItem;
+        //    CategoryBox.Items.Remove(removedItem);
+        //}
     }
 
     /// <summary>
@@ -154,59 +154,48 @@ public partial class ProductWindow : Window
         ///to convert it to letters , if not make sure the user will see it
         if (!int.TryParse(idtxt.Text, out int id))
         {
-            idtxtMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
-            idtxtMsg.Content = "Enter a integer !";
+            idtxtMsg.Visibility = Visibility.Visible;
             flag = false;
         }
         else
         {
-            idtxtMsg.Background = (Brush)bc.ConvertFrom("#FFFFFFFF")!;
-            idtxtMsg.Content = "";
+            idtxtMsg.Visibility = Visibility.Hidden;
         }
         if (name?.Text == "" || !Regex.IsMatch(name?.Text!, "^[a-zA-Z ]"))
         {
-            nameMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
-            nameMsg.Content = "Enter only alphabetical characters";
+            nameMsg.Visibility = Visibility.Visible;
             flag = false;
         }
         else
         {
-            nameMsg.Background = (Brush)bc.ConvertFrom("#FFFFFFFF")!;
-            nameMsg.Content = "";
+           nameMsg.Visibility = Visibility.Hidden;
         }///to convert it to double, if not make sure the user will see it
         if (!double.TryParse(price.Text, out double priceDoble))
         {
-
-            priceMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
-            priceMsg.Content = "Enter a Double !";
+            priceMsg.Visibility = Visibility.Visible;
             flag = false;
         }
         else
         {
-            priceMsg.Background = (Brush)bc.ConvertFrom("#FFFFFFFF")!;
-            priceMsg.Content = "";
+            priceMsg.Visibility = Visibility.Hidden;
         }///to convert it to int, if not make sure the user will see it
         if (!int.TryParse(inStock.Text, out int InStock))
         {
-            inStockMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
-            inStockMsg.Content = "Enter a integer !";
+            inStockMsg.Visibility = Visibility.Visible;
             flag = false;
         }
         else
         {
-            inStockMsg.Background = (Brush)bc.ConvertFrom("#FFFFFFFF")!;
-            inStockMsg.Content = "";
+            inStockMsg.Visibility = Visibility.Hidden;
         }//to see if the user chosed somthing on the combox, if not make sure the user will see it
         if (CategoryBox.Text.ToString() == BO.Category.all.ToString() || CategoryBox.Text == "")
         {
-            categoryBoxMsg.Background = (Brush)bc.ConvertFrom("#DD4A48")!;
-            categoryBoxMsg.Content = "Enter a Category!";
+            idtxtMsg.Visibility = Visibility.Visible;
             flag = false;
         }
         else
         {
-            categoryBoxMsg.Background = (Brush)bc.ConvertFrom("#FFFFFFFF")!;
-            categoryBoxMsg.Content = "";
+
         }
         if (flag)
         {
@@ -269,26 +258,10 @@ public partial class ProductWindow : Window
         this.Close();
     }
 
-    private void name_PreviewKeyDown(object sender, KeyEventArgs e)
-    {
-
-
-        // TextChanged = "name_TextChanged"
-        //if (!(System.Text.RegularExpressions.Regex.IsMatch(name.Text, "^[a-zA-Z ]")||
-        //    e.Key== Key.Delete||
-        //    e.Key == Key.Right ||
-        //    e.Key == Key.Left ||
-        //     e.Key == Key.Back||
-        //      e.Key == Key.Enter))
-        //{
-        //    MessageBox.Show("This textbox accepts only alphabetical characters");
-        //    e.Handled = true;
-        //}
-        
-    }
+    
     private void back_Click(object sender, RoutedEventArgs e)
     {
-        Window win = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.ToString() == "PL.ProductListWindow");
+        Window win = Application.Current.Windows.OfType<Window>().FirstOrDefault(w => w.ToString() == "PL.ProductListWindow")!;
         if (win != null) { win.Close(); }
         new ProductListWindow().Show();
         this.Close();
