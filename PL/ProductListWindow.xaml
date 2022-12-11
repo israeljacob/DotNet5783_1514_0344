@@ -8,6 +8,12 @@
         mc:Ignorable="d"
         Title="ProductListWindow" Height="640" Width="815">
     <Grid Name="MainGrid">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="Black"/>
+                <GradientStop Color="#FF1D4A5A" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -20,23 +26,47 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="CategorySelector" HorizontalAlignment= "Stretch"
-                      VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged"/>
+            <ComboBox Name="CategorySelector" SelectionChanged="CategorySelector_SelectionChanged" Grid.ColumnSpan="2" Margin="172,10,236,0" FontFamily="Sitka Small Semibold" FontSize="20" BorderBrush="#FF6D3434" Background="#FFB70D0D" VerticalAlignment="Top">
+                <ComboBox.OpacityMask>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="#FFB71313" Offset="1"/>
+                    </LinearGradientBrush>
+                </ComboBox.OpacityMask>
+                <ComboBox.Effect>
+                    <DropShadowEffect/>
+                </ComboBox.Effect>
+            </ComboBox>
             <Label x:Name="ComboboxLabal" Content="Category:" FontSize="24" />
 
         </Grid>
-        <ListView  x:Name="ProductListview" Grid.Row="1" MouseDoubleClick="ProductListview_MouseDoubleClick" >
+        <ListView  x:Name="ProductListview" Background="#FF827E79" FontSize="20" MouseDoubleClick="ProductListview_MouseDoubleClick" d:ItemsSource="{d:SampleData ItemCount=5}" Foreground="Black" FontFamily="Sitka Small Semibold" Margin="132,32,131,10" Grid.RowSpan="2" Grid.Row="1" >
             <ListView.View>
-            <GridView >
-                <GridViewColumn Header="Product Id" Width="auto" DisplayMemberBinding="{Binding UniqID}"></GridViewColumn>
-                <GridViewColumn Header="Category" Width="auto" DisplayMemberBinding="{Binding Category}"></GridViewColumn>
-                <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
-                <GridViewColumn Header="Price" Width="auto" DisplayMemberBinding="{Binding Price}"></GridViewColumn>
+                <GridView>
+                    <GridViewColumn Header="Product Id" Width="auto" DisplayMemberBinding="{Binding UniqID}"></GridViewColumn>
+                    <GridViewColumn Header="Category" Width="auto" DisplayMemberBinding="{Binding Category}"></GridViewColumn>
+                    <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{Binding Name}"></GridViewColumn>
+                    <GridViewColumn Header="Price" Width="auto" DisplayMemberBinding="{Binding Price}"></GridViewColumn>
+
                 </GridView>
+
             </ListView.View>
+            <ListView.Clip>
+                <RectangleGeometry RadiusX="10" RadiusY="10" Rect="2,2,500,480"/>
+            </ListView.Clip>
         </ListView>
 
         <Button x:Name="AddProduct" Content="Add new product" Grid.Row="2" 
-                HorizontalAlignment="Left" Margin="691,5,0,0" Padding="5" Click="AddProdct_Click"/>
+                HorizontalAlignment="Left" Margin="601,10,0,-5" Padding="5" Click="AddProdct_Click" FontFamily="Sitka Small Semibold" FontSize="20" Width="195" Background="#FF839ED4">
+            <Button.Clip>
+                <RectangleGeometry RadiusX="10" RadiusY="10" Rect="2,2,190,25"/>
+            </Button.Clip>
+        </Button>
+        <Button x:Name="back" Content="back" Grid.Row="2" 
+                HorizontalAlignment="Left" Margin="18,10,0,-5" Padding="5"  FontFamily="Sitka Small Semibold" FontSize="20" Width="195" Background="#FF839ED4" Click="back_Click">
+            <Button.Clip>
+                <RectangleGeometry RadiusX="10" RadiusY="10" Rect="2,2,190,25"/>
+            </Button.Clip>
+        </Button>
     </Grid>
 </Window>

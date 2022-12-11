@@ -105,5 +105,9 @@ public partial class ProductListWindow : Window
          if (ourProduct != null) { new ProductWindow(sender,ourProduct.UniqID).Show();}
     }
 
-   
+    private void back_Click(object sender, RoutedEventArgs e)
+    {
+        new MainWindow().Show();
+        this.Close();
+    }
 }

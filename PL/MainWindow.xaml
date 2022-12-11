@@ -7,7 +7,16 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="Admin" Content="Admin" HorizontalAlignment="Center" VerticalAlignment="Center" Height="106" Width="256" Click="Admin_Click" FontSize="24"/>
+        <Grid.Background>
+            <ImageBrush ImageSource="/Best-Affordable-Clothing-Stores-MAINIMAGE.jpg" Stretch="None"/>
+        </Grid.Background>
+        <Button x:Name="Admin" Content="Admin" HorizontalAlignment="Left" VerticalAlignment="Center" Height="78" Width="256" Click="Admin_Click" FontSize="24" Margin="268,0,0,0" FontFamily="Sitka Small Semibold" Background="#FF2D2D2D" Foreground="White">
+            <Button.Clip>
+                <RectangleGeometry RadiusX="10" RadiusY="10" Rect="1,1,250,70"/>
+            </Button.Clip>
+        </Button>
+        <Image Source="/admin.png" Margin="212,180,530,180"/>
+        <Image Height="100" Margin="90,16,58,318" Source="/cooltext425292820321232.png" OpacityMask="#FF9C9292"/>
 
     </Grid>
 </Window>
