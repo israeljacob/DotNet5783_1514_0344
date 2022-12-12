@@ -17,7 +17,7 @@ public class mainProgram
     static void Main(string[] args)
     {
         //dl obj initial
-        IBL bl = new Bl();
+        IBL bl = BLApi.Factory.Get;
         //BO obj initial
         BO.Product product = new BO.Product();
         BO.Order order = new BO.Order();

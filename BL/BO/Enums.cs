@@ -16,10 +16,16 @@ public enum Category
     shoes,//נעלים
     coats,//מעילים
     sweaters,//סוודרים
-    all
-
 }
-
+public enum CategoryForComboBox
+{
+    Shirts = 1,//חולצות
+    trousers,//מכנסיים
+    shoes,//נעלים
+    coats,//מעילים
+    sweaters,//סוודרים
+    all
+}
 public enum StatusOfOrder
 {
     Orderred=1,

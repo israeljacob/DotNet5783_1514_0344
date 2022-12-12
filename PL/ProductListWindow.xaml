@@ -40,7 +40,8 @@
             <Label x:Name="ComboboxLabal" Content="Category:" FontSize="24" />
 
         </Grid>
-        <ListView  x:Name="ProductListview" Background="#FF827E79" FontSize="20" MouseDoubleClick="ProductListview_MouseDoubleClick" d:ItemsSource="{d:SampleData ItemCount=5}" Foreground="Black" FontFamily="Sitka Small Semibold" Margin="132,32,131,10" Grid.RowSpan="2" Grid.Row="1" >
+        <ListView  x:Name="ProductListView1" Background="#FF827E79" FontSize="20" MouseDoubleClick="ProductListview_MouseDoubleClick"
+                   d:ItemsSource="{d:SampleData ItemCount=5}" Foreground="Black" FontFamily="Sitka Small Semibold" Margin="132,32,131,10" Grid.RowSpan="2" Grid.Row="1" SelectionChanged="change">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Product Id" Width="auto" DisplayMemberBinding="{Binding UniqID}"></GridViewColumn>

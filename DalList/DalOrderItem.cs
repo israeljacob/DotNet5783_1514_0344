@@ -51,7 +51,7 @@ internal class DalOrderItem:IOrderItem
     /// </summary>
     /// <returns>An array that refers to all the order items.</returns>
     /// <exception cref="Exception"></exception>
-    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? func = null)
+    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? func)
     {
         // If there is no orders.
         if (dataSource.orderItems.Count == 0)

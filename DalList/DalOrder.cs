@@ -53,7 +53,7 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <returns>An array that refers to all the order.</returns>
     /// <exception cref="DoesNotExistsException"></exception>
-    public IEnumerable<DO.Order?> GetAll(Func<DO.Order?, bool>? func = null)
+    public IEnumerable<DO.Order?> GetAll(Func<DO.Order?, bool>? func)
     {
         // If there is no orders.
         if (dataSource.orders.Count == 0)

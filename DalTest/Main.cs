@@ -10,7 +10,7 @@ public class mainProgram
     static void Main(string[] args)
     {
         //dal obj initial
-        IDal dalList = DalList.Instance;
+        IDal dalList = Factory.Get()!;
 
         //DO obj initial
         Product product = new Product();
