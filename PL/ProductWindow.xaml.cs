@@ -277,6 +277,9 @@ public partial class ProductWindow : Window
     
     private void back_Click(object sender, RoutedEventArgs e)
     {
+         Window win = Application.Current.Windows.OfType<Window>().Single(w => w.ToString() == "PL.ProductListWindow");
+        if (win != null) { win.Close(); }
+       
         new ProductListWindow().Show();
         this.Close();
     }

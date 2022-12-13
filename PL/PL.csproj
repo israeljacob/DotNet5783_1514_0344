@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <None Remove="admin.png" />
+    <None Remove="Best-Affordable-Clothing-Stores-MAINIMAGE - Copy.jpg" />
     <None Remove="Best-Affordable-Clothing-Stores-MAINIMAGE.jpg" />
     <None Remove="Cool Text - Your fashion in one place 425292710568804.png" />
     <None Remove="cooltext425292820321232.png" />
@@ -29,6 +30,7 @@
     <Resource Include="admin.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Best-Affordable-Clothing-Stores-MAINIMAGE - Copy.jpg" />
     <Resource Include="Best-Affordable-Clothing-Stores-MAINIMAGE.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
