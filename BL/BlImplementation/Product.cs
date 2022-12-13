@@ -153,9 +153,9 @@ namespace BlImplementation
             {
                 dal.Product.Update(new DO.Product
                 {
-                    UniqID = (product.UniqID <= 0)? product.UniqID : throw new BO.InCorrectDetailsException("Product ID", product.UniqID),
+                    UniqID = (product.UniqID >= 0)? product.UniqID : throw new BO.InCorrectDetailsException("Product ID", product.UniqID),
                     Name = product.Name ?? throw new BO.MissingDataException("Product name"),
-                    Price = (product.Price <=0)? product.Price : throw new BO.InCorrectDetailsException("Product price", product.Price),
+                    Price = (product.Price >0)? product.Price : throw new BO.InCorrectDetailsException("Product price", product.Price),
                     Category = product.Category != null? (DO.Category)product.Category : throw new BO.MissingDataException("Product category"),
                     InStock = (product.InStock >= 0)? product.InStock : throw new BO.InCorrectDetailsException("Product in stock", product.InStock)
             });
