@@ -81,8 +81,12 @@ public partial class ProductListWindow : Window
     /// <param name="e"></param>
     private void AddProdct_Click(object sender, RoutedEventArgs e)
     {
-       new ProductWindow(sender).Show();
-       this.Close();
+       new ProductWindow(sender).ShowDialog();
+        try
+        {
+            ProductListview.ItemsSource = bl.Product.GetListOfProducts();
+        }
+        catch (Exception ex) { MessageBox.Show(ex.Message); }
     }
 
     /// <summary>
@@ -93,7 +97,15 @@ public partial class ProductListWindow : Window
     private void ProductListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
         BO.ProductForList ourProduct = (BO.ProductForList)ProductListview.SelectedItem;
-         if (ourProduct != null) { new ProductWindow(sender,ourProduct.UniqID).Show();}
+         if (ourProduct != null)
+        {
+            new ProductWindow(sender,ourProduct.UniqID).ShowDialog();
+            try
+            {
+                ProductListview.ItemsSource = bl.Product.GetListOfProducts();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
     }
 
     private void back_Click(object sender, RoutedEventArgs e)

@@ -104,16 +104,6 @@ namespace BlImplementation
         /// <exception cref="AggregateException"></exception>
         public void AddProduct(int ID, string name, double price, BO.Category category, int inStock)
         {
-            Product product = new Product();
-
-            if (ID <= 0)
-                throw new BO.InCorrectDetailsException("product ID", ID);
-            if (name == null)
-                throw new BO.MissingDataException("product name");
-            if (price <= 0)
-                throw new BO.InCorrectDetailsException("product price", price);
-            if (inStock < 0)
-                throw new BO.InCorrectDetailsException("product in stock", inStock);
             try
             {
                 int returnedID = dalList.Product.Add(new DO.Product
@@ -161,18 +151,6 @@ namespace BlImplementation
         /// <exception cref="AggregateException"></exception>
         public void UpdateProduct(BO.Product product)
         {
-
-
-            if (product.UniqID <= 0)
-                throw new BO.InCorrectDetailsException("Product ID", product.UniqID);
-            if (product.Name == null)
-                throw new BO.MissingDataException("Product name");
-            if (product.Price <= 0)
-                throw new BO.InCorrectDetailsException("Product price",product.Price);
-            if (product.Category == null)
-                throw new BO.MissingDataException("Product category");
-            if (product.InStock < 0)
-                throw new BO.InCorrectDetailsException("Product in stock", product.InStock);
             try
             {
                 dalList.Product.Update(new DO.Product
@@ -190,7 +168,5 @@ namespace BlImplementation
             }
 
         }
-
-       
     }
 }
