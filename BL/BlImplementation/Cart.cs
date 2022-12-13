@@ -28,7 +28,7 @@ namespace BlImplementation
                 {
                     try
                     {
-                        if (dalList.Product.Get(productID).InStock == 0)
+                        if (dal?.Product.Get(productID).InStock == 0)
                             throw new BO.InCorrectDetailsException("Cart ID", productID);
                     }
                     catch (DO.DoesNotExistException ex)
@@ -47,7 +47,7 @@ namespace BlImplementation
 
             
             DO.Product product = new DO.Product();//connect between the product to id
-            try { product = dalList.Product.Get(productID); }
+            try { product = dal!.Product.Get(productID); }
             catch (DO.DoesNotExistException ex)
             {
                 throw new BO.CatchetDOException(ex);
@@ -118,8 +118,8 @@ namespace BlImplementation
             {
                 try
                 {
-                    dalList.Product.Get(orderItem!.ProductID);  //find the product
-                    if (dalList.Product.Get(orderItem.ProductID).InStock < orderItem.Amount) //if the order amount is large then in the product stock
+                    dal?.Product.Get(orderItem!.ProductID);  //find the product
+                    if (dal?.Product.Get(orderItem!.ProductID).InStock < orderItem!.Amount) //if the order amount is large then in the product stock
                         throw new BO.missingItemsException( orderItem.ProductID , orderItem.Amount);
                 }
                 catch (DO.DoesNotExistException ex)
@@ -143,7 +143,7 @@ namespace BlImplementation
                 ShipDate = DateTime.MinValue,
                 DeliveryrDate = DateTime.MinValue,
             };
-            order.UniqID = dalList.Order.Add(new DO.Order //add it to dal
+            order.UniqID = dal!.Order.Add(new DO.Order //add it to dal
             {
                 UniqID = 0,
                 CustomerAdress = order.CustomerAdress,
@@ -157,14 +157,14 @@ namespace BlImplementation
             {
                 try
                 {
-                    DO.Product product = dalList.Product.Get(orderItem1!.ProductID); //add to Bo
+                    DO.Product product = dal!.Product.Get(orderItem1!.ProductID); //add to Bo
                     product.InStock -= orderItem1.Amount;
-                    dalList.Product.Update(product);
+                    dal!.Product.Update(product);
                 }
                 catch(DO.DoesNotExistException ex) { throw new BO.CatchetDOException(ex); }
                
 
-                dalList.OrderItem.Add(new DO.OrderItem
+                dal!.OrderItem.Add(new DO.OrderItem
                 {
                     UniqID = 0,
                     ProductID = orderItem1.ProductID,
