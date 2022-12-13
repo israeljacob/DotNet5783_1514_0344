@@ -289,6 +289,7 @@ public partial class ProductWindow : Window
     private void back_Click(object sender, RoutedEventArgs e)
     {
         this.Close();
+
     }
 
     
