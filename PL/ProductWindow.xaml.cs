@@ -282,6 +282,7 @@ public partial class ProductWindow : Window
        
         new ProductListWindow().Show();
         this.Close();
+
     }
 
     
