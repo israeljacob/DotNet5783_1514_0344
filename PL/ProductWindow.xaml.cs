@@ -30,7 +30,6 @@ public partial class ProductWindow : Window
     /// show of only one bl
     /// </summary>
     IBL bl = new Bl();
-    BO.Category? removedItem = null;
     public ProductWindow(object sender, int id=0)
     {
         
@@ -250,7 +249,6 @@ public partial class ProductWindow : Window
          try
          {
              bl.Product.AddProduct(id, name?.Text!, priceDouble, (BO.Category)CategoryBox.SelectedItem, InStock);
-             new ProductListWindow().Show();
              this.Close(); 
          }
          catch (Exception ex)
@@ -284,19 +282,12 @@ public partial class ProductWindow : Window
         {
             MessageBox.Show(ex.Message);
         }
-        Window win = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.Name == "productListWindow")!;
-        if (win != null) { win.Close(); }
-        new ProductListWindow().Show();
         this.Close();
     }
 
     
     private void back_Click(object sender, RoutedEventArgs e)
     {
-         Window win = Application.Current.Windows.OfType<Window>().Single(w => w.ToString() == "PL.ProductListWindow");
-        if (win != null) { win.Close(); }
-       
-        new ProductListWindow().Show();
         this.Close();
     }
 
