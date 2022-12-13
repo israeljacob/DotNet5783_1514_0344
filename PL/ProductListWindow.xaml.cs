@@ -111,8 +111,4 @@ public partial class ProductListWindow : Window
         this.Close();
     }
 
-    private void change(object sender, SelectionChangedEventArgs e)
-    {
-
-    }
 }

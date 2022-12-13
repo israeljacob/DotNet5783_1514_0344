@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace BLApi
 {
+
     public static class Factory
     {
         static IBL bl = new Bl();

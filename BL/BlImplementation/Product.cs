@@ -106,11 +106,11 @@ namespace BlImplementation
             {
                 int returnedID = dal.Product.Add(new DO.Product
                 {
-                    UniqID = (ID <=0)? ID : throw new BO.InCorrectDetailsException("product ID", ID),
+                    UniqID = (ID >=0)? ID : throw new BO.InCorrectDetailsException("product ID", ID),
                     Name = name?? throw new BO.MissingDataException("product name"),
-                    Price = (price <= 0) ? price : throw new BO.InCorrectDetailsException("product price", price),
+                    Price = (price >= 0) ? price : throw new BO.InCorrectDetailsException("product price", price),
                     Category = (DO.Category)category,
-                    InStock = (inStock < 0)? inStock : throw new BO.InCorrectDetailsException("product in stock", inStock)
+                    InStock = (inStock > 0)? inStock : throw new BO.InCorrectDetailsException("product in stock", inStock)
                 });
             }
             catch (DO.IdAlreadyExistException ex)

@@ -10,6 +10,7 @@ namespace BlImplementation
     internal class Cart : ICart
     {
         DalApi.IDal? dal = DalApi.Factory.Get();
+
         /// <summary>
         /// Add to cart by Id and the corrent cart
         /// </summary>
