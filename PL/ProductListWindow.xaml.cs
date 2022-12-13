@@ -26,8 +26,7 @@ public partial class ProductListWindow : Window
     /// <summary>
     /// show of only one bl
     /// </summary>
-    BLApi.IBL? bl = BLApi.Factory.Get;
-
+    private IBL bl = new Bl();
     /// <summary>
     /// add the products to the list in according to combox click
     /// </summary>
@@ -37,10 +36,10 @@ public partial class ProductListWindow : Window
         InitializeComponent();
         try
         {
-            ProductListView1.ItemsSource = bl.Product.GetListOfProducts();
+            ProductListview.ItemsSource = bl.Product.GetListOfProducts();
         }
         catch(Exception ex) { MessageBox.Show(ex.Message); }
-        CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.CategoryForComboBox));
+        CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
     }
     
     /// <summary>
@@ -52,23 +51,27 @@ public partial class ProductListWindow : Window
     {
         ComboBox comboBox = sender as ComboBox ?? null!;
         ///if we select somthing
-        if ((BO.CategoryForComboBox)CategorySelector.SelectedItem == BO.CategoryForComboBox.all)
+       if(CategorySelector.SelectedItem!=null)
         {
-            try
+            if ((BO.Category)CategorySelector.SelectedItem == BO.Category.all)
             {
-                ProductListView1.ItemsSource = bl?.Product.GetListOfProducts();
+                try
+                {
+                    ProductListview.ItemsSource = bl.Product.GetListOfProducts();
+                }
+                catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-        }
-        else
-        {
-            Func<BO.ProductForList?, bool> func = product => product?.Category == (BO.Category)CategorySelector.SelectedItem;
-            try
+            else
             {
-                ProductListView1.ItemsSource = bl?.Product.GetListOfProducts(func);
+                Func<BO.ProductForList?, bool> func = product => product?.Category == (BO.Category)CategorySelector.SelectedItem;
+                try
+                {
+                    ProductListview.ItemsSource = bl.Product.GetListOfProducts(func);
+                }
+                catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
+        
     }
 
     /// <summary>
@@ -78,12 +81,8 @@ public partial class ProductListWindow : Window
     /// <param name="e"></param>
     private void AddProdct_Click(object sender, RoutedEventArgs e)
     {
-        new ProductWindow(sender).ShowDialog();
-        try
-        {
-            ProductListView1.ItemsSource = bl?.Product.GetListOfProducts();
-        }
-        catch (Exception ex) { MessageBox.Show(ex.Message); }
+       new ProductWindow(sender).Show();
+       this.Close();
     }
 
     /// <summary>
@@ -93,16 +92,8 @@ public partial class ProductListWindow : Window
     /// <param name="e"></param>
     private void ProductListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        BO.ProductForList ourProduct = (BO.ProductForList)ProductListView1.SelectedItem;
-        if (ourProduct != null)
-        { 
-            new ProductWindow(sender,ourProduct.UniqID).ShowDialog();
-            try
-            {
-                ProductListView1.ItemsSource = bl?.Product.GetListOfProducts();
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-        }
+        BO.ProductForList ourProduct = (BO.ProductForList)ProductListview.SelectedItem;
+         if (ourProduct != null) { new ProductWindow(sender,ourProduct.UniqID).Show();}
     }
 
     private void back_Click(object sender, RoutedEventArgs e)

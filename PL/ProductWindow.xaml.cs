@@ -1,4 +1,6 @@
-﻿using DocumentFormat.OpenXml.Office2010.Excel;
+﻿using BLApi;
+using BlImplementation;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,13 +29,17 @@ public partial class ProductWindow : Window
     /// <summary>
     /// show of only one bl
     /// </summary>
-    BLApi.IBL? bl = BLApi.Factory.Get;
+    IBL bl = new Bl();
+    BO.Category? removedItem = null;
     public ProductWindow(object sender, int id=0)
     {
         
         InitializeComponent();
         ///get the enums to combobox
-        CategoryBox.ItemsSource = Enum.GetValues(typeof(BO.Category));///add in to the opened list
+        List<BO.Category> categories = Enum.GetValues(typeof(BO.Category)).Cast<BO.Category>().ToList();
+        foreach (BO.Category category in categories)
+            if (category != BO.Category.all)
+                CategoryBox.Items.Add(category);///add in to the opened list
         Button? button = sender as Button;
         ///to see if we press on update or add button
         if(button !=null)
@@ -49,6 +55,11 @@ public partial class ProductWindow : Window
 
     }
    
+    private void categoryBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        
+    }
+
     /// <summary>
     /// check evrey type of the user and make sure only numbers will take place in the box
     /// </summary>
@@ -56,35 +67,36 @@ public partial class ProductWindow : Window
     /// <param name="e"></param>
     private void id_PreviewKeyDown(object sender, KeyEventArgs e)
     {
-        TextBox textBox = sender as TextBox ?? null!;
         ///Only numbers..
-        if (e.Key != Key.D0 &&
-            e.Key != Key.D1 &&
+        if( e.Key != Key.D0 && 
+            e.Key != Key.D1 && 
             e.Key != Key.D2 &&
-            e.Key != Key.D3 &&
+            e.Key != Key.D3 && 
             e.Key != Key.D4 &&
             e.Key != Key.D5 &&
             e.Key != Key.D6 &&
-            e.Key != Key.D7 &&
+            e.Key != Key.D7 && 
             e.Key != Key.D8 &&
-            e.Key != Key.D9 &&
-            e.Key != Key.Back &&
-            e.Key != Key.NumPad0 &&
-            e.Key != Key.NumPad1 &&
-            e.Key != Key.NumPad2 &&
-            e.Key != Key.NumPad3 &&
-            e.Key != Key.NumPad4 &&
-            e.Key != Key.NumPad5 &&
-            e.Key != Key.NumPad6 &&
-            e.Key != Key.NumPad7 &&
-            e.Key != Key.NumPad8 &&
-            e.Key != Key.NumPad9 &&
-            e.Key != Key.Delete &&
-            e.Key != Key.Right &&
+            e.Key != Key.D9 && 
+            e.Key != Key.Back && 
+            e.Key != Key.NumPad0 && 
+            e.Key != Key.NumPad1 && 
+            e.Key != Key.NumPad2 && 
+            e.Key != Key.NumPad3 && 
+            e.Key != Key.NumPad4 && 
+            e.Key != Key.NumPad5 && 
+            e.Key != Key.NumPad6 && 
+            e.Key != Key.NumPad7 && 
+            e.Key != Key.NumPad8 && 
+            e.Key != Key.NumPad9 && 
+            e.Key != Key.Delete && 
+            e.Key != Key.Right && 
             e.Key != Key.Left)
         {
             e.Handled = true;
+            
         }
+
     }
     /// <summary>
     /// check evrey type of the user and make sure only numbers and dote (for the price) will take place in the box
@@ -208,14 +220,14 @@ public partial class ProductWindow : Window
         {
             inStockMsg.Visibility = Visibility.Hidden;
         }//to see if the user chosed somthing on the combox, if not make sure the user will see it
-        if ( CategoryBox.Text == "")
+        if (CategoryBox.Text.ToString() == BO.Category.all.ToString() || CategoryBox.Text == "")
         {
-            categoryBoxMsg.Visibility = Visibility.Visible;
+            idtxtMsg.Visibility = Visibility.Visible;
             flag = false;
         }
         else
         {
-            categoryBoxMsg.Visibility = Visibility.Hidden;
+
         }
         if (flag)
         {
@@ -237,7 +249,8 @@ public partial class ProductWindow : Window
         
          try
          {
-             bl?.Product.AddProduct(id, name?.Text!, priceDouble, (BO.Category)CategoryBox.SelectedItem, InStock);
+             bl.Product.AddProduct(id, name?.Text!, priceDouble, (BO.Category)CategoryBox.SelectedItem, InStock);
+             new ProductListWindow().Show();
              this.Close(); 
          }
          catch (Exception ex)
@@ -265,12 +278,15 @@ public partial class ProductWindow : Window
         };
         try
         {
-            bl?.Product.UpdateProduct(product);
+            bl.Product.UpdateProduct(product);
         }
         catch(Exception ex)
         {
             MessageBox.Show(ex.Message);
         }
+        Window win = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.Name == "productListWindow")!;
+        if (win != null) { win.Close(); }
+        new ProductListWindow().Show();
         this.Close();
     }
 

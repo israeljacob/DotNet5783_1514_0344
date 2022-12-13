@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Dal
 {
-    sealed internal class DalList : IDal //
+    sealed public class DalList : IDal //
     {
         static readonly Lazy<DalList> lazy = new Lazy<DalList>(() => new DalList());
         public static DalList Instance => lazy.Value;

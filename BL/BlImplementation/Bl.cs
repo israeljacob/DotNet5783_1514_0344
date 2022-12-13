@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BLApi;
+using DalApi;
 
 namespace BlImplementation
 {
     /// <summary>
     /// Ibl entites
     /// </summary>
-        sealed internal class Bl : IBL
+        sealed public class Bl : IBL
         {
             public BLApi.IProduct Product => new Product();
             public BLApi.IOrder Order => new Order();

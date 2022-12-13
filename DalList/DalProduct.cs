@@ -53,7 +53,7 @@ internal class DalProduct:IProduct
     /// </summary>
     /// <returns>array that refers to all the product.</returns>
     /// <exception cref="Exception"></exception>
-    public IEnumerable<Product?> GetAll( Func<Product?, bool>? func)
+    public IEnumerable<Product?> GetAll( Func<Product?, bool>? func = null)
     {
         if (dataSource.products?.Count == 0)// If there is no orders.
             throw new EmptyException("product");

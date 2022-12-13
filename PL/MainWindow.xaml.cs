@@ -13,26 +13,27 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PL;
-
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
-public partial class MainWindow : Window
+namespace PL
 {
-    public MainWindow()
-    {
-        InitializeComponent();
-    }
     /// <summary>
-    /// if the user preesed the admin button
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void Admin_Click(object sender, RoutedEventArgs e)
+    public partial class MainWindow : Window
     {
-        ///show the list of all the products
-       new ProductListWindow().Show();
-        this.Close();
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+        /// <summary>
+        /// if the user preesed the admin button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Admin_Click(object sender, RoutedEventArgs e)
+        {
+            ///show the list of all the products
+           new ProductListWindow().Show();
+            this.Close();
+        }
     }
 }
