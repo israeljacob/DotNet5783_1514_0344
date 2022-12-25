@@ -12,7 +12,7 @@ public static class Factory
             ?? throw new DalConfigException($"DAL name is not extracted from the configuration");
         string dal = s_dalPackages[dalType]
            ?? throw new DalConfigException($"Package for {dalType} is not found in packages list");
-
+        Console.WriteLine(dal) ;
         try
         {
             Assembly.Load(dal ?? throw new DalConfigException($"Package {dal} is null"));

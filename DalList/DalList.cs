@@ -12,9 +12,14 @@ namespace Dal
         static readonly Lazy<DalList> lazy = new Lazy<DalList>(() => new DalList());
         public static DalList Instance => lazy.Value;
 
-        private DalList() { }
-        public IOrder Order => new DalOrder();
-        public IProduct Product => new DalProduct();
-        public IOrderItem OrderItem => new DalOrderItem();
+        private DalList() 
+        {
+            Order = new DalOrder();
+            Product= new DalProduct();
+            OrderItem= new DalOrderItem();
+        }
+        public IOrder Order { get; }
+        public IProduct Product { get; }
+        public IOrderItem OrderItem { get; }
     }
 }

@@ -4,17 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BLApi;
-using DalApi;
 
-namespace BlImplementation
+namespace BlImplementation;
+#region BL
+/// <summary>
+/// Ibl entites
+/// </summary>
+sealed internal class Bl : IBL
 {
-    /// <summary>
-    /// Ibl entites
-    /// </summary>
-        sealed public class Bl : IBL
-        {
-            public BLApi.IProduct Product => new Product();
-            public BLApi.IOrder Order => new Order();
-            public BLApi.ICart Cart => new Cart();
-        }
+    public Bl()
+    {
+        Product = new Product();
+        Order = new Order();
+        Cart = new Cart();
+    }
+    public IProduct Product { get; }
+    public IOrder Order { get; }
+    public  ICart Cart {get; }
 }
+#endregion

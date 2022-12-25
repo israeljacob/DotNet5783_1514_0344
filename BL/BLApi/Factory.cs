@@ -5,24 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLApi
+namespace BLApi;
+#region BL Factory
+/// <summary>
+/// The class that PL calls in order to use the BL layer
+/// </summary>
+public class Factory
 {
-
-    public static class Factory
-    {
-        static IBL bl = new Bl();
-        public static IBL Get
-        {
-            get {return bl; }
-
-
-
-
-
-
-            /////
-        }
-
-
-    }
+    public static IBL Get = new Bl();
 }
+#endregion

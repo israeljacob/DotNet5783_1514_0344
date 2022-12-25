@@ -1,6 +1,4 @@
-﻿using BLApi;
-using BlImplementation;
-using DocumentFormat.OpenXml.Office2010.Excel;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +27,7 @@ public partial class ProductWindow : Window
     /// <summary>
     /// show of only one bl
     /// </summary>
-    IBL bl = new Bl();
+    BLApi.IBL bl = BLApi.Factory.Get;
     public ProductWindow(object sender, int id=0)
     {
         
@@ -53,125 +51,44 @@ public partial class ProductWindow : Window
         }
 
     }
-   
-    private void categoryBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        
-    }
 
+    private void bottun_PreviewKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key == Key.Tab)
+        {
+            TextBox? textBox = sender as TextBox;
+            if(textBox?.Name=="Name")
+                price.IsEnabled= true;
+            else if(textBox?.Name == "Price")
+                inStock.IsEnabled = true;
+        }
+    }
     /// <summary>
     /// check evrey type of the user and make sure only numbers will take place in the box
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void id_PreviewKeyDown(object sender, KeyEventArgs e)
+    private void int_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
         ///Only numbers..
-        if( e.Key != Key.D0 && 
-            e.Key != Key.D1 && 
-            e.Key != Key.D2 &&
-            e.Key != Key.D3 && 
-            e.Key != Key.D4 &&
-            e.Key != Key.D5 &&
-            e.Key != Key.D6 &&
-            e.Key != Key.D7 && 
-            e.Key != Key.D8 &&
-            e.Key != Key.D9 && 
-            e.Key != Key.Back && 
-            e.Key != Key.NumPad0 && 
-            e.Key != Key.NumPad1 && 
-            e.Key != Key.NumPad2 && 
-            e.Key != Key.NumPad3 && 
-            e.Key != Key.NumPad4 && 
-            e.Key != Key.NumPad5 && 
-            e.Key != Key.NumPad6 && 
-            e.Key != Key.NumPad7 && 
-            e.Key != Key.NumPad8 && 
-            e.Key != Key.NumPad9 && 
-            e.Key != Key.Delete && 
-            e.Key != Key.Right && 
-            e.Key != Key.Left)
-        {
-            e.Handled = true;
-            
-        }
-
+        Regex regex = new("^[0-9]+");
+        e.Handled= !regex.IsMatch(e.Text);
     }
     /// <summary>
     /// check evrey type of the user and make sure only numbers and dote (for the price) will take place in the box
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void id_PreviewKeyDown1(object sender, KeyEventArgs e)
+    private void double_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
-        TextBox textBox = sender as TextBox ?? null!;
         ///Only numbers with period
-        if (e.Key != Key.D0 &&
-            e.Key != Key.D1 &&
-            e.Key != Key.D2 &&
-            e.Key != Key.D3 &&
-            e.Key != Key.D4 &&
-            e.Key != Key.D5 &&
-            e.Key != Key.D6 &&
-            e.Key != Key.D7 &&
-            e.Key != Key.D8 &&
-            e.Key != Key.D9 &&
-            e.Key != Key.Back &&
-            e.Key != Key.NumPad0 &&
-            e.Key != Key.NumPad1 &&
-            e.Key != Key.NumPad2 &&
-            e.Key != Key.NumPad3 &&
-            e.Key != Key.NumPad4 &&
-            e.Key != Key.NumPad5 &&
-            e.Key != Key.NumPad6 &&
-            e.Key != Key.NumPad7 &&
-            e.Key != Key.NumPad8 &&
-            e.Key != Key.NumPad9 &&
-            e.Key != Key.Delete &&
-            e.Key != Key.Right &&
-            e.Key != Key.Left &&
-            (e.Key != Key.Decimal || textBox!.Text.Contains(".")))
-        {
-            e.Handled = true;
-        }
+        Regex regex = new("^[0-9.]+");
+        e.Handled = !regex.IsMatch(e.Text);
     }
-    private void name_PreviewKeyDown(object sender, KeyEventArgs e)
+    private void name_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
-        if (e.Key != Key.A &&
-            e.Key != Key.B &&
-            e.Key != Key.C &&
-            e.Key != Key.D &&
-            e.Key != Key.E &&
-            e.Key != Key.F &&
-            e.Key != Key.G &&
-            e.Key != Key.H &&
-            e.Key != Key.I &&
-            e.Key != Key.J &&
-            e.Key != Key.K &&
-            e.Key != Key.L &&
-            e.Key != Key.M &&
-            e.Key != Key.N &&
-            e.Key != Key.P &&
-            e.Key != Key.Q &&
-            e.Key != Key.R &&
-            e.Key != Key.S &&
-            e.Key != Key.T &&
-            e.Key != Key.U &&
-            e.Key != Key.V &&
-            e.Key != Key.W &&
-            e.Key != Key.X &&
-            e.Key != Key.Y &&
-            e.Key != Key.Z &&
-            e.Key != Key.Back &&
-            e.Key != Key.Delete &&
-            e.Key != Key.Right &&
-            e.Key != Key.Left &&
-            e.Key != Key.Space &&
-            e.Key != Key.LeftShift &&
-            e.Key != Key.RightShift)
-        {
-            e.Handled = true;
-        }
+        Regex regex = new("^[A-Z,a-z]+[0-9]*");
+        e.Handled = !regex.IsMatch(e.Text);
     }
     /// <summary>
     /// one function to see if we press "add" or "update" button
@@ -284,15 +201,10 @@ public partial class ProductWindow : Window
         }
         this.Close();
     }
-
-    
     private void back_Click(object sender, RoutedEventArgs e)
     {
         this.Close();
-
     }
-
-    
 }
 
 

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dal;
 using DalApi;
 using DocumentFormat.OpenXml.Wordprocessing;
 using BO;
@@ -17,7 +16,7 @@ public class mainProgram
     static void Main(string[] args)
     {
         //dl obj initial
-        IBL bl = new Bl();
+        BLApi.IBL bl = BLApi.Factory.Get;
         //BO obj initial
         BO.Product product = new BO.Product();
         BO.Order order = new BO.Order();

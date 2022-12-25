@@ -1,5 +1,4 @@
-﻿using BLApi;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +25,7 @@ public partial class ProductListWindow : Window
     /// <summary>
     /// show of only one bl
     /// </summary>
-    private IBL bl = new Bl();
+    BLApi.IBL bl = BLApi.Factory.Get;
     /// <summary>
     /// add the products to the list in according to combox click
     /// </summary>
@@ -113,5 +112,4 @@ public partial class ProductListWindow : Window
         new MainWindow().Show();
         this.Close();
     }
-
 }
