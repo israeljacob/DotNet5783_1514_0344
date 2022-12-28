@@ -11,6 +11,7 @@ namespace BlImplementation
         /// </summary>
         DalApi.IDal dal = DalApi.Factory.Get()!;
 
+        #region Get list of products
         /// <summary>
         /// Returns all the products.
         /// </summary>
@@ -32,11 +33,14 @@ namespace BlImplementation
                 else
                     return from product in GetListOfProducts()
                            where func(product)
+                           orderby product.UniqID
                            select product;
             }
             catch (DO.EmptyException ex){ throw new BO.CatchetDOException(ex);  }
         }
+        #endregion
 
+        #region Product item for managger
         /// <summary>
         /// Display more features if the mameger asking product by Id
         /// </summary>
@@ -50,7 +54,7 @@ namespace BlImplementation
                 throw new BO.InCorrectDetailsException("Product ID", ID);
             try
             {
-                DO.Product product = dal.Product.Get(ID);
+                DO.Product product = dal.Product.GetByID(ID);
                 BO.Product returnedProduct = (BO.Product)product.CopyPropertiesToNew(typeof(BO.Product));
                 return returnedProduct; //return new entitie product 
             }
@@ -59,7 +63,9 @@ namespace BlImplementation
                 throw new BO.CatchetDOException(ex);
             }
         }
+        #endregion
 
+        #region Product item for costemor
         /// <summary>
         /// Display less features if the customer asking product by Id
         /// </summary>
@@ -73,7 +79,7 @@ namespace BlImplementation
                 throw new BO.InCorrectDetailsException("Product ID", ID);
             try
             {
-                DO.Product product = dal.Product.Get(ID);
+                DO.Product product = dal.Product.GetByID(ID);
                 return new BO.ProductItem
                 {
                     UniqID = product.UniqID,
@@ -89,8 +95,9 @@ namespace BlImplementation
 
             }
         }
+        #endregion
 
-        
+        #region Add product
         /// <summary>
         /// Add product
         /// </summary>
@@ -118,7 +125,9 @@ namespace BlImplementation
                 throw new BO.CatchetDOException(ex);
             }
         }
+        #endregion
 
+        #region Delete product
         /// <summary>
         /// Delete product
         /// </summary>
@@ -142,6 +151,9 @@ namespace BlImplementation
                 throw new BO.CatchetDOException(ex);
             }
         }
+        #endregion
+
+        #region Update product
         /// <summary>
         /// Uptate Product
         /// </summary>
@@ -164,7 +176,7 @@ namespace BlImplementation
             {
                 throw new BO.CatchetDOException(ex);
             }
-
         }
+        #endregion
     }
 }

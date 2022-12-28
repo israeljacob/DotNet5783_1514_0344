@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BLApi;
+using DocumentFormat.OpenXml.Office.CustomUI;
 
 namespace BlImplementation;
 /// <summary>
@@ -22,32 +23,27 @@ internal class Cart : ICart
     /// <exception cref="AggregateException"></exception>
     public BO.Cart AddToCart(BO.Cart cart, int productID)
     {
-        foreach (BO.OrderItem? item in cart.orderItems!)
+        var v = cart.orderItems!.Where(item => item?.ProductID == productID);
+        foreach (BO.OrderItem? item in v)
         {
-            if (item?.ProductID == productID)//id found
+            try
             {
-                try
-                {
-                    if (dal?.Product.Get(productID).InStock == 0)
-                        throw new BO.InCorrectDetailsException("Cart ID", productID);
-                }
-                catch (DO.DoesNotExistException ex)
-                {
-                    throw new BO.CatchetDOException(ex);
-                }
-                catch (BO.InCorrectDetailsException ex) { throw ex; }
-                
-                
-                item.Amount++;//add one to amount and update the price
-                item.TotalPrice += item.Price;
-                cart.TotalPrice += item.Price;
-                return cart;
+                if (dal?.Product.GetByID(productID).InStock == 0)
+                    throw new BO.InCorrectDetailsException("Cart ID", productID);
             }
+            catch (DO.DoesNotExistException ex)
+            {
+                throw new BO.CatchetDOException(ex);
+            }
+            catch (BO.InCorrectDetailsException ex) { throw ex; }
+            item!.Amount++;//add one to amount and update the price
+            item.TotalPrice += item.Price;
+            cart.TotalPrice += item.Price;
+            return cart;
+            
         }
-
-        
         DO.Product product = new DO.Product();//connect between the product to id
-        try { product = dal!.Product.Get(productID); }
+        try { product = dal!.Product.GetByID(productID); }
         catch (DO.DoesNotExistException ex)
         {
             throw new BO.CatchetDOException(ex);
@@ -55,9 +51,8 @@ internal class Cart : ICart
         };
         if (product.InStock == 0)
             throw new BO.InCorrectDetailsException("Cart InStock", product.InStock);
-        cart.orderItems.Add(new BO.OrderItem //if there is product in the stock add it to order item
+        cart.orderItems!.Add(new BO.OrderItem //if there is product in the stock add it to order item
         {
-            
             ProductID = product.UniqID,
             ProductName = product.Name,
             Price = product.Price,
@@ -100,7 +95,7 @@ internal class Cart : ICart
     }
     #endregion
 
-    #region Execyte order
+    #region Execute order
     /// <summary>
     /// Get the cart and creat new order
     /// </summary>
@@ -120,8 +115,8 @@ internal class Cart : ICart
         {
             try
             {
-                dal?.Product.Get(orderItem!.ProductID);  //find the product
-                if (dal?.Product.Get(orderItem!.ProductID).InStock < orderItem!.Amount) //if the order amount is large then in the product stock
+                dal?.Product.GetByID(orderItem!.ProductID);  //find the product
+                if (dal?.Product.GetByID(orderItem!.ProductID).InStock < orderItem!.Amount) //if the order amount is large then in the product stock
                     throw new BO.missingItemsException( orderItem.ProductID , orderItem.Amount);
             }
             catch (DO.DoesNotExistException ex)
@@ -159,7 +154,7 @@ internal class Cart : ICart
         {
             try
             {
-                DO.Product product = dal!.Product.Get(orderItem1!.ProductID); //add to Bo
+                DO.Product product = dal!.Product.GetByID(orderItem1!.ProductID); //add to Bo
                 product.InStock -= orderItem1.Amount;
                 dal!.Product.Update(product);
             }

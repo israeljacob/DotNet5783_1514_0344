@@ -27,15 +27,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="admin.png">
+    <Resource Include="pictures\admin.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Best-Affordable-Clothing-Stores-MAINIMAGE - Copy.jpg" />
-    <Resource Include="Best-Affordable-Clothing-Stores-MAINIMAGE.jpg">
+    <Resource Include="pictures\Best-Affordable-Clothing-Stores-MAINIMAGE - Copy.jpg" />
+    <Resource Include="pictures\Best-Affordable-Clothing-Stores-MAINIMAGE.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Cool Text - Your fashion in one place 425292710568804.png" />
-    <Resource Include="cooltext425292820321232.png" />
+    <Resource Include="pictures\Cool Text - Your fashion in one place 425292710568804.png" />
+    <Resource Include="pictures\cooltext425292820321232.png" />
   </ItemGroup>
 
 </Project>

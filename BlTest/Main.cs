@@ -274,7 +274,7 @@ public class mainProgram
         {
             // Try to get and throw an exception if not succeed
             int ID = Menu.IntInput("Enter the order ID");
-            try { bl.Order.OrderBYID(ID).PrintProperties(); }
+            try { bl.Order.OrderByID(ID).PrintProperties(); }
             catch (Exception ex) { Console.WriteLine(ex.Message); return; };
 
         }

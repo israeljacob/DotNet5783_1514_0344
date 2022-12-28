@@ -11,8 +11,8 @@ namespace DalApi
         int Add(T entity);
         void Delete(int ID);
         void Update(T ID);
-        T Get(int ID);
-        T Get(Func<T?, bool> func);
+        T GetByID(int ID);
+        T GetByFunc(Func<T?, bool> func);
         IEnumerable<T?> GetAll(Func<T?, bool>? func = null);
 
     }

@@ -29,7 +29,7 @@ internal class DalOrderItem:IOrderItem
     /// <param name="ID"></param>
     /// <returns>The requested order item.</returns>
     /// <exception cref="Exception"></exception>
-    public OrderItem Get(int ID)
+    public OrderItem GetByID(int ID)
     {
         return dataSource.orderItems?.Find(orderItem => orderItem?.UniqID == ID)
           ?? throw new DoesNotExistException("order item", ID);
@@ -41,7 +41,7 @@ internal class DalOrderItem:IOrderItem
     /// <param name="func"></param>
     /// <returns>The requested order item.</returns>
     /// <exception cref="DoesNotExistsException"></exception>
-    public OrderItem Get(Func<OrderItem?, bool> func)
+    public OrderItem GetByFunc(Func<OrderItem?, bool> func)
     {
          return dataSource.orderItems.First(func) ?? throw new DO.DoesNotExistException("Order item"); 
     }

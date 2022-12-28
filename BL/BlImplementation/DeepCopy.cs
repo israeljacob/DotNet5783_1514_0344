@@ -1,15 +1,12 @@
-﻿using DocumentFormat.OpenXml.Spreadsheet;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Reflection;
 namespace BlImplementation;
 
+/// <summary>
+/// Access to all attributes of a class
+/// </summary>
 public static class DeepCopyUtilities
 {
+    #region CopyPropertiesTo
     public static void CopyPropertiesTo<T, S>(this S from, T to)
     {
         foreach (PropertyInfo propTo in to?.GetType().GetProperties()!)
@@ -24,7 +21,9 @@ public static class DeepCopyUtilities
                 propTo.SetValue(to, value);
         }
     }
+    #endregion
 
+    #region CopyPropertiesToNew
     public static object CopyPropertiesToNew<S>(this S from, Type type)
     {
         object to = Activator.CreateInstance(type)!; // new object of Type
@@ -32,7 +31,9 @@ public static class DeepCopyUtilities
         return to!;
 
     }
+    #endregion
 
+    #region PrintProperties
     public static void PrintProperties<S>(this S print)
     {
         foreach (PropertyInfo propTo in print?.GetType().GetProperties()!)
@@ -52,4 +53,5 @@ public static class DeepCopyUtilities
         }
         Console.WriteLine();
     }
+    #endregion
 }

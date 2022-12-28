@@ -6,17 +6,47 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Height" Value="78"/>
+            <Setter Property="Width" Value="256"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontFamily" Value="Sitka Small Semibold"/>
+            <Setter Property="Background" Value="#FF2D2D2D"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="RenderTransformOrigin" Value="0.498,-0.276"/>
+            <Setter Property="Clip" Value=""/>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.Background>
-            <ImageBrush ImageSource="/Best-Affordable-Clothing-Stores-MAINIMAGE.jpg" Stretch="None"/>
+            <ImageBrush ImageSource="pictures/Best-Affordable-Clothing-Stores-MAINIMAGE.jpg" Stretch="None"/>
         </Grid.Background>
-        <Button x:Name="Admin" Content="Admin" HorizontalAlignment="Left" VerticalAlignment="Center" Height="78" Width="256" Click="Admin_Click" FontSize="24" Margin="268,0,0,0" FontFamily="Sitka Small Semibold" Background="#FF2D2D2D" Foreground="White">
+        <Button x:Name="Admin" Content="Admin" Click="Admin_click"  Margin="486,95,0,261" >
             <Button.Clip>
                 <RectangleGeometry RadiusX="10" RadiusY="10" Rect="1,1,250,70"/>
             </Button.Clip>
         </Button>
-        <Image Source="/admin.png" Margin="212,180,530,180"/>
-        <Image Height="100" Margin="90,16,58,318" Source="/cooltext425292820321232.png" OpacityMask="#FF9C9292"/>
+        <Button x:Name="User" Content="User" Click="User_click" Margin="491,217,0,139">
+            <Button.Clip>
+                <RectangleGeometry RadiusX="10" RadiusY="10" Rect="1,1,250,70"/>
+            </Button.Clip>
+        </Button>
+        <Button x:Name="NewOrder" Content="New order" Click="New_order_click" Margin="40,217,0,139">
+            <Button.Clip>
+                <RectangleGeometry RadiusX="10" RadiusY="10" Rect="1,1,250,70"/>
+            </Button.Clip>
+        </Button>
+        <Button x:Name="TrackOrder" Content="Track order" Click="Track_order_click" FontSize="24" Margin="40,95,0,261">
+            <Button.Clip>
+                <RectangleGeometry RadiusX="10" RadiusY="10" Rect="1,1,250,70"/>
+            </Button.Clip>
+        </Button>
+        <Image Source="pictures/user.JPG" Margin="426,201,312,123" RenderTransformOrigin="3.705,0.508"/>
+        <Image Source="pictures/admin.png" Margin="428,97,314,263" RenderTransformOrigin="3.705,0.508"/>
+        <Image Height="100" Margin="90,16,58,318" Source="pictures/cooltext425292820321232.png" OpacityMask="#FF9C9292"/>
+        
 
     </Grid>
 </Window>

@@ -12,7 +12,7 @@ namespace BLApi;
 public interface IOrder
 {
     //get order by ID
-    public BO.Order OrderBYID(int ID);
+    public BO.Order OrderByID(int ID);
 
     //get list of order
     public IEnumerable<BO.OrderForList?> GetListOfOrders(Func<BO.OrderForList?,bool>? func =null);

@@ -137,7 +137,7 @@ public class mainProgram
             int idinput = Menu.IntInput("Enter the ID number:");
             try
             {
-                dalList.Product.Get(idinput).DOPrintProperties();
+                dalList.Product.GetByID(idinput).DOPrintProperties();
             }
             catch (Exception e)
             {
@@ -165,7 +165,7 @@ public class mainProgram
         void UpdateProduct()
         {
             product.UniqID = Menu.IntInput("Enter the ID:");
-            dalList.Product.Get(product.UniqID).DOPrintProperties();
+            dalList.Product.GetByID(product.UniqID).DOPrintProperties();
             product.Name = Menu.StringInput("Enter the name:");
             product.Price = Menu.IntInput("Enter the price:");
             product.Category = Menu.CategoryInput();
@@ -216,7 +216,7 @@ public class mainProgram
             try
             {
                 int idinput = Menu.IntInput("Enter the ID:");
-                dalList.Order.Get(idinput).DOPrintProperties();
+                dalList.Order.GetByID(idinput).DOPrintProperties();
             }
             catch (Exception e)
             {
@@ -245,7 +245,7 @@ public class mainProgram
             try
             {
                 order.UniqID = Menu.IntInput("Enter the ID:");
-                dalList.Order.Get(order.UniqID).DOPrintProperties();
+                dalList.Order.GetByID(order.UniqID).DOPrintProperties();
                 order.CustomerName = Menu.StringInput("Enter the name:");
                 order.CustomerAdress = Menu.StringInput("Enter the address:");
                 order.CustomerEmail = Menu.emailInput();
@@ -302,7 +302,7 @@ public class mainProgram
             try
             {
                 int idinput = Menu.IntInput("Enter the ID:");
-                dalList.OrderItem.Get(idinput).DOPrintProperties();
+                dalList.OrderItem.GetByID(idinput).DOPrintProperties();
             }
             catch (Exception e)
             {
@@ -367,7 +367,7 @@ public class mainProgram
         void UpdateOrderItem()
         {
             orderItem.UniqID = Menu.IntInput("Enter the ID:");
-            dalList.OrderItem.Get(orderItem.UniqID).DOPrintProperties();
+            dalList.OrderItem.GetByID(orderItem.UniqID).DOPrintProperties();
             orderItem.ProductID = Menu.IntInput("Enter the product ID:");
             orderItem.OrderID = Menu.IntInput("Enter the order ID:");
             try

@@ -26,7 +26,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="CategorySelector" SelectionChanged="CategorySelector_SelectionChanged" Grid.ColumnSpan="2" Margin="172,10,236,0" FontFamily="Sitka Small Semibold" FontSize="20" BorderBrush="#FF6D3434" Background="#FFB70D0D" VerticalAlignment="Top" ItemsSource="{Binding}">
+            <ComboBox Name="CategorySelector" Grid.ColumnSpan="2" Margin="172,10,236,0" FontFamily="Sitka Small Semibold" FontSize="20" BorderBrush="#FF6D3434" Background="#FFB70D0D" VerticalAlignment="Top" ItemsSource="{Binding}">
                 <ComboBox.OpacityMask>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="Black"/>
