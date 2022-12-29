@@ -31,7 +31,7 @@
         <Label Content="Id:" HorizontalAlignment="Left" Margin="231,33,0,0"
                VerticalAlignment="Top" Width="116" FontSize="18" Foreground="White" FontFamily="Sitka Small Semibold"/>
         <TextBox x:Name="idtxt" Grid.Column="1" HorizontalAlignment="Left" Margin="0,39,0,0" TextWrapping="Wrap" Text="{Binding UniqID, Mode=TwoWay}"
-                 VerticalAlignment="Top" Width="120" PreviewTextInput="int_PreviewTextInput" Height="28" IsEnabledChanged="{StaticResource NullToFalse}"
+                 VerticalAlignment="Top" Width="120" PreviewTextInput="int_PreviewTextInput" Height="28" 
                  Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
         <ComboBox x:Name="CategoryBox" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" 
                   Text="{Binding Category,Mode=TwoWay}"
