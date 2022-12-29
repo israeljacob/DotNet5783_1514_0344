@@ -43,7 +43,7 @@
                 <RectangleGeometry RadiusX="10" RadiusY="10" Rect="1,1,250,70"/>
             </Button.Clip>
         </Button>
-        <Image Source="pictures/user.JPG" Margin="426,201,312,123" RenderTransformOrigin="3.705,0.508"/>
+        <Image Source="pictures/user.png" Margin="429,200,309,122" RenderTransformOrigin="3.705,0.508"/>
         <Image Source="pictures/admin.png" Margin="428,97,314,263" RenderTransformOrigin="3.705,0.508"/>
         <Image Height="100" Margin="90,16,58,318" Source="pictures/cooltext425292820321232.png" OpacityMask="#FF9C9292"/>
         

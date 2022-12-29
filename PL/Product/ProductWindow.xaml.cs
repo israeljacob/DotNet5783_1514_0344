@@ -13,7 +13,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using BO;
 using DocumentFormat.OpenXml.Wordprocessing;
 using DocumentFormat.OpenXml.Drawing.Charts;
 
@@ -27,10 +26,14 @@ public partial class ProductWindow : Window
     /// <summary>
     /// show of only one bl
     /// </summary>
-    BLApi.IBL bl = BLApi.Factory.Get;
+    private static readonly BLApi.IBL bl = BLApi.Factory.Get;
+    public static readonly DependencyProperty ProductDependency = DependencyProperty.Register(nameof(Product), typeof(BO.Product), typeof(Window));
+    public BO.Product? Product { get => (BO.Product)GetValue(ProductDependency); private set => SetValue(ProductDependency, value); }
+
     public ProductWindow(object sender, int id=0)
     {
-        
+        if(id!=0)
+            Product = bl.Product.ProductItemForManagger(id);
         InitializeComponent();
         ///get the enums to combobox
         List<BO.Category> categories = Enum.GetValues(typeof(BO.Category)).Cast<BO.Category>().ToList();
@@ -39,29 +42,14 @@ public partial class ProductWindow : Window
                 CategoryBox.Items.Add(category);///add in to the opened list
         Button? button = sender as Button;
         ///to see if we press on update or add button
-        if(button !=null)
+        if (button != null)
             UpdateButton.Visibility = Visibility.Hidden;
         else
         {
             AddButton.Visibility = Visibility.Hidden;
-
-            string title = id.ToString();
-             idtxt.Text= title;
-             idtxt.IsEnabled = false;
+            idtxt.IsEnabled = false;
         }
 
-    }
-
-    private void bottun_PreviewKeyDown(object sender, KeyEventArgs e)
-    {
-        if (e.Key == Key.Tab)
-        {
-            TextBox? textBox = sender as TextBox;
-            if(textBox?.Name=="Name")
-                price.IsEnabled= true;
-            else if(textBox?.Name == "Price")
-                inStock.IsEnabled = true;
-        }
     }
     /// <summary>
     /// check evrey type of the user and make sure only numbers will take place in the box
@@ -170,7 +158,7 @@ public partial class ProductWindow : Window
          }
          catch (Exception ex)
          {
-                 if (ex.GetType() == typeof(CatchetDOException)) { idtxt.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#DD4A48")!; }
+                 if (ex.GetType() == typeof(BO.CatchetDOException)) { idtxt.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#DD4A48")!; }
                  MessageBox.Show(ex.Message);
          }
     }
@@ -183,7 +171,7 @@ public partial class ProductWindow : Window
     /// <param name="InStock"></param>
     private void UpdateButton_Click(int id, double priceDouble, int InStock)
     {
-        Product product = new Product
+        BO.Product product = new BO.Product
         {
             UniqID = id,
             Name = name.Text,

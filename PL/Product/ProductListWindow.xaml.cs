@@ -14,6 +14,9 @@ using System.Windows.Shapes;
 using BlImplementation;
 using System.Reflection;
 using System.Windows.Controls.Primitives;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using BO;
 
 namespace PL;
 
@@ -36,10 +39,12 @@ public partial class ProductListWindow : Window
         try
         {
             ProductListview.ItemsSource = bl.Product.GetListOfProducts();
+            OrderListview.ItemsSource= bl.Order.GetListOfOrders();
         }
         catch(Exception ex) { MessageBox.Show(ex.Message); }
         CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
     }
+    
     
     /// <summary>
     /// if the user click on one of the item combox
@@ -80,7 +85,7 @@ public partial class ProductListWindow : Window
     /// <param name="e"></param>
     private void AddProdct_Click(object sender, RoutedEventArgs e)
     {
-       new ProductWindow(sender).ShowDialog();
+        new ProductWindow(sender).ShowDialog();
         try
         {
             ProductListview.ItemsSource = bl.Product.GetListOfProducts();
@@ -97,14 +102,14 @@ public partial class ProductListWindow : Window
     {
         BO.ProductForList ourProduct = (BO.ProductForList)ProductListview.SelectedItem;
          if (ourProduct != null)
-        {
+         {
             new ProductWindow(sender,ourProduct.UniqID).ShowDialog();
             try
             {
                 ProductListview.ItemsSource = bl.Product.GetListOfProducts();
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
-        }
+         }
     }
 
     private void back_Click(object sender, RoutedEventArgs e)
@@ -113,5 +118,17 @@ public partial class ProductListWindow : Window
         this.Close();
     }
 
-   
+    private void OrderListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        BO.OrderForList ourOrder = (BO.OrderForList)OrderListview.SelectedItem;
+        if (ourOrder != null)
+        {
+            new OrderWindow().ShowDialog();
+            try
+            {
+                OrderListview.ItemsSource = bl.Order.GetListOfOrders();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+    }
 }
