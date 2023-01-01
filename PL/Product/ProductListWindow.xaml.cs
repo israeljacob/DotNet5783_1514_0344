@@ -39,7 +39,7 @@ public partial class ProductListWindow : Window
         try
         {
             ProductListview.ItemsSource = bl.Product.GetListOfProducts();
-            OrderListview.ItemsSource= bl.Order.GetListOfOrders();
+            //OrderListview.ItemsSource= bl.Order.GetListOfOrders();
         }
         catch(Exception ex) { MessageBox.Show(ex.Message); }
         CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
@@ -132,18 +132,20 @@ public partial class ProductListWindow : Window
     //    }
     //}
 
-    private void OrderListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-
-    }
+    
 
     private void AddOrder_Click(object sender, RoutedEventArgs e)
     {
-        new OrderWindow(sender).ShowDialog();
-        try
-        {
-            ProductListview.ItemsSource = bl.Product.GetListOfProducts();
-        }
-        catch (Exception ex) { MessageBox.Show(ex.Message); }
+        //new OrderWindow(sender).ShowDialog();
+        //try
+        //{
+        //    ProductListview.ItemsSource = bl.Product.GetListOfProducts();
+        //}
+        //catch (Exception ex) { MessageBox.Show(ex.Message); }
+    }
+
+    private void OrderListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
     }
 }

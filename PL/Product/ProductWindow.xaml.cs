@@ -30,25 +30,31 @@ public partial class ProductWindow : Window
     public static readonly DependencyProperty ProductDependency = DependencyProperty.Register(nameof(Product), typeof(BO.Product), typeof(Window));
     public BO.Product? Product { get => (BO.Product)GetValue(ProductDependency); private set => SetValue(ProductDependency, value); }
 
-    public ProductWindow(object sender, int id=0)
+    public ProductWindow(object sender, int id = 0)
     {
-        if(id!=0)
-            Product = bl.Product.ProductItemForManagger(id);
+
         InitializeComponent();
+        if (id != 0)
+            Product = bl.Product.ProductItemForManagger(id);
+        else
+        {
+            Product = new();
+            Product!.UniqID = id;
+        }
+
         ///get the enums to combobox
         List<BO.Category> categories = Enum.GetValues(typeof(BO.Category)).Cast<BO.Category>().ToList();
         foreach (BO.Category category in categories)
             if (category != BO.Category.all)
                 CategoryBox.Items.Add(category);///add in to the opened list
-        Button? button = sender as Button;
-        ///to see if we press on update or add button
-        if (button != null)
-            UpdateButton.Visibility = Visibility.Hidden;
-        else
-        {
-            AddButton.Visibility = Visibility.Hidden;
-        }
-
+        //Button? button = sender as Button;
+        /////to see if we press on update or add button
+        //if (button != null)
+        //    UpdateButton.Visibility = Visibility.Hidden;
+        //else
+        //{
+        //    AddButton.Visibility = Visibility.Hidden;
+        //}
     }
     /// <summary>
     /// check evrey type of the user and make sure only numbers will take place in the box

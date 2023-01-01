@@ -9,31 +9,42 @@ using System.Windows.Data;
 
 namespace PL;
 
-public class convertsAdd :  IValueConverter
+public class zeroToContent : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {
         int id = (int)value;
-        if (id!=0)
-            return Visibility.Visible;
-        else
-           return Visibility.Hidden;
+        if (id > 0)
+            return "UPDATE";
+        return "ADD";
+
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    { throw new NotImplementedException(); }
+}
+[ValueConversion(typeof(int), typeof(bool))]
+public class zeroToTrue : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    {
+        int id = (int)value;
+        if (id > 0)
+            return false;
+        return true;
 
     }
     public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     { throw new NotImplementedException(); }
 }
 
-
-public class convertsUpdate : IValueConverter
+public class zeroToFalse : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {
         int id = (int)value;
-        if (id != 0)
-            return Visibility.Hidden;
-        else
-            return Visibility.Visible;
+        if (id > 0)
+            return true;
+        return false;
     }
     public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     { throw new NotImplementedException(); }

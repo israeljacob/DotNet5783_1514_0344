@@ -76,9 +76,13 @@
                         </Grid>
                     </TabItem.Content>
                 </TabItem>
-                <TabItem Header="Orders">
+                <!--<TabItem Header="Orders">
                     <TabItem.Content>
                         <Grid Name="MainGrid2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="88*"/>
+                                <ColumnDefinition Width="721*"/>
+                            </Grid.ColumnDefinitions>
                             <Grid.Background>
                                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                     <GradientStop Color="Black"/>
@@ -90,7 +94,7 @@
                                 <RowDefinition Height="500*"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <ListView  x:Name="OrderListview" Background="#FF827E79" FontSize="13" MouseDoubleClick="OrderListview_MouseDoubleClick" ItemsSource="{Binding}" Foreground="Black" FontFamily="Sitka Small Semibold" Margin="158,32,-158,10" SelectionChanged="OrderListview_SelectionChanged">
+                            <ListView  x:Name="OrderListview" Background="#FF827E79" FontSize="13" MouseDoubleClick="OrderListview_MouseDoubleClick" ItemsSource="{Binding}" Foreground="Black" FontFamily="Sitka Small Semibold" Margin="70,32,-158,10" SelectionChanged="OrderListview_SelectionChanged" Grid.Column="1">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="order Id" Width="auto" DisplayMemberBinding="{Binding UniqID}"></GridViewColumn>
@@ -106,20 +110,20 @@
                                 </ListView.Clip>
                             </ListView>
                             <Button x:Name="backFromOrder" Content="back" Grid.Row="1" 
-                HorizontalAlignment="Left" Margin="18,10,0,-5" Padding="5"  FontFamily="Sitka Small Semibold" FontSize="20" Width="195" Background="#FF839ED4" Click="back_Click">
+                HorizontalAlignment="Left" Margin="18,10,0,-5" Padding="5"  FontFamily="Sitka Small Semibold" FontSize="20" Width="195" Background="#FF839ED4" Click="back_Click" Grid.ColumnSpan="2">
                                 <Button.Clip>
                                     <RectangleGeometry RadiusX="10" RadiusY="10" Rect="2,2,190,25"/>
                                 </Button.Clip>
                             </Button>
-                            <Button x:Name="AddOrder" Content="Add new Order" Grid.Row="2" 
-                HorizontalAlignment="Left" Margin="601,10,0,-5" Padding="5" Click="AddOrder_Click" FontFamily="Sitka Small Semibold" FontSize="20" Width="195" Background="#FF839ED4">
+                            <Button x:Name="AddOrder" Content="Add new Order" Grid.Row="1" 
+                HorizontalAlignment="Left" Margin="513,10,0,-5" Padding="5" Click="AddOrder_Click" FontFamily="Sitka Small Semibold" FontSize="20" Width="195" Background="#FF839ED4" Grid.Column="1">
                                 <Button.Clip>
                                     <RectangleGeometry RadiusX="10" RadiusY="10" Rect="2,2,190,25"/>
                                 </Button.Clip>
                             </Button>
                         </Grid>
                     </TabItem.Content>
-                </TabItem>
+                </TabItem>-->
             </TabControl.Items>
         </TabControl>
     </Grid>

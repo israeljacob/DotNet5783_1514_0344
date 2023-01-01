@@ -3,12 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.Products"
+        xmlns:local="clr-namespace:PL"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="ProductWindow" Height="450" Width="800"
+        Title="ProductWindow" Height="450" Width="800"      
         DataContext="{Binding Product, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
-
+    <Window.Resources>
+        <local:zeroToTrue x:Key="zeroTrue"/>
+        <local:zeroToContent x:Key="zeroContent"/>
+    </Window.Resources>
+   
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -30,8 +34,8 @@
         </Grid.ColumnDefinitions>
         <Label Content="Id:" HorizontalAlignment="Left" Margin="231,33,0,0"
                VerticalAlignment="Top" Width="116" FontSize="18" Foreground="White" FontFamily="Sitka Small Semibold"/>
-        <TextBox x:Name="idtxt" Grid.Column="1" HorizontalAlignment="Left" Margin="0,39,0,0" TextWrapping="Wrap" Text="{Binding UniqID, Mode=TwoWay}"
-                 VerticalAlignment="Top" Width="120" PreviewTextInput="int_PreviewTextInput" Height="28" IsEnabled="{Binding ElementName "AddButton"}"
+        <TextBox x:Name="idtxt" Grid.Column="1" HorizontalAlignment="Left" Margin="0,39,0,0" TextWrapping="Wrap" Text="{Binding UniqID, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
+                 VerticalAlignment="Top" Width="120" PreviewTextInput="int_PreviewTextInput" Height="28" IsEnabled="{Binding UniqID, Converter={StaticResource zeroTrue}}"
                  Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
         <ComboBox x:Name="CategoryBox" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" 
                   Text="{Binding Category,Mode=TwoWay}"
@@ -52,19 +56,20 @@
         <Label Content="In Stock:" HorizontalAlignment="Left" Foreground="White" FontFamily="Sitka Small Semibold" Margin="231,0,0,0"
             VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="4"/>
         <TextBox x:Name="name" Grid.Column="1" PreviewTextInput="name_PreviewTextInput" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Name, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="2"  Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
-        <TextBox x:Name="price" PreviewTextInput="double_PreviewTextInput" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Price, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="3" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
-        <TextBox x:Name="inStock"  Grid.Column="1" PreviewTextInput="int_PreviewTextInput" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding InStock, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="4" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
-        <Button x:Name="AddButton" FontFamily="Sitka Small Semibold" Grid.Column="1" Content="ADD" Visibility="{Binding id, Converter={StaticResource convertsAdd}}"
-                HorizontalAlignment="Left" Margin="10,20,0,0" Grid.Row="5" VerticalAlignment="Top" Click="AddButton_or_UpdateButton_Click"  Width="73" Height="34">
+        <TextBox x:Name="price" PreviewTextInput="double_PreviewTextInput" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Price,Converter={StaticResource }, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="3" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
+        <TextBox x:Name="inStock"  Grid.Column="1" PreviewTextInput="int_PreviewTextInput" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding InStock, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="4" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
+        <Button x:Name="AddButton" FontFamily="Sitka Small Semibold" Grid.Column="1" Content="{Binding UniqID,Converter={StaticResource zeroContent}}"
+                HorizontalAlignment="Left" Margin="10,20,0,0" Grid.Row="5" VerticalAlignment="Top"
+                 Click="AddButton_or_UpdateButton_Click"  Width="73" Height="34">
             <Button.Clip>
                 <RectangleGeometry RadiusX="10" RadiusY="10" Rect="1,1,70,30"/>
             </Button.Clip>
         </Button>
-        <Button x:Name="UpdateButton"  FontFamily="Sitka Small Semibold" Grid.Column="1" Content="UPDATE" HorizontalAlignment="Left" Margin="10,20,0,0" Grid.Row="5" VerticalAlignment="Top" Click="AddButton_or_UpdateButton_Click" Width="73" Height="30">
+        <!--<Button x:Name="UpdateButton"  FontFamily="Sitka Small Semibold" Grid.Column="1" Content="UPDATE" HorizontalAlignment="Left" Margin="10,20,0,0" Grid.Row="5" VerticalAlignment="Top" Click="AddButton_or_UpdateButton_Click" Width="73" Height="30">
             <Button.Clip>
                 <RectangleGeometry RadiusX="10" RadiusY="10" Rect="1,1,70,30"/>
             </Button.Clip>
-        </Button>
+        </Button>-->
         <Label x:Name="idtxtMsg" Content="Enter an integer !" Background="Red" Visibility="Hidden"
                HorizontalAlignment="Left" Margin="153,40,0,0" VerticalAlignment="Top" Width="223" Grid.Column="1"/>
         <Label x:Name="categoryBoxMsg" Content="Choose a Category !" Background="Red" Visibility="Hidden"
