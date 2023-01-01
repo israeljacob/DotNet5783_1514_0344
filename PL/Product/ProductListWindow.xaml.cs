@@ -118,17 +118,32 @@ public partial class ProductListWindow : Window
         this.Close();
     }
 
-    private void OrderListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    //private void OrderListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    //{
+    //    BO.OrderForList ourOrder = (BO.OrderForList)OrderListview.SelectedItem;
+    //    if (ourOrder != null)
+    //    {
+    //        new ProductWindow().ShowDialog();
+    //        try
+    //        {
+    //            OrderListview.ItemsSource = bl.Order.GetListOfOrders();
+    //        }
+    //        catch (Exception ex) { MessageBox.Show(ex.Message); }
+    //    }
+    //}
+
+    private void OrderListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        BO.OrderForList ourOrder = (BO.OrderForList)OrderListview.SelectedItem;
-        if (ourOrder != null)
+
+    }
+
+    private void AddOrder_Click(object sender, RoutedEventArgs e)
+    {
+        new OrderWindow(sender).ShowDialog();
+        try
         {
-            new OrderWindow().ShowDialog();
-            try
-            {
-                OrderListview.ItemsSource = bl.Order.GetListOfOrders();
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            ProductListview.ItemsSource = bl.Product.GetListOfProducts();
         }
+        catch (Exception ex) { MessageBox.Show(ex.Message); }
     }
 }

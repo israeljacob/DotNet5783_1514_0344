@@ -47,7 +47,6 @@ public partial class ProductWindow : Window
         else
         {
             AddButton.Visibility = Visibility.Hidden;
-            idtxt.IsEnabled = false;
         }
 
     }
