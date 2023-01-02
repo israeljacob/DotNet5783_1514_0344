@@ -56,9 +56,9 @@
         <Label Content="In Stock:" HorizontalAlignment="Left" Foreground="White" FontFamily="Sitka Small Semibold" Margin="231,0,0,0"
             VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="4"/>
         <TextBox x:Name="name" Grid.Column="1" PreviewTextInput="name_PreviewTextInput" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Name, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="2"  Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
-        <TextBox x:Name="price" PreviewTextInput="double_PreviewTextInput" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Price,Converter={StaticResource }, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="3" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
+        <TextBox x:Name="price" PreviewTextInput="double_PreviewTextInput" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Price, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="3" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
         <TextBox x:Name="inStock"  Grid.Column="1" PreviewTextInput="int_PreviewTextInput" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding InStock, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="4" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
-        <Button x:Name="AddButton" FontFamily="Sitka Small Semibold" Grid.Column="1" Content="{Binding UniqID,Converter={StaticResource zeroContent}}"
+        <Button x:Name="AddOrUpdateButton" FontFamily="Sitka Small Semibold" Grid.Column="1" Content="{Binding UniqID,Converter={StaticResource zeroContent}, Mode=OneTime}"
                 HorizontalAlignment="Left" Margin="10,20,0,0" Grid.Row="5" VerticalAlignment="Top"
                  Click="AddButton_or_UpdateButton_Click"  Width="73" Height="34">
             <Button.Clip>

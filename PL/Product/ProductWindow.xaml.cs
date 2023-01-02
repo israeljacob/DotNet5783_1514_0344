@@ -47,14 +47,6 @@ public partial class ProductWindow : Window
         foreach (BO.Category category in categories)
             if (category != BO.Category.all)
                 CategoryBox.Items.Add(category);///add in to the opened list
-        //Button? button = sender as Button;
-        /////to see if we press on update or add button
-        //if (button != null)
-        //    UpdateButton.Visibility = Visibility.Hidden;
-        //else
-        //{
-        //    AddButton.Visibility = Visibility.Hidden;
-        //}
     }
     /// <summary>
     /// check evrey type of the user and make sure only numbers will take place in the box
@@ -90,10 +82,11 @@ public partial class ProductWindow : Window
     /// <param name="e"></param>
     private void AddButton_or_UpdateButton_Click(object sender, RoutedEventArgs e)
     {
+        Button? button = sender as Button;
         var bc = new BrushConverter();
         bool flag = true;
         ///to convert it to letters , if not make sure the user will see it
-        if (!int.TryParse(idtxt.Text, out int id))
+        if (!int.TryParse(idtxt.Text, out int id) || idtxt.Text == "0")
         {
             idtxtMsg.Visibility = Visibility.Visible;
             flag = false;
@@ -111,7 +104,7 @@ public partial class ProductWindow : Window
         {
            nameMsg.Visibility = Visibility.Hidden;
         }///to convert it to double, if not make sure the user will see it
-        if (!double.TryParse(price.Text, out double priceDoble))
+        if (!double.TryParse(price.Text, out double priceDoble) || price.Text == "0")
         {
             priceMsg.Visibility = Visibility.Visible;
             flag = false;
@@ -120,7 +113,7 @@ public partial class ProductWindow : Window
         {
             priceMsg.Visibility = Visibility.Hidden;
         }///to convert it to int, if not make sure the user will see it
-        if (!int.TryParse(inStock.Text, out int InStock))
+        if (!int.TryParse(inStock.Text, out int InStock) || inStock.Text == "0")
         {
             inStockMsg.Visibility = Visibility.Visible;
             flag = false;
@@ -131,17 +124,16 @@ public partial class ProductWindow : Window
         }//to see if the user chosed somthing on the combox, if not make sure the user will see it
         if (CategoryBox.Text.ToString() == BO.Category.all.ToString() || CategoryBox.Text == "")
         {
-            idtxtMsg.Visibility = Visibility.Visible;
+            categoryBoxMsg.Visibility = Visibility.Visible;
             flag = false;
         }
         else
         {
-
+            categoryBoxMsg.Visibility = Visibility.Hidden;
         }
         if (flag)
         {
-            
-            if (sender.Equals(AddButton))
+            if(button?.Content.ToString()=="ADD")
                 AddButton_Click(id, priceDoble, InStock);
             else
                 UpdateButton_Click(id, priceDoble, InStock);
@@ -155,7 +147,6 @@ public partial class ProductWindow : Window
     /// <param name="InStock"></param>
     private void AddButton_Click(int id, double priceDouble, int InStock)
     {
-        
          try
          {
              bl.Product.AddProduct(id, name?.Text!, priceDouble, (BO.Category)CategoryBox.SelectedItem, InStock);

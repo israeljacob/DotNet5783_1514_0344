@@ -7,6 +7,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="ProductListWindow" Height="640" Width="815">
+
     <Grid>
         <TabControl>
             <TabControl.Items>
@@ -31,7 +32,8 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions >
-                                <ComboBox Name="CategorySelector" Grid.ColumnSpan="2" Margin="172,10,236,0" FontFamily="Sitka Small Semibold" FontSize="20" BorderBrush="#FF6D3434" Background="#FFB70D0D" VerticalAlignment="Top" ItemsSource="{Binding}">
+                                <ComboBox Name="CategorySelector" Grid.ColumnSpan="2" Margin="172,10,236,0" FontFamily="Sitka Small Semibold" FontSize="20" BorderBrush="#FF6D3434" 
+                                          Background="#FFB70D0D" VerticalAlignment="Top" SelectionChanged="CategorySelector_SelectionChanged" ItemsSource="{Binding}">
                                     <ComboBox.OpacityMask>
                                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                             <GradientStop Color="Black"/>
@@ -45,7 +47,8 @@
                                 <Label x:Name="ComboboxLabal" Content="Category:" FontSize="24" />
 
                             </Grid>
-                            <ListView  x:Name="ProductListview" Background="#FF827E79" FontSize="20" MouseDoubleClick="ProductListview_MouseDoubleClick" ItemsSource="{Binding}" Foreground="Black" FontFamily="Sitka Small Semibold" Margin="132,32,131,10" Grid.RowSpan="2" Grid.Row="1" >
+                            <ListView  x:Name="ProductListview" Background="#FF827E79" FontSize="20" MouseDoubleClick="ProductListview_MouseDoubleClick" ItemsSource="{Binding}"
+                                       Foreground="Black" FontFamily="Sitka Small Semibold" Margin="132,32,131,10" Grid.RowSpan="2" Grid.Row="1" >
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Product Id" Width="auto" DisplayMemberBinding="{Binding UniqID}"></GridViewColumn>
@@ -76,7 +79,7 @@
                         </Grid>
                     </TabItem.Content>
                 </TabItem>
-                <!--<TabItem Header="Orders">
+                <TabItem Header="Orders">
                     <TabItem.Content>
                         <Grid Name="MainGrid2">
                             <Grid.ColumnDefinitions>
@@ -123,7 +126,7 @@
                             </Button>
                         </Grid>
                     </TabItem.Content>
-                </TabItem>-->
+                </TabItem>
             </TabControl.Items>
         </TabControl>
     </Grid>

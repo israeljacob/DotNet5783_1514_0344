@@ -17,6 +17,7 @@ using System.Windows.Controls.Primitives;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using BO;
+using System.Collections.ObjectModel;
 
 namespace PL;
 
@@ -29,6 +30,7 @@ public partial class ProductListWindow : Window
     /// show of only one bl
     /// </summary>
     BLApi.IBL bl = BLApi.Factory.Get;
+    public ObservableCollection<BO.ProductForList> products1 = new ObservableCollection<ProductForList>();
     /// <summary>
     /// add the products to the list in according to combox click
     /// </summary>
@@ -36,13 +38,15 @@ public partial class ProductListWindow : Window
     public ProductListWindow(BO.Category? category= null)
     {
         InitializeComponent();
+        
         try
         {
-            ProductListview.ItemsSource = bl.Product.GetListOfProducts();
-            //OrderListview.ItemsSource= bl.Order.GetListOfOrders();
+            var list = bl.Product.GetListOfProducts();
+            products1=new ObservableCollection<ProductForList>(list!); 
         }
         catch(Exception ex) { MessageBox.Show(ex.Message); }
-        CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+        this.CategorySelector.DataContext = Enum.GetValues(typeof(BO.Category));
+        this.DataContext = products1;
     }
     
     
@@ -61,7 +65,7 @@ public partial class ProductListWindow : Window
             {
                 try
                 {
-                    ProductListview.ItemsSource = bl.Product.GetListOfProducts();
+                    products1 = new ObservableCollection<ProductForList>(bl.Product.GetListOfProducts()!);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
@@ -70,7 +74,7 @@ public partial class ProductListWindow : Window
                 Func<BO.ProductForList?, bool> func = product => product?.Category == (BO.Category)CategorySelector.SelectedItem;
                 try
                 {
-                    ProductListview.ItemsSource = bl.Product.GetListOfProducts(func);
+                    products1 = new ObservableCollection<ProductForList>(bl.Product.GetListOfProducts(func)!);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
@@ -88,7 +92,7 @@ public partial class ProductListWindow : Window
         new ProductWindow(sender).ShowDialog();
         try
         {
-            ProductListview.ItemsSource = bl.Product.GetListOfProducts();
+            products1 = new ObservableCollection<ProductForList>(bl.Product.GetListOfProducts()!);
         }
         catch (Exception ex) { MessageBox.Show(ex.Message); }
     }
@@ -106,7 +110,7 @@ public partial class ProductListWindow : Window
             new ProductWindow(sender,ourProduct.UniqID).ShowDialog();
             try
             {
-                ProductListview.ItemsSource = bl.Product.GetListOfProducts();
+                products1 = new ObservableCollection<ProductForList>(bl.Product.GetListOfProducts()!);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
          }
