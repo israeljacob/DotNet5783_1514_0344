@@ -122,21 +122,21 @@ public partial class ProductListWindow : Window
         this.Close();
     }
 
-    //private void OrderListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-    //{
-    //    BO.OrderForList ourOrder = (BO.OrderForList)OrderListview.SelectedItem;
-    //    if (ourOrder != null)
-    //    {
-    //        new ProductWindow().ShowDialog();
-    //        try
-    //        {
-    //            OrderListview.ItemsSource = bl.Order.GetListOfOrders();
-    //        }
-    //        catch (Exception ex) { MessageBox.Show(ex.Message); }
-    //    }
-    //}
+    private void OrderListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        BO.OrderForList ourOrder = (BO.OrderForList)OrderListview.SelectedItem;
+        if (ourOrder != null)
+        {
+            new ().ShowDialog();
+            try
+            {
+                OrderListview.ItemsSource = bl.Order.GetListOfOrders();
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+    }
 
-    
+
 
     private void AddOrder_Click(object sender, RoutedEventArgs e)
     {
@@ -152,4 +152,6 @@ public partial class ProductListWindow : Window
     {
 
     }
+
+   
 }
