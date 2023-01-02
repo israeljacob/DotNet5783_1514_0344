@@ -7,7 +7,6 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="ProductListWindow" Height="640" Width="815">
-
     <Grid>
         <TabControl>
             <TabControl.Items>
@@ -20,7 +19,6 @@
                                     <GradientStop Color="#FF1D4A5A" Offset="1"/>
                                 </LinearGradientBrush>
                             </Grid.Background>
-
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="40*"/>
                                 <RowDefinition Height="500*"/>
@@ -45,7 +43,6 @@
                                     </ComboBox.Effect>
                                 </ComboBox>
                                 <Label x:Name="ComboboxLabal" Content="Category:" FontSize="24" />
-
                             </Grid>
                             <ListView  x:Name="ProductListview" Background="#FF827E79" FontSize="20" MouseDoubleClick="ProductListview_MouseDoubleClick" ItemsSource="{Binding}"
                                        Foreground="Black" FontFamily="Sitka Small Semibold" Margin="132,32,131,10" Grid.RowSpan="2" Grid.Row="1" >
@@ -97,10 +94,10 @@
                                 <RowDefinition Height="500*"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <ListView  x:Name="OrderListview" Background="#FF827E79" FontSize="13" MouseDoubleClick="OrderListview_MouseDoubleClick" ItemsSource="{Binding}" Foreground="Black" FontFamily="Sitka Small Semibold" Margin="70,32,-158,10" SelectionChanged="OrderListview_SelectionChanged" Grid.Column="1">
+                            <ListView  x:Name="OrderListview" Background="#FF827E79" FontSize="13" MouseDoubleClick="OrderListview_MouseDoubleClick" ItemsSource="{Binding}" Foreground="Black" FontFamily="Sitka Small Semibold" Margin="70,32,-158,10" Grid.Column="1">
                                 <ListView.View>
                                     <GridView>
-                                        <GridViewColumn Header="order Id" Width="auto" DisplayMemberBinding="{Binding UniqID}"></GridViewColumn>
+                                        <GridViewColumn Header="order Id" Width="auto" DisplayMemberBinding="{Binding}"></GridViewColumn>
                                         <GridViewColumn Header="Customer name" Width="auto" DisplayMemberBinding="{Binding CustomerName}"></GridViewColumn>
                                         <GridViewColumn Header="Status of order" Width="auto" DisplayMemberBinding="{Binding StatusOfOrder}"></GridViewColumn>
                                         <GridViewColumn Header="Items amount" Width="auto" DisplayMemberBinding="{Binding AmountOfItems}"></GridViewColumn>

@@ -30,7 +30,31 @@ public partial class ProductListWindow : Window
     /// show of only one bl
     /// </summary>
     BLApi.IBL bl = BLApi.Factory.Get;
-    public ObservableCollection<BO.ProductForList> products1 = new ObservableCollection<ProductForList>();
+
+
+    public ObservableCollection<ProductForList> Products
+    {
+        get { return (ObservableCollection<ProductForList>)GetValue(ProductsProperty); }
+        set { SetValue(ProductsProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for Products.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty ProductsProperty =
+        DependencyProperty.Register("Products", typeof(ObservableCollection<ProductForList>), typeof(Window), new PropertyMetadata(null));
+
+
+
+    public ObservableCollection<OrderForList> Orders
+    {
+        get { return (ObservableCollection<OrderForList>)GetValue(OrdersProperty); }
+        set { SetValue(OrdersProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for Orders.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty OrdersProperty =
+        DependencyProperty.Register("Orders", typeof(ObservableCollection<OrderForList>), typeof(Window), new PropertyMetadata(null));
+
+
     /// <summary>
     /// add the products to the list in according to combox click
     /// </summary>
@@ -41,12 +65,15 @@ public partial class ProductListWindow : Window
         
         try
         {
-            var list = bl.Product.GetListOfProducts();
-            products1=new ObservableCollection<ProductForList>(list!); 
+            var tempProduct = bl.Product.GetListOfProducts();
+            Products=new ObservableCollection<ProductForList>(tempProduct!); 
+            var tempOrder = bl.Order.GetListOfOrders();
+            Orders = new ObservableCollection<OrderForList>(tempOrder!);
         }
         catch(Exception ex) { MessageBox.Show(ex.Message); }
         this.CategorySelector.DataContext = Enum.GetValues(typeof(BO.Category));
-        this.DataContext = products1;
+        ProductListview.DataContext = Products;
+        OrderListview.DataContext = Orders;
     }
     
     
@@ -65,7 +92,7 @@ public partial class ProductListWindow : Window
             {
                 try
                 {
-                    products1 = new ObservableCollection<ProductForList>(bl.Product.GetListOfProducts()!);
+                    Products = new ObservableCollection<ProductForList>(bl.Product.GetListOfProducts()!);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
@@ -74,7 +101,7 @@ public partial class ProductListWindow : Window
                 Func<BO.ProductForList?, bool> func = product => product?.Category == (BO.Category)CategorySelector.SelectedItem;
                 try
                 {
-                    products1 = new ObservableCollection<ProductForList>(bl.Product.GetListOfProducts(func)!);
+                    Products = new ObservableCollection<ProductForList>(bl.Product.GetListOfProducts(func)!);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
@@ -92,7 +119,7 @@ public partial class ProductListWindow : Window
         new ProductWindow(sender).ShowDialog();
         try
         {
-            products1 = new ObservableCollection<ProductForList>(bl.Product.GetListOfProducts()!);
+            Products = new ObservableCollection<ProductForList>(bl.Product.GetListOfProducts()!);
         }
         catch (Exception ex) { MessageBox.Show(ex.Message); }
     }
@@ -110,7 +137,7 @@ public partial class ProductListWindow : Window
             new ProductWindow(sender,ourProduct.UniqID).ShowDialog();
             try
             {
-                products1 = new ObservableCollection<ProductForList>(bl.Product.GetListOfProducts()!);
+                Products = new ObservableCollection<ProductForList>(bl.Product.GetListOfProducts()!);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
          }
@@ -124,16 +151,16 @@ public partial class ProductListWindow : Window
 
     private void OrderListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        BO.OrderForList ourOrder = (BO.OrderForList)OrderListview.SelectedItem;
-        if (ourOrder != null)
-        {
-            new ().ShowDialog();
-            try
-            {
-                OrderListview.ItemsSource = bl.Order.GetListOfOrders();
-            }
-            catch (Exception ex) { MessageBox.Show(ex.Message); }
-        }
+        //BO.OrderForList ourOrder = (BO.OrderForList)OrderListview.SelectedItem;
+        //if (ourOrder != null)
+        //{
+        //    new ().ShowDialog();
+        //    try
+        //    {
+        //        OrderListview.ItemsSource = bl.Order.GetListOfOrders();
+        //    }
+        //    catch (Exception ex) { MessageBox.Show(ex.Message); }
+        //}
     }
 
 
