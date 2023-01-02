@@ -86,26 +86,25 @@ public partial class ProductListWindow : Window
     {
         ComboBox comboBox = sender as ComboBox ?? null!;
         ///if we select somthing
-       if(CategorySelector.SelectedItem!=null)
+      
+        if ((BO.Category)CategorySelector.SelectedItem == BO.Category.all)
         {
-            if ((BO.Category)CategorySelector.SelectedItem == BO.Category.all)
+            try
             {
-                try
-                {
-                    Products = new ObservableCollection<ProductForList>(bl.Product.GetListOfProducts()!);
-                }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }
+                Products = new ObservableCollection<ProductForList>(bl.Product.GetListOfProducts()!);
             }
-            else
-            {
-                Func<BO.ProductForList?, bool> func = product => product?.Category == (BO.Category)CategorySelector.SelectedItem;
-                try
-                {
-                    Products = new ObservableCollection<ProductForList>(bl.Product.GetListOfProducts(func)!);
-                }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }
-            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
+        else
+        {
+            Func<BO.ProductForList?, bool> func = product => product?.Category == (BO.Category)CategorySelector.SelectedItem;
+            try
+            {
+                Products = new ObservableCollection<ProductForList>(bl.Product.GetListOfProducts(func)!);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+        
         
     }
 
@@ -151,34 +150,15 @@ public partial class ProductListWindow : Window
 
     private void OrderListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        //BO.OrderForList ourOrder = (BO.OrderForList)OrderListview.SelectedItem;
-        //if (ourOrder != null)
-        //{
-        //    new ().ShowDialog();
-        //    try
-        //    {
-        //        OrderListview.ItemsSource = bl.Order.GetListOfOrders();
-        //    }
-        //    catch (Exception ex) { MessageBox.Show(ex.Message); }
-        //}
+        BO.OrderForList ourOrder = (BO.OrderForList)OrderListview.SelectedItem;
+        if (ourOrder != null)
+        {
+            new OrderWindow().ShowDialog();
+            try
+            {
+                Orders = new(bl.Order.GetListOfOrders()!);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
     }
-
-
-
-    private void AddOrder_Click(object sender, RoutedEventArgs e)
-    {
-        //new OrderWindow(sender).ShowDialog();
-        //try
-        //{
-        //    ProductListview.ItemsSource = bl.Product.GetListOfProducts();
-        //}
-        //catch (Exception ex) { MessageBox.Show(ex.Message); }
-    }
-
-    private void OrderListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-
-    }
-
-   
 }
