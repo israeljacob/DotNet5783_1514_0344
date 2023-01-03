@@ -91,7 +91,7 @@ namespace PL
             else
             {
                 nameMsg.Visibility = Visibility.Hidden;
-            }///to convert it to double, if not make sure the user will see it
+            }//to convert it to double, if not make sure the user will see it
             if (!double.TryParse(price.Text, out double priceDoble) || price.Text == "0")
             {
                 priceMsg.Visibility = Visibility.Visible;
