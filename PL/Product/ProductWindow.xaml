@@ -37,7 +37,7 @@
                  VerticalAlignment="Top" Width="120" PreviewTextInput="int_PreviewTextInput" Height="28" IsEnabled="{Binding Product.UniqID, Converter={StaticResource zeroTrue}}"
                  Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
         <ComboBox x:Name="CategoryBox" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" 
-                  ItemsSource="{Binding Categories}" Text="{Binding Product.Category.Value ,Mode=TwoWay}"
+                  ItemsSource="{Binding Categories}" Text="{Binding Product.Category ,Mode=TwoWay}"
                   Width="120" Height="27" FontFamily="Sitka Small Semibold" FontSize="18" >
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0,1">
