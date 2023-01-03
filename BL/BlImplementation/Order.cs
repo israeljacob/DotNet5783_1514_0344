@@ -94,6 +94,42 @@ internal class Order : BLApi.IOrder
     }
     #endregion
 
+    #region Update total price
+    public BO.Order UpdateTotalPrice(int ID, int totalPrice)
+    {
+        DO.Order order;
+        try {  order = dal.Order.GetByID(ID); } //get the ID
+        catch (DO.DoesNotExistException ex)
+        {
+            throw new BO.CatchetDOException(ex);
+        }
+        return new BO.Order
+        {
+            UniqID = order.UniqID,
+            CustomerAdress = order.CustomerAdress,
+            CustomerEmail = order.CustomerEmail,
+            CustomerName = order.CustomerName,
+            OrderDate = order.OrderDate,
+            ShipDate = order.ShipDate,
+            DeliveryrDate = order.DeliveryrDate,
+            orderItems = (from orderItem in dal.OrderItem.GetAll(item => ((DO.OrderItem)item!).OrderID == order.UniqID)
+                          let item = (DO.OrderItem)orderItem
+                          let product = dal.Product.GetByID(item.ProductID)
+                          select new BO.OrderItem()
+                          {
+                              UniqID = item.UniqID,
+                              ProductID = item.ProductID,
+                              ProductName = product.Name,
+                              Amount = item.Amount,
+                              Price = item.Price,
+                              TotalPrice = item.Amount * item.Price,
+                          }).ToList(),
+            StatusOfOrder = BO.StatusOfOrder.Sent,
+            TotalPrice = totalPrice
+        };
+    }
+    #endregion
+
     #region Update ship date
     /// <summary>
     /// Update ship date by ID
@@ -109,14 +145,13 @@ internal class Order : BLApi.IOrder
         {
             throw new BO.CatchetDOException(ex);
         }
-            if (order.ShipDate != null)
-                throw new BO.DatesException("Ship date"); 
+        if (order.ShipDate != null)
+            throw new BO.DatesException("Ship date"); 
         ///update the ship date
         order.ShipDate= DateTime.Now;
         try
         {
-
-         dal.Order.Update(order);
+            dal.Order.Update(order);
         }
         catch (DO.DoesNotExistException ex)
         {

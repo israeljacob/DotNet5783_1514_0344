@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:PL"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="ProductWindow" Height="450" Width="800">
     <Window.Resources>
         <local:zeroToTrue x:Key="zeroTrue"/>
@@ -32,11 +33,11 @@
         </Grid.ColumnDefinitions>
         <Label Content="Id:" HorizontalAlignment="Left" Margin="231,33,0,0"
                VerticalAlignment="Top" Width="116" FontSize="18" Foreground="White" FontFamily="Sitka Small Semibold"/>
-        <TextBox x:Name="idtxt" Grid.Column="1" HorizontalAlignment="Left" Margin="0,39,0,0" TextWrapping="Wrap" Text="{Binding UniqID, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
-                 VerticalAlignment="Top" Width="120" PreviewTextInput="int_PreviewTextInput" Height="28" IsEnabled="{Binding UniqID, Converter={StaticResource zeroTrue}}"
+        <TextBox x:Name="idtxt" Grid.Column="1" HorizontalAlignment="Left" Margin="0,39,0,0" TextWrapping="Wrap" Text="{Binding Product.UniqID, Mode=TwoWay}"
+                 VerticalAlignment="Top" Width="120" PreviewTextInput="int_PreviewTextInput" Height="28" IsEnabled="{Binding Product.UniqID, Converter={StaticResource zeroTrue}}"
                  Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
         <ComboBox x:Name="CategoryBox" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" 
-                  ItemsSource="{Binding}" Text="{Binding Category ,Mode=TwoWay}"
+                  ItemsSource="{Binding Categories}" Text="{Binding Product.Category.Value ,Mode=TwoWay}"
                   Width="120" Height="27" FontFamily="Sitka Small Semibold" FontSize="18" >
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0,1">
@@ -53,9 +54,9 @@
             VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="3"/>
         <Label Content="In Stock:" HorizontalAlignment="Left" Foreground="White" FontFamily="Sitka Small Semibold" Margin="231,0,0,0"
             VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="4"/>
-        <TextBox x:Name="name" Grid.Column="1" PreviewTextInput="name_PreviewTextInput" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Name, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="2"  Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
-        <TextBox x:Name="price" PreviewTextInput="double_PreviewTextInput" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Price, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="3" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
-        <TextBox x:Name="inStock"  Grid.Column="1" PreviewTextInput="int_PreviewTextInput" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding InStock, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="4" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
+        <TextBox x:Name="name" Grid.Column="1" PreviewTextInput="name_PreviewTextInput" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Product.Name, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="2"  Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
+        <TextBox x:Name="price" PreviewTextInput="double_PreviewTextInput" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Product.Price, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="3" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
+        <TextBox x:Name="inStock"  Grid.Column="1" PreviewTextInput="int_PreviewTextInput" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Product.InStock, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="4" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
         <Button x:Name="AddOrUpdateButton" FontFamily="Sitka Small Semibold" Grid.Column="1" Content="{Binding UniqID,Converter={StaticResource zeroContent}, Mode=OneTime}"
                 HorizontalAlignment="Left" Margin="10,20,0,0" Grid.Row="5" VerticalAlignment="Top"
                  Click="AddButton_or_UpdateButton_Click"  Width="73" Height="34">

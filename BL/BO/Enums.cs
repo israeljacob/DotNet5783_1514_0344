@@ -16,15 +16,7 @@ public enum Category
     shoes,//נעלים
     coats,//מעילים
     sweaters,//סוודרים
-}
-public enum CategoryForList
-{
-    Shirts = 1,//חולצות
-    trousers,//מכנסיים
-    shoes,//נעלים
-    coats,//מעילים
-    sweaters,//סוודרים
-    All
+    all
 }
 public enum StatusOfOrder
 {

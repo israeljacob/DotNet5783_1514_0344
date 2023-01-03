@@ -28,8 +28,6 @@ public partial class ProductWindow : Window
     /// show of only one bl
     /// </summary>
     private static readonly BLApi.IBL bl = BLApi.Factory.Get;
-
-
     public BO.Product Product
     {
         get { return (BO.Product)GetValue(ProductProperty); }
@@ -39,7 +37,15 @@ public partial class ProductWindow : Window
     // Using a DependencyProperty as the backing store for Product.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty ProductProperty =
         DependencyProperty.Register("Product", typeof(BO.Product), typeof(Window), new PropertyMetadata(null));
-   
+
+    public Array Categories
+    {
+        get { return (Array)GetValue(CategoriesProperty); }
+        set { SetValue(CategoriesProperty, value); }
+    }
+    // Using a DependencyProperty as the backing store for Categories.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty CategoriesProperty =
+        DependencyProperty.Register("Categories", typeof(Array), typeof(ProductWindow), new PropertyMetadata(null));
     public ProductWindow(object sender, int id = 0)
     {
         InitializeComponent();
@@ -50,8 +56,7 @@ public partial class ProductWindow : Window
             Product = new();
             Product!.UniqID = id;
         }
-        this.DataContext = Product;
-        CategoryBox.ItemsSource = Enum.GetValues(typeof(BO.CategoryForList));
+        Categories = Enum.GetValues(typeof(BO.Category));
     }
     /// <summary>
     /// check evrey type of the user and make sure only numbers will take place in the box
@@ -127,7 +132,7 @@ public partial class ProductWindow : Window
         {
             inStockMsg.Visibility = Visibility.Hidden;
         }//to see if the user chosed somthing on the combox, if not make sure the user will see it
-        if (CategoryBox.Text.ToString() == BO.CategoryForList.All.ToString() || CategoryBox.Text == "")
+        if (CategoryBox.Text.ToString() == BO.Category.all.ToString() || CategoryBox.Text == "")
         {
             categoryBoxMsg.Visibility = Visibility.Visible;
             flag = false;

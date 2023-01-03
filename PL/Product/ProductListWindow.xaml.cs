@@ -55,6 +55,18 @@ public partial class ProductListWindow : Window
         DependencyProperty.Register("Orders", typeof(ObservableCollection<OrderForList>), typeof(Window), new PropertyMetadata(null));
 
 
+
+    public Array Categories
+    {
+        get { return (Array)GetValue(CategoriesProperty); }
+        set { SetValue(CategoriesProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for Categories.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty CategoriesProperty =
+        DependencyProperty.Register("Categories", typeof(Array), typeof(Window), new PropertyMetadata(null));
+
+
     /// <summary>
     /// add the products to the list in according to combox click
     /// </summary>
@@ -71,9 +83,7 @@ public partial class ProductListWindow : Window
             Orders = new ObservableCollection<OrderForList>(tempOrder!);
         }
         catch(Exception ex) { MessageBox.Show(ex.Message); }
-        this.CategorySelector.DataContext = Enum.GetValues(typeof(BO.CategoryForList));
-        ProductListview.DataContext = Products;
-        OrderListview.DataContext = Orders;
+        Categories = Enum.GetValues(typeof (BO.Category));
     }
     
     
@@ -87,7 +97,7 @@ public partial class ProductListWindow : Window
         ComboBox comboBox = sender as ComboBox ?? null!;
         ///if we select somthing
       
-        if ((BO.CategoryForList)CategorySelector.SelectedItem == BO.CategoryForList.All)
+        if ((BO.Category)CategorySelector.SelectedItem == BO.Category.all)
         {
             try
             {
