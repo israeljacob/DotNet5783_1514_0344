@@ -4,6 +4,49 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="Grid" x:Key="FancyGrid">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="#FF1D4A5A" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Grid" x:Key="SecondGridForList">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="Width" Value="auto"/>
+        </Style>
+        <Style TargetType="ComboBox" x:Key="ComboBoxForList">
+            <Setter Property="Margin" Value="172,10,236,0"/>
+            <Setter Property="FontFamily" Value="Sitka Small Semibold" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="BorderBrush" Value="#FF6D3434" />
+            <Setter Property="Background" Value="#FFB70D0D" />
+            <Setter Property="ItemsSource" Value="{Binding}" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="OpacityMask">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="#FFB71313" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="Button" x:Key="ButtonSet">
+            <Setter Property="FontFamily" Value="Sitka Small Semibold"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Background" Value="#FF839ED4"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Clip">
+                <Setter.Value>
+                    <RectangleGeometry RadiusX="10" RadiusY="10" Rect="2,2,190,25"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
 </Application>

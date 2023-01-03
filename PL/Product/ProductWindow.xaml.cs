@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using DocumentFormat.OpenXml.Wordprocessing;
 using DocumentFormat.OpenXml.Drawing.Charts;
+using System.Collections.ObjectModel;
 
 namespace PL;
 
@@ -27,12 +28,20 @@ public partial class ProductWindow : Window
     /// show of only one bl
     /// </summary>
     private static readonly BLApi.IBL bl = BLApi.Factory.Get;
-    public static readonly DependencyProperty ProductDependency = DependencyProperty.Register(nameof(Product), typeof(BO.Product), typeof(Window));
-    public BO.Product? Product { get => (BO.Product)GetValue(ProductDependency); private set => SetValue(ProductDependency, value); }
 
+
+    public BO.Product Product
+    {
+        get { return (BO.Product)GetValue(ProductProperty); }
+        set { SetValue(ProductProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for Product.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty ProductProperty =
+        DependencyProperty.Register("Product", typeof(BO.Product), typeof(Window), new PropertyMetadata(null));
+   
     public ProductWindow(object sender, int id = 0)
     {
-
         InitializeComponent();
         if (id != 0)
             Product = bl.Product.ProductItemForManagger(id);
@@ -41,12 +50,8 @@ public partial class ProductWindow : Window
             Product = new();
             Product!.UniqID = id;
         }
-
-        ///get the enums to combobox
-        List<BO.Category> categories = Enum.GetValues(typeof(BO.Category)).Cast<BO.Category>().ToList();
-        foreach (BO.Category category in categories)
-            if (category != BO.Category.all)
-                CategoryBox.Items.Add(category);///add in to the opened list
+        this.DataContext = Product;
+        CategoryBox.ItemsSource = Enum.GetValues(typeof(BO.CategoryForList));
     }
     /// <summary>
     /// check evrey type of the user and make sure only numbers will take place in the box
@@ -122,7 +127,7 @@ public partial class ProductWindow : Window
         {
             inStockMsg.Visibility = Visibility.Hidden;
         }//to see if the user chosed somthing on the combox, if not make sure the user will see it
-        if (CategoryBox.Text.ToString() == BO.Category.all.ToString() || CategoryBox.Text == "")
+        if (CategoryBox.Text.ToString() == BO.CategoryForList.All.ToString() || CategoryBox.Text == "")
         {
             categoryBoxMsg.Visibility = Visibility.Visible;
             flag = false;

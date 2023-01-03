@@ -13,5 +13,9 @@ namespace PL
     /// </summary>
     public partial class App : Application
     {
+        private void Setter_Selected(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

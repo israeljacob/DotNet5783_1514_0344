@@ -11,7 +11,6 @@
         <local:zeroToTrue x:Key="zeroTrue"/>
         <local:zeroToContent x:Key="zeroContent"/>
     </Window.Resources>
-   
     <Grid>
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -37,7 +36,7 @@
                  VerticalAlignment="Top" Width="120" PreviewTextInput="int_PreviewTextInput" Height="28" IsEnabled="{Binding UniqID, Converter={StaticResource zeroTrue}}"
                  Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
         <ComboBox x:Name="CategoryBox" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" 
-                  Text="{Binding Category,Mode=TwoWay}"
+                  ItemsSource="{Binding}" Text="{Binding Category ,Mode=TwoWay}"
                   Width="120" Height="27" FontFamily="Sitka Small Semibold" FontSize="18" >
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0,1">

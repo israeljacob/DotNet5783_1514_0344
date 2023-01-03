@@ -1,5 +1,4 @@
-﻿using PL.Order;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,13 +43,13 @@ public partial class MainWindow : Window
 
     private void New_order_click(object sender, RoutedEventArgs e)
     {
-        new NewOrder().Show();
+        new NewOrderWindow().Show();
         this.Close();
     }
 
     private void Track_order_click(object sender, RoutedEventArgs e)
     {
-        new TrackOrder().Show();
+        new OrderTrackWindow().Show();
         this.Close();
     }
 }

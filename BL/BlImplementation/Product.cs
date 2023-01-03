@@ -39,7 +39,29 @@ namespace BlImplementation
             catch (DO.EmptyException ex){ throw new BO.CatchetDOException(ex);  }
         }
         #endregion
-
+        public IEnumerable<BO.ProductItem> GetListOfProductItems(Func<BO.ProductItem?, bool>? func = null)
+        {
+            try
+            {
+                if (func == null)
+                    return from product in dal.Product.GetAll()
+                           select new BO.ProductItem
+                           {
+                               UniqID = product?.UniqID ?? throw new BO.MissingDataException("Product ID"),
+                               Name = product?.Name,
+                               Price = product?.Price ?? throw new BO.MissingDataException("Product price"),
+                               Category = (BO.Category)product?.Category!,
+                               InStock = product?.InStock>0? true : false,
+                               Amount = 0
+                           };
+                else
+                    return from product in GetListOfProductItems()
+                           where func(product)
+                           orderby product.UniqID
+                           select product;
+            }
+            catch (DO.EmptyException ex) { throw new BO.CatchetDOException(ex); }
+        }
         #region Product item for managger
         /// <summary>
         /// Display more features if the mameger asking product by Id

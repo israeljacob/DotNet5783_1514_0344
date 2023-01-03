@@ -71,7 +71,7 @@ public partial class ProductListWindow : Window
             Orders = new ObservableCollection<OrderForList>(tempOrder!);
         }
         catch(Exception ex) { MessageBox.Show(ex.Message); }
-        this.CategorySelector.DataContext = Enum.GetValues(typeof(BO.Category));
+        this.CategorySelector.DataContext = Enum.GetValues(typeof(BO.CategoryForList));
         ProductListview.DataContext = Products;
         OrderListview.DataContext = Orders;
     }
@@ -87,7 +87,7 @@ public partial class ProductListWindow : Window
         ComboBox comboBox = sender as ComboBox ?? null!;
         ///if we select somthing
       
-        if ((BO.Category)CategorySelector.SelectedItem == BO.Category.all)
+        if ((BO.CategoryForList)CategorySelector.SelectedItem == BO.CategoryForList.All)
         {
             try
             {
@@ -153,7 +153,7 @@ public partial class ProductListWindow : Window
         BO.OrderForList ourOrder = (BO.OrderForList)OrderListview.SelectedItem;
         if (ourOrder != null)
         {
-            new OrderWindow().ShowDialog();
+            new OrderWindow(this.Name.ToString(),ourOrder.UniqID).ShowDialog();
             try
             {
                 Orders = new(bl.Order.GetListOfOrders()!);

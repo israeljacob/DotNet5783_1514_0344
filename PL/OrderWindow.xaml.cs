@@ -21,20 +21,40 @@ namespace PL
     public partial class OrderWindow : Window
     {
         private static readonly BLApi.IBL bl = BLApi.Factory.Get;
-        public static readonly DependencyProperty ProductDependency = DependencyProperty.Register(nameof(Product), typeof(BO.Product), typeof(Window));
-        public BO.Product? Product { get => (BO.Product)GetValue(ProductDependency); private set => SetValue(ProductDependency, value); }
-
-        public OrderWindow()
+        public BO.Order Order
         {
+            get { return (BO.Order)GetValue(OrdersProperty); }
+            set { SetValue(OrdersProperty, value); }
+        }
 
+        // Using a DependencyProperty as the backing store for Orders.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty OrdersProperty =
+            DependencyProperty.Register("Order", typeof(BO.Order), typeof(Window), new PropertyMetadata(null));
+
+
+
+        public string WinName
+        {
+            get { return (string)GetValue(WinNameProperty); }
+            set { SetValue(WinNameProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for WinName.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty WinNameProperty =
+            DependencyProperty.Register("WinName", typeof(string), typeof(Window), new PropertyMetadata(""));
+
+
+        public OrderWindow(string windowName ,int id)
+        {
             InitializeComponent();
-           
+            WinName= windowName;
+            try
+            {
+                Order = bl.Order.OrderByID(id);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+            this.DataContext = WinName;
 
-            ///get the enums to combobox
-            List<BO.Category> categories = Enum.GetValues(typeof(BO.Category)).Cast<BO.Category>().ToList();
-            foreach (BO.Category category in categories)
-                if (category != BO.Category.all)
-                    CategoryBox.Items.Add(category);///add in to the opened list
         }
         /// <summary>
         /// check evrey type of the user and make sure only numbers will take place in the box
@@ -68,7 +88,7 @@ namespace PL
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void AddButton_or_UpdateButton_Click(object sender, RoutedEventArgs e)
+        private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
             Button? button = sender as Button;
             var bc = new BrushConverter();
@@ -110,7 +130,7 @@ namespace PL
             {
                 inStockMsg.Visibility = Visibility.Hidden;
             }//to see if the user chosed somthing on the combox, if not make sure the user will see it
-            if (CategoryBox.Text.ToString() == BO.Category.all.ToString() || CategoryBox.Text == "")
+            if (CategoryBox.Text.ToString() == BO.CategoryForList.All.ToString() || CategoryBox.Text == "")
             {
                 categoryBoxMsg.Visibility = Visibility.Visible;
                 flag = false;
@@ -119,58 +139,29 @@ namespace PL
             {
                 categoryBoxMsg.Visibility = Visibility.Hidden;
             }
-            if (flag)
-            {
-                if (button?.Content.ToString() == "ADD")
-                    AddButton_Click(id, priceDoble, InStock);
-                else
-                    UpdateButton_Click(id, priceDoble, InStock);
-            }
-        }
-        /// <summary>
-        /// add to the list new product
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="priceDouble"></param>
-        /// <param name="InStock"></param>
-        private void AddButton_Click(int id, double priceDouble, int InStock)
-        {
-            try
-            {
-                bl.Product.AddProduct(id, name?.Text!, priceDouble, (BO.Category)CategoryBox.SelectedItem, InStock);
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                if (ex.GetType() == typeof(BO.CatchetDOException)) { idtxt.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#DD4A48")!; }
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// update product in the chosen item in the list, if m=not make sure the user will see it
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="priceDouble"></param>
-        /// <param name="InStock"></param>
-        private void UpdateButton_Click(int id, double priceDouble, int InStock)
-        {
-            BO.Product product = new BO.Product
-            {
-                UniqID = id,
-                Name = name.Text,
-                Price = priceDouble,
-                Category = (BO.Category)CategoryBox.SelectedItem,
-                InStock = InStock
-            };
-            try
-            {
-                bl.Product.UpdateProduct(product);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //if (flag)
+            //{
+            //    if (button?.Content.ToString() == "ADD")
+            //        AddButton_Click(id, priceDoble, InStock);
+            //    else
+            //        UpdateButton_Click(id, priceDoble, InStock);
+            //}
+            //BO.Product product = new BO.Product
+            //{
+            //    UniqID = id,
+            //    Name = name.Text,
+            //    Price = priceDouble,
+            //    Category = (BO.Category)CategoryBox.SelectedItem,
+            //    InStock = InStock
+            //};
+            //try
+            //{
+            //    bl.Product.UpdateProduct(product);
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
             this.Close();
         }
         private void back_Click(object sender, RoutedEventArgs e)
