@@ -42,7 +42,7 @@ namespace PL
 
         private void ShowOrderDetails_Click(object sender, RoutedEventArgs e)
         {
-            new OrderWindow(this.Name.ToString(), TrackOrder.UniqID).Show();
+            new OrderWindow("TrackDetailsWindow", TrackOrder.UniqID).Show();
         }
 
         private void back_Click(object sender, RoutedEventArgs e)

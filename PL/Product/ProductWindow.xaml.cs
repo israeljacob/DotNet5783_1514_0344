@@ -46,45 +46,72 @@ public partial class ProductWindow : Window
     // Using a DependencyProperty as the backing store for Categories.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty CategoriesProperty =
         DependencyProperty.Register("Categories", typeof(Array), typeof(ProductWindow), new PropertyMetadata(null));
-    public ProductWindow(object sender, int id = 0)
+
+    public bool myIDCheck
+    {
+        get { return (bool)GetValue(myIDCheckProperty); }
+        set { SetValue(myIDCheckProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for myIDCheck.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty myIDCheckProperty =
+        DependencyProperty.Register("myIDCheck", typeof(bool), typeof(ProductWindow), new PropertyMetadata(false));
+
+    public bool myNameCheck
+    {
+        get { return (bool)GetValue(myNameCheckProperty); }
+        set { SetValue(myNameCheckProperty, value); }
+    } 
+
+    // Using a DependencyProperty as the backing store for myNameCheck.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty myNameCheckProperty =
+        DependencyProperty.Register("myNameCheck", typeof(bool), typeof(ProductWindow), new PropertyMetadata(false));
+
+    public bool myPriceCheck
+    {
+        get { return (bool)GetValue(myPriceCheckProperty); }
+        set { SetValue(myPriceCheckProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for myPriceCheck.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty myPriceCheckProperty =
+        DependencyProperty.Register("myPriceCheck", typeof(bool), typeof(ProductWindow), new PropertyMetadata(false));
+    public bool myCategoryCheck
+    {
+        get { return (bool)GetValue(myCategoryCheckProperty); }
+        set { SetValue(myCategoryCheckProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for myCategoryCheck.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty myCategoryCheckProperty =
+        DependencyProperty.Register("myCategoryCheck", typeof(bool), typeof(ProductWindow), new PropertyMetadata(false));
+
+    public bool myInStockCheck
+    {
+        get { return (bool)GetValue(myInStockCheckProperty); }
+        set { SetValue(myInStockCheckProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for myInStockCheck.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty myInStockCheckProperty =
+        DependencyProperty.Register("myInStockCheck", typeof(bool), typeof(ProductWindow), new PropertyMetadata(false));
+
+
+    public ProductWindow(int id = 0)
     {
         InitializeComponent();
         if (id != 0)
             Product = bl.Product.ProductItemForManagger(id);
         else
         {
-            Product = new();
-            Product!.UniqID = id;
+            BO.Product product = new();
+            product.Category = BO.Category.all;
+            Product = product;
         }
         Categories = Enum.GetValues(typeof(BO.Category));
+        
     }
-    /// <summary>
-    /// check evrey type of the user and make sure only numbers will take place in the box
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void int_PreviewTextInput(object sender, TextCompositionEventArgs e)
-    {
-        ///Only numbers..
-        Regex regex = new("^[0-9]+");
-        e.Handled= !regex.IsMatch(e.Text);
-    }
-    /// <summary>
-    /// check evrey type of the user and make sure only numbers and dote (for the price) will take place in the box
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void double_PreviewTextInput(object sender, TextCompositionEventArgs e)
-    {
-        ///Only numbers with period
-        Regex regex = new("^[0-9.]+");
-        e.Handled = !regex.IsMatch(e.Text);
-    }
-    private void name_PreviewTextInput(object sender, TextCompositionEventArgs e)
-    {
-        Regex regex = new("^[A-Z,a-z]+[0-9]*");
-        e.Handled = !regex.IsMatch(e.Text);
-    }
+   
     /// <summary>
     /// one function to see if we press "add" or "update" button
     /// </summary>
@@ -95,106 +122,77 @@ public partial class ProductWindow : Window
         Button? button = sender as Button;
         var bc = new BrushConverter();
         bool flag = true;
+        //MessageBox.Show(Product.Price.ToString());
         ///to convert it to letters , if not make sure the user will see it
-        if (!int.TryParse(idtxt.Text, out int id) || idtxt.Text == "0")
+        if ( Product.UniqID==0)
         {
-            idtxtMsg.Visibility = Visibility.Visible;
+            myIDCheck = true;
             flag = false;
         }
         else
         {
-            idtxtMsg.Visibility = Visibility.Hidden;
+            myIDCheck = false;
         }
-        if (name?.Text == "" || !Regex.IsMatch(name?.Text!, "^[a-zA-Z ]"))
+        if (Product.Name == "" || !Regex.IsMatch(Product.Name!, "^[a-zA-Z]"))
         {
-            nameMsg.Visibility = Visibility.Visible;
+            myNameCheck= true;
             flag = false;
         }
         else
         {
-           nameMsg.Visibility = Visibility.Hidden;
-        }///to convert it to double, if not make sure the user will see it
-        if (!double.TryParse(price.Text, out double priceDoble) || price.Text == "0")
+            myNameCheck = false;
+        }
+        ///to convert it to double, if not make sure the user will see it
+        if (Product.Price == 0|| price.Text == "")
         {
-            priceMsg.Visibility = Visibility.Visible;
+            myPriceCheck = true;
             flag = false;
         }
         else
         {
-            priceMsg.Visibility = Visibility.Hidden;
-        }///to convert it to int, if not make sure the user will see it
-        if (!int.TryParse(inStock.Text, out int InStock) || inStock.Text == "0")
+            myPriceCheck = false;
+        }
+        ///to convert it to int, if not make sure the user will see it
+        if (Product.InStock == 0 || inStock.Text == "")
         {
-            inStockMsg.Visibility = Visibility.Visible;
+            myInStockCheck= true;
             flag = false;
         }
         else
         {
-            inStockMsg.Visibility = Visibility.Hidden;
-        }//to see if the user chosed somthing on the combox, if not make sure the user will see it
-        if (CategoryBox.Text.ToString() == BO.Category.all.ToString() || CategoryBox.Text == "")
+            myInStockCheck = false;
+        }
+        //to see if the user chosed somthing on the combox, if not make sure the user will see it
+        if (Product.Category == BO.Category.all)
         {
-            categoryBoxMsg.Visibility = Visibility.Visible;
+            myCategoryCheck= true;
             flag = false;
         }
         else
         {
-            categoryBoxMsg.Visibility = Visibility.Hidden;
+            myCategoryCheck = false;
         }
         if (flag)
         {
-            if(button?.Content.ToString()=="ADD")
-                AddButton_Click(id, priceDoble, InStock);
-            else
-                UpdateButton_Click(id, priceDoble, InStock);
+            try
+            {
+                if (button?.Content.ToString() == "ADD")
+                    bl.Product.AddProduct(Product.UniqID, Product.Name!, Product.Price, (BO.Category)Product.Category!,Product.InStock);
+                else
+                    bl.Product.UpdateProduct(Product);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            this.Close();
         }
     }
     /// <summary>
-    /// add to the list new product
+    /// Go back to the last window
     /// </summary>
-    /// <param name="id"></param>
-    /// <param name="priceDouble"></param>
-    /// <param name="InStock"></param>
-    private void AddButton_Click(int id, double priceDouble, int InStock)
-    {
-         try
-         {
-             bl.Product.AddProduct(id, name?.Text!, priceDouble, (BO.Category)CategoryBox.SelectedItem, InStock);
-             this.Close(); 
-         }
-         catch (Exception ex)
-         {
-                 if (ex.GetType() == typeof(BO.CatchetDOException)) { idtxt.Background = (SolidColorBrush)new BrushConverter().ConvertFromString("#DD4A48")!; }
-                 MessageBox.Show(ex.Message);
-         }
-    }
-
-    /// <summary>
-    /// update product in the chosen item in the list, if m=not make sure the user will see it
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="priceDouble"></param>
-    /// <param name="InStock"></param>
-    private void UpdateButton_Click(int id, double priceDouble, int InStock)
-    {
-        BO.Product product = new BO.Product
-        {
-            UniqID = id,
-            Name = name.Text,
-            Price = priceDouble,
-            Category = (BO.Category)CategoryBox.SelectedItem,
-            InStock = InStock
-        };
-        try
-        {
-            bl.Product.UpdateProduct(product);
-        }
-        catch(Exception ex)
-        {
-            MessageBox.Show(ex.Message);
-        }
-        this.Close();
-    }
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void back_Click(object sender, RoutedEventArgs e)
     {
         this.Close();

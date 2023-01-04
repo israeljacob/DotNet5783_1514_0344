@@ -33,6 +33,18 @@ namespace PL
 
 
 
+        public Array OrderStatuses
+        {
+            get { return (Array)GetValue(OrderStatusesProperty); }
+            set { SetValue(OrderStatusesProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for OrderStatus.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty OrderStatusesProperty =
+            DependencyProperty.Register("OrderStatuses", typeof(Array), typeof(OrderWindow), new PropertyMetadata(null));
+
+
+
         public string WinName
         {
             get { return (string)GetValue(WinNameProperty); }
@@ -46,12 +58,12 @@ namespace PL
         {
             InitializeComponent();
             WinName= windowName;
+            OrderStatuses = Enum.GetValues(typeof(BO.StatusOfOrder));
             try
             {
                 Order = bl.Order.OrderByID(id);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
-            myGrid.DataContext= Order;
         }
         /// <summary>
         /// check evrey type of the user and make sure only numbers will take place in the box
@@ -82,6 +94,11 @@ namespace PL
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void backButton_Click(object sender, RoutedEventArgs e)
         {
 
         }

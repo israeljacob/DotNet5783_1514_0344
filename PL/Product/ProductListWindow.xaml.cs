@@ -125,7 +125,7 @@ public partial class ProductListWindow : Window
     /// <param name="e"></param>
     private void AddProdct_Click(object sender, RoutedEventArgs e)
     {
-        new ProductWindow(sender).ShowDialog();
+        new ProductWindow().ShowDialog();
         try
         {
             Products = new ObservableCollection<ProductForList>(bl.Product.GetListOfProducts()!);
@@ -143,7 +143,7 @@ public partial class ProductListWindow : Window
         BO.ProductForList ourProduct = (BO.ProductForList)ProductListview.SelectedItem;
          if (ourProduct != null)
          {
-            new ProductWindow(sender,ourProduct.UniqID).ShowDialog();
+            new ProductWindow(ourProduct.UniqID).ShowDialog();
             try
             {
                 Products = new ObservableCollection<ProductForList>(bl.Product.GetListOfProducts()!);
@@ -163,7 +163,7 @@ public partial class ProductListWindow : Window
         BO.OrderForList ourOrder = (BO.OrderForList)OrderListview.SelectedItem;
         if (ourOrder != null)
         {
-            new OrderWindow(this.Name.ToString(),ourOrder.UniqID).ShowDialog();
+            new OrderWindow("ProductListWindow",ourOrder.UniqID).ShowDialog();
             try
             {
                 Orders = new(bl.Order.GetListOfOrders()!);

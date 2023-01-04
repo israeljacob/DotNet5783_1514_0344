@@ -5,7 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="OrderWindow" Height="450" Width="800">
+    <Window.Resources>
+        <local:windowToBool x:Key="winToBool"/>
+        <local:windowToVisibile x:Key="winTovisible"/>
+        <local:windowToHidden x:Key="winToHidden"/>
+        <Style TargetType="Label" x:Key="myLabel">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Sitka Small Semibold"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="Label" x:Key="LeftLabel" BasedOn="{StaticResource myLabel}">
+            <Setter Property="Width" Value="120"/>
+        </Style>
+        <Style TargetType="Label" x:Key="rightLabel" BasedOn="{StaticResource myLabel}">
+            <Setter Property="Background" Value="#FF252525"/>
+            <Setter Property="Width" Value="240"/>
+        </Style>
+    </Window.Resources>
     <Grid x:Name="myGrid" Style="{StaticResource FancyGrid}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -17,47 +38,62 @@
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Id:" HorizontalAlignment="Left" Margin="231,0,0,0"
-               VerticalAlignment="Center" Width="116" FontSize="18" Foreground="White" FontFamily="Sitka Small Semibold" Height="38"/>
-        <Label Foreground="White" FontFamily="Sitka Small Semibold" Content="Name:" HorizontalAlignment="Left" Margin="231,0,0,0"
-            VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="1"/>
-        <Label Content="Mail:" HorizontalAlignment="Left" Foreground="White" FontFamily="Sitka Small Semibold" Margin="231,0,0,0"
-            VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="2"/>
-        <Label Content="Addres" Foreground="White" FontFamily="Sitka Small Semibold" HorizontalAlignment="Left" Margin="231,0,0,0"
-            VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="3"/>
-        <Label Content="Status" HorizontalAlignment="Left" Foreground="White" FontFamily="Sitka Small Semibold" Margin="231,0,0,0"
-            VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="4"/>
-        <Label Content="Total price" HorizontalAlignment="Left" Foreground="White" FontFamily="Sitka Small Semibold" Margin="231,0,0,0"
-            VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="5"/>
-        <Label Content="Items:" HorizontalAlignment="Left" Foreground="White" FontFamily="Sitka Small Semibold"
-            VerticalAlignment="Top" Width="116" FontSize="18" Grid.Row="6"/>
-        <Label x:Name="idtxt" Grid.Column="1" HorizontalAlignment="Left" Content="{Binding UniqID}"
-                 VerticalAlignment="Top" Width="120" PreviewTextInput="int_PreviewTextInput" Height="35"
-                 Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
-        <Label x:Name="NameText" Grid.Column="1" HorizontalAlignment="Left" Content="{Binding CostemorName}"
-            VerticalAlignment="Center" Width="120" PreviewTextInput="int_PreviewTextInput" Height="38"
-            Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold" Grid.Row="1"/>
-        <Label x:Name="MailText" Grid.Column="1" HorizontalAlignment="Left" Content="{Binding CostemorMail}"
-            VerticalAlignment="Center" Width="120" PreviewTextInput="int_PreviewTextInput" Height="38"
-            Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold" Grid.Row="2"/>
-        <Label x:Name="AddText" Grid.Column="1" HorizontalAlignment="Left" Content="{Binding CostemorAddres}"
-            VerticalAlignment="Center" Width="120" PreviewTextInput="int_PreviewTextInput" Height="38"
-            Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold" Grid.Row="3"/>
-        <TextBox x:Name="StatusTB" Grid.Column="1" PreviewTextInput="name_PreviewTextInput" HorizontalAlignment="Left" 
-                 TextWrapping="Wrap" Text="{Binding StatusOfOrder, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  
-                 Height="40" Grid.Row="4"  Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
-        <TextBox x:Name="TotalPriceTB" Grid.Column="1" PreviewTextInput="name_PreviewTextInput" HorizontalAlignment="Left" 
-            TextWrapping="Wrap" Text="{Binding TotalPrice, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  
+        <Label Content="Id:" Style="{StaticResource LeftLabel}"/>
+        <Label Content="Name:" Style="{StaticResource LeftLabel}"  Grid.Row="1" />
+        <Label Content="Mail:" Style="{StaticResource LeftLabel}" Grid.Row="2"/>
+        <Label Content="Addres:" Style="{StaticResource LeftLabel}" Grid.Row="3"/>
+        <Label Content="Status:" Style="{StaticResource LeftLabel}" Grid.Row="4"/>
+        <Label Content="Total price:" Style="{StaticResource LeftLabel}" Grid.Row="5"/>
+        <Label Content="Items:" Style="{StaticResource LeftLabel}" VerticalAlignment="Top" Grid.Row="6"/>
+        <Label x:Name="idtxt" Grid.Column="1" Content="{Binding Order.UniqID, Mode=TwoWay}" Style="{StaticResource rightLabel}"/>
+        <Label x:Name="NameText" Grid.Column="1" Content="{Binding Order.CustomerName, Mode=TwoWay}" Grid.Row="1" Style="{StaticResource rightLabel}"/>
+        <Label x:Name="MailText" Grid.Column="1" Content="{Binding Order.CustomerEmail, Mode=TwoWay}" Grid.Row="2" Style="{StaticResource rightLabel}"/>
+        <Label x:Name="AddressText" Grid.Column="1" Content="{Binding Order.CustomerAdress, Mode=TwoWay}" Grid.Row="3" Style="{StaticResource rightLabel}"/>
+        <ComboBox x:Name="StatusCB" Grid.Column="1" HorizontalAlignment="Left" SelectedValue="{Binding Order.StatusOfOrder, Mode=TwoWay}"
+                 ItemsSource="{Binding OrderStatuses, Mode=TwoWay}" VerticalAlignment="Center" Width="240" Visibility="{Binding WinName , Converter={StaticResource winTovisible}}"
+                 Height="40" Grid.Row="4" FontSize="18" FontFamily="Sitka Small Semibold">
+            <ComboBox.Background>
+                <LinearGradientBrush EndPoint="0,1">
+                    <GradientStop Color="#FFF0F0F0"/>
+                    <GradientStop Color="#FF797979" Offset="1"/>
+                </LinearGradientBrush>
+            </ComboBox.Background>
+        </ComboBox>
+        <Label x:Name="StatusLabel" Grid.Column="1" Content="{Binding Order.StatusOfOrder, Mode=TwoWay}"
+                  Visibility="{Binding WinName , Converter={StaticResource winToHidden}}" Style="{StaticResource rightLabel}" Grid.Row="4" />
+        <TextBox x:Name="TotalPriceTB" Grid.Column="1" HorizontalAlignment="Left" IsReadOnly="{Binding WinName ,Converter={StaticResource winToBool}}"
+            Text="{Binding Order.TotalPrice, Mode=TwoWay}" VerticalAlignment="Center" Width="240"  
             Height="40" Grid.Row="5"  Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
-        
-        <Button x:Name="UpdateButton" FontFamily="Sitka Small Semibold" Content="Update"
-                HorizontalAlignment="Left" Margin="328,163,0,0" Grid.Row="6" VerticalAlignment="Top"
-                 Click="UpdateButton_Click"  Width="72" Height="34" Grid.Column="1">
+        <ListView  x:Name="ProductListview" Background="#FF827E79" FontSize="20" ItemsSource="{Binding Order.orderItems, Mode=TwoWay}"
+                   Foreground="Black" FontFamily="Sitka Small Semibold" Margin="0,5,10,10" Grid.Row="6" Grid.Column="1">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Id" Width="auto" DisplayMemberBinding="{Binding ProductID}"></GridViewColumn>
+                    <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{Binding ProductName}"></GridViewColumn>
+                    <GridViewColumn Header="Price" Width="auto" DisplayMemberBinding="{Binding Price}"></GridViewColumn>
+                    <GridViewColumn Header="Amount" Width="auto" DisplayMemberBinding="{Binding Amount}"></GridViewColumn>
+                    <GridViewColumn Header="Total price" Width="auto" DisplayMemberBinding="{Binding TotalPrice}"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+            <ListView.Clip>
+                <RectangleGeometry RadiusX="10" RadiusY="10" Rect="2,2,500,480"/>
+            </ListView.Clip>
+        </ListView>
+        <Button x:Name="UpdateButton" FontFamily="Sitka Small Semibold" Content="Update" Visibility="{Binding WinName , Converter={StaticResource winTovisible}}"
+                HorizontalAlignment="Left" Margin="73,153,0,0" Grid.Row="6" VerticalAlignment="Top"
+                 Click="UpdateButton_Click"  Width="72" Height="34">
             <Button.Clip>
                 <RectangleGeometry RadiusX="10" RadiusY="10" Rect="1,1,70,30"/>
+            </Button.Clip>
+        </Button>
+        <Button x:Name="backButton" FontFamily="Sitka Small Semibold" Content="Back"
+                HorizontalAlignment="Left" Margin="0,153,0,0" Grid.Row="6" VerticalAlignment="Top"
+                 Click="backButton_Click"  Width="60" Height="34">
+            <Button.Clip>
+                <RectangleGeometry RadiusX="10" RadiusY="10" Rect="1,1,60,30"/>
             </Button.Clip>
         </Button>
     </Grid>

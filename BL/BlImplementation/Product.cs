@@ -1,4 +1,7 @@
 ﻿
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Wordprocessing;
+
 namespace BlImplementation
 {
     /// <summary>
@@ -136,9 +139,9 @@ namespace BlImplementation
                 int returnedID = dal.Product.Add(new DO.Product
                 {
                     UniqID = (ID >=0)? ID : throw new BO.InCorrectDetailsException("product ID", ID),
-                    Name = name?? throw new BO.MissingDataException("product name"),
+                    Name = name!=""&&name!=null? name : throw new BO.MissingDataException("product name "),
                     Price = (price >= 0) ? price : throw new BO.InCorrectDetailsException("product price", price),
-                    Category = (DO.Category)category,
+                    Category = category !=BO.Category.all? (DO.Category)category: throw new BO.InCorrectDetailsException("product category ", category),
                     InStock = (inStock > 0)? inStock : throw new BO.InCorrectDetailsException("product in stock", inStock)
                 });
             }
@@ -188,9 +191,9 @@ namespace BlImplementation
                 dal.Product.Update(new DO.Product
                 {
                     UniqID = (product.UniqID >= 0)? product.UniqID : throw new BO.InCorrectDetailsException("Product ID", product.UniqID),
-                    Name = product.Name ?? throw new BO.MissingDataException("Product name"),
+                    Name = product.Name != "" && product.Name != null ? product.Name : throw new BO.MissingDataException("product name "),
                     Price = (product.Price >0)? product.Price : throw new BO.InCorrectDetailsException("Product price", product.Price),
-                    Category = product.Category != null? (DO.Category)product.Category : throw new BO.MissingDataException("Product category"),
+                    Category = product.Category != BO.Category.all? (DO.Category)product.Category! : throw new BO.MissingDataException("Product category "),
                     InStock = (product.InStock >= 0)? product.InStock : throw new BO.InCorrectDetailsException("Product in stock", product.InStock)
             });
             }
