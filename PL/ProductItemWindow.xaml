@@ -10,15 +10,15 @@
     <Window.Resources>
         <Style TargetType="Label" x:Key="myLabel">
             <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="Margin" Value="231,33,0,0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Width" Value="116"/>
+            <Setter Property="Height" Value="28"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontFamily" Value="Sitka Small Semibold"/>
         </Style>
-        <Style TargetType="Label" x:Key="RightLabel" BasedOn="{StaticResource myLabel}">
-            
+        <Style TargetType="Label" x:Key="LeftLabel" BasedOn="{StaticResource myLabel}">
+            <Setter Property="Margin" Value="231,0,0,0"/>
         </Style>
     </Window.Resources>
     <Grid Style="{StaticResource FancyGrid}">
@@ -35,33 +35,20 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Id:" Style="{StaticResource myLabel}"/>
+        <Label Content="Id:" Style="{StaticResource LeftLabel}"/>
         <Label x:Name="idtxt" Grid.Column="1" Style="{StaticResource myLabel}"  Content="{Binding ProductItem.UniqID, Mode=TwoWay}"/>
-        <ComboBox x:Name="CategoryBox" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" 
-                  ItemsSource="{Binding Categories, Mode=TwoWay}" SelectedValue="{Binding Product.Category, Mode=TwoWay}"
-                  Width="120" Height="27" FontFamily="Sitka Small Semibold" FontSize="18">
-            <ComboBox.Background>
-                <LinearGradientBrush EndPoint="0,1">
-                    <GradientStop Color="#FFF0F0F0"/>
-                    <GradientStop Color="#FF797979" Offset="1"/>
-                </LinearGradientBrush>
-            </ComboBox.Background>
-        </ComboBox>
-        <Label Foreground="White" FontFamily="Sitka Small Semibold" Content="Category:" HorizontalAlignment="Left" Margin="231,0,0,0"
-            VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="1"/>
-        <Label Content="Name:" HorizontalAlignment="Left" Foreground="White" FontFamily="Sitka Small Semibold" Margin="231,0,0,0"
-            VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="2"/>
-        <Label Content="Price:" Foreground="White" FontFamily="Sitka Small Semibold" HorizontalAlignment="Left" Margin="231,0,0,0"
-            VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="3"/>
-        <Label Content="In Stock:" HorizontalAlignment="Left" Foreground="White" FontFamily="Sitka Small Semibold" Margin="231,0,0,0"
-            VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="4"/>
-        <TextBox x:Name="name" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Product.Name, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="2"  Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
-        <TextBox x:Name="price" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Product.Price, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="3" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
-        <TextBox x:Name="inStock"  Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Product.InStock, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="4" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
-        <Button x:Name="AddButton" Grid.Column="1" Content="ADD" HorizontalAlignment="Left" Margin="10,20,0,0"
-                Grid.Row="5" VerticalAlignment="Top"  Width="73" Height="34"/>
-        <Button x:Name="UpdateButton" Grid.Column="1" Content="UPDATE" HorizontalAlignment="Left" Margin="10,18,0,133" 
-                Grid.Row="6"  Width="73"
-                 RenderTransformOrigin="0.459,2.32"/>
+        <Label x:Name="CategoryLabel" Style="{StaticResource myLabel}" Grid.Column="1" Grid.Row="1" Content="{Binding ProductItem.Category, Mode=TwoWay}"/>
+        <Label Content="Category:" Style="{StaticResource LeftLabel}" Grid.Row="1" />
+        <Label Content="Name:" Style="{StaticResource LeftLabel}" Grid.Row="2"/>
+        <Label Content="Price:" Style="{StaticResource LeftLabel}" Grid.Row="3"/>
+        <Label Content="In Stock:" Style="{StaticResource LeftLabel}" Grid.Row="4"/>
+        <Label Content="Amount:" Style="{StaticResource LeftLabel}" Grid.Row="5"/>
+        <Label x:Name="NameLabel" Grid.Column="1" Grid.Row="2" Style="{StaticResource myLabel}"  Content="{Binding ProductItem.Name, Mode=TwoWay}"/>
+        <Label x:Name="PriceLabel" Grid.Column="1" Grid.Row="3" Style="{StaticResource myLabel}"  Content="{Binding ProductItem.Price, Mode=TwoWay}"/>
+        <Label x:Name="InStockLabel" Grid.Column="1" Grid.Row="4" Style="{StaticResource myLabel}"  Content="{Binding ProductItem.InStock, Mode=TwoWay}"/>
+        <TextBox x:Name="AmountTB" Grid.Row="5" Grid.Column="1" Text="{Binding ProductItem.Amount,Mode=TwoWay}" VerticalAlignment="Center"
+                  Width="116" HorizontalAlignment="Left" Height="29" Background="Black" Foreground="White"/>
+        <Button x:Name="BackButton" Grid.Column="1" Content="Back" HorizontalAlignment="Left" Margin="10,59,0,0"
+                Grid.Row="5" VerticalAlignment="Top"  Width="73" Height="34" Grid.RowSpan="2" Click="BackButton_Click"/>
     </Grid>
 </Window>
