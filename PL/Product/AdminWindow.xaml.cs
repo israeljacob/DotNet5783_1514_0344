@@ -24,7 +24,7 @@ namespace PL;
 /// <summary>
 /// Interaction logic for ProductListWindow.xaml
 /// </summary>
-public partial class ProductListWindow : Window
+public partial class AdminWindow : Window
 {
     /// <summary>
     /// show of only one bl
@@ -71,7 +71,7 @@ public partial class ProductListWindow : Window
     /// add the products to the list in according to combox click
     /// </summary>
     /// <param name="category"></param>
-    public ProductListWindow(BO.Category? category= null)
+    public AdminWindow(BO.Category? category= null)
     {
         InitializeComponent();
         
@@ -163,7 +163,7 @@ public partial class ProductListWindow : Window
         BO.OrderForList ourOrder = (BO.OrderForList)OrderListview.SelectedItem;
         if (ourOrder != null)
         {
-            new OrderWindow("ProductListWindow",ourOrder.UniqID).ShowDialog();
+            new OrderWindow("AdminWindow",ourOrder.UniqID).ShowDialog();
             try
             {
                 Orders = new(bl.Order.GetListOfOrders()!);

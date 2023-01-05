@@ -58,12 +58,21 @@ public class ItemExistsInOrderException : Exception
     {
     }
 }
-///Dates Exception
+///Dates Exceptions
 [Serializable]
 public class DatesException : Exception
 {
     public DatesException(String label)
        : base($" {label} is allready updated\n")
+    {
+    }
+}
+
+[Serializable]
+public class DateException : Exception
+{
+    public DateException()
+       : base("The chronological order of the dates makes no sense\n" )
     {
     }
 }

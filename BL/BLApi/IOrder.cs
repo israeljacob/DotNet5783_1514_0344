@@ -17,11 +17,8 @@ public interface IOrder
     //get list of order
     public IEnumerable<BO.OrderForList?> GetListOfOrders(Func<BO.OrderForList?,bool>? func =null);
 
-    //Update Ship Date
-    public BO.Order UpdateShipDate(int ID);
-
-    //Update Delivery Date
-    public BO.Order UpdateDeliveryDate(int ID);
+    //Update Order
+    public void UpdateOrder(BO.Order order);
 
     //Update OrderItem Amount
     public BO.OrderItem UpdateOrderItemAmount(BO.OrderItem orderItem);

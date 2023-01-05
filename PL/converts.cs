@@ -91,7 +91,7 @@ public class windowToBool : IValueConverter
     public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {
         string winName = (string)value;
-        if (winName == "ProductListWindow")
+        if (winName == "AdminWindow")
             return false;
         return true;
     }
@@ -103,7 +103,7 @@ public class windowToVisibile : IValueConverter
     public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {
         string winName = (string)value;
-        if (winName == "ProductListWindow")
+        if (winName == "AdminWindow")
             return Visibility.Visible;
         return Visibility.Hidden;
     }
@@ -116,9 +116,21 @@ public class windowToHidden : IValueConverter
     public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     {
         string winName = (string)value;
-        if (winName == "ProductListWindow")
+        if (winName == "AdminWindow")
             return Visibility.Hidden;
         return Visibility.Visible;
+    }
+    public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    { throw new NotImplementedException(); }
+}
+public class nullTovisible : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    {
+        DateTime? date = (DateTime)value;
+        if (date == null)
+            return Visibility.Visible;
+        return Visibility.Hidden;
     }
     public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
     { throw new NotImplementedException(); }

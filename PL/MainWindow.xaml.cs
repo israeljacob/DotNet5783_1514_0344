@@ -32,7 +32,7 @@ public partial class MainWindow : Window
     private void Admin_click(object sender, RoutedEventArgs e)
     {
         ///show the list of all the products
-        new ProductListWindow().Show();
+        new AdminWindow().Show();
         this.Close();
     }
 

@@ -95,145 +95,26 @@ internal class Order : BLApi.IOrder
     #endregion
 
     #region Update total price
-    public BO.Order UpdateTotalPrice(int ID, int totalPrice)
+    public void UpdateOrder(BO.Order order)
     {
-        DO.Order order;
-        try {  order = dal.Order.GetByID(ID); } //get the ID
+        if (order.DeliveryrDate < order.ShipDate || order.ShipDate<order.OrderDate)
+            throw new BO.DateException();
+        if((order.DeliveryrDate==null && order.StatusOfOrder == BO.StatusOfOrder.Delivered)|| (order.ShipDate == null && order.StatusOfOrder == BO.StatusOfOrder.Sent) 
+            ||(order.StatusOfOrder ==BO.StatusOfOrder.Sent && order.DeliveryrDate!=null)||(order.StatusOfOrder == BO.StatusOfOrder.Orderred && order.ShipDate != null) )
+            throw new BO.DateException();
+        DO.Order DOorder;
+        try {  DOorder = dal.Order.GetByID(order.UniqID); } //get the ID
         catch (DO.DoesNotExistException ex)
         {
             throw new BO.CatchetDOException(ex);
         }
-        return new BO.Order
-        {
-            UniqID = order.UniqID,
-            CustomerAdress = order.CustomerAdress,
-            CustomerEmail = order.CustomerEmail,
-            CustomerName = order.CustomerName,
-            OrderDate = order.OrderDate,
-            ShipDate = order.ShipDate,
-            DeliveryrDate = order.DeliveryrDate,
-            orderItems = (from orderItem in dal.OrderItem.GetAll(item => ((DO.OrderItem)item!).OrderID == order.UniqID)
-                          let item = (DO.OrderItem)orderItem
-                          let product = dal.Product.GetByID(item.ProductID)
-                          select new BO.OrderItem()
-                          {
-                              UniqID = item.UniqID,
-                              ProductID = item.ProductID,
-                              ProductName = product.Name,
-                              Amount = item.Amount,
-                              Price = item.Price,
-                              TotalPrice = item.Amount * item.Price,
-                          }).ToList(),
-            StatusOfOrder = BO.StatusOfOrder.Sent,
-            TotalPrice = totalPrice
-        };
+        DOorder.ShipDate = order.ShipDate;
+        DOorder.DeliveryrDate= order.DeliveryrDate;
+        dal.Order.Update(DOorder);
     }
     #endregion
 
-    #region Update ship date
-    /// <summary>
-    /// Update ship date by ID
-    /// </summary>
-    /// <param name="ID"></param>
-    /// <returns></returns>
-    /// <exception cref="AggregateException"></exception>
-    public BO.Order UpdateShipDate(int ID)
-    {
-        DO.Order order = new DO.Order();
-        try { order = dal.Order.GetByID(ID); } //get the ID
-        catch (DO.DoesNotExistException ex)
-        {
-            throw new BO.CatchetDOException(ex);
-        }
-        if (order.ShipDate != null)
-            throw new BO.DatesException("Ship date"); 
-        ///update the ship date
-        order.ShipDate= DateTime.Now;
-        try
-        {
-            dal.Order.Update(order);
-        }
-        catch (DO.DoesNotExistException ex)
-        {
-            throw new BO.CatchetDOException(ex);
-        }
-        return new BO.Order
-        {
-            UniqID = order.UniqID,
-            CustomerAdress = order.CustomerAdress,
-            CustomerEmail = order.CustomerEmail,
-            CustomerName = order.CustomerName,
-            OrderDate = order.OrderDate,
-            ShipDate = order.ShipDate,
-            DeliveryrDate = order.DeliveryrDate,
-            orderItems = (from orderItem in dal.OrderItem.GetAll(item => ((DO.OrderItem)item!).OrderID == order.UniqID)
-                          let item = (DO.OrderItem)orderItem
-                          let product = dal.Product.GetByID(item.ProductID)
-                          select new BO.OrderItem()
-                          {
-                              UniqID = item.UniqID,
-                              ProductID = item.ProductID,
-                              ProductName = product.Name,
-                              Amount = item.Amount,
-                              Price = item.Price,
-                              TotalPrice = item.Amount * item.Price,
-                          }).ToList(),
-            StatusOfOrder = BO.StatusOfOrder.Sent,
-            TotalPrice = totalPrice(order)
-        };
-    }
-    #endregion
-
-    #region Update delivery date
-    /// <summary>
-    /// Update Delivery Date by ID
-    /// </summary>
-    /// <param name="ID"></param>
-    /// <returns></returns>
-    /// <exception cref="AggregateException"></exception>
-    public BO.Order UpdateDeliveryDate(int ID)
-    {
-
-        DO.Order order = new DO.Order();
-        try { order = dal.Order.GetByID(ID); }//get the order by id
-        catch (DO.DoesNotExistException ex)
-        {
-            throw new BO.CatchetDOException(ex);
-        }
-        if (order.DeliveryrDate != null)
-           throw new BO.DatesException("Delivery date");
-        order.DeliveryrDate = DateTime.Now;
-        try
-        {
-            dal.Order.Update(order);
-        }
-        catch(DO.DoesNotExistException ex) { throw new BO.CatchetDOException(ex); }
-        return new BO.Order
-        {
-            UniqID = order.UniqID,
-            CustomerAdress = order.CustomerAdress,
-            CustomerEmail = order.CustomerEmail,
-            CustomerName = order.CustomerName,
-            OrderDate = order.OrderDate,
-            ShipDate = order.ShipDate,
-            DeliveryrDate = order.DeliveryrDate,
-            orderItems = (from orderItem in dal.OrderItem.GetAll(item => ((DO.OrderItem)item!).OrderID == order.UniqID)
-                          let item = (DO.OrderItem)orderItem
-                          let product = dal.Product.GetByID(item.ProductID)
-                          select new BO.OrderItem()
-                          {
-                              UniqID = item.UniqID,
-                              ProductID = item.ProductID,
-                              ProductName = product.Name,
-                              Amount = item.Amount,
-                              Price = item.Price,
-                              TotalPrice = item.Amount * item.Price,
-                          }).ToList(),
-            StatusOfOrder = BO.StatusOfOrder.Delivered,
-            TotalPrice = totalPrice(order)
-        };
-    }
-    #endregion
+    
 
     #region Order track
     /// <summary>

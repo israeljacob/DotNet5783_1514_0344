@@ -54,6 +54,7 @@ namespace PL
         // Using a DependencyProperty as the backing store for WinName.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty WinNameProperty =
             DependencyProperty.Register("WinName", typeof(string), typeof(Window), new PropertyMetadata(""));
+       
         public OrderWindow(string windowName ,int id)
         {
             InitializeComponent();
@@ -65,128 +66,28 @@ namespace PL
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
-        /// <summary>
-        /// check evrey type of the user and make sure only numbers will take place in the box
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void int_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            ///Only numbers..
-            Regex regex = new("^[0-9]+");
-            e.Handled = !regex.IsMatch(e.Text);
-        }
-        /// <summary>
-        /// check evrey type of the user and make sure only numbers and dote (for the price) will take place in the box
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void double_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            ///Only numbers with period
-            Regex regex = new("^[0-9.]+");
-            e.Handled = !regex.IsMatch(e.Text);
-        }
-        private void name_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            Regex regex = new("^[A-Z,a-z]+[0-9]*");
-            e.Handled = !regex.IsMatch(e.Text);
-        }
-
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-
+                try
+                {
+                    bl.Order.UpdateOrder(Order);
+                }
+                catch (Exception ex) { MessageBox.Show(ex.Message); }
+                this.Close();
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
-
+            this.Close();
         }
 
-        /// <summary>
-        /// one function to see if we press "add" or "update" button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        //        private void UpdateButton_Click(object sender, RoutedEventArgs e)
-        //        {
-        //            Button? button = sender as Button;
-        //            var bc = new BrushConverter();
-        //            bool flag = true;
-        //            ///to convert it to letters , if not make sure the user will see it
-        //            if (!int.TryParse(idtxt.Text, out int id) || idtxt.Text == "0")
-        //            {
-        //                idtxtMsg.Visibility = Visibility.Visible;
-        //                flag = false;
-        //            }
-        //            else
-        //            {
-        //                idtxtMsg.Visibility = Visibility.Hidden;
-        //            }
-        //            if (name?.Text == "" || !Regex.IsMatch(name?.Text!, "^[a-zA-Z ]"))
-        //            {
-        //                nameMsg.Visibility = Visibility.Visible;
-        //                flag = false;
-        //            }
-        //            else
-        //            {
-        //                nameMsg.Visibility = Visibility.Hidden;
-        //            }//to convert it to double, if not make sure the user will see it
-        //            if (!double.TryParse(price.Text, out double priceDoble) || price.Text == "0")
-        //            {
-        //                priceMsg.Visibility = Visibility.Visible;
-        //                flag = false;
-        //            }
-        //            else
-        //            {
-        //                priceMsg.Visibility = Visibility.Hidden;
-        //            }///to convert it to int, if not make sure the user will see it
-        //            if (!int.TryParse(inStock.Text, out int InStock) || inStock.Text == "0")
-        //            {
-        //                inStockMsg.Visibility = Visibility.Visible;
-        //                flag = false;
-        //            }
-        //            else
-        //            {
-        //                inStockMsg.Visibility = Visibility.Hidden;
-        //            }//to see if the user chosed somthing on the combox, if not make sure the user will see it
-        //            if (CategoryBox.Text.ToString() == BO.CategoryForList.All.ToString() || CategoryBox.Text == "")
-        //            {
-        //                categoryBoxMsg.Visibility = Visibility.Visible;
-        //                flag = false;
-        //            }
-        //            else
-        //            {
-        //                categoryBoxMsg.Visibility = Visibility.Hidden;
-        //            }
-        //            //if (flag)
-        //            //{
-        //            //    if (button?.Content.ToString() == "ADD")
-        //            //        AddButton_Click(id, priceDoble, InStock);
-        //            //    else
-        //            //        UpdateButton_Click(id, priceDoble, InStock);
-        //            //}
-        //            //BO.Product product = new BO.Product
-        //            //{
-        //            //    UniqID = id,
-        //            //    Name = name.Text,
-        //            //    Price = priceDouble,
-        //            //    Category = (BO.Category)CategoryBox.SelectedItem,
-        //            //    InStock = InStock
-        //            //};
-        //            //try
-        //            //{
-        //            //    bl.Product.UpdateProduct(product);
-        //            //}
-        //            //catch (Exception ex)
-        //            //{
-        //            //    MessageBox.Show(ex.Message);
-        //            //}
-        //            this.Close();
-        //        }
-        //        private void back_Click(object sender, RoutedEventArgs e)
-        //        {
-        //            this.Close();
-        //        }
+        private void DateButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button? button = (Button)sender;
+            if(button.Content.ToString() == "Sent")
+                Order.ShipDate= DateTime.Now;
+            else
+                Order.DeliveryrDate= DateTime.Now;
+        }
     }
 }
