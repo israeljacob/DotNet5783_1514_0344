@@ -66,7 +66,6 @@ public partial class AdminWindow : Window
     public static readonly DependencyProperty CategoriesProperty =
         DependencyProperty.Register("Categories", typeof(Array), typeof(Window), new PropertyMetadata(null));
 
-
     /// <summary>
     /// add the products to the list in according to combox click
     /// </summary>

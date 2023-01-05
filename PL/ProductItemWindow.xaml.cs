@@ -31,7 +31,7 @@ namespace PL
 
         // Using a DependencyProperty as the backing store for ProductItem.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ProductItemProperty =
-            DependencyProperty.Register("ProductItem", typeof(ProductItem), typeof(ProductItemWindow), new PropertyMetadata(0));
+            DependencyProperty.Register("ProductItem", typeof(ProductItem), typeof(ProductItemWindow), new PropertyMetadata(null));
 
 
         public ProductItemWindow(ObservableCollection<ProductItem> productItems, int id)
