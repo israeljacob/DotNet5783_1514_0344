@@ -81,7 +81,7 @@
         <Label Grid.Column="1" Content="{Binding Order.StatusOfOrder, Mode=TwoWay}"
                   Visibility="{Binding WinName , Converter={StaticResource WinToHidden}}" Style="{StaticResource rightLabel}" Grid.Row="4" Height="38" Width="240" />
         <Label  Grid.Column="1" Content="{Binding Order.OrderDate, Mode=TwoWay}" Grid.Row="5" Style="{StaticResource rightLabel}" Height="38" Width="240"/>
-        <Label Grid.Column="1" Content="{Binding Order.ShipDate, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="6" Style="{StaticResource rightLabel}" Height="38" Width="240"/>
+        <Label Grid.Column="1" Content="{Binding Order.ShipDate, Mode=TwoWay}" Grid.Row="6" Style="{StaticResource rightLabel}" Height="38" Width="240"/>
         <Button Foreground="Black" FontSize="20" Width="70" Margin="0,0,330,3" Content="Sent" Grid.Column="2" Grid.Row="6" Visibility="{Binding Order.ShipDate, Converter={StaticResource NullToVisible}}" IsEnabled="{Binding WinName , Converter={StaticResource WinToBool}}" Click="DateButton_Click"/>
         <Label Grid.Column="1" Content="{Binding Order.DeliveryrDate, Mode=TwoWay}" Grid.Row="7" Style="{StaticResource rightLabel}" Height="38" Width="240"/>
         <Button Foreground="Black" Padding="0,0,220,0" FontSize="10" Margin="0,31,116,3" Content="Deliverred" Grid.Column="2" Grid.Row="6" Visibility="{Binding Order.DeliveryrDate, Converter={StaticResource NullToVisible}, Mode=TwoWay}" IsEnabled="{Binding WinName , Converter={StaticResource WinToBool}}" Click="DateButton_Click" Grid.RowSpan="2"/>
