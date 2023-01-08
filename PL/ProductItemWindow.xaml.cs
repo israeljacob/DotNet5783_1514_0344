@@ -37,7 +37,7 @@ namespace PL
 
 
 
-        public ProductItemWindow(ObservableCollection<ProductItem> productItems, int id)
+        public ProductItemWindow( ObservableCollection<ProductItem> productItems, int id)
         {
             InitializeComponent();
             ProductItem = productItems.FirstOrDefault(pro => pro.UniqID==id)!;

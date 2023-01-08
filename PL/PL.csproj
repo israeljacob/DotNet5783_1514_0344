@@ -14,6 +14,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Order\**" />
+    <Compile Remove="Product\**" />
+    <EmbeddedResource Remove="Order\**" />
+    <EmbeddedResource Remove="Product\**" />
+    <None Remove="Order\**" />
+    <None Remove="Product\**" />
+    <Page Remove="Order\**" />
+    <Page Remove="Product\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="admin.png" />
     <None Remove="Best-Affordable-Clothing-Stores-MAINIMAGE - Copy.jpg" />
     <None Remove="Best-Affordable-Clothing-Stores-MAINIMAGE.jpg" />
@@ -36,11 +47,6 @@
     </Resource>
     <Resource Include="pictures\Cool Text - Your fashion in one place 425292710568804.png" />
     <Resource Include="pictures\cooltext425292820321232.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Order\" />
-    <Folder Include="Product\" />
   </ItemGroup>
 
 </Project>

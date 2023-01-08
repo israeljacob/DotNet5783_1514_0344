@@ -1,8 +1,8 @@
 ﻿using BO;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -100,6 +100,20 @@ namespace PL
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
+        }
+
+
+        private void cart_Click(object sender, RoutedEventArgs e)
+        {
+            Cart cart = new Cart();
+            foreach (var item in ProductItems)
+                if (item.Amount > 0)
+                    bl.Cart.AddToCart(cart, item.UniqID);
+            foreach (var item in ProductItems)
+                if (item.Amount > 1)
+                    bl.Cart.UpdateCart(cart, item.UniqID,item.Amount);
+           new CartViewWindow(cart).ShowDialog();
+            this.Close();
         }
     }
 }
