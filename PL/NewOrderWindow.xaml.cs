@@ -93,6 +93,7 @@ namespace PL
             if (ourProduct != null)
             {
                 new ProductItemWindow(ProductItems, ourProduct.UniqID).ShowDialog();
+                
                 try
                 {
                     ProductItems = new(bl.Product.GetListOfProductItems()!);

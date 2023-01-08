@@ -1,4 +1,5 @@
 ﻿using BO;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,22 +23,24 @@ namespace PL
     public partial class ProductItemWindow : Window
     {
 
-
+        BLApi.IBL bL = BLApi.Factory.Get;
         public ProductItem ProductItem
         {
-            get { return (ProductItem)GetValue(ProductItemProperty); }
-            set { SetValue(ProductItemProperty, value); }
+            get { return (ProductItem)GetValue(OrderItemProperty); }
+            set { SetValue(OrderItemProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for ProductItem.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ProductItemProperty =
+        public static readonly DependencyProperty OrderItemProperty =
             DependencyProperty.Register("ProductItem", typeof(ProductItem), typeof(ProductItemWindow), new PropertyMetadata(null));
+
+
 
 
         public ProductItemWindow(ObservableCollection<ProductItem> productItems, int id)
         {
             InitializeComponent();
-            ProductItem = productItems.FirstOrDefault(pro => pro.UniqID == id)!;
+            ProductItem = productItems.FirstOrDefault(pro => pro.UniqID==id)!;
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

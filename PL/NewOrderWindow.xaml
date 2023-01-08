@@ -44,6 +44,12 @@
                     <RectangleGeometry RadiusX="10" RadiusY="10" Rect="2,2,190,25"/>
                 </Button.Clip>
             </Button>
+            <Button x:Name="back_Copy" Content="back" Grid.Row="2" Click="back_Click"
+                HorizontalAlignment="Left" Margin="595,5,0,0" Padding="5" FontFamily="Sitka Small Semibold" FontSize="20" Width="195" Background="#FF839ED4">
+                <Button.Clip>
+                    <RectangleGeometry RadiusX="10" RadiusY="10" Rect="2,2,190,25"/>
+                </Button.Clip>
+            </Button>
         </Grid>
     </Grid>
 </Window>

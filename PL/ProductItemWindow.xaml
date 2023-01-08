@@ -46,8 +46,8 @@
         <Label x:Name="NameLabel" Grid.Column="1" Grid.Row="2" Style="{StaticResource myLabel}"  Content="{Binding ProductItem.Name, Mode=TwoWay}"/>
         <Label x:Name="PriceLabel" Grid.Column="1" Grid.Row="3" Style="{StaticResource myLabel}"  Content="{Binding ProductItem.Price, Mode=TwoWay}"/>
         <Label x:Name="InStockLabel" Grid.Column="1" Grid.Row="4" Style="{StaticResource myLabel}"  Content="{Binding ProductItem.InStock, Mode=TwoWay}"/>
-        <TextBox x:Name="AmountTB" Grid.Row="5" Grid.Column="1" Text="{Binding ProductItem.Amount,Mode=TwoWay}" VerticalAlignment="Center"
-                  Width="116" HorizontalAlignment="Left" Height="29" Background="Black" Foreground="White"/>
+        <TextBox x:Name="AmountTB" Grid.Row="5" Grid.Column="1" Text="{Binding ProductItem.Amount,Mode=TwoWay}"
+                  Width="116" HorizontalAlignment="Left" Background="Black" Foreground="White" Margin="0,17,0,0" Height="29" VerticalAlignment="Top"/>
         <Button x:Name="BackButton" Grid.Column="1" Content="Back" HorizontalAlignment="Left" Margin="10,59,0,0"
                 Grid.Row="5" VerticalAlignment="Top"  Width="73" Height="34" Grid.RowSpan="2" Click="BackButton_Click"/>
     </Grid>
