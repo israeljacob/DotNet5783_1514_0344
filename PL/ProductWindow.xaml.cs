@@ -99,7 +99,6 @@ public partial class ProductWindow : Window
 
     public ProductWindow(int id = 0)
     {
-        InitializeComponent();
         if (id != 0)
             Product = bl.Product.ProductItemForManagger(id);
         else
@@ -109,7 +108,7 @@ public partial class ProductWindow : Window
             Product = product;
         }
         Categories = Enum.GetValues(typeof(BO.Category));
-        
+        InitializeComponent();
     }
    
     /// <summary>
@@ -124,7 +123,7 @@ public partial class ProductWindow : Window
         bool flag = true;
         //MessageBox.Show(Product.Price.ToString());
         ///to convert it to letters , if not make sure the user will see it
-        if ( Product.UniqID==0)
+        if (Product.UniqID==0)
         {
             myIDCheck = true;
             flag = false;
@@ -143,7 +142,7 @@ public partial class ProductWindow : Window
             myNameCheck = false;
         }
         ///to convert it to double, if not make sure the user will see it
-        if (Product.Price == 0|| price.Text == "")
+        if (Product.Price == 0)
         {
             myPriceCheck = true;
             flag = false;
@@ -153,7 +152,7 @@ public partial class ProductWindow : Window
             myPriceCheck = false;
         }
         ///to convert it to int, if not make sure the user will see it
-        if (Product.InStock == 0 || inStock.Text == "")
+        if (Product.InStock == 0)
         {
             myInStockCheck= true;
             flag = false;

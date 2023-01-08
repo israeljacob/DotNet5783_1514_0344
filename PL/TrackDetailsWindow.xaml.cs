@@ -36,8 +36,6 @@ namespace PL
         {
             InitializeComponent();
             TrackOrder= orderTracking;
-            this.DataContext = TrackOrder;
-            OrderTrackLV.DataContext = TrackOrder.ProgressOfOrder;
         }
 
         private void ShowOrderDetails_Click(object sender, RoutedEventArgs e)

@@ -99,8 +99,8 @@ internal class Order : BLApi.IOrder
     {
         if (order.DeliveryrDate < order.ShipDate || order.ShipDate<order.OrderDate)
             throw new BO.DateException();
-        if((order.DeliveryrDate==null && order.StatusOfOrder == BO.StatusOfOrder.Delivered)|| (order.ShipDate == null && order.StatusOfOrder == BO.StatusOfOrder.Sent) 
-            ||(order.StatusOfOrder ==BO.StatusOfOrder.Sent && order.DeliveryrDate!=null)||(order.StatusOfOrder == BO.StatusOfOrder.Orderred && order.ShipDate != null) )
+        if(((order.DeliveryrDate==null || order.ShipDate ==null) && order.StatusOfOrder == BO.StatusOfOrder.Delivered)|| (order.ShipDate == null && order.StatusOfOrder == BO.StatusOfOrder.Sent) 
+            ||(order.StatusOfOrder ==BO.StatusOfOrder.Sent && order.DeliveryrDate!=null)||(order.StatusOfOrder == BO.StatusOfOrder.Orderred && (order.ShipDate != null || order.DeliveryrDate != null)))
             throw new BO.DateException();
         DO.Order DOorder;
         try {  DOorder = dal.Order.GetByID(order.UniqID); } //get the ID

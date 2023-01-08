@@ -28,10 +28,10 @@
         <Grid.Background>
             <ImageBrush ImageSource="pictures/Best-Affordable-Clothing-Stores-MAINIMAGE.jpg" Stretch="None"/>
         </Grid.Background>
-        <Button x:Name="Admin" Content="Admin" Click="Admin_click"  Margin="486,95,0,261" />
-        <Button x:Name="User" Content="User" Click="User_click" Margin="491,217,0,139"/>
-        <Button x:Name="NewOrder" Content="New order" Click="New_order_click" Margin="40,217,0,139"/>
-        <Button x:Name="TrackOrder" Content="Track order" Click="Track_order_click" FontSize="24" Margin="40,95,0,261"/>
+        <Button Content="Admin" Click="Admin_click"  Margin="486,95,0,261" />
+        <Button Content="User" Click="User_click" Margin="491,217,0,139"/>
+        <Button Content="New order" Click="New_order_click" Margin="40,217,0,139"/>
+        <Button Content="Track order" Click="Track_order_click" FontSize="24" Margin="40,95,0,261"/>
         <Image Source="pictures/user.png" Margin="429,200,309,122" RenderTransformOrigin="3.705,0.508"/>
         <Image Source="pictures/admin.png" Margin="428,97,314,263" RenderTransformOrigin="3.705,0.508"/>
         <Image Height="100" Margin="90,16,58,318" Source="pictures/cooltext425292820321232.png" OpacityMask="#FF9C9292"/>

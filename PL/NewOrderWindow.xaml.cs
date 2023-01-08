@@ -62,7 +62,7 @@ namespace PL
             ComboBox comboBox = sender as ComboBox ?? null!;
             ///if we select somthing
 
-            if ((BO.Category)CategorySelector.SelectedItem == BO.Category.all)
+            if ((BO.Category)(sender as ComboBox)?.SelectedItem! == BO.Category.all)
             {
                 try
                 {
@@ -72,7 +72,7 @@ namespace PL
             }
             else
             {
-                Func<BO.ProductItem?, bool> func = product => product?.Category == (BO.Category)CategorySelector.SelectedItem;
+                Func<BO.ProductItem?, bool> func = product => product?.Category == (BO.Category)(sender as ComboBox)?.SelectedItem!;
                 try
                 {
                     ProductItems = new(bl.Product.GetListOfProductItems(func)!);
@@ -89,7 +89,7 @@ namespace PL
 
         private void ProductItemListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            BO.ProductItem ourProduct = (BO.ProductItem)ProductItemListview.SelectedItem;
+            BO.ProductItem ourProduct = (BO.ProductItem)(sender as ListView)?.SelectedItem!;
             if (ourProduct != null)
             {
                 new ProductItemWindow(ProductItems, ourProduct.UniqID).ShowDialog();

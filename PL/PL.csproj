@@ -40,6 +40,7 @@
 
   <ItemGroup>
     <Folder Include="Order\" />
+    <Folder Include="Product\" />
   </ItemGroup>
 
 </Project>

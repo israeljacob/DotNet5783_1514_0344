@@ -93,10 +93,9 @@ public partial class AdminWindow : Window
     /// <param name="e"></param>
     private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ComboBox comboBox = sender as ComboBox ?? null!;
         ///if we select somthing
       
-        if ((BO.Category)CategorySelector.SelectedItem == BO.Category.all)
+        if ((BO.Category)(sender as ComboBox)?.SelectedItem! == BO.Category.all)
         {
             try
             {
@@ -106,7 +105,7 @@ public partial class AdminWindow : Window
         }
         else
         {
-            Func<BO.ProductForList?, bool> func = product => product?.Category == (BO.Category)CategorySelector.SelectedItem;
+            Func<BO.ProductForList?, bool> func = product => product?.Category == (BO.Category)(sender as ComboBox)?.SelectedItem!;
             try
             {
                 Products = new ObservableCollection<ProductForList>(bl.Product.GetListOfProducts(func)!);
@@ -139,7 +138,7 @@ public partial class AdminWindow : Window
     /// <param name="e"></param>
     private void ProductListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        BO.ProductForList ourProduct = (BO.ProductForList)ProductListview.SelectedItem;
+        BO.ProductForList ourProduct = (BO.ProductForList)(sender as ListView)?.SelectedItem!;
          if (ourProduct != null)
          {
             new ProductWindow(ourProduct.UniqID).ShowDialog();
@@ -159,7 +158,7 @@ public partial class AdminWindow : Window
 
     private void OrderListview_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        BO.OrderForList ourOrder = (BO.OrderForList)OrderListview.SelectedItem;
+        BO.OrderForList ourOrder = (BO.OrderForList)(sender as ListView)?.SelectedItem!;
         if (ourOrder != null)
         {
             new OrderWindow("AdminWindow",ourOrder.UniqID).ShowDialog();

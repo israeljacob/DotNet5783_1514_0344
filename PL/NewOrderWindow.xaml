@@ -8,21 +8,21 @@
         DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="NewOrderWindow" Height="450" Width="800">
     <Grid>
-        <Grid Name="MainGrid1" Style="{StaticResource FancyGrid}">
+        <Grid Style="{StaticResource FancyGrid}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40*"/>
                 <RowDefinition Height="500*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid Style="{StaticResource SecondGridForList}">
-                <ComboBox Name="CategorySelector" Style="{StaticResource ComboBoxForList}" ItemsSource="{Binding Categories}" Height="29" Margin="172,0,236,0" VerticalAlignment="Center" SelectionChanged="CategorySelector_SelectionChanged">
+                <ComboBox Style="{StaticResource ComboBoxForList}" ItemsSource="{Binding Categories}" Height="29" Margin="172,0,236,0" VerticalAlignment="Center" SelectionChanged="CategorySelector_SelectionChanged">
                     <ComboBox.Effect>
                         <DropShadowEffect/>
                     </ComboBox.Effect>
                 </ComboBox>
-                <Label x:Name="ComboboxLabal" Content="Category:" FontSize="18" Background="#FFE8E4E4" Margin="32,1,613,-1" Padding="25,0,0,5"/>
+                <Label Content="Category:" FontSize="18" Background="#FFE8E4E4" Margin="32,1,613,-1" Padding="25,0,0,5"/>
             </Grid>
-            <ListView  x:Name="ProductItemListview" Background="#FF827E79" FontSize="16" ItemsSource="{Binding ProductItems,Mode=TwoWay}" Width="650"
+            <ListView Background="#FF827E79" FontSize="16" ItemsSource="{Binding ProductItems,Mode=TwoWay}" Width="650"
                        Foreground="Black" FontFamily="Sitka Small Semibold" Margin="116,29,34,0" Grid.RowSpan="2" SelectionChanged="ProductItemListview_SelectionChanged"  >
                 <ListView.View>
                     <GridView>
@@ -38,7 +38,7 @@
                     <RectangleGeometry RadiusX="10" RadiusY="10" Rect="2,2,500,480"/>
                 </ListView.Clip>
             </ListView>
-            <Button x:Name="back" Content="back" Grid.Row="2" Click="back_Click"
+            <Button Content="back" Grid.Row="2" Click="back_Click"
                 HorizontalAlignment="Left" Margin="18,10,0,-5" Padding="5" FontFamily="Sitka Small Semibold" FontSize="20" Width="195" Background="#FF839ED4">
                 <Button.Clip>
                     <RectangleGeometry RadiusX="10" RadiusY="10" Rect="2,2,190,25"/>

@@ -8,11 +8,10 @@
         DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="OrderWindow" Height="450" Width="800">
     <Window.Resources>
-        <local:windowToBool x:Key="winToBool"/>
-        <local:windowToVisibile x:Key="winTovisible"/>
-        <local:windowToHidden x:Key="winToHidden"/>
-        <local:trueToVisible x:Key="trueVisible"/>
-        <local:nullTovisible x:Key="nullTovisible"/>
+        <local:NullToVisible x:Key="NullToVisible"/>
+        <local:WinToVisible x:Key="WinToVisible"/>
+        <local:WinToHidden x:Key="WinToHidden"/>
+        <local:WinToBool x:Key="WinToBool"/>
         <Style TargetType="Button">
             <Setter Property="FontFamily" Value="Sitka Small Semibold"/>
             <Setter Property="Clip">
@@ -37,7 +36,7 @@
             <Setter Property="Width" Value="240"/>
         </Style>
     </Window.Resources>
-    <Grid x:Name="myGrid" Style="{StaticResource FancyGrid}">
+    <Grid  Style="{StaticResource FancyGrid}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -65,12 +64,12 @@
         <Label Content="Delivery date:" Style="{StaticResource LeftLabel}" Grid.Row="7" Width="140" Height="38"/>
         <Label Content="Total price:" Style="{StaticResource LeftLabel}" Grid.Row="8" Height="38" Width="120"/>
         <Label Content="Items:" Style="{StaticResource LeftLabel}" VerticalAlignment="Top" Grid.Row="8" Height="38" Margin="0,31,0,0" Grid.RowSpan="2" Width="120"/>
-        <Label x:Name="idtxt" Grid.Column="1" Content="{Binding Order.UniqID, Mode=TwoWay}" Style="{StaticResource rightLabel}" Height="38" Width="240"/>
-        <Label x:Name="NameText" Grid.Column="1" Content="{Binding Order.CustomerName, Mode=TwoWay}" Grid.Row="1" Style="{StaticResource rightLabel}" Height="38" Width="240"/>
-        <Label x:Name="MailText" Grid.Column="1" Content="{Binding Order.CustomerEmail, Mode=TwoWay}" Grid.Row="2" Style="{StaticResource rightLabel}" Height="38" Width="240"/>
-        <Label x:Name="AddressText" Grid.Column="1" Content="{Binding Order.CustomerAdress, Mode=TwoWay}" Grid.Row="3" Style="{StaticResource rightLabel}" Height="38" Width="240"/>
-        <ComboBox x:Name="StatusCB" Grid.Column="1" HorizontalAlignment="Left" SelectedValue="{Binding Order.StatusOfOrder, Mode=TwoWay}"
-                 ItemsSource="{Binding OrderStatuses, Mode=TwoWay}" VerticalAlignment="Center" Width="240" Visibility="{Binding WinName , Converter={StaticResource winTovisible}}"
+        <Label Grid.Column="1" Content="{Binding Order.UniqID, Mode=TwoWay}" Style="{StaticResource rightLabel}" Height="38" Width="240"/>
+        <Label Grid.Column="1" Content="{Binding Order.CustomerName, Mode=TwoWay}" Grid.Row="1" Style="{StaticResource rightLabel}" Height="38" Width="240"/>
+        <Label Grid.Column="1" Content="{Binding Order.CustomerEmail, Mode=TwoWay}" Grid.Row="2" Style="{StaticResource rightLabel}" Height="38" Width="240"/>
+        <Label Grid.Column="1" Content="{Binding Order.CustomerAdress, Mode=TwoWay}" Grid.Row="3" Style="{StaticResource rightLabel}" Height="38" Width="240"/>
+        <ComboBox Grid.Column="1" HorizontalAlignment="Left" SelectedValue="{Binding Order.StatusOfOrder, Mode=TwoWay}"
+                 ItemsSource="{Binding OrderStatuses, Mode=TwoWay}" VerticalAlignment="Center" Width="240" Visibility="{Binding WinName , Converter={StaticResource WinToVisible}}"
                  Height="40" Grid.Row="4" FontSize="18" FontFamily="Sitka Small Semibold">
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0,1">
@@ -79,15 +78,15 @@
                 </LinearGradientBrush>
             </ComboBox.Background>
         </ComboBox>
-        <Label x:Name="StatusLabel" Grid.Column="1" Content="{Binding Order.StatusOfOrder, Mode=TwoWay}"
-                  Visibility="{Binding WinName , Converter={StaticResource winToHidden}}" Style="{StaticResource rightLabel}" Grid.Row="4" Height="38" Width="240" />
-        <Label x:Name="OrderDateText" Grid.Column="1" Content="{Binding Order.OrderDate, Mode=TwoWay}" Grid.Row="5" Style="{StaticResource rightLabel}" Height="38" Width="240"/>
-        <Label x:Name="ShipDateText" Grid.Column="1" Content="{Binding Order.ShipDate, Mode=TwoWay}" Grid.Row="6" Style="{StaticResource rightLabel}" Height="38" Width="240"/>
-        <Button x:Name="SentButton" Foreground="Black" Content="Sent" Grid.Column="2" Grid.Row="6" Visibility="{Binding Order.ShipDate, Converter={StaticResource nullTovisible}}" IsEnabled="{Binding WinName , Converter={StaticResource winToBool}}" Click="DateButton_Click"/>
-        <Label x:Name="DeliveryDateText" Grid.Column="1" Content="{Binding Order.DeliveryrDate, Mode=TwoWay}" Grid.Row="7" Style="{StaticResource rightLabel}" Height="38" Width="240"/>
-        <Button x:Name="DeliverredButton" Foreground="Black" Content="Deliverred" Grid.Column="2" Grid.Row="7" Visibility="{Binding Order.DeliveryrDate, Converter={StaticResource nullTovisible}, Mode=TwoWay}" IsEnabled="{Binding WinName , Converter={StaticResource winToBool}}" Click="DateButton_Click"/>
-        <Label x:Name="TotalPriceLabel" Grid.Column="1" Style="{StaticResource rightLabel}" Content="{Binding Order.TotalPrice, Mode=TwoWay}" Grid.Row="8" Height="38" Width="240" />
-        <ListView  x:Name="ProductListview" Background="#FF827E79" FontSize="20" ItemsSource="{Binding Order.orderItems, Mode=TwoWay}"
+        <Label Grid.Column="1" Content="{Binding Order.StatusOfOrder, Mode=TwoWay}"
+                  Visibility="{Binding WinName , Converter={StaticResource WinToHidden}}" Style="{StaticResource rightLabel}" Grid.Row="4" Height="38" Width="240" />
+        <Label  Grid.Column="1" Content="{Binding Order.OrderDate, Mode=TwoWay}" Grid.Row="5" Style="{StaticResource rightLabel}" Height="38" Width="240"/>
+        <Label Grid.Column="1" Content="{Binding Order.ShipDate, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="6" Style="{StaticResource rightLabel}" Height="38" Width="240"/>
+        <Button Foreground="Black" FontSize="20" Width="70" Margin="0,0,330,3" Content="Sent" Grid.Column="2" Grid.Row="6" Visibility="{Binding Order.ShipDate, Converter={StaticResource NullToVisible}}" IsEnabled="{Binding WinName , Converter={StaticResource WinToBool}}" Click="DateButton_Click"/>
+        <Label Grid.Column="1" Content="{Binding Order.DeliveryrDate, Mode=TwoWay}" Grid.Row="7" Style="{StaticResource rightLabel}" Height="38" Width="240"/>
+        <Button Foreground="Black" Padding="0,0,220,0" FontSize="10" Margin="0,31,116,3" Content="Deliverred" Grid.Column="2" Grid.Row="6" Visibility="{Binding Order.DeliveryrDate, Converter={StaticResource NullToVisible}, Mode=TwoWay}" IsEnabled="{Binding WinName , Converter={StaticResource WinToBool}}" Click="DateButton_Click" Grid.RowSpan="2"/>
+        <Label Grid.Column="1" Style="{StaticResource rightLabel}" Content="{Binding Order.TotalPrice, Mode=TwoWay}" Grid.Row="8" Height="38" Width="240" />
+        <ListView  Background="#FF827E79" FontSize="20" ItemsSource="{Binding Order.orderItems, Mode=TwoWay}"
                    Foreground="Black" Grid.ColumnSpan="2" FontFamily="Sitka Small Semibold" Margin="0,5,10,10" Grid.Row="9" Grid.Column="1">
             <ListView.View>
                 <GridView>
@@ -102,10 +101,10 @@
                 <RectangleGeometry RadiusX="10" RadiusY="10" Rect="2,2,500,480"/>
             </ListView.Clip>
         </ListView>
-        <Button x:Name="UpdateButton"  Content="Update" Visibility="{Binding WinName , Converter={StaticResource winTovisible}}"
+        <Button Content="Update" Visibility="{Binding WinName , Converter={StaticResource WinToVisible}}"
                 HorizontalAlignment="Left" Margin="73,120,0,0" Grid.Row="9" VerticalAlignment="Top"
                  Click="UpdateButton_Click"  Width="72" Height="34"/>
-        <Button x:Name="backButton" Content="Back"
+        <Button Content="Back"
                 HorizontalAlignment="Left" Margin="0,120,0,0" Grid.Row="9" VerticalAlignment="Top"
                  Click="backButton_Click"  Width="60" Height="34"/>
     </Grid>

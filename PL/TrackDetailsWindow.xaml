@@ -5,14 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="TrackDetailsWindow" Height="450" Width="800">
     <Window.Resources>
         <Style TargetType="Button" BasedOn="{StaticResource ButtonSet}"/>
     </Window.Resources>
-    <Grid Name="MainGrid1" Style="{StaticResource FancyGrid}">
+    <Grid Style="{StaticResource FancyGrid}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="500*"/>
+            <RowDefinition Height="29*"/>
+            <RowDefinition Height="361*"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid Style="{StaticResource SecondGridForList}">
@@ -23,12 +25,12 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <Label Content="ID:" FontSize="12" Background="White"/>
-            <Label x:Name="OrderID" Content="{Binding UniqID}" FontSize="12" Grid.Column="1" Background="White"/>
+            <Label Content="{Binding UniqID}" FontSize="12" Grid.Column="1" Background="White"/>
             <Label Content="Status:" FontSize="12" Grid.Column="2" Background="White"/>
-            <Label x:Name="StatusOfOrder" Content="{Binding StatusOfOrder}" FontSize="12" Background="White" Grid.Column="3"/>
+            <Label Content="{Binding StatusOfOrder}" FontSize="12" Background="White" Grid.Column="3"/>
         </Grid>
-        <ListView  x:Name="OrderTrackLV" Background="#FF827E79" FontSize="18" ItemsSource="{Binding Mode=OneWay}"
-                   Foreground="Black" FontFamily="Sitka Small Semibold" Margin="125,32,125,10" Grid.RowSpan="2" Grid.Row="1" >
+        <ListView Background="#FF827E79" FontSize="18" ItemsSource="{Binding TrackOrder.ProgressOfOrder, Mode=OneWay}"
+                   Foreground="Black" FontFamily="Sitka Small Semibold" Margin="125,32,125,10" Grid.RowSpan="3" Grid.Row="1" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Updates" Width="auto" DisplayMemberBinding="{Binding}"></GridViewColumn>
@@ -38,9 +40,9 @@
                 <RectangleGeometry RadiusX="10" RadiusY="10" Rect="2,2,500,480"/>
             </ListView.Clip>
         </ListView>
-        <Button x:Name="OrderDetails" Content="order details" Grid.Row="2" Width="220"
+        <Button Content="order details" Grid.Row="3" Width="220"
                 HorizontalAlignment="Left" Margin="600,10,0,-5" Click="ShowOrderDetails_Click"/>
-        <Button x:Name="back" Content="back" Grid.Row="2" 
+        <Button Content="back" Grid.Row="3" 
             HorizontalAlignment="Left" Margin="18,10,0,-5" Width="195" Click="back_Click"/>
     </Grid>
 </Window>
