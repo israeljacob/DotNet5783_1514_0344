@@ -38,7 +38,7 @@
         <Label Content="Id:" HorizontalAlignment="Left" Margin="231,33,0,0"
                VerticalAlignment="Top" Width="116" FontSize="18" Foreground="White" FontFamily="Sitka Small Semibold"/>
         <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="0,39,0,0" TextWrapping="Wrap" Text="{Binding Product.UniqID, Mode=TwoWay}"
-                 VerticalAlignment="Top" Width="120" Height="28" IsReadOnly="{Binding Product.UniqID, Converter={StaticResource ZeroToFalse}, Mode=OneTime}"
+                 VerticalAlignment="Top" Width="120" Height="28" IsReadOnly="{Binding Product.UniqID, Converter={StaticResource ZeroToFalse},Mode=OneTime}"
                  Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
         <ComboBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" 
                   ItemsSource="{Binding Categories, Mode=TwoWay}" SelectedValue="{Binding Product.Category, Mode=TwoWay}"

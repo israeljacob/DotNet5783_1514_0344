@@ -32,6 +32,7 @@ public partial class AdminWindow : Window
     BLApi.IBL bl = BLApi.Factory.Get;
 
 
+
     public ObservableCollection<ProductForList> Products
     {
         get { return (ObservableCollection<ProductForList>)GetValue(ProductsProperty); }
