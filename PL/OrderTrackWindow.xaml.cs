@@ -35,21 +35,20 @@ public partial class OrderTrackWindow : Window
     public OrderTrackWindow()
     {
         InitializeComponent();
-        OrderIDTB.DataContext = OrderID;
     }
 
     private void Track_Click(object sender, RoutedEventArgs e)
     {
         try
         {
-            orderTracking = bL.Order.OrderTrack(int.Parse(OrderIDTB.Text));
+            orderTracking = bL.Order.OrderTrack(OrderID);
+            new TrackDetailsWindow(orderTracking).Show();
+            this.Close();
         }
         catch(Exception ex)
         {
             MessageBox.Show(ex.Message);
         }
-        new TrackDetailsWindow(orderTracking).Show();
-        this.Close();
     }
 
     private void OrderID_PreviewTextInput(object sender, TextCompositionEventArgs e)

@@ -9,11 +9,10 @@
         DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="ProductWindow" Height="450" Width="800">
     <Window.Resources>
-        <local:zeroToTrue x:Key="zeroTrue"/>
-        <local:zeroToContent x:Key="zeroContent"/>
-        <local:zeroToHidden x:Key="zeroHidden"/>
-        <local:zeroToVisible x:Key="zeroVisible"/>
-        <local:trueToVisible x:Key="truevisible"/>
+        <local:ZeroToFalse x:Key="ZeroToFalse" />
+        <local:ZeroToVisible x:Key="ZeroToVisible" />
+        <local:ZeroToHidden x:Key="ZeroToHidden" />
+        <local:TrueToVisible x:Key="TrueToVisible"/>
         <Style TargetType="Button">
             <Setter Property="FontFamily" Value="Sitka Small Semibold"/>
             <Setter Property="Clip">
@@ -38,10 +37,10 @@
         </Grid.ColumnDefinitions>
         <Label Content="Id:" HorizontalAlignment="Left" Margin="231,33,0,0"
                VerticalAlignment="Top" Width="116" FontSize="18" Foreground="White" FontFamily="Sitka Small Semibold"/>
-        <TextBox x:Name="idtxt" Grid.Column="1" HorizontalAlignment="Left" Margin="0,39,0,0" TextWrapping="Wrap" Text="{Binding Product.UniqID, Mode=TwoWay}"
-                 VerticalAlignment="Top" Width="120" Height="28" IsEnabled="{Binding Product.UniqID, Converter={StaticResource zeroTrue}, Mode=OneTime}"
+        <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="0,39,0,0" TextWrapping="Wrap" Text="{Binding Product.UniqID, Mode=TwoWay}"
+                 VerticalAlignment="Top" Width="120" Height="28" IsReadOnly="{Binding Product.UniqID, Converter={StaticResource ZeroToFalse}, Mode=OneTime}"
                  Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
-        <ComboBox x:Name="CategoryBox" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" 
+        <ComboBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" 
                   ItemsSource="{Binding Categories, Mode=TwoWay}" SelectedValue="{Binding Product.Category, Mode=TwoWay}"
                   Width="120" Height="27" FontFamily="Sitka Small Semibold" FontSize="18">
             <ComboBox.Background>
@@ -59,26 +58,26 @@
             VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="3"/>
         <Label Content="In Stock:" HorizontalAlignment="Left" Foreground="White" FontFamily="Sitka Small Semibold" Margin="231,0,0,0"
             VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="4"/>
-        <TextBox x:Name="name" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Product.Name, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="2"  Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
-        <TextBox x:Name="price" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Product.Price, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="3" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
-        <TextBox x:Name="inStock"  Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Product.InStock, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="4" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
-        <Button x:Name="AddButton" Grid.Column="1" Content="ADD" HorizontalAlignment="Left" Margin="10,20,0,0"
+        <TextBox Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Product.Name, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="2"  Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
+        <TextBox x:Name="Price" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Product.Price, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="3" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
+        <TextBox x:Name="InStock" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Product.InStock, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="4" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
+        <Button Grid.Column="1" Content="ADD" HorizontalAlignment="Left" Margin="10,20,0,0"
                 Grid.Row="5" VerticalAlignment="Top" Click="AddButton_or_UpdateButton_Click"  Width="73" Height="34"
-                Visibility="{Binding Product.UniqID, Converter={StaticResource zeroVisible}, Mode=OneTime}"/>
-        <Button x:Name="UpdateButton" Grid.Column="1" Content="UPDATE" HorizontalAlignment="Left" Margin="10,20,0,0" 
+                Visibility="{Binding Product.UniqID, Converter={StaticResource ZeroToVisible}, Mode=OneTime}"/>
+        <Button Grid.Column="1" Content="UPDATE" HorizontalAlignment="Left" Margin="10,20,0,0" 
                 Grid.Row="5" VerticalAlignment="Top" Click="AddButton_or_UpdateButton_Click" Width="73" Height="30"
-                Visibility="{Binding Product.UniqID, Converter={StaticResource zeroHidden}, Mode=OneTime}"/>
-        <Label x:Name="idtxtMsg" Content="Enter an integer !" Background="Red" Visibility="{Binding myIDCheck,Converter={StaticResource truevisible}}"
+                Visibility="{Binding Product.UniqID, Converter={StaticResource ZeroToHidden}, Mode=OneTime}"/>
+        <Label Content="Enter an integer !" Background="Red" Visibility="{Binding myIDCheck,Converter={StaticResource TrueToVisible}}"
                HorizontalAlignment="Left" Margin="153,40,0,0" VerticalAlignment="Top" Width="223" Grid.Column="1"/>
-        <Label x:Name="categoryBoxMsg" Content="Choose a Category !" Background="Red" Visibility="{Binding myCategoryCheck,Converter={StaticResource truevisible}}"
+        <Label Content="Choose a Category !" Background="Red" Visibility="{Binding myCategoryCheck,Converter={StaticResource TrueToVisible}}"
                HorizontalAlignment="Left" Margin="153,0,0,0" VerticalAlignment="Center" Width="223" Grid.Column="1" Grid.Row="1"/>
-        <Label x:Name="priceMsg" Content="Enter a double !" Background="Red" Visibility="{Binding myPriceCheck,Converter={StaticResource truevisible}}"
+        <Label Content="Enter a double !" Background="Red" Visibility="{Binding myPriceCheck,Converter={StaticResource TrueToVisible}}"
                HorizontalAlignment="Left" Margin="153,0,0,0" VerticalAlignment="Center" Width="218" Grid.Column="1" Grid.Row="3"/>
-        <Label x:Name="inStockMsg" Content="Enter an integer !" Background="Red" Visibility="{Binding myInStockCheck,Converter={StaticResource truevisible}}"
+        <Label Content="Enter an integer !" Background="Red" Visibility="{Binding myInStockCheck,Converter={StaticResource TrueToVisible}}"
                HorizontalAlignment="Left" Margin="153,0,0,0" VerticalAlignment="Center" Width="223" Grid.Column="1" Grid.Row="4"/>
-        <Label x:Name="nameMsg" Content="Enter only alphabetical characters !" Background="Red" Visibility="{Binding myNameCheck,Converter={StaticResource truevisible}}"
+        <Label Content="Enter only alphabetical characters !" Background="Red" Visibility="{Binding myNameCheck,Converter={StaticResource TrueToVisible}}"
                HorizontalAlignment="Left" Margin="153,0,0,0" VerticalAlignment="Center" Width="218" Grid.Column="1" Grid.Row="2"/>
-        <Button x:Name="back" Content="Cancel" Grid.Row="5" HorizontalAlignment="Left" Margin="5,147,0,10"
-                Padding="5" FontSize="20" Width="195" Background="#FF839ED4" Click="back_Click"/>
+        <Button Content="Cancel" Grid.Row="5" HorizontalAlignment="Left" Margin="5,147,0,10"
+                Padding="0,0,120,0" FontSize="20" Width="195" Background="#FF839ED4" Click="back_Click"/>
     </Grid>
 </Window>
