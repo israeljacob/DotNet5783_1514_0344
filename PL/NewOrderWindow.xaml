@@ -23,7 +23,7 @@
                 <Label Content="Category:" FontSize="18" Background="#FFE8E4E4" Margin="32,1,613,-1" Padding="25,0,0,5"/>
             </Grid>
             <ListView Background="#FF827E79" FontSize="10" ItemsSource="{Binding ProductItems}" Width="650" MouseDoubleClick="ListView_MouseDoubleClick"
-                       Foreground="Black" FontFamily="Sitka Small Semibold" Margin="116,29,34,0" Grid.RowSpan="2">
+                       Foreground="Black" FontFamily="Sitka Small Semibold" Margin="116,29,34,0" Grid.RowSpan="2" SelectionChanged="ListView_SelectionChanged">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Product Id" Width="auto" DisplayMemberBinding="{Binding UniqID}"/>
@@ -39,7 +39,7 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Add item" Width="auto">
+                        <GridViewColumn Header="Reduce item" Width="auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button Content="-" Click="ReduceButton_Click" Height="20" Width="30"/>
