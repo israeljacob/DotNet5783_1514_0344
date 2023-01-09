@@ -23,7 +23,8 @@ internal class Cart : ICart
     /// <exception cref="AggregateException"></exception>
     public BO.Cart AddToCart(BO.Cart cart, int productID)
     {
-        var v = cart.orderItems!.Where(item => item?.ProductID == productID);
+        cart.OrderItems= new List<BO.OrderItem?>();
+        IEnumerable<BO.OrderItem?> v = cart.OrderItems!;
         foreach (BO.OrderItem? item in v)
         {
             try
@@ -47,11 +48,10 @@ internal class Cart : ICart
         catch (DO.DoesNotExistException ex)
         {
             throw new BO.CatchetDOException(ex);
-            
         };
         if (product.InStock == 0)
             throw new BO.InCorrectDetailsException("Cart InStock", product.InStock);
-        cart.orderItems!.Add(new BO.OrderItem //if there is product in the stock add it to order item
+        cart.OrderItems!.Add(new BO.OrderItem //if there is product in the stock add it to order item
         {
             ProductID = product.UniqID,
             ProductName = product.Name,
@@ -74,7 +74,7 @@ internal class Cart : ICart
     /// <exception cref="AggregateException"></exception>
     public BO.Cart UpdateCart(BO.Cart cart, int ID, int amount)
     {
-        BO.OrderItem? orderItem = cart.orderItems?.FirstOrDefault(x => x?.ProductID == ID); //find the orderItem by id
+        BO.OrderItem? orderItem = cart.OrderItems?.FirstOrDefault(x => x?.ProductID == ID); //find the orderItem by id
         if (orderItem == null)
             throw new BO.InCorrectDetailsException("Order Item", ID);
         int dif = amount - orderItem.Amount; //update the amount
@@ -83,7 +83,7 @@ internal class Cart : ICart
         if (amount == 0)
         {
             cart.TotalPrice -= orderItem.TotalPrice; //update the total price
-            cart.orderItems?.Remove(orderItem);
+            cart.OrderItems?.Remove(orderItem);
         }
         else
         {
@@ -111,7 +111,7 @@ internal class Cart : ICart
             throw new BO.InCorrectDetailsException("Customer Email", cart.CustomerEmail);
         if (cart.TotalPrice <= 0)
             throw new BO.InCorrectDetailsException("Total Price in Cart", (int)cart.TotalPrice);
-        foreach (BO.OrderItem? orderItem in cart.orderItems!)
+        foreach (BO.OrderItem? orderItem in cart.OrderItems!)
         {
             try
             {
@@ -133,7 +133,7 @@ internal class Cart : ICart
             CustomerName = cart.CustomerName,
             CustomerAdress = cart.CustomerAdress,
             CustomerEmail = cart.CustomerEmail,
-            orderItems = cart.orderItems,
+            orderItems = cart.OrderItems,
             TotalPrice = cart.TotalPrice,
             StatusOfOrder = BO.StatusOfOrder.Orderred,
             OrderDate = DateTime.Now,

@@ -83,11 +83,14 @@ namespace PL
 
         private void DateButton_Click(object sender, RoutedEventArgs e)
         {
+            BO.Order order = Order;
             Button? button = (Button)sender;
             if(button.Content.ToString() == "Sent")
-                Order.ShipDate= DateTime.Now;
+                order.ShipDate= DateTime.Now;
             else
-                Order.DeliveryrDate= DateTime.Now;
+                order.DeliveryrDate= DateTime.Now;
+            Order = new();
+            Order = order;
         }
     }
 }

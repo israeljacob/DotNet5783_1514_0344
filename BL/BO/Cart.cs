@@ -26,7 +26,7 @@ namespace BO
         /// <summary>
         /// All the items of this list.
         /// </summary>
-        public List<OrderItem?>?orderItems { get; set; }
+        public List<OrderItem?>?OrderItems{ get; set; }
         /// <summary>
         /// The total price of the order.
         /// </summary>
@@ -40,7 +40,7 @@ namespace BO
 Name: {CustomerName}, 
 Customer Email=  {CustomerEmail}, 
 Customer Adress: {CustomerAdress} 
-Order Items: {orderItems}
+Order Items: {OrderItems}
 Total Price: {TotalPrice}
 ";
     }

@@ -25,7 +25,7 @@ public class mainProgram
             CustomerName = "eazy",
             CustomerAdress = "JCT",
             CustomerEmail = "ijacob@g.jct.ac.il",
-            orderItems = new List<OrderItem>()!,
+            OrderItems = new List<OrderItem>()!,
             TotalPrice = 0
         };
 

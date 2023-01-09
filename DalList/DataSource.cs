@@ -44,7 +44,7 @@ internal sealed class DataSource
         /// <summary>
         /// Order ID.
         /// </summary>
-        internal static int orderID = r.Next(1000000, 1500000);
+        internal static int orderID = r.Next(100000, 150000);
         internal static int OrderID
         {
             get { return orderID++; }
@@ -53,7 +53,7 @@ internal sealed class DataSource
         /// <summary>
         /// Order item ID.
         /// </summary>
-        internal static int orderItemID = r.Next(2000000, 2500000);
+        internal static int orderItemID = r.Next(200000, 250000);
         internal static int OrderItemID
         {
             get { return orderItemID++; }
@@ -100,7 +100,7 @@ internal sealed class DataSource
         for (int i = 0; i < 10; i++)
         {
             DO.Product temp = new DO.Product();
-            temp.UniqID = r.Next(100, 999);
+            temp.UniqID = r.Next(300000, 349999);
 
             temp.Name = Productsnames[i];
 

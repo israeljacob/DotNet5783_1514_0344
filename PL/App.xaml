@@ -44,7 +44,7 @@
             <Setter Property="Padding" Value="10,5"/>
             <Setter Property="Clip">
                 <Setter.Value>
-                    <RectangleGeometry RadiusX="10" RadiusY="10" Rect="2,2,190,25"/>
+                    <RectangleGeometry RadiusX="10" RadiusY="10" Rect="50,2,190,70"/>
                 </Setter.Value>
             </Setter>
         </Style>

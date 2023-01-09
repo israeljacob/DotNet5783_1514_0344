@@ -105,12 +105,36 @@ public partial class ProductWindow : Window
         {
             BO.Product product = new();
             product.Category = BO.Category.all;
+            product.Name = "";
+            product.Price = 0;
+            product.InStock = 0;
             Product = product;
         }
         Categories = Enum.GetValues(typeof(BO.Category));
         InitializeComponent();
     }
-   
+    /// <summary>
+    /// check evrey type of the user and make sure only numbers will take place in the box
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void int_PreviewTextInput(object sender, TextCompositionEventArgs e)
+    {
+        ///Only numbers..
+        Regex regex = new("^[0-9]+");
+        e.Handled = !regex.IsMatch(e.Text);
+    }
+    /// <summary>
+    /// check evrey type of the user and make sure only numbers and dote (for the price) will take place in the box
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void double_PreviewTextInput(object sender, TextCompositionEventArgs e)
+    {
+        ///Only numbers with period
+        Regex regex = new("^[0-9.]+");
+        e.Handled = !regex.IsMatch(e.Text);
+    }
     /// <summary>
     /// one function to see if we press "add" or "update" button
     /// </summary>
@@ -119,11 +143,12 @@ public partial class ProductWindow : Window
     private void AddButton_or_UpdateButton_Click(object sender, RoutedEventArgs e)
     {
         Button? button = sender as Button;
+        double price =0;
         var bc = new BrushConverter();
         bool flag = true;
         //MessageBox.Show(Product.Price.ToString());
         ///to convert it to letters , if not make sure the user will see it
-        if (Product.UniqID==0)
+        if (Product.UniqID<100000)
         {
             myIDCheck = true;
             flag = false;
@@ -132,7 +157,7 @@ public partial class ProductWindow : Window
         {
             myIDCheck = false;
         }
-        if (Product.Name == "" || !Regex.IsMatch(Product.Name!, "^[a-zA-Z]"))
+        if (Product.Name == "" || !Regex.IsMatch(Product.Name!, @"^[a-zA-Z ]*$"))
         {
             myNameCheck= true;
             flag = false;
@@ -142,7 +167,16 @@ public partial class ProductWindow : Window
             myNameCheck = false;
         }
         ///to convert it to double, if not make sure the user will see it
-        if (Product.Price == 0)
+        try
+        {
+            double.TryParse(button?.Tag.ToString(), out price);
+        }
+        catch
+        {
+            myPriceCheck = true;
+            flag = false;
+        }
+        if (Product.Price <= 0 || price != Product.Price)
         {
             myPriceCheck = true;
             flag = false;
@@ -152,7 +186,7 @@ public partial class ProductWindow : Window
             myPriceCheck = false;
         }
         ///to convert it to int, if not make sure the user will see it
-        if (Product.InStock == 0)
+        if (Product.InStock < 0)
         {
             myInStockCheck= true;
             flag = false;
