@@ -46,8 +46,7 @@
         <Label Grid.Column="1" Grid.Row="2" Style="{StaticResource myLabel}"  Content="{Binding ProductItem.Name, Mode=TwoWay}"/>
         <Label  Grid.Column="1" Grid.Row="3" Style="{StaticResource myLabel}"  Content="{Binding ProductItem.Price, Mode=TwoWay}"/>
         <Label Grid.Column="1" Grid.Row="4" Style="{StaticResource myLabel}"  Content="{Binding ProductItem.InStock, Mode=TwoWay}"/>
-        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding ProductItem.Amount,Mode=TwoWay}" VerticalAlignment="Center"
-                  Width="116" HorizontalAlignment="Left" Height="29" Background="Black" Foreground="White"/>
+        <Label Grid.Column="1" Grid.Row="5" Style="{StaticResource myLabel}"  Content="{Binding ProductItem.Amount, Mode=TwoWay}"/>
         <Button Grid.Column="1" Content="Back" HorizontalAlignment="Left" Margin="10,59,0,0"
                 Grid.Row="5" VerticalAlignment="Top"  Width="73" Height="34" Grid.RowSpan="2" Click="BackButton_Click"/>
     </Grid>

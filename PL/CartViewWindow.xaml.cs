@@ -37,9 +37,6 @@ namespace PL
         {
             InitializeComponent();
             MyCart = cart;
-
-
-            
         }
     }
 }

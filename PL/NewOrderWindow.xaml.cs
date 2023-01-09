@@ -32,8 +32,6 @@ namespace PL
         public static readonly DependencyProperty ProductItemsProperty =
             DependencyProperty.Register("ProductItems", typeof(ObservableCollection<BO.ProductItem>), typeof(NewOrderWindow), new PropertyMetadata(null));
 
-
-
         public Array Categories
         {
             get { return (Array)GetValue(CategoriesProperty); }
@@ -43,6 +41,18 @@ namespace PL
         // Using a DependencyProperty as the backing store for Categories.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty CategoriesProperty =
             DependencyProperty.Register("Categories", typeof(Array), typeof(NewOrderWindow), new PropertyMetadata(null));
+
+
+
+        public BO.Cart MyCart
+        {
+            get { return (BO.Cart)GetValue(MyCartProperty); }
+            set { SetValue(MyCartProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyCart.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MyCartProperty =
+            DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
 
 
         public NewOrderWindow()
@@ -86,34 +96,49 @@ namespace PL
             new MainWindow().Show();
             this.Close();
         }
-
-        private void ProductItemListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            BO.ProductItem ourProduct = (BO.ProductItem)(sender as ListView)?.SelectedItem!;
-            if (ourProduct != null)
-            {
-                new ProductItemWindow(ProductItems, ourProduct.UniqID).ShowDialog();
-                
-                try
-                {
-                    ProductItems = new(bl.Product.GetListOfProductItems()!);
-                }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }
-            }
-        }
-
-
         private void cart_Click(object sender, RoutedEventArgs e)
         {
-            Cart cart = new Cart();
-            foreach (var item in ProductItems)
-                if (item.Amount > 0)
-                    bl.Cart.AddToCart(cart, item.UniqID);
-            foreach (var item in ProductItems)
-                if (item.Amount > 1)
-                    bl.Cart.UpdateCart(cart, item.UniqID,item.Amount);
-           new CartViewWindow(cart).ShowDialog();
+            //foreach (var item in ProductItems)
+            //    if (item.Amount > 0)
+            //        bl.Cart.AddToCart(cart, item.UniqID);
+            //foreach (var item in ProductItems)
+            //    if (item.Amount > 1)
+            //        bl.Cart.UpdateCart(cart, item.UniqID,item.Amount);
+           new CartViewWindow(MyCart).ShowDialog();
             this.Close();
+        }
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            ObservableCollection<ProductItem> products = ProductItems;
+            int id = ((ProductItem)((Button)sender).DataContext).UniqID;
+            foreach (var item in products)
+            {
+                if (item.UniqID == id)
+                    item.Amount++;
+            }
+            ProductItems = new(from ProductItem productItems in products
+                               where productItems != null
+                               select productItems);
+        }
+        private void ReduceButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            ObservableCollection<ProductItem> products = ProductItems;
+            int id = ((ProductItem)((Button)sender).DataContext).UniqID;
+            foreach (var item in products)
+            {
+                if (item.UniqID == id && item.Amount>0)
+                    item.Amount--;
+            }
+            ProductItems = new(from ProductItem productItems in products
+                               where productItems != null
+                               select productItems);
+        }
+        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            BO.ProductItem ourProduct = (BO.ProductItem)(sender as ListView)?.SelectedItem!;
+            new ProductItemWindow(ProductItems, ourProduct.UniqID).ShowDialog();
         }
     }
 }
