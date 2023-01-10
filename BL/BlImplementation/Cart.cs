@@ -13,23 +13,45 @@ namespace BlImplementation;
 internal class Cart : ICart
 {
     DalApi.IDal? dal = DalApi.Factory.Get();
+
+    #region Add or update cart
+    /// <summary>
+    /// Add or update the cart
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="productItem"></param>
+    /// <returns>The Updated cart</returns>
+    public BO.Cart AddOrUpdateCart(BO.Cart cart, BO.ProductItem productItem)
+    {
+        foreach(BO.OrderItem? orderItem in cart.OrderItems!)
+            if(orderItem?.ProductID== productItem.UniqID)
+            {
+                return UpdateCart(cart, productItem.UniqID, productItem.Amount);
+            }
+        cart = AddToCart(cart, productItem.UniqID);
+        return UpdateCart(cart, productItem.UniqID, productItem.Amount);
+    }
+
+    #endregion
+
     #region Add to cart
     /// <summary>
     /// Add to cart by Id and the corrent cart
     /// </summary>
     /// <param name="cart"></param>
     /// <param name="productID"></param>
-    /// <returns></returns>
+    /// <returns>The Updated cart</returns>
     /// <exception cref="AggregateException"></exception>
     public BO.Cart AddToCart(BO.Cart cart, int productID)
     {
         cart.OrderItems= new List<BO.OrderItem?>();
         IEnumerable<BO.OrderItem?> v = cart.OrderItems!;
-        foreach (BO.OrderItem? item in v)
-        {
+        
+        DO.Product? product = new DO.Product();//connect between the product to id
             try
             {
-                if (dal?.Product.GetByID(productID).InStock == 0)
+            product = dal?.Product.GetByID(productID);
+                if (product?.InStock == 0)
                     throw new BO.InCorrectDetailsException("Cart ID", productID);
             }
             catch (DO.DoesNotExistException ex)
@@ -37,27 +59,18 @@ internal class Cart : ICart
                 throw new BO.CatchetDOException(ex);
             }
             catch (BO.InCorrectDetailsException ex) { throw ex; }
-            item!.Amount++;//add one to amount and update the price
-            item.TotalPrice += item.Price;
-            cart.TotalPrice += item.Price;
-            return cart;
-            
-        }
-        DO.Product product = new DO.Product();//connect between the product to id
         try { product = dal!.Product.GetByID(productID); }
         catch (DO.DoesNotExistException ex)
         {
             throw new BO.CatchetDOException(ex);
         };
-        if (product.InStock == 0)
-            throw new BO.InCorrectDetailsException("Cart InStock", product.InStock);
         cart.OrderItems!.Add(new BO.OrderItem //if there is product in the stock add it to order item
         {
-            ProductID = product.UniqID,
-            ProductName = product.Name,
-            Price = product.Price,
+            ProductID = product?.UniqID?? throw new Exception(),
+            ProductName = product?.Name,
+            Price = product?.Price ?? throw new Exception(),
             Amount = 1,
-            TotalPrice = product.Price
+            TotalPrice = product?.Price ?? throw new Exception()
         });
         return cart;
     }

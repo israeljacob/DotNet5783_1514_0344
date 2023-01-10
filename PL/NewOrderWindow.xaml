@@ -35,14 +35,14 @@
                         <GridViewColumn Header="Add item" Width="auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="+" Click="AddButton_Click" Height="20" Width="30"/>
+                                    <Button Content="+" Click="AddButton_Click" Height="20" Width="30" IsEnabled="{Binding InStock}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Header="Reduce item" Width="auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="-" Click="ReduceButton_Click" Height="20" Width="30"/>
+                                    <Button Content="-" Click="ReduceButton_Click" Height="20" Width="30" IsEnabled="{Binding InStock}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>

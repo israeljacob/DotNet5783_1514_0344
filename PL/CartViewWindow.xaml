@@ -8,17 +8,19 @@
         DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="CartViewWindow" Height="450" Width="800">
     <Window.Resources>
-        <Style TargetType="Label">
-            <Setter Property="Background" Value="Black"/>
+        <Style TargetType="Label" x:Key="GeneralLabel">
+            <Setter Property="Background" Value="#FF1D4A5A"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Padding" Value="80,0,0,0"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="Height" Value="30"/>
             <Setter Property="FontFamily" Value="Sitka Small Semibold"/>
         </Style>
+        <Style TargetType="Label" x:Key="CustemoDetailsLabel" BasedOn="{StaticResource GeneralLabel}">
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Padding" Value="80,0,0,0"/>
+        </Style>
         <Style TargetType="TextBox">
             <Setter Property="Grid.Column" Value="1"/>
-            <Setter Property="Background" Value="Gray"/>
             <Setter Property="FontFamily" Value="Sitka Small Semibold"/>
             <Setter Property="FontSize" Value="18"/>
         </Style>
@@ -35,14 +37,14 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Label Content="Your name:"/>
-        <Label Content="Your mail:" Grid.Row="1"/>
-        <Label Content="Your addres:" Grid.Row="2"/>
+        <Label Style="{StaticResource CustemoDetailsLabel}" Content="Your name:"/>
+        <Label Style="{StaticResource CustemoDetailsLabel}" Content="Your mail:" Grid.Row="1"/>
+        <Label Style="{StaticResource CustemoDetailsLabel}" Content="Your addres:" Grid.Row="2"/>
         <TextBox Text="{Binding MyCart.CustomerName,Mode=TwoWay}"/>
         <TextBox Text="{Binding MyCart.CustomerEmail, Mode=TwoWay}" Grid.Row="1"/>
         <TextBox Text="{Binding MyCart.CustomerAdress, Mode=TwoWay}" Grid.Row="2"/>
-        <ListView Background="#FF827E79" FontSize="10" ItemsSource="{Binding MyCart.OrderItems}" Width="650" 
-                  Grid.Row="3" Foreground="Black" FontFamily="Sitka Small Semibold" Grid.ColumnSpan="2" Height="294" Margin="75,0,75,40" VerticalAlignment="Bottom">
+        <ListView Background="#FF827E79" FontSize="10" ItemsSource="{Binding MyCart.OrderItems}" 
+                  Grid.Row="3" Foreground="Black" FontFamily="Sitka Small Semibold" Grid.ColumnSpan="2" Height="232" Margin="133,0,83,101" VerticalAlignment="Bottom">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Product Id" Width="auto" DisplayMemberBinding="{Binding ProductID}"/>
@@ -53,5 +55,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <!-- -->
+        <Label Style="{StaticResource GeneralLabel}" Grid.Row="3" Grid.Column="1" Margin="170,273,231,41" Content="Total price:" Padding="15,5,0,0"/>
+        <Label Style="{StaticResource GeneralLabel}" Grid.Row="3" Grid.Column="1" Margin="318,273,83,41"/>
     </Grid>
 </Window>

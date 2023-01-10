@@ -86,13 +86,17 @@ namespace PL
         private void cart_Click(object sender, RoutedEventArgs e)
         {
             BO.Cart MyCart= new BO.Cart();
+            MyCart.CustomerName = "";
+            MyCart.CustomerEmail = "";
+            MyCart.CustomerAdress = "";
+            MyCart.OrderItems = new();
             foreach (ProductItem item in ProductItems)
             {
                 if (item != null && item.Amount>0)
                 {
                     try 
                     {
-                        bl.Cart.AddToCart(MyCart, item.UniqID);
+                        bl.Cart.AddOrUpdateCart(MyCart, item);
                     }
                     catch(Exception ex) { MessageBox.Show(ex.Message); }
                 }
