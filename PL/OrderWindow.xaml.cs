@@ -92,5 +92,15 @@ namespace PL
             Order = new();
             Order = order;
         }
+
+        private void ItemUpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            BO.OrderItem ourOrderItem = (BO.OrderItem)((Button)sender).DataContext;
+            try
+            {
+                 bl.Order.UpdateOrderItemAmount(ourOrderItem);
+            }
+            catch(Exception ex) { MessageBox.Show(ex.Message); }
+        }
     }
 }

@@ -25,7 +25,7 @@ public class WinToVisible : IValueConverter
     }
 }
 
-public class WinToHidden:IValueConverter
+public class WinToHidden : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
@@ -128,6 +128,22 @@ public class TrueToVisible : IValueConverter
         if (flag)
             return Visibility.Visible;
         return Visibility.Hidden;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class VisibleToFalse : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        Visibility visibility = (Visibility)value;
+        if (visibility == Visibility.Visible)
+            return false;
+        return true;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

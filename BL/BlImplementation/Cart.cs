@@ -44,7 +44,6 @@ internal class Cart : ICart
     /// <exception cref="AggregateException"></exception>
     public BO.Cart AddToCart(BO.Cart cart, int productID)
     {
-        cart.OrderItems= new List<BO.OrderItem?>();
         IEnumerable<BO.OrderItem?> v = cart.OrderItems!;
         
         DO.Product? product = new DO.Product();//connect between the product to id

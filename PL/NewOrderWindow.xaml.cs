@@ -85,20 +85,20 @@ namespace PL
         }
         private void cart_Click(object sender, RoutedEventArgs e)
         {
-            BO.Cart MyCart= new BO.Cart();
+            BO.Cart MyCart = new BO.Cart();
             MyCart.CustomerName = "";
             MyCart.CustomerEmail = "";
             MyCart.CustomerAdress = "";
             MyCart.OrderItems = new();
             foreach (ProductItem item in ProductItems)
             {
-                if (item != null && item.Amount>0)
+                if (item != null && item.Amount > 0)
                 {
-                    try 
+                    try
                     {
                         bl.Cart.AddOrUpdateCart(MyCart, item);
                     }
-                    catch(Exception ex) { MessageBox.Show(ex.Message); }
+                    catch (Exception ex) { MessageBox.Show(ex.Message); }
                 }
             }
             new CartViewWindow(MyCart).ShowDialog();

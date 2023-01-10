@@ -12,6 +12,7 @@
         <local:WinToVisible x:Key="WinToVisible"/>
         <local:WinToHidden x:Key="WinToHidden"/>
         <local:WinToBool x:Key="WinToBool"/>
+        <local:VisibleToFalse x:Key="VisibleToFalse"/>
         <Style TargetType="Button">
             <Setter Property="FontFamily" Value="Sitka Small Semibold"/>
             <Setter Property="Clip">
@@ -86,22 +87,35 @@
         <Label Grid.Column="1" Content="{Binding Order.DeliveryrDate, Mode=TwoWay}" Grid.Row="7" Style="{StaticResource rightLabel}" Height="38" Width="240"/>
         <Button Foreground="Black" Padding="0,0,220,0" FontSize="10" Margin="0,31,116,3" Content="Deliverred" Grid.Column="2" Grid.Row="6" Visibility="{Binding Order.DeliveryrDate, Converter={StaticResource NullToVisible}, Mode=TwoWay}" IsEnabled="{Binding WinName , Converter={StaticResource WinToBool}}" Click="DateButton_Click" Grid.RowSpan="2"/>
         <Label Grid.Column="1" Style="{StaticResource rightLabel}" Content="{Binding Order.TotalPrice, Mode=TwoWay}" Grid.Row="8" Height="38" Width="240" />
-        <ListView  Background="#FF827E79" FontSize="20" ItemsSource="{Binding Order.orderItems, Mode=TwoWay}"
+        <ListView  Background="#FF827E79" FontSize="16" ItemsSource="{Binding Order.orderItems, Mode=TwoWay}"
                    Foreground="Black" Grid.ColumnSpan="2" FontFamily="Sitka Small Semibold" Margin="0,5,10,10" Grid.Row="9" Grid.Column="1">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Id" Width="auto" DisplayMemberBinding="{Binding ProductID}"></GridViewColumn>
-                    <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{Binding ProductName}"></GridViewColumn>
-                    <GridViewColumn Header="Price" Width="auto" DisplayMemberBinding="{Binding Price}"></GridViewColumn>
-                    <GridViewColumn Header="Amount" Width="auto" DisplayMemberBinding="{Binding Amount}"></GridViewColumn>
-                    <GridViewColumn Header="Total price" Width="auto" DisplayMemberBinding="{Binding TotalPrice}"></GridViewColumn>
+                    <GridViewColumn Header="Id" Width="auto" DisplayMemberBinding="{Binding ProductID}"/>
+                    <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{Binding ProductName}"/>
+                    <GridViewColumn Header="Price" Width="auto" DisplayMemberBinding="{Binding Price}"/>
+                    <GridViewColumn Header="Amount" Width="auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Text="{Binding Amount}" Height="20" Width="30" IsReadOnly="{Binding ElementName=UpdateButton,Path=Visibility,Converter={StaticResource VisibleToFalse}}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Total price" Width="auto" DisplayMemberBinding="{Binding TotalPrice}"/>
+                    <GridViewColumn Header="Amount" Width="auto">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="update" Click="ItemUpdateButton_Click" Height="20" Width="30" Visibility="{Binding ElementName=UpdateButton, Path=Visibility}"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
             <ListView.Clip>
                 <RectangleGeometry RadiusX="10" RadiusY="10" Rect="2,2,500,480"/>
             </ListView.Clip>
         </ListView>
-        <Button Content="Update" Visibility="{Binding WinName , Converter={StaticResource WinToVisible}}"
+        <Button x:Name="UpdateButton" Content="Update" Visibility="{Binding WinName , Converter={StaticResource WinToVisible}}"
                 HorizontalAlignment="Left" Margin="73,120,0,0" Grid.Row="9" VerticalAlignment="Top"
                  Click="UpdateButton_Click"  Width="72" Height="34"/>
         <Button Content="Back"
