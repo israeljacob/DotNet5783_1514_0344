@@ -36,7 +36,6 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Label Style="{StaticResource CustemorDetailsLabel}" Content="Your name:"/>
         <Label Style="{StaticResource CustemorDetailsLabel}" Content="Your mail" Grid.Row="1"/>
@@ -56,9 +55,9 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label Style="{StaticResource GeneralLabel}" Grid.Row="3" Content="Total price:" Padding="130,5,0,0" Margin="0,308,261,6" Grid.Column="1"/>
-        <Label Style="{StaticResource GeneralLabel}" Grid.Row="3" Grid.Column="1" Content="{Binding MyCart.TotalPrice}" Margin="267,304,0,10"/>
-        <Button Content="Execute order" Click="ExecuteButton_Click"/>
-        <Button Content="Back to update items" Click="BackButton_Click"/>
+        <Label Style="{StaticResource GeneralLabel}" Grid.Row="3" Content="Total price:" Padding="130,5,0,0" Margin="10,269,251,45" Grid.Column="1"/>
+        <Label Style="{StaticResource GeneralLabel}" Grid.Row="3" Grid.Column="1" Content="{Binding MyCart.TotalPrice}" Margin="267,269,0,45"/>
+        <Button Content="Execute order" Click="ExecuteButton_Click" Grid.Row="4" Grid.Column="1"/>
+        <Button Content="Back to update items" Click="BackButton_Click" Grid.Row="4"/>
     </Grid>
 </Window>
