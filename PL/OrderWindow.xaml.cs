@@ -23,15 +23,13 @@ namespace PL
         private static readonly BLApi.IBL bl = BLApi.Factory.Get;
         public BO.Order Order
         {
-            get { return (BO.Order)GetValue(OrdersProperty); }
-            set { SetValue(OrdersProperty, value); }
+            get { return (BO.Order)GetValue(OrderProperty); }
+            set { SetValue(OrderProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Orders.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty OrdersProperty =
+        public static readonly DependencyProperty OrderProperty =
             DependencyProperty.Register("Order", typeof(BO.Order), typeof(Window), new PropertyMetadata(null));
-
-
 
         public Array OrderStatuses
         {
@@ -68,11 +66,14 @@ namespace PL
         }
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-                try
-                {
-                    bl.Order.UpdateOrder(Order);
-                }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }
+            try
+            {
+                bl.Order.UpdateOrder(Order);
+            }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message);
+            }
                 this.Close();
         }
 
@@ -98,9 +99,12 @@ namespace PL
             BO.OrderItem ourOrderItem = (BO.OrderItem)((Button)sender).DataContext;
             try
             {
-                 bl.Order.UpdateOrderItemAmount(ourOrderItem);
+                 Order = bl.Order.UpdateOrderItemAmount(Order,ourOrderItem);
             }
-            catch(Exception ex) { MessageBox.Show(ex.Message); }
+            catch(Exception ex) 
+            { 
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

@@ -21,7 +21,7 @@ public interface IOrder
     public void UpdateOrder(BO.Order order);
 
     //Update OrderItem Amount
-    public BO.OrderItem UpdateOrderItemAmount(BO.OrderItem orderItem);
+    public BO.Order UpdateOrderItemAmount(BO.Order order, BO.OrderItem orderItem);
 
     //get Order Tracking by ID
     public BO.OrderTracking OrderTrack(int ID);

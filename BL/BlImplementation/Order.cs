@@ -114,8 +114,6 @@ internal class Order : BLApi.IOrder
     }
     #endregion
 
-    
-
     #region Order track
     /// <summary>
     ///  Track the order status
@@ -151,38 +149,49 @@ internal class Order : BLApi.IOrder
     /// <param name="orderItem"></param>
     /// <returns></returns>
     /// <exception cref="BO.InCorrectDetailsException"></exception>
-    public BO.OrderItem UpdateOrderItemAmount(BO.OrderItem orderItem)
+    public BO.Order UpdateOrderItemAmount(BO.Order BOorder,BO.OrderItem orderItem)
     {
-
+        BO.OrderItem orderOrderItem = BOorder.orderItems?.FirstOrDefault(item => item?.UniqID == orderItem.UniqID)!;
+        int difference = orderItem.Amount-orderOrderItem.Amount;
+        DO.Product product = new DO.Product();
         DO.OrderItem DOorderItem = new DO.OrderItem();
-        DO.Order  order = new DO.Order();
+        DO.Order  DOorder = new DO.Order();
         try { 
+                product= dal.Product.GetByID(orderItem.ProductID);
                 DOorderItem = dal.OrderItem.GetByID(orderItem.UniqID);
-                order = dal.Order.GetByID(DOorderItem.OrderID);
+                DOorder = dal.Order.GetByID(DOorderItem.OrderID);
             }
         catch (DO.DoesNotExistException ex)
         {
             throw new BO.CatchetDOException(ex);
         }
-        if(order.ShipDate != null) { throw new BO.DatesException("Ship date"); }
+        if (product.InStock < difference) throw new BO.missingItemsException(product.UniqID, difference);
+        if(DOorder.ShipDate != null) { throw new BO.DatesException("Ship date"); }
+        if(orderItem.Amount == 0)
+        {
+            try
+            {
+                dal.OrderItem.Delete(DOorderItem.UniqID);
+            }
+            catch (Exception ex) {throw new BO.CatchetDOException(ex); }
+            BOorder.orderItems?.ToList().RemoveAll(item => item?.UniqID == orderItem.UniqID);
+            return BOorder;
+        }
         DOorderItem.Amount=orderItem.Amount;
         try
         {
+            product.InStock -= difference;
+            dal.Product.Update(product);
             dal.OrderItem.Update(DOorderItem);
-            return new BO.OrderItem
-            {
-                UniqID = orderItem.UniqID,
-                ProductID = orderItem.ProductID,
-                ProductName = dal.Product.GetByID(DOorderItem.ProductID).Name,
-                Price = orderItem.Price,
-                Amount = orderItem.Amount,
-                TotalPrice = orderItem.TotalPrice
-            };
         }
         catch (DO.DoesNotExistException ex)
         {
             throw new BO.CatchetDOException(ex);
         }
+        foreach (BO.OrderItem? orderItem1 in BOorder.orderItems!)
+            if (orderItem1?.UniqID == orderItem.UniqID)
+                orderItem1.Amount = orderItem.Amount;
+        return BOorder;
     }
     #endregion
 

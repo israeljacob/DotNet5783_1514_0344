@@ -296,7 +296,11 @@ public class mainProgram
         {
             // Try to update and throw an exception if not succeed
             int ID = Menu.IntInput("Enter the order ID");
-            try { bl.Order.UpdateOrderItemAmount(bl.Order.GetOrderItem(ID)).PrintProperties(); }
+
+            try {
+                
+                BO.OrderItem orderItem = bl.Order.GetOrderItem(ID);
+                bl.Order.UpdateOrderItemAmount(order,orderItem).PrintProperties(); }
             catch (Exception ex) { Console.WriteLine(ex.Message); return; };
         }
         ///<summary>

@@ -77,4 +77,12 @@ public class DateException : Exception
     }
 }
 
+[Serializable]
+public class InCorrectIDException : Exception
+{
+    public InCorrectIDException(int ID)
+        :base($"{ID} is smaller than 300,000")
+    {
+    }
+}
 

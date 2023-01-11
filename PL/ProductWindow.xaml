@@ -67,8 +67,8 @@
         <Button Grid.Column="1" Content="UPDATE" HorizontalAlignment="Left" Margin="10,20,0,0" Tag="{Binding ElementName=Price, Path=Text}"
                 Grid.Row="5" VerticalAlignment="Top" Click="AddButton_or_UpdateButton_Click" Width="73" Height="30"
                 Visibility="{Binding Product.UniqID, Converter={StaticResource ZeroToHidden}, Mode=OneTime}"/>
-        <Label Content="Enter an integer of 6 digits!" Background="Red" Visibility="{Binding myIDCheck,Converter={StaticResource TrueToVisible}}"
-               HorizontalAlignment="Left" Margin="153,40,0,0" VerticalAlignment="Top" Width="223" Grid.Column="1"/>
+        <Label Content="Enter an integer that's larger than 300,000!" Background="Red" Visibility="{Binding myIDCheck,Converter={StaticResource TrueToVisible}}"
+               HorizontalAlignment="Left" Margin="153,40,0,0" VerticalAlignment="Top" Width="250" Grid.Column="1"/>
         <Label Content="Choose a Category !" Background="Red" Visibility="{Binding myCategoryCheck,Converter={StaticResource TrueToVisible}}"
                HorizontalAlignment="Left" Margin="153,0,0,0" VerticalAlignment="Center" Width="223" Grid.Column="1" Grid.Row="1"/>
         <Label Content="Enter a double !" Background="Red" Visibility="{Binding myPriceCheck,Converter={StaticResource TrueToVisible}}"

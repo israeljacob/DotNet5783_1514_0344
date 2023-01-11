@@ -101,8 +101,7 @@ namespace PL
                     catch (Exception ex) { MessageBox.Show(ex.Message); }
                 }
             }
-            new CartViewWindow(MyCart).ShowDialog();
-            this.Close();
+            new CartWindow(MyCart).ShowDialog();
         }
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {

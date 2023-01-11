@@ -11,7 +11,7 @@ namespace BO;
 /// </summary>
 public enum Category
 {
-    Shirts ,//חולצות
+    Shirts =1,//חולצות
     trousers,//מכנסיים
     shoes,//נעלים
     coats,//מעילים

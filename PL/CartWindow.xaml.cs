@@ -15,10 +15,9 @@ using System.Windows.Shapes;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for CartViewWindow.xaml
+    /// Interaction logic for CartWindow.xaml
     /// </summary>
-    
-    public partial class CartViewWindow : Window
+    public partial class CartWindow : Window
     {
 
 
@@ -30,13 +29,23 @@ namespace PL
 
         // Using a DependencyProperty as the backing store for MyCart.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MyCartProperty =
-            DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(CartViewWindow), new PropertyMetadata(null));
+            DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(CartWindow), new PropertyMetadata(null));
 
 
-        public CartViewWindow(BO.Cart cart)
+        public CartWindow(BO.Cart cart)
         {
             InitializeComponent();
-            MyCart = cart;
+            MyCart= cart;
+        }
+
+        private void ExecuteButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

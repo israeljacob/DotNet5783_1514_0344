@@ -134,6 +134,8 @@ namespace BlImplementation
         /// <exception cref="AggregateException"></exception>
         public void AddProduct(int ID, string name, double price, BO.Category category, int inStock)
         {
+            if (ID < 300000)
+                throw new BO.InCorrectIDException(ID);
             try
             {
                 int returnedID = dal.Product.Add(new DO.Product
