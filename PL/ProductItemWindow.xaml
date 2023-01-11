@@ -8,16 +8,18 @@
         DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="ProductItemWindow" Height="450" Width="800">
     <Window.Resources>
-        <Style TargetType="Label" x:Key="myLabel">
+        <!-- Label style -->
+        <Style TargetType="Label" x:Key="myLabel" BasedOn="{StaticResource Genaral}">
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="Width" Value="116"/>
             <Setter Property="Height" Value="28"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontFamily" Value="Sitka Small Semibold"/>
+            <Setter Property="Grid.Column" Value="1"/>
         </Style>
         <Style TargetType="Label" x:Key="LeftLabel" BasedOn="{StaticResource myLabel}">
+            <Setter Property="Grid.Column" Value="0"/>
             <Setter Property="Margin" Value="231,0,0,0"/>
         </Style>
     </Window.Resources>
@@ -35,19 +37,19 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Id:" Style="{StaticResource LeftLabel}"/>
-        <Label  Grid.Column="1" Style="{StaticResource myLabel}"  Content="{Binding ProductItem.UniqID, Mode=TwoWay}"/>
-        <Label Style="{StaticResource myLabel}" Grid.Column="1" Grid.Row="1" Content="{Binding ProductItem.Category, Mode=TwoWay}"/>
-        <Label Content="Category:" Style="{StaticResource LeftLabel}" Grid.Row="1" />
-        <Label Content="Name:" Style="{StaticResource LeftLabel}" Grid.Row="2"/>
-        <Label Content="Price:" Style="{StaticResource LeftLabel}" Grid.Row="3"/>
-        <Label Content="In Stock:" Style="{StaticResource LeftLabel}" Grid.Row="4"/>
-        <Label Content="Amount:" Style="{StaticResource LeftLabel}" Grid.Row="5"/>
-        <Label Grid.Column="1" Grid.Row="2" Style="{StaticResource myLabel}"  Content="{Binding ProductItem.Name, Mode=TwoWay}"/>
-        <Label  Grid.Column="1" Grid.Row="3" Style="{StaticResource myLabel}"  Content="{Binding ProductItem.Price, Mode=TwoWay}"/>
-        <Label Grid.Column="1" Grid.Row="4" Style="{StaticResource myLabel}"  Content="{Binding ProductItem.InStock, Mode=TwoWay}"/>
-        <Label Grid.Column="1" Grid.Row="5" Style="{StaticResource myLabel}"  Content="{Binding ProductItem.Amount, Mode=TwoWay}"/>
-        <Button Grid.Column="1" Content="Back" HorizontalAlignment="Left" Margin="10,59,0,0"
-                Grid.Row="5" VerticalAlignment="Top"  Width="73" Height="34" Grid.RowSpan="2" Click="BackButton_Click"/>
+        <Label Style="{StaticResource LeftLabel}" Content="Id:"/>
+        <Label Style="{StaticResource LeftLabel}" Content="Category:" Grid.Row="1" />
+        <Label Style="{StaticResource LeftLabel}" Content="Name:" Grid.Row="2"/>
+        <Label Style="{StaticResource LeftLabel}" Content="Price:" Grid.Row="3"/>
+        <Label Style="{StaticResource LeftLabel}" Content="In Stock:" Grid.Row="4"/>
+        <Label Style="{StaticResource LeftLabel}" Content="Amount:" Grid.Row="5"/>
+        <Label Style="{StaticResource myLabel}" Content="{Binding ProductItem.UniqID, Mode=TwoWay}"/>
+        <Label Style="{StaticResource myLabel}" Content="{Binding ProductItem.Category, Mode=TwoWay}" Grid.Row="1"/>
+        <Label Style="{StaticResource myLabel}" Content="{Binding ProductItem.Name, Mode=TwoWay}" Grid.Row="2"/>
+        <Label Style="{StaticResource myLabel}" Content="{Binding ProductItem.Price, Mode=TwoWay}" Grid.Row="3"/>
+        <Label Style="{StaticResource myLabel}" Content="{Binding ProductItem.InStock, Mode=TwoWay}" Grid.Row="4" />
+        <Label Style="{StaticResource myLabel}" Content="{Binding ProductItem.Amount, Mode=TwoWay}" Grid.Row="5"/>
+        <Button Content="Back" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                Grid.Row="6" Width="73" Height="34" Click="BackButton_Click" RenderTransformOrigin="0.56,-0.727"/>
     </Grid>
 </Window>

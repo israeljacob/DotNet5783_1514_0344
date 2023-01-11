@@ -7,16 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
-        <Style TargetType="Button">
+        <Style TargetType="Button" BasedOn="{StaticResource Genaral}">
             <Setter Property="HorizontalAlignment" Value="Left"/>
             <Setter Property="Height" Value="78"/>
             <Setter Property="Width" Value="256"/>
             <Setter Property="FontSize" Value="24"/>
-            <Setter Property="FontFamily" Value="Sitka Small Semibold"/>
             <Setter Property="Background" Value="#FF2D2D2D"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="RenderTransformOrigin" Value="0.498,-0.276"/>
-            <Setter Property="Clip" Value=""/>
             <Setter Property="Clip">
                 <Setter.Value>
                     <RectangleGeometry RadiusX="10" RadiusY="10" Rect="1,1,250,70"/>

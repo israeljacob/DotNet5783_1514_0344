@@ -8,10 +8,9 @@
         DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="OrderTrackWindow" Height="200" Width="300">
     <Window.Resources>
-        <Style TargetType="Button">
+        <Style TargetType="Button" BasedOn="{StaticResource ButtonSet}">
             <Setter Property="Width" Value="90"/>
             <Setter Property="Grid.Row" Value="1"/>
-            <Setter Property="Background" Value="#FF839ED4"/>
             <Setter Property="Clip">
                 <Setter.Value>
                     <RectangleGeometry RadiusX="10" RadiusY="10" Rect="10,10,70,30"/>
@@ -29,9 +28,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Text="Order ID:" FontSize="32" TextAlignment="Center" Padding="20" Height="80" Background="Gray"/>
-        <TextBox  Grid.Column="1" Height="80" Width="200" FontSize="32" Text="{Binding OrderID,Mode=TwoWay}" 
-                 PreviewTextInput="OrderID_PreviewTextInput" HorizontalAlignment="Left"/>
-        <Button Content="Track" Click="Track_Click"  FontSize="20" Grid.Column="1" HorizontalAlignment="Right"/>
+        <TextBox Style="{StaticResource Genaral}" Grid.Column="1" Height="80" Width="200" FontSize="32" Text="{Binding OrderID,Mode=TwoWay}" PreviewTextInput="OrderID_PreviewTextInput" HorizontalAlignment="Left"/>
+        <Button Content="Track" Click="Track_Click" HorizontalAlignment="Right" Grid.Column="1"/>
         <Button Content="Back" Click="Back_Click" HorizontalAlignment="Left"/>
     </Grid>
 </Window>

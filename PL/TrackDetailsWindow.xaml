@@ -17,7 +17,7 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid Style="{StaticResource SecondGridForList}">
+        <Grid Style="{StaticResource GridForList}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
@@ -29,20 +29,14 @@
             <Label Content="Status:" FontSize="12" Grid.Column="2" Background="White"/>
             <Label Content="{Binding StatusOfOrder}" FontSize="12" Background="White" Grid.Column="3"/>
         </Grid>
-        <ListView Background="#FF827E79" FontSize="18" ItemsSource="{Binding TrackOrder.ProgressOfOrder, Mode=OneWay}"
-                   Foreground="Black" FontFamily="Sitka Small Semibold" Margin="125,32,125,10" Grid.RowSpan="3" Grid.Row="1" >
+        <ListView Style="{StaticResource LVstyle}" FontSize="18" ItemsSource="{Binding TrackOrder.ProgressOfOrder, Mode=OneWay}" Margin="125,32,125,10" Grid.RowSpan="3" Grid.Row="1" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Updates" Width="auto" DisplayMemberBinding="{Binding}"></GridViewColumn>
                 </GridView>
             </ListView.View>
-            <ListView.Clip>
-                <RectangleGeometry RadiusX="10" RadiusY="10" Rect="2,2,500,480"/>
-            </ListView.Clip>
         </ListView>
-        <Button Content="order details" Grid.Row="3" Width="220"
-                HorizontalAlignment="Left" Margin="600,10,0,-5" Click="ShowOrderDetails_Click"/>
-        <Button Content="back" Grid.Row="3" 
-            HorizontalAlignment="Left" Margin="18,10,0,-5" Width="195" Click="back_Click"/>
+        <Button Content="order details" Grid.Row="3" Width="270" HorizontalAlignment="Left" Margin="570,3,0,2" Click="ShowOrderDetails_Click"/>
+        <Button Content="back" Grid.Row="3" HorizontalAlignment="Left" Margin="-70,8,0,-3" Width="195" Click="back_Click"/>
     </Grid>
 </Window>

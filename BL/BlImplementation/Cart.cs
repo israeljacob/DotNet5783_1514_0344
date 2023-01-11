@@ -71,6 +71,7 @@ internal class Cart : ICart
             Amount = 1,
             TotalPrice = product?.Price ?? throw new Exception()
         });
+        cart.TotalPrice += product?.Price?? throw new Exception();
         return cart;
     }
     #endregion
@@ -113,7 +114,7 @@ internal class Cart : ICart
     /// </summary>
     /// <param name="cart"></param>
     /// <exception cref="AggregateException"></exception>
-    public void ExecuteOrder(BO.Cart cart)
+    public int ExecuteOrder(BO.Cart cart)
     {
         if (cart.CustomerName == null)
             throw new BO.MissingDataException("Customer Name");
@@ -149,8 +150,8 @@ internal class Cart : ICart
             TotalPrice = cart.TotalPrice,
             StatusOfOrder = BO.StatusOfOrder.Orderred,
             OrderDate = DateTime.Now,
-            ShipDate = DateTime.MinValue,
-            DeliveryrDate = DateTime.MinValue,
+            ShipDate = null,
+            DeliveryrDate = null,
         };
         order.UniqID = dal!.Order.Add(new DO.Order //add it to dal
         {
@@ -171,8 +172,6 @@ internal class Cart : ICart
                 dal!.Product.Update(product);
             }
             catch(DO.DoesNotExistException ex) { throw new BO.CatchetDOException(ex); }
-           
-
             dal!.OrderItem.Add(new DO.OrderItem
             {
                 UniqID = 0,
@@ -182,6 +181,7 @@ internal class Cart : ICart
                 Price = orderItem1.Price,
             });
         }
+        return order.UniqID;
     }
     #endregion
 }

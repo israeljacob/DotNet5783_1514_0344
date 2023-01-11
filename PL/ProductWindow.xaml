@@ -13,18 +13,54 @@
         <local:ZeroToVisible x:Key="ZeroToVisible" />
         <local:ZeroToHidden x:Key="ZeroToHidden" />
         <local:TrueToVisible x:Key="TrueToVisible"/>
-        <Style TargetType="Button">
-            <Setter Property="FontFamily" Value="Sitka Small Semibold"/>
+        <Style TargetType="Button" BasedOn="{StaticResource Genaral}">
             <Setter Property="Clip">
                 <Setter.Value>
                     <RectangleGeometry RadiusX="10" RadiusY="10" Rect="1,1,70,30"/>
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="Label" BasedOn="{StaticResource Genaral}" x:Key="GeneralLabel">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Height" Value="30"/>
+        </Style>
+        <Style TargetType="Label" BasedOn="{StaticResource GeneralLabel}" x:Key="LeftLabel">
+            <Setter Property="Foreground" Value="white"/>
+            <Setter Property="Width" Value="116"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
+        <Style TargetType="Label" BasedOn="{StaticResource GeneralLabel}" x:Key="ErrorLabel">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Background" Value="Red"/>
+            <Setter Property="Width" Value="290"/>
+            <Setter Property="Grid.Column" Value="2"/>
+        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource ButtonSet}" x:Key="GeneralButton">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Grid.Row" Value="5"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="100"/>
+        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource GeneralButton}" x:Key="uniqButton">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Grid.Column" Value="1"/>
+            <Setter Property="Grid.Row" Value="5"/>
+            <Setter Property="Grid.Row" Value="5"/>
+            <Setter Property="Tag" Value="{Binding ElementName=Price, Path=Text}"/>
+        </Style>
+        <Style TargetType="TextBox" BasedOn="{StaticResource Genaral}">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Grid.Column" Value="1"/>
+            <Setter Property="Background" Value="#FF252525"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
     </Window.Resources>
     <Grid Style="{StaticResource FancyGrid}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -32,52 +68,27 @@
             <RowDefinition Height="5*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="267*"/>
+            <ColumnDefinition Width="166*"/>
+            <ColumnDefinition Width="367*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Id:" HorizontalAlignment="Left" Margin="231,33,0,0"
-               VerticalAlignment="Top" Width="116" FontSize="18" Foreground="White" FontFamily="Sitka Small Semibold"/>
-        <TextBox Grid.Column="1" HorizontalAlignment="Left" Margin="0,39,0,0" TextWrapping="Wrap" Text="{Binding Product.UniqID, Mode=TwoWay}"
-                 VerticalAlignment="Top" Width="120" Height="28" IsReadOnly="{Binding Product.UniqID, Converter={StaticResource ZeroToFalse},Mode=OneTime}"
-                 Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold" PreviewTextInput="int_PreviewTextInput"/>
-        <ComboBox Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" 
-                  ItemsSource="{Binding Categories, Mode=TwoWay}" SelectedValue="{Binding Product.Category, Mode=TwoWay}"
-                  Width="120" Height="27" FontFamily="Sitka Small Semibold" FontSize="18">
-            <ComboBox.Background>
-                <LinearGradientBrush EndPoint="0,1">
-                    <GradientStop Color="#FFF0F0F0"/>
-                    <GradientStop Color="#FF797979" Offset="1"/>
-                </LinearGradientBrush>
-            </ComboBox.Background>
-        </ComboBox>
-        <Label Foreground="White" FontFamily="Sitka Small Semibold" Content="Category:" HorizontalAlignment="Left" Margin="231,0,0,0"
-            VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="1"/>
-        <Label Content="Name:" HorizontalAlignment="Left" Foreground="White" FontFamily="Sitka Small Semibold" Margin="231,0,0,0"
-            VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="2"/>
-        <Label Content="Price:" Foreground="White" FontFamily="Sitka Small Semibold" HorizontalAlignment="Left" Margin="231,0,0,0"
-            VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="3"/>
-        <Label Content="In Stock:" HorizontalAlignment="Left" Foreground="White" FontFamily="Sitka Small Semibold" Margin="231,0,0,0"
-            VerticalAlignment="Center" Width="116" FontSize="18" Grid.Row="4"/>
-        <TextBox Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Product.Name, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="2"  Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold"/>
-        <TextBox x:Name="Price" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Product.Price, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="3" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold" PreviewTextInput="double_PreviewTextInput"/>
-        <TextBox x:Name="InStock" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding Product.InStock, Mode=TwoWay}" VerticalAlignment="Center" Width="120"  Height="28" Grid.Row="4" Background="#FF252525" Foreground="White" FontSize="18" FontFamily="Sitka Small Semibold" PreviewTextInput="int_PreviewTextInput"/>
-        <Button Grid.Column="1" Content="ADD" HorizontalAlignment="Left" Margin="10,20,0,0"
-                Grid.Row="5" VerticalAlignment="Top" Click="AddButton_or_UpdateButton_Click"  Width="73" Height="34" Tag="{Binding ElementName=Price, Path=Text}"
-                Visibility="{Binding Product.UniqID, Converter={StaticResource ZeroToVisible}, Mode=OneTime}"/>
-        <Button Grid.Column="1" Content="UPDATE" HorizontalAlignment="Left" Margin="10,20,0,0" Tag="{Binding ElementName=Price, Path=Text}"
-                Grid.Row="5" VerticalAlignment="Top" Click="AddButton_or_UpdateButton_Click" Width="73" Height="30"
-                Visibility="{Binding Product.UniqID, Converter={StaticResource ZeroToHidden}, Mode=OneTime}"/>
-        <Label Content="Enter an integer that's larger than 300,000!" Background="Red" Visibility="{Binding myIDCheck,Converter={StaticResource TrueToVisible}}"
-               HorizontalAlignment="Left" Margin="153,40,0,0" VerticalAlignment="Top" Width="250" Grid.Column="1"/>
-        <Label Content="Choose a Category !" Background="Red" Visibility="{Binding myCategoryCheck,Converter={StaticResource TrueToVisible}}"
-               HorizontalAlignment="Left" Margin="153,0,0,0" VerticalAlignment="Center" Width="223" Grid.Column="1" Grid.Row="1"/>
-        <Label Content="Enter a double !" Background="Red" Visibility="{Binding myPriceCheck,Converter={StaticResource TrueToVisible}}"
-               HorizontalAlignment="Left" Margin="153,0,0,0" VerticalAlignment="Center" Width="218" Grid.Column="1" Grid.Row="3"/>
-        <Label Content="Enter an integer !" Background="Red" Visibility="{Binding myInStockCheck,Converter={StaticResource TrueToVisible}}"
-               HorizontalAlignment="Left" Margin="153,0,0,0" VerticalAlignment="Center" Width="223" Grid.Column="1" Grid.Row="4"/>
-        <Label Content="Enter only alphabetical characters !" Background="Red" Visibility="{Binding myNameCheck,Converter={StaticResource TrueToVisible}}"
-               HorizontalAlignment="Left" Margin="153,0,0,0" VerticalAlignment="Center" Width="218" Grid.Column="1" Grid.Row="2"/>
-        <Button Content="Cancel" Grid.Row="5" HorizontalAlignment="Left" Margin="5,147,0,10"
-                Padding="0,0,120,0" FontSize="20" Width="195" Background="#FF839ED4" Click="back_Click"/>
+        <Label Content="Id:" Style="{StaticResource LeftLabel}" HorizontalAlignment="Left" Height="30" Margin="151,0,0,0" Width="116"/>
+        <Label Content="Category:" Style="{StaticResource LeftLabel}" Grid.Row="1" HorizontalAlignment="Left" Height="30" Margin="151,0,0,0" Width="116"/>
+        <Label Content="Name:" Style="{StaticResource LeftLabel}" Grid.Row="2" HorizontalAlignment="Left" Height="30" Margin="151,0,0,0" Width="116"/>
+        <Label Content="Price:" Style="{StaticResource LeftLabel}" Grid.Row="3" HorizontalAlignment="Left" Height="30" Margin="151,0,0,0" Width="116"/>
+        <Label Content="In Stock:" Style="{StaticResource LeftLabel}" Grid.Row="4" HorizontalAlignment="Left" Height="30" Margin="151,0,0,0" Width="116"/>
+        <TextBox Text="{Binding Product.UniqID, Mode=TwoWay}" IsReadOnly="{Binding Product.UniqID, Converter={StaticResource ZeroToFalse},Mode=OneTime}" PreviewTextInput="int_PreviewTextInput"/>
+        <ComboBox Style="{StaticResource Genaral}" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Categories, Mode=TwoWay}" SelectedValue="{Binding Product.Category, Mode=TwoWay}" FontSize="18"/>
+        <TextBox Text="{Binding Product.Name, Mode=TwoWay}" Grid.Row="2"/>
+        <TextBox x:Name="Price" Text="{Binding Product.Price, Mode=TwoWay}" Grid.Row="3" PreviewTextInput="double_PreviewTextInput"/>
+        <TextBox x:Name="InStock" Text="{Binding Product.InStock, Mode=TwoWay}" Grid.Row="4" PreviewTextInput="int_PreviewTextInput"/>
+        <Label Content="Enter an integer that's larger than 300,000!" Visibility="{Binding myIDCheck,Converter={StaticResource TrueToVisible}}" Style="{StaticResource ErrorLabel}" Grid.Column="2"/>
+        <Label Content="Choose a Category !" Visibility="{Binding myCategoryCheck,Converter={StaticResource TrueToVisible}}" Style="{StaticResource ErrorLabel}" Grid.Row="1"/>
+        <Label Content="Enter only alphabetical characters !" Visibility="{Binding myNameCheck,Converter={StaticResource TrueToVisible}}" Style="{StaticResource ErrorLabel}" Grid.Row="2"/>
+        <Label Content="Enter a double !" Visibility="{Binding myPriceCheck,Converter={StaticResource TrueToVisible}}" Style="{StaticResource ErrorLabel}" Grid.Row="3"/>
+        <Label Content="Enter an integer !" Visibility="{Binding myInStockCheck,Converter={StaticResource TrueToVisible}}" Style="{StaticResource ErrorLabel}" Grid.Row="4"/>
+        <Button Content="ADD" Style="{StaticResource uniqButton}" Click="AddButton_or_UpdateButton_Click" Visibility="{Binding Product.UniqID, Converter={StaticResource ZeroToVisible}, Mode=OneTime}"/>
+        <Button Content="UPDATE" Style="{StaticResource uniqButton}" Click="AddButton_or_UpdateButton_Click" Visibility="{Binding Product.UniqID, Converter={StaticResource ZeroToHidden}, Mode=OneTime}"/>
+        <Button Style="{StaticResource GeneralButton}" Content="Cancel" VerticalAlignment="Bottom" Click="back_Click"/>
     </Grid>
 </Window>

@@ -7,6 +7,12 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="NewOrderWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="Button" BasedOn="{StaticResource Genaral}">
+            <Setter Property="Width" Value="30"/>
+            <Setter Property="Height" Value="20"/>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid Style="{StaticResource FancyGrid}">
             <Grid.RowDefinitions>
@@ -14,17 +20,12 @@
                 <RowDefinition Height="500*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Grid Style="{StaticResource SecondGridForList}">
-                <ComboBox Style="{StaticResource ComboBoxForList}" ItemsSource="{Binding Categories}" Height="29" Margin="172,0,236,0" VerticalAlignment="Center" SelectionChanged="CategorySelector_SelectionChanged">
-                    <ComboBox.Effect>
-                        <DropShadowEffect/>
-                    </ComboBox.Effect>
-                </ComboBox>
+            <Grid Style="{StaticResource GridForList}">
+                <ComboBox Style="{StaticResource ComboBoxForList}" ItemsSource="{Binding Categories}" Height="29" Margin="172,0,236,0" VerticalAlignment="Center" SelectionChanged="CategorySelector_SelectionChanged"/>
                 <Label Content="Category:" FontSize="18" Background="#FFE8E4E4" Margin="32,1,613,-1" Padding="25,0,0,5"/>
             </Grid>
-            <ListView Background="#FF827E79" FontSize="10" ItemsSource="{Binding ProductItems}" Width="650" MouseDoubleClick="ListView_MouseDoubleClick"
-                       Foreground="Black" FontFamily="Sitka Small Semibold" Margin="116,29,34,0" Grid.RowSpan="2">
-                <ListView.View>
+            <ListView Style="{StaticResource LVstyle}" FontSize="10" ItemsSource="{Binding ProductItems}" Width="650" MouseDoubleClick="ListView_MouseDoubleClick" Margin="116,29,34,0" Grid.RowSpan="2">
+               <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Product Id" Width="auto" DisplayMemberBinding="{Binding UniqID}"/>
                         <GridViewColumn Header="Category" Width="auto" DisplayMemberBinding="{Binding Category}"/>
@@ -35,35 +36,22 @@
                         <GridViewColumn Header="Add item" Width="auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="+" Click="AddButton_Click" Height="20" Width="30" IsEnabled="{Binding InStock}"/>
+                                    <Button Content="+" Click="AddButton_Click" IsEnabled="{Binding InStock}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Header="Reduce item" Width="auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="-" Click="ReduceButton_Click" Height="20" Width="30" IsEnabled="{Binding InStock}"/>
+                                    <Button Content="-" Click="ReduceButton_Click" IsEnabled="{Binding InStock}"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                     </GridView>
                 </ListView.View>
-                <ListView.Clip>
-                    <RectangleGeometry RadiusX="10" RadiusY="10" Rect="2,2,500,480"/>
-                </ListView.Clip>
             </ListView>
-            <Button Content="back" Grid.Row="2" Click="back_Click"
-                HorizontalAlignment="Left" Margin="18,10,0,-5" Padding="5" FontFamily="Sitka Small Semibold" FontSize="20" Width="195" Background="#FF839ED4">
-                <Button.Clip>
-                    <RectangleGeometry RadiusX="10" RadiusY="10" Rect="2,2,190,25"/>
-                </Button.Clip>
-            </Button>
-            <Button Content="Go to my cart" Grid.Row="2" Click="cart_Click"
-                 Margin="595,5,0,0" Padding="5" FontFamily="Sitka Small Semibold" FontSize="20" Width="195" Background="#FF839ED4">
-                <Button.Clip>
-                    <RectangleGeometry RadiusX="10" RadiusY="10" Rect="2,2,190,25"/>
-                </Button.Clip>
-            </Button>
+            <Button Style="{StaticResource ButtonSet}" Content="back" Grid.Row="2" Click="back_Click" HorizontalAlignment="Left" Margin="18,10,0,-5" Padding="5"/>
+            <Button Style="{StaticResource ButtonSet}" Content="Go to my cart" Grid.Row="2" Click="cart_Click" Margin="595,5,0,0" Padding="5"/>
         </Grid>
     </Grid>
 </Window>

@@ -20,6 +20,6 @@ public interface ICart
     public BO.Cart UpdateCart(BO.Cart cart, int ID, int amount);
 
     //Do the order that in the cart
-    public void ExecuteOrder(BO.Cart cart);
+    public int ExecuteOrder(BO.Cart cart);
 }
 #endregion

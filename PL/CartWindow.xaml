@@ -8,27 +8,37 @@
         DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="CartWindow" Height="450" Width="800">
     <Window.Resources>
-        <Style TargetType="Label" x:Key="GeneralLabel">
+        <local:TrueToVisible x:Key="TrueToVisible"/>
+        <Style TargetType="Label" x:Key="GeneralLabel" BasedOn="{StaticResource Genaral}">
             <Setter Property="Background" Value="#FF1D4A5A"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="Height" Value="30"/>
-            <Setter Property="FontFamily" Value="Sitka Small Semibold"/>
         </Style>
         <Style TargetType="Label" x:Key="CustemorDetailsLabel" BasedOn="{StaticResource GeneralLabel}">
             <Setter Property="Background" Value="Black"/>
-            <Setter Property="Padding" Value="80,0,0,0"/>
+            <Setter Property="Padding" Value="60,0,0,0"/>
         </Style>
-        <Style TargetType="TextBox">
+        <Style TargetType="Label" x:Key="ErrorLabel" BasedOn="{StaticResource GeneralLabel}">
+            <Setter Property="Margin" Value="375,0,0,0"/>
+            <Setter Property="Background" Value="Red"/>
             <Setter Property="Grid.Column" Value="1"/>
-            <Setter Property="FontFamily" Value="Sitka Small Semibold"/>
+        </Style>
+        <Style TargetType="TextBox" BasedOn="{StaticResource Genaral}">
+            <Setter Property="Grid.Column" Value="1"/>
+            <Setter Property="Margin" Value="0,0,225,0"/>
             <Setter Property="FontSize" Value="18"/>
+        </Style>
+        <Style TargetType="Button" BasedOn="{StaticResource Genaral}">
+            <Setter Property="Background" Value="#FF1D4A5A"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Height" Value="30"/>
         </Style>
     </Window.Resources>
     <Grid Style="{StaticResource FancyGrid}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -43,8 +53,10 @@
         <TextBox Text="{Binding MyCart.CustomerName, Mode=TwoWay}"/>
         <TextBox Text="{Binding MyCart.CustomerEmail, Mode=TwoWay}" Grid.Row="1"/>
         <TextBox Text="{Binding MyCart.CustomerAdress, Mode=TwoWay}" Grid.Row="2"/>
-        <ListView Background="#FF827E79" Foreground="Black" FontSize="12" ItemsSource="{Binding MyCart.OrderItems}"
-                  Grid.Row="3" Grid.ColumnSpan="2" FontFamily="Sitka Small Semibold" Height="232" Margin="133,0,8,71">
+        <Label Style="{StaticResource ErrorLabel}" Content="Enter your full name!" Visibility="{Binding NameCheck, Converter={StaticResource TrueToVisible}}"/>
+        <Label Style="{StaticResource ErrorLabel}" Content="Enter your legal mail!" Visibility="{Binding MailCheck, Converter={StaticResource TrueToVisible}}" Grid.Row="1"/>
+        <Label Style="{StaticResource ErrorLabel}" Content="Enter your addres!" Visibility="{Binding AddresCheck, Converter={StaticResource TrueToVisible}}" Grid.Row="2"/>
+        <ListView Style="{StaticResource LVstyle}" ItemsSource="{Binding MyCart.OrderItems}" Grid.Row="3" Grid.ColumnSpan="2" Height="232" Margin="133,6,8,55">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Product Id" Width="auto" DisplayMemberBinding="{Binding ProductID}"/>
@@ -55,8 +67,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label Style="{StaticResource GeneralLabel}" Grid.Row="3" Content="Total price:" Padding="130,5,0,0" Margin="10,269,251,45" Grid.Column="1"/>
-        <Label Style="{StaticResource GeneralLabel}" Grid.Row="3" Grid.Column="1" Content="{Binding MyCart.TotalPrice}" Margin="267,269,0,45"/>
+        <Label Style="{StaticResource GeneralLabel}" Grid.Row="3" Grid.Column="1" Content="Total price:"  Margin="14,254,333,3"/>
+        <Label Style="{StaticResource GeneralLabel}" Grid.Row="3" Grid.Column="1" Content="{Binding MyCart.TotalPrice}" Margin="200,254,67,3"/>
         <Button Content="Execute order" Click="ExecuteButton_Click" Grid.Row="4" Grid.Column="1"/>
         <Button Content="Back to update items" Click="BackButton_Click" Grid.Row="4"/>
     </Grid>
