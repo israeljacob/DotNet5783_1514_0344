@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace PL
 {
@@ -42,6 +43,7 @@ namespace PL
         public static readonly DependencyProperty CategoriesProperty =
             DependencyProperty.Register("Categories", typeof(Array), typeof(NewOrderWindow), new PropertyMetadata(null));
 
+       
         public NewOrderWindow()
         {
             InitializeComponent();
@@ -52,6 +54,7 @@ namespace PL
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
             Categories = Enum.GetValues(typeof(BO.Category));
+            
         }
 
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)

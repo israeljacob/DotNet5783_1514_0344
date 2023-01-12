@@ -25,7 +25,8 @@
                 <Label Content="Category:" FontSize="18" Background="#FFE8E4E4" Margin="32,1,613,-1" Padding="25,0,0,5"/>
             </Grid>
             <ListView Style="{StaticResource LVstyle}" FontSize="10" ItemsSource="{Binding ProductItems}" Width="650" MouseDoubleClick="ListView_MouseDoubleClick" Margin="116,29,34,0" Grid.RowSpan="2">
-               <ListView.View>
+                
+                <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Product Id" Width="auto" DisplayMemberBinding="{Binding UniqID}"/>
                         <GridViewColumn Header="Category" Width="auto" DisplayMemberBinding="{Binding Category}"/>
