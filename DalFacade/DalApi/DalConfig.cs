@@ -7,7 +7,10 @@ static class DalConfig
 {
     internal static string? s_dalName;
     internal static Dictionary<string, string> s_dalPackages;
-
+    /// <summary>
+    /// extract and load the XML file 
+    /// </summary>
+    /// <exception cref="DalConfigException"></exception>
     static DalConfig()
     {
         XElement dalConfig = XElement.Load(@"..\xml\dal-config.xml")

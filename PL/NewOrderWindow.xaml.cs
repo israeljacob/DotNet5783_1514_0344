@@ -83,6 +83,11 @@ namespace PL
             new MainWindow().Show();
             this.Close();
         }
+        /// <summary>
+        /// to see all the item the customer choose
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cart_Click(object sender, RoutedEventArgs e)
         {
             BO.Cart MyCart = new BO.Cart();
@@ -103,6 +108,11 @@ namespace PL
             }
             new CartWindow(MyCart).ShowDialog();
         }
+        /// <summary>
+        /// if we want to add item/product press on the @+@ button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             ObservableCollection<ProductItem> products = ProductItems;
@@ -116,6 +126,11 @@ namespace PL
                                where productItems != null
                                select productItems);
         }
+        /// <summary>
+        /// if we want to substruct item
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ReduceButton_Click(object sender, RoutedEventArgs e)
         {
             ObservableCollection<ProductItem> products = ProductItems;
@@ -129,6 +144,11 @@ namespace PL
                                where productItems != null
                                select productItems);
         }
+        /// <summary>
+        /// whenever  we press double time on the list view we call this function
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             BO.ProductItem ourProduct = (BO.ProductItem)(sender as ListView)?.SelectedItem!;

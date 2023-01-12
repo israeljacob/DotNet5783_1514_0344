@@ -36,7 +36,11 @@ namespace PL
 
 
 
-
+        /// <summary>
+        /// find the product id to catch it 
+        /// </summary>
+        /// <param name="productItems"></param>
+        /// <param name="id"></param>
         public ProductItemWindow( ObservableCollection<ProductItem> productItems, int id)
         {
             InitializeComponent();

@@ -37,6 +37,11 @@ public partial class OrderTrackWindow : Window
         InitializeComponent();
     }
 
+    /// <summary>
+    /// track order button 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Track_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -50,7 +55,11 @@ public partial class OrderTrackWindow : Window
             MessageBox.Show(ex.Message);
         }
     }
-
+    /// <summary>
+    /// only numbers...
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void OrderID_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {
         Regex regex = new("^[0-9]+");

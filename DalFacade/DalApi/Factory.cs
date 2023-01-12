@@ -6,6 +6,11 @@ using static DalApi.DalConfig;
 
 public static class Factory
 {
+    /// <summary>
+    /// to see all the packages configuration that loaded 
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="DalConfigException"></exception>
     public static IDal? Get()
     {
         string dalType = s_dalName

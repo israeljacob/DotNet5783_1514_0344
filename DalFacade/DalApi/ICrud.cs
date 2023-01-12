@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace DalApi
 {
+    /// <summary>
+    /// interface for crud 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface ICrud<T> where T:struct
     {
         int Add(T entity);
