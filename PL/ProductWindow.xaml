@@ -56,6 +56,7 @@
             <Setter Property="Background" Value="#FF252525"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="18"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
     </Window.Resources>
     <Grid Style="{StaticResource FancyGrid}">
@@ -78,7 +79,7 @@
         <Label Content="Price:" Style="{StaticResource LeftLabel}" Grid.Row="3" HorizontalAlignment="Left" Height="30" Margin="151,0,0,0" Width="116"/>
         <Label Content="In Stock:" Style="{StaticResource LeftLabel}" Grid.Row="4" HorizontalAlignment="Left" Height="30" Margin="151,0,0,0" Width="116"/>
         <TextBox Text="{Binding Product.UniqID, Mode=TwoWay}" IsReadOnly="{Binding Product.UniqID, Converter={StaticResource ZeroToFalse},Mode=OneTime}" PreviewTextInput="int_PreviewTextInput"/>
-        <ComboBox Style="{StaticResource Genaral}" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Categories, Mode=TwoWay}" SelectedValue="{Binding Product.Category, Mode=TwoWay}" FontSize="18"/>
+        <ComboBox Style="{StaticResource Genaral}" Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Categories, Mode=TwoWay}" VerticalAlignment="Center" SelectedValue="{Binding Product.Category, Mode=TwoWay}" FontSize="18"/>
         <TextBox Text="{Binding Product.Name, Mode=TwoWay}" Grid.Row="2"/>
         <TextBox x:Name="Price" Text="{Binding Product.Price, Mode=TwoWay}" Grid.Row="3" PreviewTextInput="double_PreviewTextInput"/>
         <TextBox x:Name="InStock" Text="{Binding Product.InStock, Mode=TwoWay}" Grid.Row="4" PreviewTextInput="int_PreviewTextInput"/>
