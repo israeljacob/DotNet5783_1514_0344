@@ -26,10 +26,9 @@ internal class Order : IOrder
     {
         var listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
 
-        if (listOrders.RemoveAll(p => p?.ID == id) == 0)
-            throw new Exception("missing id"); //new DalMissingIdException(id, "Lecturer");
-
-        XMLTools.SaveListToXMLSerializer(listOrders, s_lecturers);
+        if (listOrders.RemoveAll(p => p?.UniqID == ID) == 0)
+            throw new DO.DoesNotExistException("Order",ID); 
+        XMLTools.SaveListToXMLSerializer(listOrders, s_orders);
     }
 
     public IEnumerable<DO.Order?> GetAll(Func<DO.Order?, bool>? func = null)
@@ -41,7 +40,8 @@ internal class Order : IOrder
 
     public DO.Order GetByFunc(Func<DO.Order?, bool> func)
     {
-        throw new NotImplementedException();
+        return XMLTools.LoadListFromXMLSerializer<DO.Order>(s_orders).FirstOrDefault(func)
+            ?? throw new DO.DoesNotExistException("Order");
     }
 
     public DO.Order GetByID(int ID)
@@ -51,8 +51,16 @@ internal class Order : IOrder
 
     }
 
-    public void Update(DO.Order ID)
+    public void Update(DO.Order order)
     {
-        throw new NotImplementedException();
+        try
+        {
+            Delete(order.UniqID);
+            Add(order);
+        }
+        catch 
+        {
+            throw new DO.DoesNotExistException("Order", order.UniqID);
+        }
     }
 }
