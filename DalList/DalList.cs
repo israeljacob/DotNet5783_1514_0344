@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace Dal
 {
-    sealed public class DalList : IDal //
+    /// <summary>
+    /// we use the lazy to initial only one and protact it even if happan to be Multi-tranding
+    /// so there is no way to make two instance 
+    /// </summary>
+    sealed public class DalList : IDal 
     {
         static readonly Lazy<DalList> lazy = new Lazy<DalList>(() => new DalList());
         public static DalList Instance => lazy.Value;

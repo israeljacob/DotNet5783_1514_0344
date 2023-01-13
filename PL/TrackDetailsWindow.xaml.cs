@@ -27,7 +27,7 @@ namespace PL
             set { SetValue(TrackOrderProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for TrackOrder.  This enables animation, styling, binding, etc...
+        // Using a DependencyProperty as the backing store for TrackOrder. This enables animation, styling, binding, etc...
         public static readonly DependencyProperty TrackOrderProperty =
             DependencyProperty.Register("TrackOrder", typeof(BO.OrderTracking), typeof(Window), new PropertyMetadata(null));
 
@@ -38,6 +38,11 @@ namespace PL
             TrackOrder= orderTracking;
         }
 
+        /// <summary>
+        /// after the id was typed send the details
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowOrderDetails_Click(object sender, RoutedEventArgs e)
         {
             new OrderWindow("TrackDetailsWindow", TrackOrder.UniqID).Show();

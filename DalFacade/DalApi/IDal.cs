@@ -7,6 +7,9 @@ using DO;
 
 namespace DalApi
 {
+    /// <summary>
+    /// interface that will be hiretet 
+    /// </summary>
     public interface IDal
     {
         public IOrder Order { get; }

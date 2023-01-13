@@ -71,9 +71,15 @@ namespace PL
             MyCart= cart;
         }
 
+        /// <summary>
+        /// complete the purches side
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ExecuteButton_Click(object sender, RoutedEventArgs e)
         {
             bool flag = false;
+            //make sure the name is completeed
             if(!MyCart.CustomerName!.Contains(" "))
             {
                 flag = true;
@@ -83,6 +89,7 @@ namespace PL
             {
                 NameCheck = false;
             }
+            //make sure the mail is completeed
             if (!MyCart.CustomerEmail!.Contains("@") || !MyCart.CustomerEmail!.Contains("."))
             {
                 flag = true;
@@ -92,6 +99,7 @@ namespace PL
             {
                 MailCheck = false;
             }
+            //make sure the address is completeed
             if (MyCart.CustomerAdress == "")
             {
                 flag = true;
@@ -105,6 +113,7 @@ namespace PL
             {
                 try
                 {
+                    //if email,adrees,name completed  do the orders
                     int orderId= bl.Cart.ExecuteOrder(MyCart);
                     MessageBox.Show($"Your order has been successfully orderred. Your track order number is: {orderId}. Thank you for shopping with us.");
                     foreach (var process in Process.GetProcesses())

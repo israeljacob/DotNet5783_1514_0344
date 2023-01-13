@@ -82,6 +82,11 @@ namespace PL
             this.Close();
         }
 
+        /// <summary>
+        /// set the ship date or the delivery date if it has not send yet
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DateButton_Click(object sender, RoutedEventArgs e)
         {
             BO.Order order = Order;
@@ -93,7 +98,11 @@ namespace PL
             Order = new();
             Order = order;
         }
-
+        /// <summary>
+        /// if the customer want to update the orders
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ItemUpdateButton_Click(object sender, RoutedEventArgs e)
         {
             BO.OrderItem ourOrderItem = (BO.OrderItem)((Button)sender).DataContext;
