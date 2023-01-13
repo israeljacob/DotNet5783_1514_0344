@@ -47,8 +47,9 @@ namespace BlImplementation
             try
             {
                 if (func == null)
-                    return (IEnumerable<BO.ProductItem>)(from product in dal.Product.GetAll()
-                           let pro = new BO.ProductItem
+                    return from product in dal.Product.GetAll()
+                           where product != null
+                           select new BO.ProductItem
                            {
                                UniqID = product?.UniqID ?? throw new BO.MissingDataException("Product ID"),
                                Name = product?.Name,
@@ -56,9 +57,7 @@ namespace BlImplementation
                                Category = (BO.Category)product?.Category!,
                                InStock = product?.InStock > 0 ? true : false,
                                Amount = 0
-                           }
-                           group pro by pro.Category into groupedProduct
-                           select groupedProduct);
+                           };
                 else
                     return from product in GetListOfProductItems()
                            where func(product)

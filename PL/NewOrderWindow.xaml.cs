@@ -15,147 +15,146 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.ComponentModel;
 
-namespace PL
+namespace PL;
+
+/// <summary>
+/// Interaction logic for NewOrderWindow.xaml
+/// </summary>
+public partial class NewOrderWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for NewOrderWindow.xaml
-    /// </summary>
-    public partial class NewOrderWindow : Window
+    BLApi.IBL bl = BLApi.Factory.Get;
+    public ObservableCollection<BO.ProductItem> ProductItems
     {
-        BLApi.IBL bl = BLApi.Factory.Get;
-        public ObservableCollection<BO.ProductItem> ProductItems
+        get { return (ObservableCollection<BO.ProductItem>)GetValue(ProductItemsProperty); }
+        set { SetValue(ProductItemsProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for ProductItems.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty ProductItemsProperty =
+        DependencyProperty.Register("ProductItems", typeof(ObservableCollection<BO.ProductItem>), typeof(NewOrderWindow), new PropertyMetadata(null));
+
+    public Array Categories
+    {
+        get { return (Array)GetValue(CategoriesProperty); }
+        set { SetValue(CategoriesProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for Categories.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty CategoriesProperty =
+        DependencyProperty.Register("Categories", typeof(Array), typeof(NewOrderWindow), new PropertyMetadata(null));
+
+   
+    public NewOrderWindow()
+    {
+        InitializeComponent();
+        try
         {
-            get { return (ObservableCollection<BO.ProductItem>)GetValue(ProductItemsProperty); }
-            set { SetValue(ProductItemsProperty, value); }
+            var tempProductItem = bl.Product.GetListOfProductItems();
+            ProductItems = new(tempProductItem);
         }
+        catch (Exception ex) { MessageBox.Show(ex.Message); }
+        Categories = Enum.GetValues(typeof(BO.Category));
+        
+    }
 
-        // Using a DependencyProperty as the backing store for ProductItems.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ProductItemsProperty =
-            DependencyProperty.Register("ProductItems", typeof(ObservableCollection<BO.ProductItem>), typeof(NewOrderWindow), new PropertyMetadata(null));
+    private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        ComboBox comboBox = sender as ComboBox ?? null!;
+        ///if we select somthing
 
-        public Array Categories
+        if ((BO.Category)(sender as ComboBox)?.SelectedItem! == BO.Category.all)
         {
-            get { return (Array)GetValue(CategoriesProperty); }
-            set { SetValue(CategoriesProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Categories.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty CategoriesProperty =
-            DependencyProperty.Register("Categories", typeof(Array), typeof(NewOrderWindow), new PropertyMetadata(null));
-
-       
-        public NewOrderWindow()
-        {
-            InitializeComponent();
             try
             {
-                var tempProductItem = bl.Product.GetListOfProductItems();
-                ProductItems = new(tempProductItem);
+                ProductItems = new(bl.Product.GetListOfProductItems()!);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
-            Categories = Enum.GetValues(typeof(BO.Category));
-            
         }
-
-        private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        else
         {
-            ComboBox comboBox = sender as ComboBox ?? null!;
-            ///if we select somthing
+            Func<BO.ProductItem?, bool> func = product => product?.Category == (BO.Category)(sender as ComboBox)?.SelectedItem!;
+            try
+            {
+                ProductItems = new(bl.Product.GetListOfProductItems(func)!);
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message); }
+        }
+    }
 
-            if ((BO.Category)(sender as ComboBox)?.SelectedItem! == BO.Category.all)
+    private void back_Click(object sender, RoutedEventArgs e)
+    {
+        new MainWindow().Show();
+        this.Close();
+    }
+    /// <summary>
+    /// to see all the item the customer choose
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void cart_Click(object sender, RoutedEventArgs e)
+    {
+        BO.Cart MyCart = new BO.Cart();
+        MyCart.CustomerName = "";
+        MyCart.CustomerEmail = "";
+        MyCart.CustomerAdress = "";
+        MyCart.OrderItems = new();
+        foreach (ProductItem item in ProductItems)
+        {
+            if (item != null && item.Amount > 0)
             {
                 try
                 {
-                    ProductItems = new(bl.Product.GetListOfProductItems()!);
-                }
-                catch (Exception ex) { MessageBox.Show(ex.Message); }
-            }
-            else
-            {
-                Func<BO.ProductItem?, bool> func = product => product?.Category == (BO.Category)(sender as ComboBox)?.SelectedItem!;
-                try
-                {
-                    ProductItems = new(bl.Product.GetListOfProductItems(func)!);
+                    bl.Cart.AddOrUpdateCart(MyCart, item);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
             }
         }
-
-        private void back_Click(object sender, RoutedEventArgs e)
+        new CartWindow(MyCart).ShowDialog();
+    }
+    /// <summary>
+    /// if we want to add item/product press on the @+@ button
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void AddButton_Click(object sender, RoutedEventArgs e)
+    {
+        ObservableCollection<ProductItem> products = ProductItems;
+        int id = ((ProductItem)((Button)sender).DataContext).UniqID;
+        foreach (var item in products)
         {
-            new MainWindow().Show();
-            this.Close();
+            if (item.UniqID == id)
+                item.Amount++;
         }
-        /// <summary>
-        /// to see all the item the customer choose
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cart_Click(object sender, RoutedEventArgs e)
+        ProductItems = new(from ProductItem productItems in products
+                           where productItems != null
+                           select productItems);
+    }
+    /// <summary>
+    /// if we want to substruct item
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ReduceButton_Click(object sender, RoutedEventArgs e)
+    {
+        ObservableCollection<ProductItem> products = ProductItems;
+        int id = ((ProductItem)((Button)sender).DataContext).UniqID;
+        foreach (var item in products)
         {
-            BO.Cart MyCart = new BO.Cart();
-            MyCart.CustomerName = "";
-            MyCart.CustomerEmail = "";
-            MyCart.CustomerAdress = "";
-            MyCart.OrderItems = new();
-            foreach (ProductItem item in ProductItems)
-            {
-                if (item != null && item.Amount > 0)
-                {
-                    try
-                    {
-                        bl.Cart.AddOrUpdateCart(MyCart, item);
-                    }
-                    catch (Exception ex) { MessageBox.Show(ex.Message); }
-                }
-            }
-            new CartWindow(MyCart).ShowDialog();
+            if (item.UniqID == id && item.Amount > 0)
+                item.Amount--;
         }
-        /// <summary>
-        /// if we want to add item/product press on the @+@ button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            ObservableCollection<ProductItem> products = ProductItems;
-            int id = ((ProductItem)((Button)sender).DataContext).UniqID;
-            foreach (var item in products)
-            {
-                if (item.UniqID == id)
-                    item.Amount++;
-            }
-            ProductItems = new(from ProductItem productItems in products
-                               where productItems != null
-                               select productItems);
-        }
-        /// <summary>
-        /// if we want to substruct item
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ReduceButton_Click(object sender, RoutedEventArgs e)
-        {
-            ObservableCollection<ProductItem> products = ProductItems;
-            int id = ((ProductItem)((Button)sender).DataContext).UniqID;
-            foreach (var item in products)
-            {
-                if (item.UniqID == id && item.Amount > 0)
-                    item.Amount--;
-            }
-            ProductItems = new(from ProductItem productItems in products
-                               where productItems != null
-                               select productItems);
-        }
-        /// <summary>
-        /// whenever  we press double time on the list view we call this function
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            BO.ProductItem ourProduct = (BO.ProductItem)(sender as ListView)?.SelectedItem!;
-            new ProductItemWindow(ProductItems, ourProduct.UniqID).ShowDialog();
-        }
+        ProductItems = new(from ProductItem productItems in products
+                           where productItems != null
+                           select productItems);
+    }
+    /// <summary>
+    /// whenever  we press double time on the list view we call this function
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ListView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        BO.ProductItem ourProduct = (BO.ProductItem)(sender as ListView)?.SelectedItem!;
+        new ProductItemWindow(ProductItems, ourProduct.UniqID).ShowDialog();
     }
 }

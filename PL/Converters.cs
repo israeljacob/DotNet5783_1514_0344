@@ -10,6 +10,9 @@ using System.Windows.Media;
 
 namespace PL;
 
+/// <summary>
+/// Convert from window name to visible/hidden
+/// </summary>
 public class WinToVisible : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -26,6 +29,9 @@ public class WinToVisible : IValueConverter
     }
 }
 
+/// <summary>
+/// Convert from window name to hidden/visible
+/// </summary>
 public class WinToHidden : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -42,6 +48,9 @@ public class WinToHidden : IValueConverter
     }
 }
 
+/// <summary>
+/// Convert from null to visible
+/// </summary>
 public class NullToVisible : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -57,6 +66,9 @@ public class NullToVisible : IValueConverter
     }
 }
 
+/// <summary>
+/// Convert from window name to bool
+/// </summary>
 public class WinToBool : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -73,6 +85,9 @@ public class WinToBool : IValueConverter
     }
 }
 
+/// <summary>
+/// Convert from zero to false and from any other number to true
+/// </summary>
 public class ZeroToFalse : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -89,6 +104,9 @@ public class ZeroToFalse : IValueConverter
     }
 }
 
+/// <summary>
+/// Convert from zero to visible and from any other number to hidden
+/// </summary>
 public class ZeroToVisible : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -105,6 +123,9 @@ public class ZeroToVisible : IValueConverter
     }
 }
 
+/// <summary>
+/// Convert from zero to hidden and from any other number to visible
+/// </summary>
 public class ZeroToHidden : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -121,6 +142,9 @@ public class ZeroToHidden : IValueConverter
     }
 }
 
+/// <summary>
+/// Convert from true to visible and from false to hidden
+/// </summary>
 public class TrueToVisible : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -137,6 +161,9 @@ public class TrueToVisible : IValueConverter
     }
 }
 
+/// <summary>
+/// Convert from visible to false and from hidden to true
+/// </summary>
 public class VisibleToFalse : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
