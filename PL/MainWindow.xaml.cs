@@ -38,7 +38,8 @@ public partial class MainWindow : Window
 
     private void User_click(object sender, RoutedEventArgs e)
     {
-
+        new Login().Show();
+        this.Close();
     }
 
     private void New_order_click(object sender, RoutedEventArgs e)
