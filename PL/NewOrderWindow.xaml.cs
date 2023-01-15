@@ -61,12 +61,33 @@ public partial class NewOrderWindow : Window
     {
         ComboBox comboBox = sender as ComboBox ?? null!;
         ///if we select somthing
+        ObservableCollection<ProductItem> products = new();
+        foreach (ProductItem item in ProductItems)
+        {
+            bool flag = false;
+            foreach (ProductItem it in products)
+            {
+                if (item.UniqID == it.UniqID)
+                {
+                    it.Amount = item.Amount;
+                    flag = true;
+                }
+            }
+            if (!flag)
+                products.Add(item);
+        }
 
         if ((BO.Category)(sender as ComboBox)?.SelectedItem! == BO.Category.all)
         {
             try
             {
                 ProductItems = new(bl.Product.GetListOfProductItems()!);
+                foreach (ProductItem item in products)
+                    foreach (ProductItem it in ProductItems)
+                    {
+                        if(item.UniqID == it.UniqID)
+                            it.Amount = item.Amount;
+                    }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
@@ -76,6 +97,12 @@ public partial class NewOrderWindow : Window
             try
             {
                 ProductItems = new(bl.Product.GetListOfProductItems(func)!);
+                foreach (ProductItem item in products)
+                    foreach (ProductItem it in ProductItems)
+                    {
+                        if (item.UniqID == it.UniqID)
+                            it.Amount = item.Amount;
+                    }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }

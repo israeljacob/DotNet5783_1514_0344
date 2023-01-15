@@ -22,11 +22,11 @@
                 <StackPanel Margin="20 50">
                     <TextBlock Text="User Login" Margin="20" Foreground="White" TextAlignment="Center" FontSize="38" FontFamily="Great Vibes"></TextBlock>
                     <StackPanel Orientation="Horizontal" Margin="10">
-                        
+
                         <TextBox x:Name="txtUsername" Margin="10 0"  Foreground="White" Width="250" BorderBrush="White" CaretBrush="#FFD94448" SelectionBrush="#FFD94448" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="10">
-                       
+
                         <PasswordBox x:Name="txtPassword" Margin="10 0" Foreground="White" Width="250" BorderBrush="White" CaretBrush="#FFD94448" SelectionBrush="#FFD94448" />
                     </StackPanel>
                     <StackPanel Margin="10" HorizontalAlignment="Center">

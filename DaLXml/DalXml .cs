@@ -2,7 +2,7 @@
 
 namespace Dal;
 
-sealed internal class DalXml : IDal
+sealed public class DalXml : IDal
 {
     /// <summary>
     /// we use the lazy to initial only one and protact it even if happan to be Multi-tranding

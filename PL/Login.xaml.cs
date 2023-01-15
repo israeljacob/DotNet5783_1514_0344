@@ -13,58 +13,57 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml;
 
-namespace PL
+namespace PL;
+
+/// <summary>
+/// Interaction logic for Login.xaml
+/// </summary>
+/// 
+
+
+public partial class Login : Window
 {
-    /// <summary>
-    /// Interaction logic for Login.xaml
-    /// </summary>
-    /// 
-
-
-    public partial class Login : Window
+    public Login()
     {
-        public Login()
+        InitializeComponent();
+    }
+
+
+
+    private void btnLogin_Click(object sender, RoutedEventArgs e)
+    {
+
+        XmlDocument doc = new XmlDocument();
+        doc.Load("PL/users.xml");
+        doc.Save(Console.Out);
+
+        XmlNodeList Clist = doc.GetElementsByTagName("username");
+
+        var Username = "";
+        var Password = "";
+        var Error = "";
+
+        foreach (XmlNode node in doc.SelectNodes("//users")!)
         {
-            InitializeComponent();
-        }
+            Username = node.SelectSingleNode("username")!.InnerText;
+            Password = node.SelectSingleNode("password")!.InnerText;
 
-
-
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
-        {
-
-            XmlDocument doc = new XmlDocument();
-            doc.Load("PL/users.xml");
-            doc.Save(Console.Out);
-
-            XmlNodeList Clist = doc.GetElementsByTagName("username");
-
-            var Username = "";
-            var Password = "";
-            var Error = "";
-
-            foreach (XmlNode node in doc.SelectNodes("//users"))
+            if (Username == txtUsername.Text && Password == txtPassword.Password)
             {
-                Username = node.SelectSingleNode("username").InnerText;
-                Password = node.SelectSingleNode("password").InnerText;
-
-                if (Username == txtUsername.Text && Password == txtPassword.Password)
-                {
-                 //   new .Show();
-                }
-                else
-                {
-                    Error = "Invalid username/password";
-                    break;
-                }
+                //   new .Show();
             }
-            if (Error != "")
-            { MessageBox.Show(Error); }
+            else
+            {
+                Error = "Invalid username/password";
+                break;
+            }
         }
+        if (Error != "")
+        { MessageBox.Show(Error); }
+    }
 
-        private void btnExit_Click(object sender, RoutedEventArgs e)
-        {
+    private void btnExit_Click(object sender, RoutedEventArgs e)
+    {
 
-        }
     }
 }

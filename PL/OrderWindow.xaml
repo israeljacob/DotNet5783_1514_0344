@@ -15,7 +15,7 @@
         <local:VisibleToFalse x:Key="VisibleToFalse"/>
         <!-- Button style -->
         <Style TargetType="Button" BasedOn="{StaticResource Genaral}">
-            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Background" Value="#FF839ED4"/>
             <Setter Property="Grid.Column" Value="2"/>
             <Setter Property="Clip">
                 <Setter.Value>
@@ -81,7 +81,7 @@
         <Label Content="{Binding Order.ShipDate, Mode=TwoWay}" Grid.Row="6" Style="{StaticResource rightLabel}"/>
         <Button FontSize="20" Width="70" Margin="0,0,330,3" Content="Sent" Grid.Row="6" Visibility="{Binding Order.ShipDate, Converter={StaticResource NullToVisible}}" IsEnabled="{Binding WinName , Converter={StaticResource WinToBool}}" Click="DateButton_Click"/>
         <Label Content="{Binding Order.DeliveryrDate, Mode=TwoWay}" Grid.Row="7" Style="{StaticResource rightLabel}"/>
-        <Button Padding="0,0,220,0" FontSize="10" Content="Deliverred" Grid.Row="7" Visibility="{Binding Order.DeliveryrDate, Converter={StaticResource NullToVisible}, Mode=TwoWay}" IsEnabled="{Binding WinName , Converter={StaticResource WinToBool}}" Click="DateButton_Click" Grid.RowSpan="2"/>
+        <Button Padding="0,0,70,0" FontSize="10" Content="Deliverred" Grid.Row="6" Visibility="{Binding Order.DeliveryrDate, Converter={StaticResource NullToVisible}, Mode=TwoWay}" IsEnabled="{Binding WinName , Converter={StaticResource WinToBool}}" Click="DateButton_Click" Grid.Column="2" Margin="1,30,267,1" Grid.RowSpan="2"/>
         <Label Content="{Binding Order.TotalPrice, Mode=TwoWay}" Grid.Row="8" Style="{StaticResource rightLabel}"/>
         <ListView Style="{StaticResource LVstyle}" FontSize="14" ItemsSource="{Binding Order.orderItems, Mode=TwoWay}" Grid.ColumnSpan="2" Margin="0,5,10,10" Grid.Row="9" Grid.Column="1">
             <ListView.View>
@@ -108,10 +108,10 @@
             </ListView.View>
         </ListView>
         <Button x:Name="UpdateButton" Content="Update" Visibility="{Binding WinName , Converter={StaticResource WinToVisible}}"
-                HorizontalAlignment="Left" Margin="73,120,0,0" Grid.Row="9" VerticalAlignment="Top"
-                 Click="UpdateButton_Click"  Width="72" Height="34"/>
+                HorizontalAlignment="Left" Margin="319,118,0,0" Grid.Row="9" VerticalAlignment="Top"
+                 Click="UpdateButton_Click"  Width="72" Height="34" Grid.Column="2"/>
         <Button Content="Back"
-                HorizontalAlignment="Left" Margin="0,120,0,0" Grid.Row="9" VerticalAlignment="Top"
+                HorizontalAlignment="Left" Margin="-369,117,0,0" Grid.Row="9" VerticalAlignment="Bottom"
                  Click="backButton_Click"  Width="60" Height="34"/>
     </Grid>
 </Window>
