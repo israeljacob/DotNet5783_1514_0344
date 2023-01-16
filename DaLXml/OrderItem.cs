@@ -15,7 +15,7 @@ using System.Xml.Linq;
 
 internal class OrderItem : IOrderItem
 {
-    DataSourcexml dataSourcexml = DataSourcexml.Instance;
+   // DataSourcexml dataSourcexml = DataSourcexml.Instance;
     const string s_orderItems = "OrderItems"; //Linq to XML
 
     static DO.OrderItem? getOrderItem(XElement ord)

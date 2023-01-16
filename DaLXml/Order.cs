@@ -13,7 +13,7 @@ using DocumentFormat.OpenXml.Spreadsheet;
 
 internal class Order : IOrder
 {
-    DataSourcexml dataSource = DataSourcexml.Instance;
+    //DataSourcexml dataSource = DataSourcexml.Instance;
 
 
     const string s_orders = @"Orders";
