@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dal;
 
+using DAL;
 using DalApi;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
@@ -16,9 +17,10 @@ internal class Order : IOrder
 
 
     const string s_orders = @"Orders";
+    const string s_data = @"data-config";
     public int Add(DO.Order order)
     {
-        order.UniqID = DataSourcexml.Config.OrderID;
+        order.UniqID = SerialNumbers.GetOrderId;
         List<DO.Order?> listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
         if (listOrders.FirstOrDefault(ord => ord?.UniqID == order.UniqID) != null)
             throw new DO.IdAlreadyExistException("Order", order.UniqID);

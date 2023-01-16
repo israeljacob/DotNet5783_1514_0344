@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Dal;
+
+using DAL;
 using DalApi;
 using DO;
 using DocumentFormat.OpenXml.Office2010.Excel;
@@ -46,9 +48,8 @@ internal class OrderItem : IOrderItem
     }
     public int Add(DO.OrderItem orderItem)
     {
-        orderItem.UniqID = DataSourcexml.Config.OrderItemID;
+        orderItem.UniqID = SerialNumbers.GetOrderItemId;
         XElement orderItemsRootElem = XMLTools.LoadListFromXMLElement(s_orderItems);
-
         if (XMLTools.LoadListFromXMLElement(s_orderItems)?.Elements()
             .FirstOrDefault(ord => ord.ToIntNullable("UniqID") == orderItem.UniqID) is not null)
             throw new DO.IdAlreadyExistException("Order item", orderItem.UniqID);

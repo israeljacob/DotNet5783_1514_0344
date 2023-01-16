@@ -43,7 +43,7 @@ public partial class NewOrderWindow : Window
     public static readonly DependencyProperty CategoriesProperty =
         DependencyProperty.Register("Categories", typeof(Array), typeof(NewOrderWindow), new PropertyMetadata(null));
 
-   
+       ObservableCollection<ProductItem> products = new();
     public NewOrderWindow()
     {
         InitializeComponent();
@@ -61,7 +61,6 @@ public partial class NewOrderWindow : Window
     {
         ComboBox comboBox = sender as ComboBox ?? null!;
         ///if we select somthing
-        ObservableCollection<ProductItem> products = new();
         foreach (ProductItem item in ProductItems)
         {
             bool flag = false;
