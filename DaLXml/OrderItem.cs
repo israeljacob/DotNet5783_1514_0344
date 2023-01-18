@@ -9,13 +9,10 @@ namespace Dal;
 using DAL;
 using DalApi;
 using DO;
-using DocumentFormat.OpenXml.Office2010.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
 using System.Xml.Linq;
 
 internal class OrderItem : IOrderItem
 {
-   DataSourcexml dataSourcexml = DataSourcexml.Instance;
     const string s_orderItems = "OrderItems"; //Linq to XML
     /// <summary>
     /// assigns a unique ID to it using the GetOrderItemId property from the SerialNumbers class,

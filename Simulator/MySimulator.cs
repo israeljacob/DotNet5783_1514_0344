@@ -1,192 +1,99 @@
-﻿//using BLApi;
-//using DocumentFormat.OpenXml.EMMA;
-//using System;
-//using System.Collections.Generic;
-//using System.Collections.ObjectModel;
-//using System.ComponentModel;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
+﻿using DocumentFormat.OpenXml.EMMA;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-//namespace Simulator;
+namespace Simulator;
 
-//public sealed class MySimulator: INotifyPropertyChanged
-//{
-//    public event PropertyChangedEventHandler? PropertyChanged;
-//    static readonly IBL bl = Factory.Get();
+public static class MySimulator
+{
+    private static volatile bool active = false;
+    static readonly BLApi.IBL bl = BLApi.Factory.Get();
+    public delegate void SimulationCompleteEventHandler();
+    public static event SimulationCompleteEventHandler? SimulationComplete;
+    public delegate void OrderProcessingEventHandler(int ID, BO.StatusOfOrder? CurrentStatus, DateTime start, BO.StatusOfOrder? nextStatus, DateTime end);
+    public static event OrderProcessingEventHandler? OrderProcessing;
 
-//    MySimulator() { }
-//    public static MySimulator Instance { get; } = new MySimulator();
+    public static void activate()
+    {
+        active = true;
+        new Thread(() =>
+        {
+            while (active)
+            {
+                int? orderID = bl.Order.ForSimulator();
+                if (orderID is not null)
+                {
+                    BO.Order order;
+                    try
+                    {
+                        order = bl.Order.GetOrderByID((int)orderID);
+                    }
+                    catch (Exception ex) { throw new Exception(ex.Message); }
+                    bool shipped = false;
+                    if (order.ShipDate != null)
+                        shipped = true;
+                    Random random = new Random();
+                    int time = random.Next(3, 11);
+                    DateTime finishTask = DateTime.Now + new TimeSpan(time * 10000);
+                    //report
+                    OrderProcessing?.Invoke(
+                        order.UniqID,
+                        order.StatusOfOrder,
+                        DateTime.Now,
+                        order.StatusOfOrder == BO.StatusOfOrder.Orderred ? BO.StatusOfOrder.Sent : BO.StatusOfOrder.Delivered,
+                        finishTask);
+                    Thread.Sleep(time * 1000);
+                    if (shipped)
+                    {
+                        order.StatusOfOrder = BO.StatusOfOrder.Delivered;
+                        order.DeliveryrDate = DateTime.Now;
+                    }
+                    else
+                    {
+                        order.StatusOfOrder = BO.StatusOfOrder.Sent;
+                        order.ShipDate = DateTime.Now;
+                    }
+                    try
+                    {
+                        bl.Order.UpdateOrder(order);
+                    }
+                    catch (Exception ex) { throw new Exception(ex.Message); }
+                    //report finished
+                    SimulationComplete?.Invoke();
+                }
+                Thread.Sleep(1000);
+            }
+        }).Start();
+    }
 
+    public static void StopSimulation()
+    {
+        active = false;
+        SimulationComplete?.Invoke();
+    }
+    public static void RegisterToSimulationComplete(SimulationCompleteEventHandler handler)
+    {
+        SimulationComplete += handler;
+    }
 
-//    Action<MySimulator> update;
-//    private bool active = false;
-//    public void UnActivate()
-//    {
-//        active= false;
-//    }
-//    public void Activate()
-//    {
-//        active = true;
-//        new Thread(()=>
-//        while (active)
-//        {
-//            int? orderID = bl.Order.ForSimulator();
+    public static void UnregisterFromSimulationComplete(SimulationCompleteEventHandler handler)
+    {
+        SimulationComplete -= handler;
+    }
+    public static void RegisterToUpdateProgress(OrderProcessingEventHandler handler)
+    {
+        OrderProcessing += handler;
+    }
 
-//        }
-//    });
-    
-//    BO.Order? order = bl.Order.ForSimulator();
-//    public BO.Order Order
-//    {
-//        get { return order!; }
-//        set
-//        {
-//            order = value;
-//            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Order)));
-//        }
-//    }
-
-
-
-
-
-//    ////private static properties
-//    //private static Thread? simulationThread;
-//    //private static volatile bool stopSimulation;
-
-//    ////public static events and delegates
-//    //public delegate void SimulationEventHandler(object sender, EventArgs e);
-//    //public static event SimulationEventHandler? SimulationCompleted;
-//    //public static event SimulationEventHandler? Simulationupdated;
-//    //public static event SimulationEventHandler? SimulationStopped;
-//    //public static event SimulationEventHandler? SimulationOrderUpdated;
-
-//    ////////public static methods
-//    //////public static void RunSimulation()
-//    //////{
-//    //////    isRunning = true;
-//    //////    stopSimulation = false;
-
-//    //////    //perform simulation
-//    //////    while (isRunning)
-//    //////    {
-//    //////        //check if simulation should stop
-//    //////        if (stopSimulation)
-//    //////        {
-//    //////            isRunning = false;
-//    //////            OnSimulationComplete?.Invoke();
-//    //////            break;
-//    //////        }
-//    //////        //update simulation
-//    //////        OnSimulationUpdate?.Invoke();
-//    //////        //additional event
-//    //////        OnAdditionalEvent?.Invoke();
-//    //////    }
-//    //////}
-
-//    //public static void StopSimulation()
-//    //{
-//    //    stopSimulation = true;
-//    //    simulationThread?.Join();
-//    //}
-
-//    //public static void RegisterForCompleteEvent(SimulationEventHandler handler)
-//    //{
-//    //    SimulationCompleted += handler;
-//    //}
-
-//    //public static void UnregisterForCompleteEvent(SimulationEventHandler handler)
-//    //{
-//    //    SimulationCompleted -= handler;
-//    //}
-
-//    //public static void RegisterForUpdateEvent(SimulationEventHandler handler)
-//    //{
-//    //    Simulationupdated += handler;
-//    //}
-
-//    //public static void UnregisterForUpdateEvent(SimulationEventHandler handler)
-//    //{
-//    //    Simulationupdated -= handler;
-//    //}
-
-//    //public static void RegisterForAdditionalEvent(SimulationEventHandler handler)
-//    //{
-//    //    SimulationOrderUpdated += handler;
-//    //}
-
-//    //public static void UnregisterForAdditionalEvent(SimulationEventHandler handler)
-//    //{
-//    //    SimulationOrderUpdated -= handler;
-//    //}
-
-//    //public static void RegisterForStopEvent(SimulationEventHandler handler)
-//    //{
-//    //    SimulationStopped += handler;
-//    //}
-
-//    //public static void UnregisterForStopEvent(SimulationEventHandler handler)
-//    //{
-//    //    SimulationStopped -= handler;
-//    //}
-//    //public static void RunSimulation()
-//    //{
-//    //    stopSimulation = false;
-
-//    //    simulationThread = new Thread(Simulate);
-//    //    simulationThread.Start();
-//    //}
-//    //public static void Simulate()
-//    //{
-//    //    BLApi.IBL bl = BLApi.Factory.Get();
-//    //    List<BO.Order> orders = (from BO.OrderForList order in bl.Order.GetListOfOrders().ToList()!
-//    //                             select bl.Order.GetOrderByID(order.UniqID)).ToList();
+    public static void UnregisterFromUpdateProgress(OrderProcessingEventHandler handler)
+    {
+        OrderProcessing -= handler;
+    }
 
 
-//    //    stopSimulation = false;
-//    //    while (true)
-//    //    {
-//    //        if (stopSimulation)
-//    //        {
-//    //            break;
-//    //        }
-//    //        //Get the next order to process based on priority
-//    //        var nextOrder = orders.Where(o => o.StatusOfOrder == BO.StatusOfOrder.Orderred)
-//    //                              .OrderBy(o => o.OrderDate)
-//    //                              .FirstOrDefault();
-//    //        if (nextOrder == null)
-//    //        {
-//    //            nextOrder = orders.Where(o => o.StatusOfOrder == BO.StatusOfOrder.Sent)
-//    //                              .OrderBy(o => o.ShipDate)
-//    //                              .FirstOrDefault();
-//    //        }
-
-//    //        if (nextOrder == null)
-//    //        {
-//    //            //There are no more orders to process
-//    //            break;
-//    //        }
-
-//    //        //Update the order status
-//    //        if (nextOrder.StatusOfOrder == BO.StatusOfOrder.Orderred)
-//    //        {
-//    //            nextOrder.StatusOfOrder = BO.StatusOfOrder.Sent;
-//    //            nextOrder.ShipDate = DateTime.Now;
-//    //            Console.WriteLine("Order " + nextOrder.UniqID + " has been sent");
-//    //        }
-//    //        else if (nextOrder.StatusOfOrder == BO.StatusOfOrder.Sent)
-//    //        {
-//    //            nextOrder.StatusOfOrder = BO.StatusOfOrder.Delivered;
-//    //            nextOrder.DeliveryrDate = DateTime.Now;
-//    //            Console.WriteLine("Order " + nextOrder.UniqID + " has been delivered");
-//    //        }
-
-//    //        //Wait for a certain amount of time before processing the next order
-//    //        Random random= new Random();
-//    //        System.Threading.Thread.Sleep(random.Next(3000,10000));
-//    //    }
-//    //}
-//}
-
-
+}

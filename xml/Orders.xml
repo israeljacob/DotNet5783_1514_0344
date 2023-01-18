@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfOrder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Order>
     <UniqID>100000</UniqID>
@@ -100,13 +100,13 @@
     <DeliveryrDate>2022-12-14T06:38:47.8022023+02:00</DeliveryrDate>
   </Order>
   <Order>
-    <UniqID>100011</UniqID>
-    <CustomerName>Bradley Moran</CustomerName>
-    <CustomerEmail>dhrakar@gmail.com</CustomerEmail>
-    <CustomerAdress>WC87 2KG</CustomerAdress>
-    <OrderDate>2022-03-08T06:38:47.8033036+02:00</OrderDate>
-    <ShipDate>2022-11-13T06:38:47.8033077+02:00</ShipDate>
-    <DeliveryrDate xsi:nil="true" />
+    <UniqID>100013</UniqID>
+    <CustomerName>Abraham Rangel</CustomerName>
+    <CustomerEmail>agolomsh@outlook.com</CustomerEmail>
+    <CustomerAdress>N08 4JP</CustomerAdress>
+    <OrderDate>2020-07-30T06:38:47.8052341+03:00</OrderDate>
+    <ShipDate>2020-11-20T06:38:47.8052368+02:00</ShipDate>
+    <DeliveryrDate>2023-01-18T09:30:14.0643943+02:00</DeliveryrDate>
   </Order>
   <Order>
     <UniqID>100012</UniqID>
@@ -115,25 +115,7 @@
     <CustomerAdress>4 Station Road</CustomerAdress>
     <OrderDate>2022-04-04T06:38:47.8042166+03:00</OrderDate>
     <ShipDate>2022-05-08T06:38:47.8042214+03:00</ShipDate>
-    <DeliveryrDate xsi:nil="true" />
-  </Order>
-  <Order>
-    <UniqID>100013</UniqID>
-    <CustomerName>Abraham Rangel</CustomerName>
-    <CustomerEmail>agolomsh@outlook.com</CustomerEmail>
-    <CustomerAdress>N08 4JP</CustomerAdress>
-    <OrderDate>2020-07-30T06:38:47.8052341+03:00</OrderDate>
-    <ShipDate>2020-11-20T06:38:47.8052368+02:00</ShipDate>
-    <DeliveryrDate xsi:nil="true" />
-  </Order>
-  <Order>
-    <UniqID>100014</UniqID>
-    <CustomerName>Tanya Griffin</CustomerName>
-    <CustomerEmail>jginspace@outlook.com</CustomerEmail>
-    <CustomerAdress>85 New Road</CustomerAdress>
-    <OrderDate>2021-09-19T06:38:47.8063185+03:00</OrderDate>
-    <ShipDate>2022-06-26T06:38:47.8063231+03:00</ShipDate>
-    <DeliveryrDate xsi:nil="true" />
+    <DeliveryrDate>2023-01-18T09:30:31.1453554+02:00</DeliveryrDate>
   </Order>
   <Order>
     <UniqID>100015</UniqID>
@@ -142,16 +124,16 @@
     <CustomerAdress>NW61 0IL</CustomerAdress>
     <OrderDate>2021-07-25T06:38:47.8074972+03:00</OrderDate>
     <ShipDate>2022-05-12T06:38:47.8075004+03:00</ShipDate>
-    <DeliveryrDate xsi:nil="true" />
+    <DeliveryrDate>2023-01-18T09:43:28.6724628+02:00</DeliveryrDate>
   </Order>
   <Order>
-    <UniqID>100016</UniqID>
-    <CustomerName>Agnes Marquez</CustomerName>
-    <CustomerEmail>parrt@me.com</CustomerEmail>
-    <CustomerAdress>90 New Road</CustomerAdress>
-    <OrderDate>2021-01-27T06:38:47.8086947+02:00</OrderDate>
-    <ShipDate xsi:nil="true" />
-    <DeliveryrDate xsi:nil="true" />
+    <UniqID>100014</UniqID>
+    <CustomerName>Tanya Griffin</CustomerName>
+    <CustomerEmail>jginspace@outlook.com</CustomerEmail>
+    <CustomerAdress>85 New Road</CustomerAdress>
+    <OrderDate>2021-09-19T06:38:47.8063185+03:00</OrderDate>
+    <ShipDate>2022-06-26T06:38:47.8063231+03:00</ShipDate>
+    <DeliveryrDate>2023-01-18T09:43:40.4992563+02:00</DeliveryrDate>
   </Order>
   <Order>
     <UniqID>100017</UniqID>
@@ -159,17 +141,17 @@
     <CustomerEmail>hstiles@live.com</CustomerEmail>
     <CustomerAdress>SE64 7XG</CustomerAdress>
     <OrderDate>2020-06-24T06:38:47.809618+03:00</OrderDate>
-    <ShipDate xsi:nil="true" />
-    <DeliveryrDate xsi:nil="true" />
+    <ShipDate>2023-01-18T09:29:53.0044313+02:00</ShipDate>
+    <DeliveryrDate>2023-01-18T09:43:46.7338084+02:00</DeliveryrDate>
   </Order>
   <Order>
-    <UniqID>100018</UniqID>
-    <CustomerName>Lottie Hancock</CustomerName>
-    <CustomerEmail>fallorn@live.com</CustomerEmail>
-    <CustomerAdress>9469 George Street</CustomerAdress>
-    <OrderDate>2020-11-30T06:38:47.8104383+02:00</OrderDate>
-    <ShipDate xsi:nil="true" />
-    <DeliveryrDate xsi:nil="true" />
+    <UniqID>100011</UniqID>
+    <CustomerName>Bradley Moran</CustomerName>
+    <CustomerEmail>dhrakar@gmail.com</CustomerEmail>
+    <CustomerAdress>WC87 2KG</CustomerAdress>
+    <OrderDate>2022-03-08T06:38:47.8033036+02:00</OrderDate>
+    <ShipDate>2022-11-13T06:38:47.8033077+02:00</ShipDate>
+    <DeliveryrDate>2023-01-18T09:43:47.5434541+02:00</DeliveryrDate>
   </Order>
   <Order>
     <UniqID>100019</UniqID>
@@ -177,7 +159,25 @@
     <CustomerEmail>jimxugle@icloud.com</CustomerEmail>
     <CustomerAdress>SE45 7QS</CustomerAdress>
     <OrderDate>2020-08-05T06:38:47.812017+03:00</OrderDate>
-    <ShipDate xsi:nil="true" />
-    <DeliveryrDate xsi:nil="true" />
+    <ShipDate>2023-01-18T09:30:03.0265009+02:00</ShipDate>
+    <DeliveryrDate>2023-01-18T09:43:55.8332848+02:00</DeliveryrDate>
+  </Order>
+  <Order>
+    <UniqID>100018</UniqID>
+    <CustomerName>Lottie Hancock</CustomerName>
+    <CustomerEmail>fallorn@live.com</CustomerEmail>
+    <CustomerAdress>9469 George Street</CustomerAdress>
+    <OrderDate>2020-11-30T06:38:47.8104383+02:00</OrderDate>
+    <ShipDate>2023-01-18T09:30:20.0881963+02:00</ShipDate>
+    <DeliveryrDate>2023-01-18T09:44:06.8512597+02:00</DeliveryrDate>
+  </Order>
+  <Order>
+    <UniqID>100016</UniqID>
+    <CustomerName>Agnes Marquez</CustomerName>
+    <CustomerEmail>parrt@me.com</CustomerEmail>
+    <CustomerAdress>90 New Road</CustomerAdress>
+    <OrderDate>2021-01-27T06:38:47.8086947+02:00</OrderDate>
+    <ShipDate>2023-01-18T09:30:25.1228075+02:00</ShipDate>
+    <DeliveryrDate>2023-01-18T09:44:16.8857191+02:00</DeliveryrDate>
   </Order>
 </ArrayOfOrder>

@@ -14,7 +14,6 @@ using System.Runtime.CompilerServices;
 
 internal class Order : IOrder
 {
-    DataSourcexml dataSource = DataSourcexml.Instance;
 
 
     const string s_orders = @"Orders";
