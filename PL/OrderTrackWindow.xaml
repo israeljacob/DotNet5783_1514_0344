@@ -28,7 +28,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Text="Order ID:" FontSize="32" TextAlignment="Center" Background="Gray" Margin="0,29,0,51"/>
-        <TextBox Style="{StaticResource Genaral}" Grid.Column="1" Width="200" FontSize="32" Text="{Binding OrderID,Mode=TwoWay}" PreviewTextInput="OrderID_PreviewTextInput" HorizontalAlignment="Left" Margin="0,29,0,51"/>
+        <TextBox Style="{StaticResource Genaral}" Grid.Column="1" Width="150" FontSize="32" Text="{Binding OrderID,Mode=TwoWay}" PreviewTextInput="OrderID_PreviewTextInput" HorizontalAlignment="Center" Margin="0,29,0,51"/>
         <Button Content="Track" Click="Track_Click" HorizontalAlignment="Right" Grid.Column="1"/>
         <Button Content="Back" Click="Back_Click" HorizontalAlignment="Left"/>
     </Grid>

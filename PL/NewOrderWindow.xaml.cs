@@ -22,7 +22,11 @@ namespace PL;
 /// </summary>
 public partial class NewOrderWindow : Window
 {
-    BLApi.IBL bl = BLApi.Factory.Get;
+    BLApi.IBL bl = BLApi.Factory.Get();
+
+    private string groupName = "Category";
+    PropertyGroupDescription propertyGroupDescription;
+    public ICollectionView CollectionViewProductItemList { set; get; }
     public ObservableCollection<BO.ProductItem> ProductItems
     {
         get { return (ObservableCollection<BO.ProductItem>)GetValue(ProductItemsProperty); }
@@ -54,7 +58,10 @@ public partial class NewOrderWindow : Window
         }
         catch (Exception ex) { MessageBox.Show(ex.Message); }
         Categories = Enum.GetValues(typeof(BO.Category));
-        
+        CollectionViewProductItemList = CollectionViewSource.GetDefaultView(ProductItems);
+
+        propertyGroupDescription = new PropertyGroupDescription(groupName);
+        CollectionViewProductItemList.GroupDescriptions.Add(propertyGroupDescription);
     }
 
     private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)

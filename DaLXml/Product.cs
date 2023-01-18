@@ -9,13 +9,14 @@ using DalApi;
 using DO;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.Spreadsheet;
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 
 internal class Product : IProduct
 {
     const string s_products = "Products"; //Linq to XML
 
-   
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Product product)
     {
         List<DO.Product?> listProducts = XMLTools.LoadListFromXMLSerializer<DO.Product>(s_products);
@@ -26,6 +27,7 @@ internal class Product : IProduct
         return product.UniqID;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int ID)
     {
         var listProducts = XMLTools.LoadListFromXMLSerializer<DO.Product>(s_products);
@@ -34,27 +36,28 @@ internal class Product : IProduct
             throw new DO.DoesNotExistException("Product", ID);
         XMLTools.SaveListToXMLSerializer(listProducts, s_products);
     }
-   
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.Product?> GetAll(Func<DO.Product?, bool>? func = null)
     {
         var listProducts = XMLTools.LoadListFromXMLSerializer<DO.Product>(s_products)!;
         return func == null ? listProducts.OrderBy(ord => ((DO.Product)ord!).UniqID)
                               : listProducts.Where(func).OrderBy(ord => ((DO.Product)ord!).UniqID);
     }
-       
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Product GetByFunc(Func<DO.Product?, bool> func)
     {
         return XMLTools.LoadListFromXMLSerializer<DO.Product>(s_products).FirstOrDefault(func)
             ?? throw new DO.DoesNotExistException("Product");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Product GetByID(int ID)
     {
         return XMLTools.LoadListFromXMLSerializer<DO.Product>(s_products).FirstOrDefault(p => p?.UniqID == ID)
             ?? throw new DO.DoesNotExistException("Product", ID);
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Product product)
     {
         try

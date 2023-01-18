@@ -20,7 +20,7 @@ namespace PL
     /// </summary>
     public partial class OrderWindow : Window
     {
-        private static readonly BLApi.IBL bl = BLApi.Factory.Get;
+        private static readonly BLApi.IBL bl = BLApi.Factory.Get();
         public BO.Order Order
         {
             get { return (BO.Order)GetValue(OrderProperty); }
@@ -60,7 +60,7 @@ namespace PL
             OrderStatuses = Enum.GetValues(typeof(BO.StatusOfOrder));
             try
             {
-                Order = bl.Order.OrderByID(id);
+                Order = bl.Order.GetOrderByID(id);
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }

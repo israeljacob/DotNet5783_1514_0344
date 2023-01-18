@@ -274,7 +274,7 @@ public class mainProgram
         {
             // Try to get and throw an exception if not succeed
             int ID = Menu.IntInput("Enter the order ID");
-            try { bl.Order.OrderByID(ID).PrintProperties(); }
+            try { bl.Order.GetOrderByID(ID).PrintProperties(); }
             catch (Exception ex) { Console.WriteLine(ex.Message); return; };
 
         }
@@ -312,7 +312,7 @@ public class mainProgram
             int ID = Menu.IntInput("Enter the order ID");
             try 
             {
-                Order order1= bl.Order.OrderByID(ID);
+                Order order1= bl.Order.GetOrderByID(ID);
                 order1.ShipDate = DateTime.Now;
                 bl.Order.UpdateOrder(order1); 
             }
@@ -327,7 +327,7 @@ public class mainProgram
             int ID = Menu.IntInput("Enter the order ID");
             try
             {
-                Order order1 = bl.Order.OrderByID(ID);
+                Order order1 = bl.Order.GetOrderByID(ID);
                 order1.ShipDate = DateTime.Now;
                 bl.Order.UpdateOrder(order1);
             }

@@ -53,4 +53,10 @@ public partial class MainWindow : Window
         new OrderTrackWindow().Show();
         this.Close();
     }
+
+    private void Simulator_click(object sender, RoutedEventArgs e)
+    {
+        new SimulatorWindow().Show();
+
+    }
 }

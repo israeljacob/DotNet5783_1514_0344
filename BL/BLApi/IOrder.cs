@@ -11,8 +11,10 @@ namespace BLApi;
 /// </summary>
 public interface IOrder
 {
+    //get order ID for simulator
+    public int? ForSimulator();
     //get order by ID
-    public BO.Order OrderByID(int ID);
+    public BO.Order GetOrderByID(int ID);
 
     //get list of order
     public IEnumerable<BO.OrderForList?> GetListOfOrders(Func<BO.OrderForList?,bool>? func =null);

@@ -15,7 +15,7 @@ using System.Xml.Linq;
 
 internal class OrderItem : IOrderItem
 {
-   // DataSourcexml dataSourcexml = DataSourcexml.Instance;
+   DataSourcexml dataSourcexml = DataSourcexml.Instance;
     const string s_orderItems = "OrderItems"; //Linq to XML
 
     static DO.OrderItem? getOrderItem(XElement ord)
@@ -48,13 +48,13 @@ internal class OrderItem : IOrderItem
     }
     public int Add(DO.OrderItem orderItem)
     {
-        orderItem.UniqID = SerialNumbers.GetOrderItemId;
+        orderItem.UniqID = DataConfig.GetOrderItemId;
         XElement orderItemsRootElem = XMLTools.LoadListFromXMLElement(s_orderItems);
-        if (XMLTools.LoadListFromXMLElement(s_orderItems)?.Elements()
+        if (orderItemsRootElem?.Elements()
             .FirstOrDefault(ord => ord.ToIntNullable("UniqID") == orderItem.UniqID) is not null)
             throw new DO.IdAlreadyExistException("Order item", orderItem.UniqID);
-        orderItemsRootElem.Add(new XElement("OrderItem", createOrderItemElement(orderItem)));
-        XMLTools.SaveListToXMLElement(orderItemsRootElem, s_orderItems);
+        orderItemsRootElem?.Add(new XElement("OrderItem", createOrderItemElement(orderItem)));
+        XMLTools.SaveListToXMLElement(orderItemsRootElem!, s_orderItems);
         return orderItem.UniqID;
     }
 
@@ -72,7 +72,10 @@ internal class OrderItem : IOrderItem
     public IEnumerable<DO.OrderItem?> GetAll(Func<DO.OrderItem?, bool>? func = null)
     {
         if (func is null)
-            return XMLTools.LoadListFromXMLElement(s_orderItems).Elements().Select(o => getOrderItem(o));
+        {
+            return from XElement x in XMLTools.LoadListFromXMLElement(s_orderItems).Elements()
+                   select getOrderItem(x);
+        }
         return XMLTools.LoadListFromXMLElement(s_orderItems).Elements().Select(o => getOrderItem(o)).Where(func);
     }
 
@@ -93,6 +96,11 @@ internal class OrderItem : IOrderItem
     public void Update(DO.OrderItem orderItem)
     {
         Delete(orderItem.UniqID);
-        Add(orderItem);
+        XElement orderItemsRootElem = XMLTools.LoadListFromXMLElement(s_orderItems);
+        if (orderItemsRootElem?.Elements()
+            .FirstOrDefault(ord => ord.ToIntNullable("UniqID") == orderItem.UniqID) is not null)
+            throw new DO.IdAlreadyExistException("Order item", orderItem.UniqID);
+        orderItemsRootElem?.Add(new XElement("OrderItem", createOrderItemElement(orderItem)));
+        XMLTools.SaveListToXMLElement(orderItemsRootElem!, s_orderItems);
     }
 }

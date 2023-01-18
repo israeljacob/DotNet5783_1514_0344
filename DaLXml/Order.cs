@@ -10,17 +10,19 @@ using DAL;
 using DalApi;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
+using System.Runtime.CompilerServices;
 
 internal class Order : IOrder
 {
-    //DataSourcexml dataSource = DataSourcexml.Instance;
+    DataSourcexml dataSource = DataSourcexml.Instance;
 
 
     const string s_orders = @"Orders";
-    const string s_data = @"data-config";
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Order order)
     {
-        order.UniqID = SerialNumbers.GetOrderId;
+        order.UniqID = DataConfig.GetOrderId;
         List<DO.Order?> listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
         if (listOrders.FirstOrDefault(ord => ord?.UniqID == order.UniqID) != null)
             throw new DO.IdAlreadyExistException("Order", order.UniqID);
@@ -29,6 +31,7 @@ internal class Order : IOrder
         return order.UniqID;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int ID)
     {
         var listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_orders);
@@ -38,6 +41,7 @@ internal class Order : IOrder
         XMLTools.SaveListToXMLSerializer(listOrders, s_orders);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<DO.Order?> GetAll(Func<DO.Order?, bool>? func = null)
     {
         var listOrders = XMLTools.LoadListFromXMLSerializer<DO.Order>(s_orders)!;
@@ -45,19 +49,21 @@ internal class Order : IOrder
                               : listOrders.Where(func).OrderBy(ord => ((DO.Order)ord!).UniqID);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Order GetByFunc(Func<DO.Order?, bool> func)
     {
         return XMLTools.LoadListFromXMLSerializer<DO.Order>(s_orders).FirstOrDefault(func)
             ?? throw new DO.DoesNotExistException("Order");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public DO.Order GetByID(int ID)
     {
         return XMLTools.LoadListFromXMLSerializer<DO.Order>(s_orders).FirstOrDefault(o => o?.UniqID == ID)
             ?? throw new DO.DoesNotExistException("Order",ID);
 
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(DO.Order order)
     {
         try

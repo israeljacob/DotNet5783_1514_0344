@@ -23,7 +23,7 @@ namespace PL
     public partial class ProductItemWindow : Window
     {
 
-        BLApi.IBL bL = BLApi.Factory.Get;
+        BLApi.IBL bL = BLApi.Factory.Get();
         public ProductItem ProductItem
         {
             get { return (ProductItem)GetValue(OrderItemProperty); }

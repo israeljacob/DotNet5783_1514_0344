@@ -21,7 +21,7 @@ namespace PL;
 /// </summary>
 public partial class OrderTrackWindow : Window
 {
-    private static readonly BLApi.IBL bL = BLApi.Factory.Get;
+    private static readonly BLApi.IBL bL = BLApi.Factory.Get();
     public int OrderID
     {
         get { return (int)GetValue(OrderIDProperty); }

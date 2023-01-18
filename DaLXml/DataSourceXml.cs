@@ -1,13 +1,20 @@
-﻿using DAL;
+﻿
+using DAL;
+using DO;
+using DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace Dal;
-
-
-internal sealed class DataSourcexml
+/// <summary>
+/// Stores the lists of entities.
+/// </summary>
+internal sealed class DataSourceXml
 {
     const string s_orders = @"Orders";
     const string s_products = @"Products";
     const string s_orderItems = @"OrderItems";
+    const string s_config = @"data-config";
+
+
     // Orders list
     internal List<DO.Order?> orders = new List<DO.Order?>();
     // Order items list.
@@ -15,16 +22,19 @@ internal sealed class DataSourcexml
     // Products list.
     internal List<DO.Product?> products = new List<DO.Product?>();
 
-    private static DataSourcexml instance;
-    public static DataSourcexml Instance
+    private static DataSourceXml instance;
+    public static DataSourceXml Instance
     {
         get
         {
             return instance;
         }
     }
-    static DataSourcexml() => instance = new DataSourcexml();
-    private DataSourcexml()
+    /// <summary>
+    /// static constructor
+    /// </summary>
+    static DataSourceXml() => instance = new DataSourceXml();
+    private DataSourceXml()
     {
         ProductInitialize();
         OrderInitialize();
@@ -33,8 +43,6 @@ internal sealed class DataSourcexml
         XMLTools.SaveListToXMLSerializer(products, s_products);
         XMLTools.SaveListToXMLSerializer(orderItems, s_orderItems);
     }
-
-
     /// <summary>
     /// Initializes 10 new products.
     /// </summary>
@@ -165,7 +173,7 @@ internal sealed class DataSourcexml
         for (int i = 0; i < 20; i++)
         {
             DO.Order temp = new DO.Order();
-            temp.UniqID = SerialNumbers.GetOrderId;
+            temp.UniqID = DataConfig.GetOrderId;
             temp.CustomerName = names[i];
             temp.CustomerEmail = emails[i];
             temp.CustomerAdress = adresses[i];
@@ -207,7 +215,7 @@ internal sealed class DataSourcexml
         {
             DO.OrderItem temp = new DO.OrderItem();
             int rand = r.Next(1, 9);
-            temp.UniqID = SerialNumbers.GetOrderItemId;
+            temp.UniqID = DataConfig.GetOrderItemId;
             temp.ProductID = products[rand]?.UniqID ?? 0;
             temp.OrderID = orders[i / 2]?.UniqID ?? 0;
             temp.Amount = r.Next(1, 10);
@@ -216,4 +224,9 @@ internal sealed class DataSourcexml
         }
     }
 
+
+
+
+
 }
+

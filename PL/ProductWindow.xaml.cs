@@ -27,7 +27,7 @@ public partial class ProductWindow : Window
     /// <summary>
     /// show of only one bl
     /// </summary>
-    private static readonly BLApi.IBL bl = BLApi.Factory.Get;
+    private static readonly BLApi.IBL bl = BLApi.Factory.Get();
     public BO.Product Product
     {
         get { return (BO.Product)GetValue(ProductProperty); }

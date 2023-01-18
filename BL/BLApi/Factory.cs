@@ -12,6 +12,7 @@ namespace BLApi;
 /// </summary>
 public class Factory
 {
-    public static IBL Get = new Bl();
+    public static IBL Get() => new Bl();
 }
+
 #endregion

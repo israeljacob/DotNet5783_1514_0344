@@ -29,7 +29,7 @@ public partial class AdminWindow : Window
     /// <summary>
     /// show of only one bl
     /// </summary>
-    BLApi.IBL bl = BLApi.Factory.Get;
+    BLApi.IBL bl = BLApi.Factory.Get();
 
 
 

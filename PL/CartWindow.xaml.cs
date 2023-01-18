@@ -21,7 +21,7 @@ namespace PL
     public partial class CartWindow : Window
     {
 
-        BLApi.IBL bl = BLApi.Factory.Get;
+        BLApi.IBL bl = BLApi.Factory.Get();
         public BO.Cart MyCart
         {
             get { return (BO.Cart)GetValue(MyCartProperty); }

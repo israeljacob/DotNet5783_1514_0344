@@ -11,9 +11,9 @@ namespace DAL;
 
 
 /// <summary>
-/// this class provids a Serials IDs for DL for Line and UserTrip
+/// this class provids a Serials IDs for DAL for order and order item
 /// </summary>
-public class SerialNumbers
+public class DataConfig
 {
 
     static XElement? Root;

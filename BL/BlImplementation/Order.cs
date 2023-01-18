@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using DocumentFormat.OpenXml.Drawing;
+using DocumentFormat.OpenXml.VariantTypes;
 
 namespace BlImplementation;
 
@@ -14,13 +16,48 @@ internal class Order : BLApi.IOrder
     /// Handles everything related an order.
     /// </summary>
     DalApi.IDal dal = DalApi.Factory.Get()!;
+
+    #region Get List Of orders for simulator
+    /// <summary>
+    /// Returns all the orders.
+    /// </summary>
+    /// <returns>An IEnumerable of all the orders.</returns>
+    /// <exception cref="MissingAttributeException"></exception>
+    public int? ForSimulator()
+    {
+        DO.Order? order1, order2;
+        try
+        {
+            order1 = (from order in dal.Order.GetAll()
+                      where order?.ShipDate == null
+                      orderby order?.OrderDate
+                      select order).FirstOrDefault();
+            order2 = (from order in dal.Order.GetAll()
+                      where order?.ShipDate != null && order?.DeliveryrDate == null
+                      orderby order?.ShipDate
+                      select order).FirstOrDefault();
+        }
+        catch (DO.EmptyException ex)
+        {
+            throw new BO.CatchetDOException(ex);
+        }
+        if (order1 is null && order2 is null)
+            return null;
+        else if (order1 is not null && order2 is not null)
+            return order1?.OrderDate < order2?.ShipDate ? order1?.UniqID : order2?.UniqID;
+        else
+            return order1 is null ? order2?.UniqID : order1?.UniqID;
+
+    }
+    #endregion
+
     #region Get List Of orders
     /// <summary>
     /// Returns all the orders.
     /// </summary>
     /// <returns>An IEnumerable of all the orders.</returns>
     /// <exception cref="MissingAttributeException"></exception>
-    public IEnumerable<BO.OrderForList?> GetListOfOrders(Func<BO.OrderForList?,bool>? func =null)
+    public IEnumerable<BO.OrderForList?> GetListOfOrders(Func<BO.OrderForList?, bool>? func = null)
     {
         try
         {
@@ -54,7 +91,7 @@ internal class Order : BLApi.IOrder
     /// <param name="ID"></param>
     /// <returns></returns>
     /// <exception cref="AggregateException"></exception>
-    public BO.Order OrderByID(int ID)
+    public BO.Order GetOrderByID(int ID)
     {
         if (ID <= 0)
             throw new BO.InCorrectDetailsException("Order ID", ID);
@@ -71,17 +108,17 @@ internal class Order : BLApi.IOrder
                 ShipDate = order.ShipDate,
                 DeliveryrDate = order.DeliveryrDate,
                 orderItems = (from orderItem in dal.OrderItem.GetAll(item => ((DO.OrderItem)item!).OrderID == order.UniqID)
-                             let item = (DO.OrderItem)orderItem
-                             let product = dal.Product.GetByID(item.ProductID)
-                             select new BO.OrderItem()
-                             {
-                                 UniqID = item.UniqID,
-                                 ProductID = item.ProductID,
-                                 ProductName = product.Name,
-                                 Amount = item.Amount,
-                                 Price = item.Price,
-                                 TotalPrice = item.Amount * item.Price,
-                             }).ToList(),
+                              let item = (DO.OrderItem)orderItem
+                              let product = dal.Product.GetByID(item.ProductID)
+                              select new BO.OrderItem()
+                              {
+                                  UniqID = item.UniqID,
+                                  ProductID = item.ProductID,
+                                  ProductName = product.Name,
+                                  Amount = item.Amount,
+                                  Price = item.Price,
+                                  TotalPrice = item.Amount * item.Price,
+                              }).ToList(),
                 StatusOfOrder = statusOfOrder(order),
                 TotalPrice = totalPrice(order)
             };
@@ -97,19 +134,19 @@ internal class Order : BLApi.IOrder
     #region Update total price
     public void UpdateOrder(BO.Order order)
     {
-        if (order.DeliveryrDate < order.ShipDate || order.ShipDate<order.OrderDate)
+        if (order.DeliveryrDate < order.ShipDate || order.ShipDate < order.OrderDate)
             throw new BO.DateException();
-        if(((order.DeliveryrDate==null || order.ShipDate ==null) && order.StatusOfOrder == BO.StatusOfOrder.Delivered)|| (order.ShipDate == null && order.StatusOfOrder == BO.StatusOfOrder.Sent) 
-            ||(order.StatusOfOrder ==BO.StatusOfOrder.Sent && order.DeliveryrDate!=null)||(order.StatusOfOrder == BO.StatusOfOrder.Orderred && (order.ShipDate != null || order.DeliveryrDate != null)))
+        if (((order.DeliveryrDate == null || order.ShipDate == null) && order.StatusOfOrder == BO.StatusOfOrder.Delivered) || (order.ShipDate == null && order.StatusOfOrder == BO.StatusOfOrder.Sent)
+            || (order.StatusOfOrder == BO.StatusOfOrder.Sent && order.DeliveryrDate != null) || (order.StatusOfOrder == BO.StatusOfOrder.Orderred && (order.ShipDate != null || order.DeliveryrDate != null)))
             throw new BO.DateException();
         DO.Order DOorder;
-        try {  DOorder = dal.Order.GetByID(order.UniqID); } //get the ID
+        try { DOorder = dal.Order.GetByID(order.UniqID); } //get the ID
         catch (DO.DoesNotExistException ex)
         {
             throw new BO.CatchetDOException(ex);
         }
         DOorder.ShipDate = order.ShipDate;
-        DOorder.DeliveryrDate= order.DeliveryrDate;
+        DOorder.DeliveryrDate = order.DeliveryrDate;
         dal.Order.Update(DOorder);
     }
     #endregion
@@ -149,35 +186,36 @@ internal class Order : BLApi.IOrder
     /// <param name="orderItem"></param>
     /// <returns></returns>
     /// <exception cref="BO.InCorrectDetailsException"></exception>
-    public BO.Order UpdateOrderItemAmount(BO.Order BOorder,BO.OrderItem orderItem)
+    public BO.Order UpdateOrderItemAmount(BO.Order BOorder, BO.OrderItem orderItem)
     {
         BO.OrderItem orderOrderItem = BOorder.orderItems?.FirstOrDefault(item => item?.UniqID == orderItem.UniqID)!;
-        int difference = orderItem.Amount-orderOrderItem.Amount;
+        int difference = orderItem.Amount - orderOrderItem.Amount;
         DO.Product product = new DO.Product();
         DO.OrderItem DOorderItem = new DO.OrderItem();
-        DO.Order  DOorder = new DO.Order();
-        try { 
-                product= dal.Product.GetByID(orderItem.ProductID);
-                DOorderItem = dal.OrderItem.GetByID(orderItem.UniqID);
-                DOorder = dal.Order.GetByID(DOorderItem.OrderID);
-            }
+        DO.Order DOorder = new DO.Order();
+        try
+        {
+            product = dal.Product.GetByID(orderItem.ProductID);
+            DOorderItem = dal.OrderItem.GetByID(orderItem.UniqID);
+            DOorder = dal.Order.GetByID(DOorderItem.OrderID);
+        }
         catch (DO.DoesNotExistException ex)
         {
             throw new BO.CatchetDOException(ex);
         }
         if (product.InStock < difference) throw new BO.missingItemsException(product.UniqID, difference);
-        if(DOorder.ShipDate != null) { throw new BO.DatesException("Ship date"); }
-        if(orderItem.Amount == 0)
+        if (DOorder.ShipDate != null) { throw new BO.DatesException("Ship date"); }
+        if (orderItem.Amount == 0)
         {
             try
             {
                 dal.OrderItem.Delete(DOorderItem.UniqID);
             }
-            catch (Exception ex) {throw new BO.CatchetDOException(ex); }
+            catch (Exception ex) { throw new BO.CatchetDOException(ex); }
             BOorder.orderItems?.ToList().RemoveAll(item => item?.UniqID == orderItem.UniqID);
             return BOorder;
         }
-        DOorderItem.Amount=orderItem.Amount;
+        DOorderItem.Amount = orderItem.Amount;
         try
         {
             product.InStock -= difference;
@@ -253,7 +291,7 @@ internal class Order : BLApi.IOrder
         {
             return dal.OrderItem.GetAll(orderItem => orderItem?.OrderID == order?.UniqID).Count();
         }
-        catch(DO.EmptyException ex) { throw new BO.CatchetDOException(ex); }
+        catch (DO.EmptyException ex) { throw new BO.CatchetDOException(ex); }
     }
     #endregion
 
