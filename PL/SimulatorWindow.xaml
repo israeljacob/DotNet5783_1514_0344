@@ -5,26 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="SimulatorWindow" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="451*"/>
+            <ColumnDefinition Width="349*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="12*"/>
             <RowDefinition Height="10*"/>
         </Grid.RowDefinitions>
         <TextBlock x:Name="timerTextBlock" Text="00:00:00" 
-                   Grid.Column="1" FontSize="96" TextAlignment="Center" Foreground="#FF37F10E"/>
-        <StackPanel>
+                   Grid.Column="1" FontSize="96" TextAlignment="Center" Foreground="#FF37F10E" Margin="0,0,0,197" Grid.RowSpan="2"/>
+        <StackPanel Margin="0,0,0,197" Grid.RowSpan="2">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Current Order:"/>
-                <Label x:Name="lblCurrentOrder" Content="" Width="185"/>
+                <Label x:Name="lblCurrentOrder" Content="{Binding OrderId}" Width="185"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Current Order Status:"/>
-                <Label x:Name="lblCurrentOrderStatus" Content="" Width="156"/>
+                <Label x:Name="lblCurrentOrderStatus" Content="orderred" Width="156"/>
+                <Label Content="next Order Status:"/>
+                <Label x:Name="lblCurrentOrderStatus_Copy" Content="Sent" Width="156"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Label Content="Timer:" RenderTransformOrigin="0.5,0.5">
@@ -37,7 +40,7 @@
                         </TransformGroup>
                     </Label.RenderTransform>
                 </Label>
-                <Label x:Name="lblTimer" Content="" Width="229"/>
+                <Label x:Name="lblTimer" Content="18/1/2023 19:40:23" Width="229"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="btnStopSimulation" Content="Stop Simulation" Click="btnStopSimulation_Click"/>

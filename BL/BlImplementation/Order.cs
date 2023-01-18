@@ -44,10 +44,9 @@ internal class Order : BLApi.IOrder
         if (order1 is null && order2 is null)
             return null;
         else if (order1 is not null && order2 is not null)
-            return order1?.OrderDate < order2?.ShipDate ? order1?.UniqID : order2?.UniqID;
+            return order1?.OrderDate <= order2?.ShipDate ? order1?.UniqID : order2?.UniqID;
         else
             return order1 is null ? order2?.UniqID : order1?.UniqID;
-
     }
     #endregion
 

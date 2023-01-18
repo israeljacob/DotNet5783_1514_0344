@@ -1,4 +1,5 @@
-﻿using Simulator;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using Simulator;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,10 +25,23 @@ namespace PL;
 /// </summary>
 public partial class SimulatorWindow : Window, INotifyPropertyChanged
 {
+
+
+    public int OrderId
+    {
+        get { return (int)GetValue(OrderIdProperty); }
+        set { SetValue(OrderIdProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for OrderId.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty OrderIdProperty =
+        DependencyProperty.Register("OrderId", typeof(int), typeof(SimulatorWindow), new PropertyMetadata(0));
+
+
+
     public event PropertyChangedEventHandler? PropertyChanged ;
     private BackgroundWorker bgWorker;
     private bool cancelation = true;
-    private bool isBackgroundWorker = true;
     Stopwatch stopWatch = new Stopwatch();
     public SimulatorWindow()
     {
@@ -46,53 +60,58 @@ public partial class SimulatorWindow : Window, INotifyPropertyChanged
 
     private void BgWorker_DoWork(object sender, DoWorkEventArgs e)
     {
-        MySimulator.RegisterToUpdateProgress(Simulator_SimulationOrderUpdated);
+        MySimulator.RegisterToUpdateProgress(Updated);
+        MySimulator.RegisterToSimulationComplete(complete);
         MySimulator.activate();
-        while (isBackgroundWorker)
+        while (!bgWorker.CancellationPending)
         {
             Thread.Sleep(1000);
-            bgWorker.ReportProgress(1);
+            bgWorker.ReportProgress(3);
         }
     }
 
     private void BgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
-        int ID = e.ProgressPercentage;
-        lblCurrentOrder.Content = ID;
-        string timerText = stopWatch.Elapsed.ToString();
+        if (e.ProgressPercentage == 3)
+        {
+            string timerText = stopWatch.Elapsed.ToString();
             timerText = timerText.Substring(0, 8);
-            this.timerTextBlock.Text = timerText;
+            timerTextBlock.Text = timerText;
+        }
+        else if (e.ProgressPercentage >=100000)
+        {
+            
+            int ID = e.ProgressPercentage;
+        }
     }
 
     private void BgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
-        MessageBox.Show("Simulation Completed");
         this.Close();
     }
 
     private void btnStopSimulation_Click(object sender, EventArgs e)
     {
-        if (isBackgroundWorker)
+        if (!bgWorker.CancellationPending)
         {
+            MySimulator.StopSimulation();
+            Thread.Sleep(11000);
+            MySimulator.UnregisterFromSimulationComplete(complete);
+            MySimulator.UnregisterFromUpdateProgress(Updated);
             stopWatch.Stop();
-            isBackgroundWorker = false;
+            bgWorker.CancelAsync();
         }
         cancelation = false;
-        this.Close();
     }
-
-    private void Simulator_SimulationCompleted(object sender, EventArgs e)
+    private void Updated(int ID, BO.StatusOfOrder? correntStatus, DateTime start, BO.StatusOfOrder? nextStatus, DateTime end)
     {
-        bgWorker.CancelAsync();
-    }
-
-    private void Simulator_SimulationStopped(object sender, EventArgs e)
-    {
-        bgWorker.CancelAsync();
-    }
-    private void Simulator_SimulationOrderUpdated(int ID, BO.StatusOfOrder? correntStatus, DateTime now, BO.StatusOfOrder? nextStatus, DateTime finish)
-    {
+        OrderId = ID;
         bgWorker.ReportProgress(ID);
+    }
+
+    private void complete()
+    {
+        bgWorker.ReportProgress(1);
     }
     protected override void OnClosing(CancelEventArgs e)
     {
