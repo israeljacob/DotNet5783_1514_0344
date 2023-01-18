@@ -11,7 +11,10 @@ namespace DAL;
 
 
 /// <summary>
-/// this class provids a Serials IDs for DAL for order and order item
+/// this class provids a Serials IDs for DL for Line and UserTrip
+/// The class has a static XElement field called Root, 
+/// which is used to store the root element of the XML file. 
+///  which store the directory and file name of the XML file respectively.
 /// </summary>
 public class DataConfig
 {
