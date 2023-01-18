@@ -4,6 +4,11 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
+/// <summary>
+/// XMLTools is a static class that provides various utility functions for working with XML data. 
+/// The class has several fields, including a constant string s_dir that holds the directory path where the XML files are stored, 
+/// and an empty constructor that creates the directory if it does not exist.
+/// </summary>
 static class XMLTools
 {
     const string s_dir = @"..\xml\";
@@ -28,6 +33,16 @@ static class XMLTools
     #endregion
 
     #region SaveLoadWithXElement
+    /// <summary>
+    /// defines two methods for saving and loading XML data using the XElement class. 
+    ///  saves the element to an XML file with the given entity name in the s_dir directory. 
+    /// The LoadListFromXMLElement method takes an entity name as a parameter, 
+    /// loads the corresponding XML file from the s_dir directory, and returns the root element as an XElement object. 
+    /// If the file does not exist, it creates a new file with the given entity name and an empty root element.
+    /// </summary>
+    /// <param name="rootElem"></param>
+    /// <param name="entity"></param>
+    /// <exception cref="Exception"></exception>
     public static void SaveListToXMLElement(XElement rootElem, string entity)
     {
         string filePath = $"{s_dir + entity}.xml";
@@ -41,7 +56,13 @@ static class XMLTools
             throw new Exception($"fail to create xml file: {filePath}", ex);
         }
     }
-
+    /// <summary>
+    /// loads the corresponding XML file from the s_dir directory, and returns the root element as an XElement object. 
+    /// If the file does not exist, it creates a new file with the given entity name and an empty root element.
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static XElement LoadListFromXMLElement(string entity)
     {
         string filePath = $"{s_dir + entity}.xml";
@@ -63,6 +84,17 @@ static class XMLTools
 
     #region SaveLoadWithXMLSerializer
     //static readonly bool s_writing = false;
+    /// <summary>
+    /// saving using the XmlSerializer class.
+    ///  serializes the list to an XML file with the given entity name in the s_dir directory.
+    /// The LoadListFromXMLSerializer method takes an entity name as a parameter,
+    /// deserializes the corresponding XML file from the s_dir directory, and returns the deserialized list of structs. 
+    /// If the file does not exist, it returns an empty list.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="list"></param>
+    /// <param name="entity"></param>
+    /// <exception cref="Exception"></exception>
     public static void SaveListToXMLSerializer<T>(List<T?> list, string entity) where T : struct
     {
         string filePath = $"{s_dir + entity}.xml";
@@ -77,7 +109,14 @@ static class XMLTools
             throw new Exception($"fail to create xml file: {filePath}", ex);
         }
     }
-
+    /// <summary>
+    /// The LoadListFromXMLSerializer method takes an entity name as a parameter,
+    /// deserializes the corresponding XML file from the s_dir directory, and returns the deserialized list of structs. 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="entity"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public static List<T?> LoadListFromXMLSerializer<T>(string entity) where T : struct
     {
         string filePath = $"{s_dir + entity}.xml";
@@ -91,6 +130,8 @@ static class XMLTools
         catch (Exception ex)
         {
             // DO.XMLFileLoadCreateException(filePath, $"fail to load xml file: {dir + filePath}", ex);            }
+            //In case of any exception while saving or loading the files,
+            //it throws exception with the message "fail to create/load xml file: filePath"
             throw new Exception($"fail to load xml file: {filePath}", ex);
         }
     }

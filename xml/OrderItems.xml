@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfOrderItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <OrderItem>
     <UniqID>200000</UniqID>
@@ -279,5 +279,26 @@
     <OrderID>100019</OrderID>
     <Price>279</Price>
     <Amount>8</Amount>
+  </OrderItem>
+  <OrderItem>
+    <UniqID>200040</UniqID>
+    <ProductID>347304</ProductID>
+    <OrderID>100020</OrderID>
+    <Price>279</Price>
+    <Amount>1</Amount>
+  </OrderItem>
+  <OrderItem>
+    <UniqID>200041</UniqID>
+    <ProductID>349913</ProductID>
+    <OrderID>100020</OrderID>
+    <Price>200</Price>
+    <Amount>1</Amount>
+  </OrderItem>
+  <OrderItem>
+    <UniqID>200042</UniqID>
+    <ProductID>327489</ProductID>
+    <OrderID>100021</OrderID>
+    <Price>100</Price>
+    <Amount>1</Amount>
   </OrderItem>
 </ArrayOfOrderItem>
