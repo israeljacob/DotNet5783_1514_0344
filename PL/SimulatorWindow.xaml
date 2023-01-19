@@ -7,44 +7,39 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="SimulatorWindow" Height="450" Width="800">
+    <Window.Resources>
+        <local:TrueToVisible x:Key="TrueToVisible"/>
+        <Style TargetType="Label">
+            <Setter Property="Grid.Row" Value="1"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Window.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="451*"/>
-            <ColumnDefinition Width="349*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="12*"/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <TextBlock x:Name="timerTextBlock" Text="00:00:00" 
-                   Grid.Column="1" FontSize="96" TextAlignment="Center" Foreground="#FF37F10E" Margin="0,0,0,197" Grid.RowSpan="2"/>
-        <StackPanel Margin="0,0,0,197" Grid.RowSpan="2">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Current Order:"/>
-                <Label x:Name="lblCurrentOrder" Content="{Binding OrderId}" Width="185"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Current Order Status:"/>
-                <Label x:Name="lblCurrentOrderStatus" Content="orderred" Width="156"/>
-                <Label Content="next Order Status:"/>
-                <Label x:Name="lblCurrentOrderStatus_Copy" Content="Sent" Width="156"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Timer:" RenderTransformOrigin="0.5,0.5">
-                    <Label.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform Angle="0.676"/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Label.RenderTransform>
-                </Label>
-                <Label x:Name="lblTimer" Content="18/1/2023 19:40:23" Width="229"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button x:Name="btnStopSimulation" Content="Stop Simulation" Click="btnStopSimulation_Click"/>
-            </StackPanel>
-        </StackPanel>
+                    FontSize="96" TextAlignment="Center" Foreground="#FF37F10E" Margin="119,0,0,0" HorizontalAlignment="Left" Width="585" Height="117" VerticalAlignment="Top" />
+        <Label Content="Current Order:"  Grid.Row="1" Margin="10,0,690,114"/>
+        <Label x:Name="lblCurrentOrder" Content="{Binding OrderID}" Margin="115,0,585,114" Grid.Row="1"/>
+        <Label Content="Current Order Status:" Grid.Row="1" Margin="22,50,628,64" Width="150"/>
+        <ProgressBar x:Name="progressBar" Minimum="0" Maximum="100" Value="{Binding ForProgress}" Grid.Row="2" Margin="230,145,0,0" Grid.RowSpan="2"/>
+        <Label x:Name="lblCurrentOrderStatus" Content="{Binding Corrent}" Margin="196,50,504,64" Grid.Row="1" RenderTransformOrigin="-1.407,0.25"/>
+        <Label Content="next Order Status:" Grid.Row="2" Margin="10,12,690,103"/>
+        <Label x:Name="lblCurrentOrderStatus_Copy" Content="{Binding Next}" Margin="146,10,554,105" Grid.Row="2" RenderTransformOrigin="-0.591,-0.388"/>
+        <Label Content="Begin time:" Margin="362,47,338,67" Grid.Row="1"/>
+
+        <Label x:Name="lblTimer" Content="{Binding Begin.TimeOfDay}" Width="200" Grid.Row="1" Margin="504,47,96,67"/>
+        <Button x:Name="btnStopSimulation" Content="Stop Simulation" Click="btnStopSimulation_Click" Grid.Row="3" Margin="0,0,607,0"/>
+        <Label Content="Finish time:" Margin="333,10,367,105" Grid.Row="2"/>
+        <Label x:Name="lblTimer_Copy" Content="{Binding Finish.TimeOfDay}"  Grid.Row="2" Width="200" Margin="504,12,96,103"/>
+        <Label x:Name="lblCurrentOrderStatus_Copy1" Content="{Binding ForProgress}"  Grid.Row="2" Width="200" Margin="312,105,288,10"/>
+        <Label  Content="Update completed!!!"  Grid.Row="2" Visibility="{Binding Completed, Converter={StaticResource TrueToVisible}}" Width="200" Margin="537,102,63,13"/>
     </Grid>
 </Window>

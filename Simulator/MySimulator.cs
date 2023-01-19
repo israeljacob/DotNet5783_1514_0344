@@ -39,7 +39,7 @@ public static class MySimulator
                         shipped = true;
                     Random random = new Random();
                     int time = random.Next(3, 11);
-                    DateTime finishTask = DateTime.Now + new TimeSpan(time* 10000);
+                    DateTime finishTask = DateTime.Now + new TimeSpan(time* 10000000);
                     //report
                     OrderProcessing?.Invoke(
                         order.UniqID,
