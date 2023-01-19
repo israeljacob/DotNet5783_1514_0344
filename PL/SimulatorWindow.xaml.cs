@@ -246,5 +246,14 @@ public partial class SimulatorWindow : Window
         if (cancelation)
             MessageBox.Show("You can close the window by pressing the stop simlation button only");
     }
+
+
+    private void Window_MouseMove(object sender, MouseEventArgs e)
+    {
+        if (e.LeftButton == MouseButtonState.Pressed)
+        {
+            this.DragMove();
+        }
+    }
 }
 
