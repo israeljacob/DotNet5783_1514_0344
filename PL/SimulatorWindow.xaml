@@ -17,7 +17,8 @@
             <Setter Property="Foreground" Value="White"/>
         </Style>
     </Window.Resources>
-    <Grid>
+    <Grid Style="{StaticResource FancyGrid}">
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="4*"/>
             <RowDefinition Height="5*"/>
@@ -25,9 +26,9 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <TextBlock x:Name="timerTextBlock" Text="00:00:00" 
-                    FontSize="96" TextAlignment="Center" Foreground="#FF37F10E" Margin="119,0,0,0" HorizontalAlignment="Left" Width="585" Height="117" VerticalAlignment="Top" />
-        <Label Content="Current Order:"  Grid.Row="1" Margin="10,0,690,114"/>
-        <Label x:Name="lblCurrentOrder" Content="{Binding OrderID}" Margin="115,0,585,114" Grid.Row="1"/>
+                    FontSize="96" TextAlignment="Center" Foreground="White" Margin="398,0,0,0" HorizontalAlignment="Left" Width="392" Height="117" VerticalAlignment="Center" />
+        <Label Content="Current Order:"  Margin="35,48,665,38" Grid.Row="0" />
+        <Label x:Name="lblCurrentOrder" Content="{Binding OrderID}" Margin="230,43,470,43" Grid.Row="0"/>
         <Label Content="Current Order Status:" Grid.Row="1" Margin="22,50,628,64" Width="150"/>
         <ProgressBar x:Name="progressBar" Minimum="0" Maximum="100" Value="{Binding ForProgress}" Grid.Row="2" Margin="230,145,0,0" Grid.RowSpan="2"/>
         <Label x:Name="lblCurrentOrderStatus" Content="{Binding Corrent}" Margin="196,50,504,64" Grid.Row="1" RenderTransformOrigin="-1.407,0.25"/>
