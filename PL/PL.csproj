@@ -37,12 +37,14 @@
     <None Remove="icon8.png" />
     <None Remove="pictures\ICON.png" />
     <None Remove="pictures\icon1.png" />
+    <None Remove="pictures\icon10.png" />
     <None Remove="pictures\icon3.png" />
     <None Remove="pictures\icon4.png" />
     <None Remove="pictures\icon5.png" />
     <None Remove="pictures\icon6.png" />
     <None Remove="pictures\icon7.png" />
     <None Remove="pictures\icon8.png" />
+    <None Remove="pictures\icon9.png" />
     <None Remove="user.png" />
   </ItemGroup>
 
@@ -70,12 +72,14 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="pictures\icon1.png" />
+    <Resource Include="pictures\icon10.png" />
     <Resource Include="pictures\icon3.png" />
     <Resource Include="pictures\icon4.png" />
     <Resource Include="pictures\icon5.png" />
     <Resource Include="pictures\icon6.png" />
     <Resource Include="pictures\icon7.png" />
     <Resource Include="pictures\icon8.png" />
+    <Resource Include="pictures\icon9.png" />
   </ItemGroup>
 
 </Project>

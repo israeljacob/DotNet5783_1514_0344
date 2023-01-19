@@ -29,11 +29,11 @@
         <Grid.Background>
             <ImageBrush ImageSource="pictures/Best-Affordable-Clothing-Stores-MAINIMAGE.jpg" Stretch="None"/>
         </Grid.Background>
-        <Button Content="Admin" Click="Admin_click"  Margin="474,105,0,224" Height="NaN" />
+        <Button Content="Admin" Click="Admin_click"  Margin="480,102,0,227" Height="NaN" />
         <Button Content="Simulator" Click="Simulator_click"  Margin="54,102,0,219" Height="NaN" />
         <Button Content="New order" Click="New_order_click" Margin="54,283,0,43" Height="NaN" />
-        <Button Content="Track order" Click="Track_order_click" FontSize="24" Margin="474,283,0,54" Height="NaN"/>
-        <Image Source="/icon8.png" Margin="406,120,320,239" RenderTransformOrigin="3.705,0.508"/>
+        <Button Content="Track order" Click="Track_order_click" FontSize="24" Margin="481,288,0,48" Height="NaN"/>
+        <Image Source="/pictures/icon10.png" Margin="412,107,318,251" RenderTransformOrigin="3.705,0.508"/>
         <Image Height="100" Margin="90,16,58,318" Source="pictures/cooltext425292820321232.png" OpacityMask="#FF9C9292"/>
         <Image HorizontalAlignment="Left" Height="67" Margin="315,283,0,0" VerticalAlignment="Top" Width="77" Source="/ICON.png"/>
         <Image HorizontalAlignment="Left" Height="133" Margin="280,91,0,0" VerticalAlignment="Top" Width="134" Source="/icon6.png"/>
