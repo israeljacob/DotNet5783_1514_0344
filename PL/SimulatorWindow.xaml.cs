@@ -28,6 +28,18 @@ public partial class SimulatorWindow : Window
 {
 
 
+    public string Percent
+    {
+        get { return (string)GetValue(PercentProperty); }
+        set { SetValue(PercentProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for Percent.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty PercentProperty =
+        DependencyProperty.Register("Percent", typeof(string), typeof(SimulatorWindow), new PropertyMetadata("0%"));
+
+
+
     public int ForProgress
     {
         get { return (int)GetValue(ForProgressProperty); }
@@ -86,34 +98,38 @@ public partial class SimulatorWindow : Window
 
 
 
-    public DateTime Begin
+    public string Begin
     {
-        get { return (DateTime)GetValue(BeginProperty); }
+        get { return (string)GetValue(BeginProperty); }
         set { SetValue(BeginProperty, value); }
     }
 
     // Using a DependencyProperty as the backing store for Begin.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty BeginProperty =
-        DependencyProperty.Register("Begin", typeof(DateTime), typeof(SimulatorWindow), new PropertyMetadata(DateTime.MinValue));
+        DependencyProperty.Register("Begin", typeof(string), typeof(SimulatorWindow), new PropertyMetadata(DateTime.MinValue.ToString()));
 
-    public DateTime Finish
+    public string Finish
     {
-        get { return (DateTime)GetValue(FinishProperty); }
+        get { return (string)GetValue(FinishProperty); }
         set { SetValue(FinishProperty, value); }
     }
 
     // Using a DependencyProperty as the backing store for Begin.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty FinishProperty =
-        DependencyProperty.Register("Finish", typeof(DateTime), typeof(SimulatorWindow), new PropertyMetadata(DateTime.MinValue));
+        DependencyProperty.Register("Finish", typeof(string), typeof(SimulatorWindow), new PropertyMetadata(DateTime.MinValue.ToString()));
 
-
+    bool finished = false;
+    bool toProgress = true;
+    DateTime begin = DateTime.MinValue;
+    DateTime finish = DateTime.MinValue;
+    double percent = 0;
     private BackgroundWorker bgWorker;
     private bool cancelation = true;
     Stopwatch stopWatch = new Stopwatch();
     public SimulatorWindow()
     {
         InitializeComponent();
-        
+
         bgWorker = new BackgroundWorker();
         bgWorker.DoWork += BgWorker_DoWork!;
         bgWorker.ProgressChanged += BgWorker_ProgressChanged!;
@@ -139,29 +155,48 @@ public partial class SimulatorWindow : Window
 
     private void BgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
-        
+
         if (e.ProgressPercentage == 3)
         {
-            int dif = Finish.Second - Begin.Second;
-            ForProgress += 100 / dif;
+            if (toProgress)
+            {
+                TimeSpan diff = finish - begin;
+                int dif = diff.Seconds + 1;
+                ForProgress = (int)Math.Round((double)100 / dif + percent) < 100 ? (int)Math.Round((double)100 / dif + percent) : 100;
+                percent += ForProgress < 100 ? (double)100 / dif : 100;
+                Percent = $"{ForProgress}%";
+            }
             string timerText = stopWatch.Elapsed.ToString();
             timerText = timerText.Substring(0, 8);
             timerTextBlock.Text = timerText;
+            toProgress = true;
         }
-        else if (e.ProgressPercentage >=100000)
+        else if (e.ProgressPercentage >= 100000)
         {
+            if (Completed)
+                toProgress = false;
             Completed = false;
             ForProgress = 0;
+            Percent = "0%";
+            percent = 0;
             ArrayList arrayList = (ArrayList)e.UserState!;
             OrderID = e.ProgressPercentage;
             Corrent = (BO.StatusOfOrder?)arrayList[1];
-            Begin = (DateTime)arrayList[2]!;
+            Begin = ((DateTime)arrayList[2]!).ToString();
             Next = (BO.StatusOfOrder?)arrayList[3];
-            Finish = (DateTime)arrayList[4]!;
+            Finish = ((DateTime)arrayList[4]!).ToString();
         }
         else
         {
-            Completed= true;
+            Completed = true;
+            if (finished && !bgWorker.CancellationPending)
+            {
+                MySimulator.UnregisterFromSimulationComplete(complete);
+                MySimulator.UnregisterFromUpdateProgress(Updated);
+                stopWatch.Stop();
+                bgWorker.CancelAsync();
+                cancelation = false;
+            }
         }
     }
 
@@ -172,20 +207,27 @@ public partial class SimulatorWindow : Window
 
     private void btnStopSimulation_Click(object sender, EventArgs e)
     {
-        if (!bgWorker.CancellationPending)
+        MySimulator.StopSimulation();
+        if (Completed && !bgWorker.CancellationPending)
         {
-            MySimulator.StopSimulation();
-            Thread.Sleep(11000);
             MySimulator.UnregisterFromSimulationComplete(complete);
             MySimulator.UnregisterFromUpdateProgress(Updated);
             stopWatch.Stop();
             bgWorker.CancelAsync();
+            cancelation = false;
         }
-        cancelation = false;
+        else
+        { 
+            finished = true;
+            MessageBox.Show("The window will close wen the corrent order will be updated");
+        }
+
     }
     private void Updated(int ID, BO.StatusOfOrder? correntStatus, DateTime start, BO.StatusOfOrder? nextStatus, DateTime end)
     {
-        ArrayList arrayList= new ArrayList();
+        begin = start;
+        finish = end;
+        ArrayList arrayList = new ArrayList();
         arrayList.Add(ID);
         arrayList.Add(correntStatus);
         arrayList.Add(start);
@@ -201,7 +243,7 @@ public partial class SimulatorWindow : Window
     protected override void OnClosing(CancelEventArgs e)
     {
         e.Cancel = cancelation;
-        if(cancelation)
+        if (cancelation)
             MessageBox.Show("You can close the window by pressing the stop simlation button only");
     }
 }

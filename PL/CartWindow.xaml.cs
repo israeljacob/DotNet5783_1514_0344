@@ -116,13 +116,8 @@ namespace PL
                     //if email,adrees,name completed  do the orders
                     int orderId= bl.Cart.ExecuteOrder(MyCart);
                     MessageBox.Show($"Your order has been successfully orderred. Your track order number is: {orderId}. Thank you for shopping with us.");
-                    foreach (var process in Process.GetProcesses())
-                    {
-                        if (process.MainWindowTitle.Contains("Cart"))
-                        {
-                            process.CloseMainWindow();
-                        }
-                    }
+                    Application.Current.Windows.OfType<Window>().Single(w => w.ToString() == "PL.NewOrderWindow")?.Close();
+                    new MainWindow().Show();
                     this.Close();
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }

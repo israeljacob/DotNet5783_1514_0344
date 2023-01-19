@@ -23,10 +23,6 @@ namespace PL;
 public partial class NewOrderWindow : Window
 {
     BLApi.IBL bl = BLApi.Factory.Get();
-
-    private string groupName = "Category";
-    PropertyGroupDescription propertyGroupDescription;
-    public ICollectionView CollectionViewProductItemList { set; get; }
     public ObservableCollection<BO.ProductItem> ProductItems
     {
         get { return (ObservableCollection<BO.ProductItem>)GetValue(ProductItemsProperty); }
@@ -47,7 +43,7 @@ public partial class NewOrderWindow : Window
     public static readonly DependencyProperty CategoriesProperty =
         DependencyProperty.Register("Categories", typeof(Array), typeof(NewOrderWindow), new PropertyMetadata(null));
 
-       ObservableCollection<ProductItem> products = new();
+
     public NewOrderWindow()
     {
         InitializeComponent();
@@ -58,42 +54,19 @@ public partial class NewOrderWindow : Window
         }
         catch (Exception ex) { MessageBox.Show(ex.Message); }
         Categories = Enum.GetValues(typeof(BO.Category));
-        CollectionViewProductItemList = CollectionViewSource.GetDefaultView(ProductItems);
 
-        propertyGroupDescription = new PropertyGroupDescription(groupName);
-        CollectionViewProductItemList.GroupDescriptions.Add(propertyGroupDescription);
     }
 
     private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         ComboBox comboBox = sender as ComboBox ?? null!;
         ///if we select somthing
-        foreach (ProductItem item in ProductItems)
-        {
-            bool flag = false;
-            foreach (ProductItem it in products)
-            {
-                if (item.UniqID == it.UniqID)
-                {
-                    it.Amount = item.Amount;
-                    flag = true;
-                }
-            }
-            if (!flag)
-                products.Add(item);
-        }
 
         if ((BO.Category)(sender as ComboBox)?.SelectedItem! == BO.Category.all)
         {
             try
             {
                 ProductItems = new(bl.Product.GetListOfProductItems()!);
-                foreach (ProductItem item in products)
-                    foreach (ProductItem it in ProductItems)
-                    {
-                        if(item.UniqID == it.UniqID)
-                            it.Amount = item.Amount;
-                    }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }
@@ -103,12 +76,6 @@ public partial class NewOrderWindow : Window
             try
             {
                 ProductItems = new(bl.Product.GetListOfProductItems(func)!);
-                foreach (ProductItem item in products)
-                    foreach (ProductItem it in ProductItems)
-                    {
-                        if (item.UniqID == it.UniqID)
-                            it.Amount = item.Amount;
-                    }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message); }
         }

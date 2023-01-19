@@ -9,7 +9,8 @@
         Title="SimulatorWindow" Height="450" Width="800">
     <Window.Resources>
         <local:TrueToVisible x:Key="TrueToVisible"/>
-        <Style TargetType="Label">
+
+        <Style TargetType="Label" BasedOn="{StaticResource Genaral}">
             <Setter Property="Grid.Row" Value="1"/>
             <Setter Property="Width" Value="100"/>
             <Setter Property="Height" Value="30"/>
@@ -35,11 +36,11 @@
         <Label x:Name="lblCurrentOrderStatus_Copy" Content="{Binding Next}" Margin="146,10,554,105" Grid.Row="2" RenderTransformOrigin="-0.591,-0.388"/>
         <Label Content="Begin time:" Margin="362,47,338,67" Grid.Row="1"/>
 
-        <Label x:Name="lblTimer" Content="{Binding Begin.TimeOfDay}" Width="200" Grid.Row="1" Margin="504,47,96,67"/>
-        <Button x:Name="btnStopSimulation" Content="Stop Simulation" Click="btnStopSimulation_Click" Grid.Row="3" Margin="0,0,607,0"/>
+        <Label  Content="{Binding Begin}" Width="200" Grid.Row="1" Margin="504,47,96,67"/>
+        <Button Style="{StaticResource ButtonSet}" Content="Stop Simulation" Click="btnStopSimulation_Click" Grid.Row="3" Margin="0,0,607,0"/>
         <Label Content="Finish time:" Margin="333,10,367,105" Grid.Row="2"/>
-        <Label x:Name="lblTimer_Copy" Content="{Binding Finish.TimeOfDay}"  Grid.Row="2" Width="200" Margin="504,12,96,103"/>
-        <Label x:Name="lblCurrentOrderStatus_Copy1" Content="{Binding ForProgress}"  Grid.Row="2" Width="200" Margin="312,105,288,10"/>
+        <Label Content="{Binding Finish}"  Grid.Row="2" Width="NaN" Margin="504,12,96,103"/>
+        <Label Content="{Binding Percent}"  Grid.Row="2" Width="200" Margin="312,105,288,10"/>
         <Label  Content="Update completed!!!"  Grid.Row="2" Visibility="{Binding Completed, Converter={StaticResource TrueToVisible}}" Width="200" Margin="537,102,63,13"/>
     </Grid>
 </Window>
