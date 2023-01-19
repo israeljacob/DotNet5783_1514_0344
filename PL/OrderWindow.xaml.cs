@@ -52,11 +52,11 @@ namespace PL
         // Using a DependencyProperty as the backing store for WinName.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty WinNameProperty =
             DependencyProperty.Register("WinName", typeof(string), typeof(Window), new PropertyMetadata(""));
-       
-        public OrderWindow(string windowName ,int id)
+
+        public OrderWindow(string windowName, int id)
         {
             InitializeComponent();
-            WinName= windowName;
+            WinName = windowName;
             OrderStatuses = Enum.GetValues(typeof(BO.StatusOfOrder));
             try
             {
@@ -70,11 +70,11 @@ namespace PL
             {
                 bl.Order.UpdateOrder(Order);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-                this.Close();
+            this.Close();
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e)
@@ -91,10 +91,10 @@ namespace PL
         {
             BO.Order order = Order;
             Button? button = (Button)sender;
-            if(button.Content.ToString() == "Sent")
-                order.ShipDate= DateTime.Now;
+            if (button.Content.ToString() == "Sent")
+                order.ShipDate = DateTime.Now;
             else
-                order.DeliveryrDate= DateTime.Now;
+                order.DeliveryrDate = DateTime.Now;
             Order = new();
             Order = order;
         }
@@ -108,10 +108,10 @@ namespace PL
             BO.OrderItem ourOrderItem = (BO.OrderItem)((Button)sender).DataContext;
             try
             {
-                 Order = bl.Order.UpdateOrderItemAmount(Order,ourOrderItem);
+                Order = bl.Order.UpdateOrderItemAmount(Order, ourOrderItem);
             }
-            catch(Exception ex) 
-            { 
+            catch (Exception ex)
+            {
                 MessageBox.Show(ex.Message);
             }
         }

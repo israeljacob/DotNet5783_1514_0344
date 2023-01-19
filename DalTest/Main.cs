@@ -11,7 +11,6 @@ public class mainProgram
     {
         //dal obj initial
         IDal dalList = DalXml.Instance;
-
         //DO obj initial
         Product product = new Product();
 

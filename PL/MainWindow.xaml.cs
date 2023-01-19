@@ -35,13 +35,6 @@ public partial class MainWindow : Window
         new AdminWindow().Show();
         this.Close();
     }
-
-    private void User_click(object sender, RoutedEventArgs e)
-    {
-        new Login().Show();
-        this.Close();
-    }
-
     private void New_order_click(object sender, RoutedEventArgs e)
     {
         new NewOrderWindow().Show();
