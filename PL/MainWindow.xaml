@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        ResizeMode="NoResize"
+        Title="MainWindow" Height="450" Width="800"
+        Icon="\pictures\icon5.png"
+        >
     <Window.Resources>
         <Style TargetType="Button" BasedOn="{StaticResource Genaral}">
             <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -26,13 +29,16 @@
         <Grid.Background>
             <ImageBrush ImageSource="pictures/Best-Affordable-Clothing-Stores-MAINIMAGE.jpg" Stretch="None"/>
         </Grid.Background>
-        <Button Content="Admin" Click="Admin_click"  Margin="486,95,0,261" />
-        <Button Content="Simulator" Click="Simulator_click"  Margin="486,217,0,139" />
-        <Button Content="New order" Click="New_order_click" Margin="40,217,0,139"/>
-        <Button Content="Track order" Click="Track_order_click" FontSize="24" Margin="40,95,0,261"/>
-        <Image Source="pictures/admin.png" Margin="428,97,314,263" RenderTransformOrigin="3.705,0.508"/>
+        <Button Content="Admin" Click="Admin_click"  Margin="474,105,0,224" Height="NaN" />
+        <Button Content="Simulator" Click="Simulator_click"  Margin="54,102,0,219" Height="NaN" />
+        <Button Content="New order" Click="New_order_click" Margin="54,283,0,43" Height="NaN" />
+        <Button Content="Track order" Click="Track_order_click" FontSize="24" Margin="474,283,0,54" Height="NaN"/>
+        <Image Source="/icon8.png" Margin="406,120,320,239" RenderTransformOrigin="3.705,0.508"/>
         <Image Height="100" Margin="90,16,58,318" Source="pictures/cooltext425292820321232.png" OpacityMask="#FF9C9292"/>
-        
+        <Image HorizontalAlignment="Left" Height="67" Margin="315,283,0,0" VerticalAlignment="Top" Width="77" Source="/ICON.png"/>
+        <Image HorizontalAlignment="Left" Height="133" Margin="280,91,0,0" VerticalAlignment="Top" Width="134" Source="/icon6.png"/>
+        <Image HorizontalAlignment="Left" Height="64" Margin="416,286,0,0" VerticalAlignment="Top" Width="76" Source="/icon7.png"/>
+
 
     </Grid>
 </Window>

@@ -30,6 +30,19 @@
     <None Remove="Best-Affordable-Clothing-Stores-MAINIMAGE.jpg" />
     <None Remove="Cool Text - Your fashion in one place 425292710568804.png" />
     <None Remove="cooltext425292820321232.png" />
+    <None Remove="ICON.png" />
+    <None Remove="icon1.png" />
+    <None Remove="icon6.png" />
+    <None Remove="icon7.png" />
+    <None Remove="icon8.png" />
+    <None Remove="pictures\ICON.png" />
+    <None Remove="pictures\icon1.png" />
+    <None Remove="pictures\icon3.png" />
+    <None Remove="pictures\icon4.png" />
+    <None Remove="pictures\icon5.png" />
+    <None Remove="pictures\icon6.png" />
+    <None Remove="pictures\icon7.png" />
+    <None Remove="pictures\icon8.png" />
     <None Remove="user.png" />
   </ItemGroup>
 
@@ -39,6 +52,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="ICON.png" />
+    <Resource Include="icon1.png" />
+    <Resource Include="icon6.png" />
+    <Resource Include="icon7.png" />
+    <Resource Include="icon8.png" />
     <Resource Include="pictures\admin.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -48,6 +66,16 @@
     </Resource>
     <Resource Include="pictures\Cool Text - Your fashion in one place 425292710568804.png" />
     <Resource Include="pictures\cooltext425292820321232.png" />
+    <Resource Include="pictures\ICON.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="pictures\icon1.png" />
+    <Resource Include="pictures\icon3.png" />
+    <Resource Include="pictures\icon4.png" />
+    <Resource Include="pictures\icon5.png" />
+    <Resource Include="pictures\icon6.png" />
+    <Resource Include="pictures\icon7.png" />
+    <Resource Include="pictures\icon8.png" />
   </ItemGroup>
 
 </Project>
