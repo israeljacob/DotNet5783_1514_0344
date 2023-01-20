@@ -40,7 +40,7 @@
             </ProgressBar.Effect>
         </ProgressBar>
         <Label x:Name="lblCurrentOrderStatus" Content="{Binding Corrent}" Margin="264,50,403,55" Grid.Row="1" RenderTransformOrigin="-1.407,0.25" FontSize="22" Background="{x:Null}" Height="NaN" Width="NaN"/>
-        <Label Content="next Order Status: " Grid.Row="2" Margin="0,13,560,84" Background="{x:Null}" FontSize="22" Width="NaN" Height="NaN"/>
+        <Label Content="Next Order Status: " Grid.Row="2" Margin="0,13,560,84" Background="{x:Null}" FontSize="22" Width="NaN" Height="NaN"/>
         <Label x:Name="lblCurrentOrderStatus_Copy" Content="{Binding Next}" Margin="228,13,427,84" Grid.Row="2" RenderTransformOrigin="-0.591,-0.388" Background="{x:Null}" FontSize="22" Height="NaN" Width="NaN"/>
         <Label Content="Begin time:"  Grid.Row="1" FontSize="22" Background="{x:Null}" Margin="404,0,0,0" HorizontalAlignment="Left" Width="146" VerticalAlignment="Center" Height="40"/>
 
