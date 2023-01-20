@@ -5,6 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+         WindowStyle="None"
+        MouseMove="Window_MouseMove"
+        AllowDrop="True"
         DataContext="{Binding RelativeSource={RelativeSource self}}"
         Title="SimulatorWindow" Height="450" Width="800">
     <Window.Resources>
@@ -18,29 +21,34 @@
             <Setter Property="Foreground" Value="White"/>
         </Style>
     </Window.Resources>
-    <Grid>
+    <Grid Style="{StaticResource FancyGrid}">
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="4*"/>
-            <RowDefinition Height="5*"/>
-            <RowDefinition Height="5*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="116*"/>
+            <RowDefinition Height="142*"/>
+            <RowDefinition Height="147*"/>
+            <RowDefinition Height="29*"/>
         </Grid.RowDefinitions>
         <TextBlock x:Name="timerTextBlock" Text="00:00:00" 
-                    FontSize="96" TextAlignment="Center" Foreground="#FF37F10E" Margin="119,0,0,0" HorizontalAlignment="Left" Width="585" Height="117" VerticalAlignment="Top" />
-        <Label Content="Current Order:"  Grid.Row="1" Margin="10,0,690,114"/>
-        <Label x:Name="lblCurrentOrder" Content="{Binding OrderID}" Margin="115,0,585,114" Grid.Row="1"/>
-        <Label Content="Current Order Status:" Grid.Row="1" Margin="22,50,628,64" Width="150"/>
-        <ProgressBar x:Name="progressBar" Minimum="0" Maximum="100" Value="{Binding ForProgress}" Grid.Row="2" Margin="230,145,0,0" Grid.RowSpan="2"/>
-        <Label x:Name="lblCurrentOrderStatus" Content="{Binding Corrent}" Margin="196,50,504,64" Grid.Row="1" RenderTransformOrigin="-1.407,0.25"/>
-        <Label Content="next Order Status:" Grid.Row="2" Margin="10,12,690,103"/>
-        <Label x:Name="lblCurrentOrderStatus_Copy" Content="{Binding Next}" Margin="146,10,554,105" Grid.Row="2" RenderTransformOrigin="-0.591,-0.388"/>
-        <Label Content="Begin time:" Margin="362,47,338,67" Grid.Row="1"/>
+                    FontSize="48" TextAlignment="Center" Foreground="White" Margin="337,0,0,0" HorizontalAlignment="Left" Width="392" Height="82" VerticalAlignment="Center" FontFamily="Viner Hand ITC" />
+        <Label Content="Current Order: "  Margin="3,48,0,2" Grid.Row="0" Background="{x:Null}" FontSize="22" Width="200" HorizontalAlignment="Left" Height="NaN" />
+        <Label x:Name="lblCurrentOrder" Content="{Binding OrderID}" Margin="200,48,0,18" Grid.Row="0" FontSize="22" Height="NaN" HorizontalAlignment="Left" Background="{x:Null}" Width="136"/>
+        <Label Content="Current Order Status:" Grid.Row="1" Margin="0,50,522,42" Width="NaN" Background="{x:Null}" FontSize="22" Height="NaN"/>
+        <ProgressBar x:Name="progressBar"  Minimum="0" Maximum="100" Value="{Binding ForProgress}" Grid.Row="2" Margin="272,141,8,10" Grid.RowSpan="2" Background="#FF5D5C5C">
+            <ProgressBar.Effect>
+                <DropShadowEffect/>
+            </ProgressBar.Effect>
+        </ProgressBar>
+        <Label x:Name="lblCurrentOrderStatus" Content="{Binding Corrent}" Margin="264,50,403,55" Grid.Row="1" RenderTransformOrigin="-1.407,0.25" FontSize="22" Background="{x:Null}" Height="NaN" Width="NaN"/>
+        <Label Content="next Order Status: " Grid.Row="2" Margin="0,13,560,84" Background="{x:Null}" FontSize="22" Width="NaN" Height="NaN"/>
+        <Label x:Name="lblCurrentOrderStatus_Copy" Content="{Binding Next}" Margin="228,13,427,84" Grid.Row="2" RenderTransformOrigin="-0.591,-0.388" Background="{x:Null}" FontSize="22" Height="NaN" Width="NaN"/>
+        <Label Content="Begin time:"  Grid.Row="1" FontSize="22" Background="{x:Null}" Margin="404,0,0,0" HorizontalAlignment="Left" Width="146" VerticalAlignment="Center" Height="40"/>
 
-        <Label  Content="{Binding Begin}" Width="200" Grid.Row="1" Margin="504,47,96,67"/>
-        <Button Style="{StaticResource ButtonSet}" Content="Stop Simulation" Click="btnStopSimulation_Click" Grid.Row="3" Margin="0,0,607,0"/>
-        <Label Content="Finish time:" Margin="333,10,367,105" Grid.Row="2"/>
-        <Label Content="{Binding Finish}"  Grid.Row="2" Width="NaN" Margin="504,12,96,103"/>
-        <Label Content="{Binding Percent}"  Grid.Row="2" Width="200" Margin="312,105,288,10"/>
-        <Label  Content="Update completed!!!"  Grid.Row="2" Visibility="{Binding Completed, Converter={StaticResource TrueToVisible}}" Width="200" Margin="537,102,63,13"/>
+        <Label  Content="{Binding Begin}" Width="NaN" Grid.Row="1" Margin="550,50,0,42" Background="{x:Null}" FontSize="20" Height="NaN"/>
+        <Button Style="{StaticResource ButtonSet}" Content="Stop Simulation" Click="btnStopSimulation_Click" Grid.Row="2" Margin="1,138,575,3" Grid.RowSpan="2" Width="NaN"/>
+        <Label Content="Finish time:" Margin="402,14,230,83" Grid.Row="2" Background="{x:Null}" FontSize="22" Height="50" Width="NaN"/>
+        <Label Content="{Binding Finish}"  Grid.Row="2" Width="250" Margin="550,13,0,84" Background="{x:Null}" Height="50" FontSize="20"/>
+        <Label Content="{Binding Percent}"  Grid.Row="2" Width="NaN" Margin="502,138,230,0" Grid.RowSpan="2" Background="{x:Null}" FontSize="18" Foreground="Black" Height="NaN"/>
+        <Label  Content="Update completed!"  Grid.Row="2" Visibility="{Binding Completed, Converter={StaticResource TrueToVisible}}" Width="NaN" Margin="591,139,9,-22" Grid.RowSpan="2" Background="{x:Null}" FontSize="18" Height="NaN"/>
     </Grid>
 </Window>

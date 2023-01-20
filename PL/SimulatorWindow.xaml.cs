@@ -23,6 +23,9 @@ namespace PL;
 
 /// <summary>
 /// Interaction logic for SimulatorWindow.xaml
+/// It creates an instance of the BackgroundWorker class,
+/// and assigns event handlers to its DoWork, ProgressChanged, and RunWorkerCompleted events. 
+/// The BackgroundWorker is configured to report progress and support cancellation.
 /// </summary>
 public partial class SimulatorWindow : Window
 {
@@ -126,8 +129,15 @@ public partial class SimulatorWindow : Window
     private BackgroundWorker bgWorker;
     private bool cancelation = true;
     Stopwatch stopWatch = new Stopwatch();
+
+    /// <summary>
+    /// The program starts the simulation
+    /// by calling the RunWorkerAsync method of the BackgroundWorker
+    /// and starts a Stopwatch. 
+    /// </summary>
     public SimulatorWindow()
     {
+        
         InitializeComponent();
 
         bgWorker = new BackgroundWorker();
@@ -141,6 +151,15 @@ public partial class SimulatorWindow : Window
         stopWatch.Restart();
     }
 
+    /// <summary>
+    /// The BgWorker_DoWork event handler registered
+    /// to the DoWork event of the BackgroundWorker register to the "OrderProcessing" and 
+    /// "SimulationComplete" events of the MySimulator class, 
+    /// starts the simulation by calling the "activate()" method of the MySimulator class,
+    /// and enters a loop that sleeps for 1 second and reports progress 3 every iteration.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void BgWorker_DoWork(object sender, DoWorkEventArgs e)
     {
         MySimulator.RegisterToUpdateProgress(Updated);
@@ -153,6 +172,20 @@ public partial class SimulatorWindow : Window
         }
     }
 
+    /// <summary>
+    /// The BgWorker_ProgressChanged event handler registered to the ProgressChanged event of the
+    /// BackgroundWorker updates the form elements with the status of the simulation.
+    /// It checks the ProgressPercentage passed from the DoWork method, if it's 3, it updates the timer textblock,
+    /// otherwise, if it's greater than or equal to 100000, 
+    /// it updates the form elements with the order details passed as the UserState parameter
+    /// and sets the completion flag to false. 
+    /// Otherwise, it sets the completion flag to true and if the flag finished is true,
+    /// unregister from the "OrderProcessing" and "SimulationComplete" events of the MySimulator class 
+    /// and stops the stopwatch,
+    /// cancels the background worker and sets the cancelation flag to false.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void BgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
 
@@ -197,6 +230,12 @@ public partial class SimulatorWindow : Window
         }
     }
 
+    /// <summary>
+    /// The BgWorker_RunWorkerCompleted event handler registered to the RunWorkerCompleted event
+    /// of the BackgroundWorker closes the form.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void BgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
         if (!bgWorker.CancellationPending)
@@ -209,6 +248,17 @@ public partial class SimulatorWindow : Window
         }
     }
 
+    /// <summary>
+    ///  The btnStopSimulation_Click event handler,
+    /// which is triggered when the user clicks the Stop Simulation button, stops the simulation 
+    /// by calling the StopSimulation method of the MySimulator class, if the completion flag is true, 
+    /// it unregisters from the "OrderProcessing" and "SimulationComplete" events of the MySimulator class,
+    /// stops the stopwatch, cancels the background worker and sets the cancelation flag to false.
+    /// Otherwise, it sets the finished flag to true and shows a message box 
+    /// informing the user that the window will close when the current order is updated.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void btnStopSimulation_Click(object sender, EventArgs e)
     {
         MySimulator.StopSimulation();
@@ -245,6 +295,15 @@ public partial class SimulatorWindow : Window
         e.Cancel = cancelation;
         if (cancelation)
             MessageBox.Show("You can close the window by pressing the stop simlation button only");
+    }
+
+
+    private void Window_MouseMove(object sender, MouseEventArgs e)
+    {
+        if (e.LeftButton == MouseButtonState.Pressed)
+        {
+            this.DragMove();
+        }
     }
 }
 
