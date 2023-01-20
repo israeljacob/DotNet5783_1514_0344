@@ -189,35 +189,35 @@ public partial class SimulatorWindow : Window
         else
         {
             Completed = true;
-            if (finished && !bgWorker.CancellationPending)
+            if (finished)
             {
-                MySimulator.UnregisterFromSimulationComplete(complete);
-                MySimulator.UnregisterFromUpdateProgress(Updated);
-                stopWatch.Stop();
                 bgWorker.CancelAsync();
-                cancelation = false;
+
             }
         }
     }
 
     private void BgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
-        this.Close();
+        if (!bgWorker.CancellationPending)
+        {
+            MySimulator.UnregisterFromSimulationComplete(complete);
+            MySimulator.UnregisterFromUpdateProgress(Updated);
+            stopWatch.Stop();
+            cancelation = false;
+            this.Close();
+        }
     }
 
     private void btnStopSimulation_Click(object sender, EventArgs e)
     {
         MySimulator.StopSimulation();
-        if (Completed && !bgWorker.CancellationPending)
+        if (Completed)
         {
-            MySimulator.UnregisterFromSimulationComplete(complete);
-            MySimulator.UnregisterFromUpdateProgress(Updated);
-            stopWatch.Stop();
             bgWorker.CancelAsync();
-            cancelation = false;
         }
         else
-        { 
+        {
             finished = true;
             MessageBox.Show("The window will close wen the corrent order will be updated");
         }
