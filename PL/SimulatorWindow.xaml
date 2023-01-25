@@ -39,7 +39,7 @@
             </ProgressBar.Effect>
         </ProgressBar>
         <Label x:Name="lblCurrentOrderStatus" Content="{Binding Corrent}" Margin="264,50,403,55" Grid.Row="1" RenderTransformOrigin="-1.407,0.25" FontSize="22" Background="{x:Null}" Height="NaN" Width="NaN"/>
-        <Label Content="next Order Status: " Grid.Row="2" Margin="0,13,560,84" Background="{x:Null}" FontSize="22" Width="NaN" Height="NaN"/>
+        <Label Content="Next Order Status: " Grid.Row="2" Margin="0,13,560,84" Background="{x:Null}" FontSize="22" Width="NaN" Height="NaN"/>
         <Label x:Name="lblCurrentOrderStatus_Copy" Content="{Binding Next}" Margin="228,13,427,84" Grid.Row="2" RenderTransformOrigin="-0.591,-0.388" Background="{x:Null}" FontSize="22" Height="NaN" Width="NaN"/>
         <Label Content="Begin time:"  Grid.Row="1" FontSize="22" Background="{x:Null}" Margin="404,0,0,0" HorizontalAlignment="Left" Width="146" VerticalAlignment="Center" Height="40"/>
 
@@ -47,7 +47,7 @@
         <Button Style="{StaticResource ButtonSet}" Content="Stop Simulation" Click="btnStopSimulation_Click" Grid.Row="2" Margin="1,138,575,3" Grid.RowSpan="2" Width="NaN"/>
         <Label Content="Finish time:" Margin="402,14,230,83" Grid.Row="2" Background="{x:Null}" FontSize="22" Height="50" Width="NaN"/>
         <Label Content="{Binding Finish}"  Grid.Row="2" Width="250" Margin="550,13,0,84" Background="{x:Null}" Height="50" FontSize="20"/>
-        <Label Content="{Binding Percent}"  Grid.Row="2" Width="NaN" Margin="502,138,230,0" Grid.RowSpan="2" Background="{x:Null}" FontSize="18" Foreground="Black" Height="NaN"/>
+        <Label Content="{Binding Percent}"  Grid.Row="2" Width="NaN" Margin="502,138,209,0" Grid.RowSpan="2" Background="{x:Null}" FontSize="18" Foreground="Black" Height="NaN"/>
         <Label  Content="Update completed!"  Grid.Row="2" Visibility="{Binding Completed, Converter={StaticResource TrueToVisible}}" Width="NaN" Margin="591,139,9,-22" Grid.RowSpan="2" Background="{x:Null}" FontSize="18" Height="NaN"/>
     </Grid>
 </Window>
