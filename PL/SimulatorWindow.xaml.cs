@@ -139,7 +139,6 @@ public partial class SimulatorWindow : Window
     DateTime finish = DateTime.MinValue;
     double percent = 0;
     private BackgroundWorker bgWorker;
-    private bool cancelation = true;
     Stopwatch stopWatch = new Stopwatch();
 
     /// <summary>
@@ -237,7 +236,6 @@ public partial class SimulatorWindow : Window
             if (finished)
             {
                 bgWorker.CancelAsync();
-
             }
         }
     }
@@ -255,7 +253,6 @@ public partial class SimulatorWindow : Window
             MySimulator.UnregisterFromSimulationComplete(complete);
             MySimulator.UnregisterFromUpdateProgress(Updated);
             stopWatch.Stop();
-            cancelation = false;
             this.Close();
         }
     }
@@ -302,13 +299,6 @@ public partial class SimulatorWindow : Window
     {
         bgWorker.ReportProgress(1);
     }
-    //protected override void OnClosing(CancelEventArgs e)
-    //{
-    //    e.Cancel = cancelation;
-    //    if (cancelation)
-    //        MessageBox.Show("You can close the window by pressing the stop simlation button only");
-    //}
-
 
     private void Window_MouseMove(object sender, MouseEventArgs e)
     {
