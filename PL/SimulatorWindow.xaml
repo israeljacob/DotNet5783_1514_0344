@@ -28,7 +28,7 @@
             <RowDefinition Height="147*"/>
             <RowDefinition Height="29*"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="timerTextBlock" Text="00:00:00" 
+        <TextBlock Text="{Binding TimerShow}" 
                     FontSize="48" TextAlignment="Center" Foreground="White" Margin="337,0,0,0" HorizontalAlignment="Left" Width="392" Height="82" VerticalAlignment="Center" FontFamily="Viner Hand ITC" />
         <Label Content="Current Order: "  Margin="3,48,0,2" Grid.Row="0" Background="{x:Null}" FontSize="22" Width="200" HorizontalAlignment="Left" Height="NaN" />
         <Label x:Name="lblCurrentOrder" Content="{Binding OrderID}" Margin="200,48,0,18" Grid.Row="0" FontSize="22" Height="NaN" HorizontalAlignment="Left" Background="{x:Null}" Width="136"/>
