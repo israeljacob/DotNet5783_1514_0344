@@ -135,6 +135,4 @@ public static class MySimulator
     {
         OrderProcessing -= handler;
     }
-
-
 }

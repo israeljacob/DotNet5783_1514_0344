@@ -168,7 +168,7 @@ public partial class SimulatorWindow : Window
         while (!bgWorker.CancellationPending)
         {
             Thread.Sleep(1000);
-            bgWorker.ReportProgress(3);
+            bgWorker.ReportProgress(0);
         }
     }
 
@@ -189,7 +189,7 @@ public partial class SimulatorWindow : Window
     private void BgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
 
-        if (e.ProgressPercentage == 3)
+        if (e.ProgressPercentage == 0)
         {
             if (toProgress)
             {
