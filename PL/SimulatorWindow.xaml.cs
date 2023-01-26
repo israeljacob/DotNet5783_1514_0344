@@ -43,6 +43,18 @@ public partial class SimulatorWindow : Window
 
 
 
+    public string TimerShow
+    {
+        get { return (string)GetValue(TimerShowProperty); }
+        set { SetValue(TimerShowProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for TimerShow.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty TimerShowProperty =
+        DependencyProperty.Register("TimerShow", typeof(string), typeof(SimulatorWindow), new PropertyMetadata("00:00:00"));
+
+
+
     public int ForProgress
     {
         get { return (int)GetValue(ForProgressProperty); }
@@ -168,7 +180,7 @@ public partial class SimulatorWindow : Window
         while (!bgWorker.CancellationPending)
         {
             Thread.Sleep(1000);
-            bgWorker.ReportProgress(3);
+            bgWorker.ReportProgress(0);
         }
     }
 
@@ -189,19 +201,19 @@ public partial class SimulatorWindow : Window
     private void BgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
 
-        if (e.ProgressPercentage == 3)
+        if (e.ProgressPercentage == 0)
         {
             if (toProgress)
             {
                 TimeSpan diff = finish - begin;
                 int dif = diff.Seconds + 1;
                 ForProgress = (int)Math.Round((double)100 / dif + percent) < 100 ? (int)Math.Round((double)100 / dif + percent) : 100;
-                percent += ForProgress < 100 ? (double)100 / dif : 100;
+                percent = ForProgress < 100 ? percent+(double)100 / dif : 100;
                 Percent = $"{ForProgress}%";
             }
             string timerText = stopWatch.Elapsed.ToString();
             timerText = timerText.Substring(0, 8);
-            timerTextBlock.Text = timerText;
+            TimerShow = timerText;
             toProgress = true;
         }
         else if (e.ProgressPercentage >= 100000)
@@ -290,12 +302,12 @@ public partial class SimulatorWindow : Window
     {
         bgWorker.ReportProgress(1);
     }
-    protected override void OnClosing(CancelEventArgs e)
-    {
-        e.Cancel = cancelation;
-        if (cancelation)
-            MessageBox.Show("You can close the window by pressing the stop simlation button only");
-    }
+    //protected override void OnClosing(CancelEventArgs e)
+    //{
+    //    e.Cancel = cancelation;
+    //    if (cancelation)
+    //        MessageBox.Show("You can close the window by pressing the stop simlation button only");
+    //}
 
 
     private void Window_MouseMove(object sender, MouseEventArgs e)
