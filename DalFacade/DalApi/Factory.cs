@@ -13,6 +13,7 @@ public static class Factory
     /// <exception cref="DalConfigException"></exception>
     public static IDal? Get()
     {
+        
         string dalType = s_dalName
             ?? throw new DalConfigException($"DAL name is not extracted from the configuration");
         string dal = s_dalPackages[dalType]
@@ -26,10 +27,10 @@ public static class Factory
         {
             throw new DalConfigException("Failed to load {dal}.dll package");
         }
-
         Type? type = Type.GetType($"Dal.{dal}, {dal}")
             ?? throw new DalConfigException($"Class Dal.{dal} was not found in {dal}.dll");
-
+        ///return the implemntation of the entity
+        ///and property of that type as the instance of the class that implements the IDal interface.
         return type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static)?
                    .GetValue(null) as IDal
             ?? throw new DalConfigException($"Class {dal} is not singleton or Instance property not found");

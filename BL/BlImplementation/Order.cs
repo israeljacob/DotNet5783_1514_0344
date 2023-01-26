@@ -28,6 +28,7 @@ internal class Order : BLApi.IOrder
         DO.Order? order1, order2;
         try
         {
+            /////////////////////////////////////
             order1 = (from order in dal.Order.GetAll()
                       where order?.ShipDate == null
                       orderby order?.OrderDate
@@ -67,7 +68,7 @@ internal class Order : BLApi.IOrder
                            UniqID = order?.UniqID ?? throw new BO.MissingDataException("Order ID"),
                            CustomerName = order?.CustomerName,
                            StatusOfOrder = statusOfOrder(order),
-                           AmountOfItems = amoutOfItems(order),
+                           AmountOfItems = amountOfItems(order),
                            TotalPrice = totalPrice(order)
                        };
             else
@@ -130,7 +131,7 @@ internal class Order : BLApi.IOrder
     }
     #endregion
 
-    #region Update total price
+    #region Update date
     public void UpdateOrder(BO.Order order)
     {
         if (order.DeliveryrDate < order.ShipDate || order.ShipDate < order.OrderDate)
@@ -160,11 +161,10 @@ internal class Order : BLApi.IOrder
     public BO.OrderTracking OrderTrack(int ID)
     {
         DO.Order track = new DO.Order();
-        try { track = dal.Order.GetByID(ID); }
+        try { track = dal.Order.GetByID(ID); } // bring data from layer below
         catch { throw new BO.InCorrectDetailsException("Order ID", ID); }
         List<Tuple<DateTime?, string?>?> tracking = new List<Tuple<DateTime?, string?>?>();
-        if (track.OrderDate != null)
-            tracking.Add(Tuple.Create(track.OrderDate, "The order has been created")!);
+        tracking.Add(Tuple.Create(track.OrderDate, "The order has been created")!);
         if (track.ShipDate != null)
             tracking.Add(Tuple.Create(track.ShipDate, "The order has been sent")!);
         if (track.DeliveryrDate != null)
@@ -240,7 +240,6 @@ internal class Order : BLApi.IOrder
     /// <returns></returns>
     public BO.OrderItem GetOrderItem(int ID)
     {
-
         try
         {
             DO.OrderItem orderItem = dal.OrderItem.GetByID(ID);
@@ -278,13 +277,13 @@ internal class Order : BLApi.IOrder
     }
     #endregion
 
-    #region amout of items
+    #region amount of items
     /// <summary>
     /// Amount of items
     /// </summary>
     /// <param name="order"></param>
     /// <returns>The amount of items</returns>
-    private int amoutOfItems(DO.Order? order)
+    private int amountOfItems(DO.Order? order)
     {
         try
         {

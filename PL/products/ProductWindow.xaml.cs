@@ -100,7 +100,14 @@ public partial class ProductWindow : Window
     public ProductWindow(int id = 0)
     {
         if (id != 0)
+        {
+            try
+            {
+
             Product = bl.Product.ProductItemForManagger(id);
+            }
+            catch(Exception ex) { MessageBox.Show(ex.Message); }
+        }
         else
         {
             BO.Product product = new();
@@ -144,11 +151,10 @@ public partial class ProductWindow : Window
     {
         Button? button = sender as Button;
         double price =0;
-        var bc = new BrushConverter();
         bool flag = true;
         //MessageBox.Show(Product.Price.ToString());
         ///to convert it to letters , if not make sure the user will see it
-        if (Product.UniqID<100000)
+        if (Product.UniqID<300000)
         {
             myIDCheck = true;
             flag = false;
@@ -176,7 +182,7 @@ public partial class ProductWindow : Window
             myPriceCheck = true;
             flag = false;
         }
-        if (Product.Price <= 0 || price != Product.Price)
+        if (Product.Price <= 0 )
         {
             myPriceCheck = true;
             flag = false;
@@ -230,6 +236,8 @@ public partial class ProductWindow : Window
     {
         this.Close();
     }
+
+   
 }
 
 

@@ -171,7 +171,7 @@ namespace Dal
             int option;
             Console.WriteLine(messege);
             while (!int.TryParse(Console.ReadLine(), out option))
-                Console.WriteLine("you must entar numbers ony. try again!");
+                Console.WriteLine("you must entar numbers only. try again!");
             return option;
         }
 

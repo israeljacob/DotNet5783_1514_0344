@@ -16,6 +16,9 @@ internal sealed class DataSource
     // Products list.
     internal List<DO.Product?> products = new List<DO.Product?>();
 
+    /// <summary>
+    /// singelton
+    /// </summary>
     private static DataSource instance;
     public static DataSource Instance
     {
@@ -25,7 +28,7 @@ internal sealed class DataSource
         }
     }
     /// <summary>
-    /// static constructor
+    /// static constructor, if instance in line 22 in null we use this constructor
     /// </summary>
     static DataSource() => instance = new DataSource();
     private DataSource()

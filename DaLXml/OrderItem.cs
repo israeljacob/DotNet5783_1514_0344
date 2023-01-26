@@ -118,7 +118,13 @@ internal class OrderItem : IOrderItem
             .Elements().Select(o => getOrderItem(o)).Where(func);
         return result.FirstOrDefault() ?? throw new DO.DoesNotExistException("Order item");
     }
-
+    /// <summary>
+    ///  takes an integer ID as an argument and returns the product with that ID.
+    /// If no product with the specified ID exists, it throws a DoesNotExistException.
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <returns></returns>
+    /// <exception cref="DO.DoesNotExistException"></exception>
     public DO.OrderItem GetByID(int ID)
     {
         return (DO.OrderItem)getOrderItem(XMLTools.LoadListFromXMLElement(s_orderItems)?.Elements()

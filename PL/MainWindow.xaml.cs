@@ -50,6 +50,5 @@ public partial class MainWindow : Window
     private void Simulator_click(object sender, RoutedEventArgs e)
     {
         new SimulatorWindow().Show();
-
     }
 }
