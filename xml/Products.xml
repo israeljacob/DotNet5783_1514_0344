@@ -1,80 +1,73 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-	<Product>
-		<UniqID>334356</UniqID>
-		<Name>Shirt Slender</Name>
-		<Price>149</Price>
-		<Category>Shirts</Category>
-		<InStock>17</InStock>
-	</Product>
-	<Product>
-		<UniqID>331743</UniqID>
-		<Name>Shirt Bent</Name>
-		<Price>180</Price>
-		<Category>Shirts</Category>
-		<InStock>0</InStock>
-	</Product>
-	<Product>
-		<UniqID>339841</UniqID>
-		<Name>Shirt Attire</Name>
-		<Price>279</Price>
-		<Category>Shirts</Category>
-		<InStock>7</InStock>
-	</Product>
-	<Product>
-		<UniqID>309351</UniqID>
-		<Name>Shirt Kin</Name>
-		<Price>100</Price>
-		<Category>Shirts</Category>
-		<InStock>13</InStock>
-	</Product>
-	<Product>
-		<UniqID>313016</UniqID>
-		<Name>Trouser Minute</Name>
-		<Price>279</Price>
-		<Category>trousers</Category>
-		<InStock>17</InStock>
-	</Product>
-	<Product>
-		<UniqID>336616</UniqID>
-		<Name>Trouser Agro</Name>
-		<Price>349</Price>
-		<Category>trousers</Category>
-		<InStock>10</InStock>
-	</Product>
-	<Product>
-		<UniqID>304737</UniqID>
-		<Name>Trouser Places</Name>
-		<Price>599</Price>
-		<Category>trousers</Category>
-		<InStock>0</InStock>
-	</Product>
-	<Product>
-		<UniqID>328945</UniqID>
-		<Name>Trouser Lustrous</Name>
-		<Price>349</Price>
-		<Category>trousers</Category>
-		<InStock>0</InStock>
-	</Product>
-	<Product>
-		<UniqID>310116</UniqID>
-		<Name>Trouser Surge</Name>
-		<Price>480</Price>
-		<Category>trousers</Category>
-		<InStock>11</InStock>
-	</Product>
-	<Product>
-		<UniqID>302791</UniqID>
-		<Name>Shoe Threads</Name>
-		<Price>499</Price>
-		<Category>shoes</Category>
-		<InStock>1</InStock>
-	</Product>
-	<Product>
-		<UniqID>952022</UniqID>
-		<Name>sd</Name>
-		<Price>123</Price>
-		<Category>Shirts</Category>
-		<InStock>12</InStock>
-	</Product>
+  <Product>
+    <UniqID>346254</UniqID>
+    <Name>Shirt Slender</Name>
+    <Price>200</Price>
+    <Category>Shirts</Category>
+    <InStock>4</InStock>
+  </Product>
+  <Product>
+    <UniqID>323069</UniqID>
+    <Name>Shirt Bent</Name>
+    <Price>149</Price>
+    <Category>Shirts</Category>
+    <InStock>0</InStock>
+  </Product>
+  <Product>
+    <UniqID>323091</UniqID>
+    <Name>Shirt Attire</Name>
+    <Price>180</Price>
+    <Category>Shirts</Category>
+    <InStock>6</InStock>
+  </Product>
+  <Product>
+    <UniqID>343321</UniqID>
+    <Name>Shirt Kin</Name>
+    <Price>159</Price>
+    <Category>Shirts</Category>
+    <InStock>17</InStock>
+  </Product>
+  <Product>
+    <UniqID>302256</UniqID>
+    <Name>Trouser Minute</Name>
+    <Price>349</Price>
+    <Category>trousers</Category>
+    <InStock>7</InStock>
+  </Product>
+  <Product>
+    <UniqID>329461</UniqID>
+    <Name>Trouser Agro</Name>
+    <Price>789</Price>
+    <Category>trousers</Category>
+    <InStock>18</InStock>
+  </Product>
+  <Product>
+    <UniqID>335970</UniqID>
+    <Name>Trouser Places</Name>
+    <Price>349</Price>
+    <Category>trousers</Category>
+    <InStock>6</InStock>
+  </Product>
+  <Product>
+    <UniqID>319313</UniqID>
+    <Name>Trouser Lustrous</Name>
+    <Price>279</Price>
+    <Category>trousers</Category>
+    <InStock>3</InStock>
+  </Product>
+  <Product>
+    <UniqID>322808</UniqID>
+    <Name>Trouser Surge</Name>
+    <Price>349</Price>
+    <Category>trousers</Category>
+    <InStock>5</InStock>
+  </Product>
+  <Product>
+    <UniqID>328619</UniqID>
+    <Name>Shoe Threads</Name>
+    <Price>350</Price>
+    <Category>shoes</Category>
+    <InStock>4</InStock>
+  </Product>
 </ArrayOfProduct>

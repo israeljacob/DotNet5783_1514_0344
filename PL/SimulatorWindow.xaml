@@ -22,7 +22,6 @@
         </Style>
     </Window.Resources>
     <Grid Style="{StaticResource FancyGrid}">
-
         <Grid.RowDefinitions>
             <RowDefinition Height="116*"/>
             <RowDefinition Height="142*"/>
