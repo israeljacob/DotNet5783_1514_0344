@@ -14,10 +14,7 @@ using System.Runtime.CompilerServices;
 
 internal class Order : IOrder
 {
-
-
     const string s_orders = @"Orders";
-    const string s_data = @"data-config";
 
     /// <summary>
     /// loads a list of orders from the XML file, checks if the order already exists in the list, 
