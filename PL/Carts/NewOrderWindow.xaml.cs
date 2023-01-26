@@ -104,7 +104,7 @@ public partial class NewOrderWindow : Window
             {
                 try
                 {
-                    bl.Cart.AddOrUpdateCart(MyCart, item);
+                    bl.Cart.AddToCart(MyCart, item.UniqID,item.Amount);
                 }
                 catch (Exception ex) { MessageBox.Show(ex.Message); }
             }

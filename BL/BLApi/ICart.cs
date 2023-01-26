@@ -11,10 +11,8 @@ namespace BLApi;
 /// </summary>
 public interface ICart
 {
-    //Add or update cart
-    public BO.Cart AddOrUpdateCart(BO.Cart cart, BO.ProductItem productItem);
     //Add to cart
-    public BO.Cart AddToCart(BO.Cart cart, int ID);
+    public BO.Cart AddToCart(BO.Cart cart, int ID, int amount =1);
 
     //Update the cart
     public BO.Cart UpdateCart(BO.Cart cart, int ID, int amount);

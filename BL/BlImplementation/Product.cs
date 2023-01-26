@@ -76,7 +76,7 @@ namespace BlImplementation
         /// <exception cref="Exception"></exception>
         public BO.Product ProductItemForManagger(int ID)
         {
-            if (ID <= 0)
+            if (ID < 300000)
                 throw new BO.InCorrectDetailsException("Product ID", ID);
             try
             {
@@ -101,7 +101,7 @@ namespace BlImplementation
         /// <exception cref="Exception"></exception>
         public BO.ProductItem ProductItemForCostemor(int ID, BO.Cart cart)
         {
-            if (ID <= 0)
+            if (ID < 300000)
                 throw new BO.InCorrectDetailsException("Product ID", ID);
             try
             {
@@ -141,11 +141,11 @@ namespace BlImplementation
             {
                 int returnedID = dal.Product.Add(new DO.Product
                 {
-                    UniqID = (ID >=0)? ID : throw new BO.InCorrectDetailsException("product ID", ID),
+                    UniqID =  ID ,
                     Name = name!=""&&name!=null? name : throw new BO.MissingDataException("product name "),
-                    Price = (price >= 0) ? price : throw new BO.InCorrectDetailsException("product price", price),
+                    Price = (price > 0) ? price : throw new BO.InCorrectDetailsException("product price", price),
                     Category = category !=BO.Category.all? (DO.Category)category: throw new BO.InCorrectDetailsException("product category ", category),
-                    InStock = (inStock > 0)? inStock : throw new BO.InCorrectDetailsException("product in stock", inStock)
+                    InStock = (inStock >= 0)? inStock : throw new BO.InCorrectDetailsException("product in stock", inStock)
                 });
             }
             catch (DO.IdAlreadyExistException ex)
@@ -163,10 +163,10 @@ namespace BlImplementation
         /// <exception cref="AggregateException"></exception>
         public void DeleteProduct(int ID)
         {
-            Func<DO.OrderItem?, bool> func = orderItem => orderItem?.ProductID == ID;
+            Func<DO.OrderItem?, bool> funcID = orderItem => orderItem?.ProductID == ID;
             try
             {
-            if (dal.OrderItem.GetAll(func) != null)
+            if (dal.OrderItem.GetAll(funcID) != null)
                 throw new BO.ItemExistsInOrderException("Product");
             }
             catch (DO.EmptyException ex) { throw new BO.CatchetDOException(ex); }
@@ -193,7 +193,7 @@ namespace BlImplementation
             {
                 dal.Product.Update(new DO.Product
                 {
-                    UniqID = (product.UniqID >= 0)? product.UniqID : throw new BO.InCorrectDetailsException("Product ID", product.UniqID),
+                    UniqID = (product.UniqID >= 300000)? product.UniqID : throw new BO.InCorrectDetailsException("Product ID", product.UniqID),
                     Name = product.Name != "" && product.Name != null ? product.Name : throw new BO.MissingDataException("product name "),
                     Price = (product.Price >0)? product.Price : throw new BO.InCorrectDetailsException("Product price", product.Price),
                     Category = product.Category != BO.Category.all? (DO.Category)product.Category! : throw new BO.MissingDataException("Product category "),

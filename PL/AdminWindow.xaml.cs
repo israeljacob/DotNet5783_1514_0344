@@ -71,10 +71,9 @@ public partial class AdminWindow : Window
     /// add the products to the list in according to combox click
     /// </summary>
     /// <param name="category"></param>
-    public AdminWindow(BO.Category? category= null)
+    public AdminWindow()
     {
         InitializeComponent();
-        
         try
         {
             var tempProduct = bl.Product.GetListOfProducts();

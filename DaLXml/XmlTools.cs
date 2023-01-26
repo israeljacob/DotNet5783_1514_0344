@@ -34,10 +34,7 @@ static class XMLTools
 
     #region SaveLoadWithXElement
     /// <summary>
-    /// defines two methods for saving and loading XML data using the XElement class. 
     ///  saves the element to an XML file with the given entity name in the s_dir directory. 
-    /// The LoadListFromXMLElement method takes an entity name as a parameter, 
-    /// loads the corresponding XML file from the s_dir directory, and returns the root element as an XElement object. 
     /// If the file does not exist, it creates a new file with the given entity name and an empty root element.
     /// </summary>
     /// <param name="rootElem"></param>
