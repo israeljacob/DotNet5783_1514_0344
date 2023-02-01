@@ -17,6 +17,7 @@ public static class MySimulator
     /// <summary>
     /// These events can be subscribed to by external code to receive notifications
     /// when the simulation is complete or when the order processing is updated.
+    /// volatile - dont start any process before the early process fhinished
     /// </summary>
     private static volatile bool active = false;
     static readonly BLApi.IBL bl = BLApi.Factory.Get();

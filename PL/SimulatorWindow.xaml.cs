@@ -145,6 +145,7 @@ public partial class SimulatorWindow : Window
     /// The program starts the simulation
     /// by calling the RunWorkerAsync method of the BackgroundWorker
     /// and starts a Stopwatch. 
+    /// ProgressChanged is the main progress
     /// </summary>
     public SimulatorWindow()
     {
@@ -186,7 +187,7 @@ public partial class SimulatorWindow : Window
     /// <summary>
     /// The BgWorker_ProgressChanged event handler registered to the ProgressChanged event of the
     /// BackgroundWorker updates the form elements with the status of the simulation.
-    /// It checks the ProgressPercentage passed from the DoWork method, if it's 3, it updates the timer textblock,
+    /// It checks the ProgressPercentage passed from the DoWork method, if it's 0, it updates the timer textblock,
     /// otherwise, if it's greater than or equal to 100000, 
     /// it updates the form elements with the order details passed as the UserState parameter
     /// and sets the completion flag to false. 

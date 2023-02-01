@@ -29,12 +29,18 @@
                 <TabItem Header="Prodocts">
                     <TabItem.Content>
                         <Grid Style="{StaticResource FancyGrid}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="74*"/>
+                                <ColumnDefinition Width="13*"/>
+                                <ColumnDefinition Width="11*"/>
+                                <ColumnDefinition Width="711*"/>
+                            </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="40*"/>
                                 <RowDefinition Height="500*"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <Grid Style="{StaticResource GridForList}">
+                            <Grid Style="{StaticResource GridForList}" Grid.ColumnSpan="4">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
@@ -42,7 +48,7 @@
                                 <ComboBox Style="{StaticResource ComboBoxForList}" ItemsSource="{Binding Categories}" Grid.ColumnSpan="2" SelectionChanged="CategorySelector_SelectionChanged"/>
                                 <Label Content="Category:" FontSize="16" Background="#FFE8E4E4" Padding="5,3,5,3" Margin="77,10,232,0" />
                             </Grid>
-                            <ListView FontSize="20" MouseDoubleClick="ProductListview_MouseDoubleClick" ItemsSource="{Binding Products, Mode=TwoWay}" Margin="132,32,131,10" Grid.RowSpan="2" Grid.Row="1" >
+                            <ListView FontSize="20" MouseDoubleClick="ProductListview_MouseDoubleClick" ItemsSource="{Binding Products, Mode=TwoWay}" Margin="34,10,131,1" Grid.Row="1" Grid.Column="3" >
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="Product Id" Width="auto" DisplayMemberBinding="{Binding UniqID}"></GridViewColumn>
@@ -52,8 +58,8 @@
                                     </GridView>
                                 </ListView.View>
                             </ListView>
-                            <Button Content="Add new product" Grid.Row="2" Margin="601,10,0,-5" Click="AddProdct_Click"/>
-                            <Button Content="back" Grid.Row="2" Margin="18,10,0,-5" Click="back_Click"/>
+                            <Button Content="Add new product" Grid.Row="2" Margin="503,10,0,-5" Click="AddProdct_Click" Grid.Column="3"/>
+                            <Button Content="back" Grid.Row="2" Margin="18,10,0,-5" Click="back_Click" Grid.ColumnSpan="4"/>
                         </Grid>
                     </TabItem.Content>
                 </TabItem>
@@ -68,7 +74,7 @@
                                 <RowDefinition Height="500*"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
-                            <ListView  FontSize="13" MouseDoubleClick="OrderListview_MouseDoubleClick" ItemsSource="{Binding Orders, Mode=TwoWay}" Margin="70,32,-158,10" Grid.Column="1">
+                            <ListView  FontSize="13" MouseDoubleClick="OrderListview_MouseDoubleClick" ItemsSource="{Binding Orders, Mode=TwoWay}" Margin="139,21,-88,21" Grid.ColumnSpan="2">
                                 <ListView.View>
                                     <GridView>
                                         <GridViewColumn Header="order Id" Width="auto" DisplayMemberBinding="{Binding UniqID}"></GridViewColumn>
@@ -79,7 +85,7 @@
                                     </GridView>
                                 </ListView.View>
                             </ListView>
-                            <Button Content="back" Grid.Row="1" Margin="18,10,0,-5" Click="back_Click" Width="131"/>
+                            <Button Content="back" Grid.Row="1" Margin="10,3,0,2" Click="back_Click" Width="198" Grid.ColumnSpan="2"/>
                         </Grid>
                     </TabItem.Content>
                 </TabItem>
