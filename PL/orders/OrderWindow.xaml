@@ -83,7 +83,7 @@
         <Label Content="{Binding Order.DeliveryrDate, Mode=TwoWay}" Grid.Row="7" Style="{StaticResource rightLabel}"/>
         <Button Padding="0,0,70,0" FontSize="10" Content="Deliverred" Grid.Row="6" Visibility="{Binding Order.DeliveryrDate, Converter={StaticResource NullToVisible}, Mode=TwoWay}" IsEnabled="{Binding WinName , Converter={StaticResource WinToBool}}" Click="DateButton_Click" Grid.Column="2" Margin="1,30,267,1" Grid.RowSpan="2"/>
         <Label Content="{Binding Order.TotalPrice, Mode=TwoWay}" Grid.Row="8" Style="{StaticResource rightLabel}"/>
-        <ListView Style="{StaticResource LVstyle}" FontSize="14" ItemsSource="{Binding Order.orderItems, Mode=TwoWay}" Grid.ColumnSpan="2" Margin="0,5,10,10" Grid.Row="9" Grid.Column="1">
+        <ListView Style="{StaticResource LVstyle}" FontSize="14"  Grid.ColumnSpan="2" Margin="0,5,10,10" Grid.Row="9" Grid.Column="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Id" Width="auto" DisplayMemberBinding="{Binding ProductID}"/>
