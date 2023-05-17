@@ -3,6 +3,21 @@
 
 
 
+## Skills:
+>### • Knowledge of modern development infrastructures in Dot Net and knowledge of the C# language
+>### • Acknowledgment of Basic Design Patterns (Observer, Factory Method, Singleton)
+>### • Acknowledgment with working methods of LINQ data collections
+>### • Built a graphical user interface (GUI) using the WPF library
+>### • Knowledge of data binding methods
+>### • Knowledge of DOM XML, working with XML files
+>### • Working in a multi-process environment using different methods
+>### • Developing self-learning ability, dealing with challenges, creative thinking ability
+>### • Experience in carrying out a complete project from A to Z
+
+
+
+
+
 
 
 ## Requirment: 
